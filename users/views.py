@@ -7,6 +7,6 @@ from .serializers import UserSerializer
 User = get_user_model()
 
 
-class UserViewset(viewsets.ModelViewSet):
+class UserViewset(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer

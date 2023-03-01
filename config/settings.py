@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -95,11 +96,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASE_URL = config('DATABASE_URL')
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
+
 }
 
 # Password validation
@@ -138,7 +139,6 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -152,5 +152,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination","PAGE_SIZE": 50,
 }
