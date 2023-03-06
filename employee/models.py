@@ -58,7 +58,7 @@ class Employee(models.Model):
     password_reset_code = models.CharField(max_length=200, null=True, blank=True)
     reason = models.CharField(max_length=200, blank=True, null=True)
     last_ip = models.CharField(max_length=30, null=True, blank=True)
-    created_at = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     emp_picture = models.TextField(blank=True, null=True)
     national_id_pic = models.TextField(null=True, blank=True)
@@ -83,7 +83,7 @@ class Employee(models.Model):
 
 
 class AppraisalAreas(models.Model):
-    description = models.CharField(_("Descriptiom"), max_length=50)
+    description = models.CharField(_("Description"), max_length=50)
     scored = models.BooleanField(_("Scored"))
 
     class Meta:
