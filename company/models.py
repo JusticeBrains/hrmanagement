@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model  # get current active user
@@ -170,6 +171,57 @@ class DisciplinaryActions(models.Model):
 
     def __str__(self):
         return f"{self.description}"
+
+
+class PayrollStructure(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    no = models.PositiveIntegerField(_("No."))
+    year = models.PositiveIntegerField(_("Year"))
+    name = models.CharField(_("Name"), max_length=150)
+    start_date = models.DateField(_("Start Date"),)
+    end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
+    closed = models.BooleanField(_("Closed"))
+
+
+class SalaryGrade(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure")
+                                          , on_delete=models.CASCADE)
+    job_tiles = models.CharField(_("Job Titles"), max_length=150)
+    transport_rate = models.DecimalField(_("Transport Rate"), max_digits=5, decimal_places=2)
+
+    class Meta:
+        verbose_name = "Salary Grade"
+        verbose_name_plural = "Salary Grades"
+
+    def __str__(self) -> str:
+        return self.code
+
+class NoSeries(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    description = models.CharField(_("Description"), max_length=50)
+    default_nos = models.BooleanField(_("Default Nos."))
+    manual_nos = models.BooleanField(_("Manual Nos."))
+    date_order = models.BooleanField(_("Date Order"))
+
+    class Meta:
+        verbose_name = "No. Series"
+        verbose_name_plural = "No. Series"
+
+
+class JobTitles(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure"), on_delete=models.CASCADE)
+    salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Salary Grade"), on_delete=models.CASCADE)
+    accept_disability = models.BooleanField(_("Accept Disability"))
+    minimum_age = models.PositiveIntegerField(_("Minimum Age"))
+    minimum_years_of_experience = models.PositiveIntegerField(_("Minimum Years Of Experience"))
+    description = models.CharField(_("Description"), max_length=80)
+    level = models.CharField(_("Level"), max_length=50)
+
+    class Meta:
+        verbose_name = "Job Titles"
+        verbose_name_plural = "Job Titles"
 
 
 class Job(models.Model):
@@ -961,3 +1013,51 @@ class EndOfServiceEntry(CashService):
     @property
     def service_duration(self):
         return self.end_of_service_date - self.employment_date
+
+
+class DimensionValue(models.Model):
+    id = models.UUIDField(_("ID"),primary_key=True,default=uuid.uuid4, editable=False)
+    dimension_code = models.CharField(_("Dimension Code"), max_length=50)
+    code = models.CharField(_("Code"), max_length=50)
+    name = models.CharField(_("Name"), max_length=150)
+    dimension_value_type = models.CharField(_("Dimension Value Type"),choices=text_options.DimensionValueType.choices, max_length=50)
+    totaling = models.CharField(_("Totaling"), max_length=50)
+    blocked = models.BooleanField(_("Blocked"))
+    consolidation_code = models.CharField(_("Consolidation Code"), max_length=50)
+    indentation = models.PositiveIntegerField(_("Indentation"))
+    global_dimension_no = models.PositiveIntegerField(_("Global Dimension No"))
+    map_to_ic_dimension_code = models.CharField(_("Map To IC Dimension Code"), max_length=50)
+    map_to_ic_dimension_value_code = models.CharField(_("Map To IC Dimension Value Code"), max_length=50)
+    dimension_value_id = models.PositiveIntegerField(_("Dimension Value ID"))
+    last_modified_date_time = models.DateTimeField(_("Last Modified Date Time"), auto_now=False, auto_now_add=False)
+
+    class Meta:
+        verbose_name = "Dimension Value"
+        verbose_name_plural = "Dimension Values"
+    
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class FirstCategoryLevel(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    first_level = models.CharField(_("First Level"), max_length=50)
+
+    class Meta:
+        verbose_name = "First Category Level"
+        verbose_name_plural = "First Category Level"
+
+    def __str__(self) -> str:
+        return self.code
+
+class SecondCategoryLevel(models.Model):
+    code = models.CharField(_("Code"), max_length=50)
+    first_category_code = models.CharField(_("First"), max_length=50)
+    name = models.CharField(_("Name"), max_length=150)
+    level_no = models.PositiveIntegerField(_("Level No."))
+
+    def __str__(self) -> str:
+        return self.code
+
+

@@ -6,7 +6,7 @@ from options.text_options import (
     EMPLOYEESTATUS,
     MARITALSTATUS,
     APPRAISALGRADES,
-    MedicalType,
+    ReviewType,
     EmployeeType,
     MEDICALLIMITTYPE,
     OffenseType,
@@ -92,18 +92,21 @@ class AppraisalAreas(models.Model):
 
 
 class EmployeeAppraisal(models.Model):
-    emp_code = models.CharField(verbose_name=_("Employee Code"), max_length=50)
-    emp_name = models.ForeignKey(Employee, verbose_name=_("Employee Name"), on_delete=models.CASCADE,
-                                 related_name="emp_name")
-    paygroup_code = models.CharField(_("Pay Group Code"), max_length=50)
-    job_title = models.ForeignKey(Job, verbose_name=_("Job Title"), on_delete=models.CASCADE)
+    emp_code = models.ForeignKey(Employee, verbose_name=_("Employee Code"), on_delete=models.CASCADE,
+                                 related_name="emp_code")
+    emp_name = models.CharField(verbose_name=_("Employee Name"), max_length=50)
+    paygroup_code = models.ForeignKey("paygroup.PayGroup", verbose_name=_("Pay Groups"), on_delete=models.CASCADE, related_name="paygroup_code")
+    job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title"), on_delete=models.CASCADE)
+    job_title = models.CharField(_("Job Title"), max_length=150)
+    dimension_code_1 = models.ForeignKey("company.DimensionValue", verbose_name=_("Dimension 1 Code"), on_delete=models.CASCADE, related_name="dimension_code_1")
+    dimension_code_2 = models.ForeignKey("company.DimensionValue", verbose_name=_("Dimension 2 Code"), on_delete=models.CASCADE, related_name="dimension_code_2")
     appraisal_date = models.DateField(_("Appraisal Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     appraisal_venue = models.CharField(_("Appraisal Venue"), max_length=50, blank=True, null=True)
     appraiser = models.CharField(verbose_name="Appraiser", max_length=200, blank=True, null=True)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False, blank=True,
                                         null=True)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE, blank=True, null=True)
-    no_series = models.CharField(_("No. Series"), max_length=50, blank=True, null=True)
+    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"), blank=True, null=True)
 
     class Meta:
@@ -112,8 +115,7 @@ class EmployeeAppraisal(models.Model):
 
 
 class EmployeeAppraisalResponse(models.Model):
-    appraisal_no = models.ForeignKey("EmployeeAppraisal", verbose_name=_("Employee Appraisal No"),
-                                     on_delete=models.CASCADE, related_name="appraisalno")
+    appraisal_no = models.CharField(_("Appraisal No."), max_length=50)
     emp_code = models.CharField(verbose_name=_("Employee"), max_length=50)
     appraisal_code = models.CharField(verbose_name=_("Employee Appraisal Code"), max_length=50)
     appraisal_description = models.TextField(_("Appraisal Description"))
@@ -134,14 +136,19 @@ class EmployeeAppraisalResponse(models.Model):
 
 
 class EmployeePromotion(models.Model):
-    department_name = models.ForeignKey("company.Department", verbose_name=_("Department Name"),
+    no = models.CharField(_("No."), max_length=50)
+    department_code = models.ForeignKey("company.SecondCategoryLevel", verbose_name=_("Department Name"),
                                         on_delete=models.CASCADE)
+    department_name = models.CharField(_("Department Name"), max_length=150)
+    emp_code = models.CharField(_("Employee Code"), max_length=50)
     emp_name = models.ForeignKey("Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE)
     paygroup = models.ForeignKey("paygroup.PayGroup", verbose_name=_("Pay Group"), on_delete=models.CASCADE)
-    current_job_title = models.ForeignKey("company.Job", verbose_name=_("Current Job"), on_delete=models.CASCADE)
+    current_job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Current Job"), on_delete=models.CASCADE)
+    current_job_title = models.CharField(_("Current Job Title"), max_length=50)
+    new_job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("New Job Title Code"), on_delete=models.CASCADE, related_name="new_job_title_code")
     new_job_title = models.CharField(_("New Job Title"), max_length=50)
-    current_salary_grade = models.CharField(_("Current Salary Grade"), max_length=100)
-    new_salary_grade = models.CharField(_("New Salary Grade"), max_length=100)
+    current_salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Current Salary Grade"), on_delete=models.CASCADE, related_name="current_salary_grade")
+    new_salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("New Salary Grade"), on_delete=models.CASCADE, related_name="new_salary_grade")
     current_notch = models.PositiveIntegerField(_("Current Notch"))
     new_notch = models.PositiveIntegerField(_("New Notch"))
     current_basic_salary = models.DecimalField(_("Current Basic Salary"), max_digits=5, decimal_places=2)
@@ -149,7 +156,7 @@ class EmployeePromotion(models.Model):
     comment = models.CharField(_("Comment"), max_length=250)
     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
+    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
     effective_date = models.DateField(_("Effective Date"), auto_now=False, auto_now_add=False)
 
@@ -182,7 +189,7 @@ class EmployeeMedicals(models.Model):
     dependant_code = models.CharField(_("Dependant Code"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
+    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -237,10 +244,11 @@ class EmployeePolicy(LeaveRequest):
 
 class EmployeePayReview(models.Model):
     no = models.CharField(_("Code"), max_length=50)
-    emp_code = models.CharField(_("Employee Name"), max_length=150)
-    emp_name = models.ForeignKey("employee.Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE)
+    review_type = models.CharField(_("Review Type"),choices=ReviewType.choices, max_length=50)
+    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
+    emp_name = models.CharField(_("Employee Name"), max_length=150)
     job_title_code = models.CharField(_("Job Title Code"), max_length=150)
-    job_title = models.ForeignKey("company.Job", verbose_name=_("Job Title"), on_delete=models.CASCADE)
+    job_title = models.CharField(_("Job Title"), max_length=150)
     base_pay = models.DecimalField(_("BasePay"), max_digits=5, decimal_places=2)
     percentage_increase = models.DecimalField(_("Percentage Increase"), max_digits=5, decimal_places=2)
     start_date = models.DateField(_("Start Date"), auto_now=True, auto_now_add=False)
@@ -248,7 +256,7 @@ class EmployeePayReview(models.Model):
     effective_date = models.DateField(_("Effective Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
-    no_series = models.CharField(_("No. Series"), max_length=50)
+    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:

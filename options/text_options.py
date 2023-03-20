@@ -289,3 +289,21 @@ class PersonnelType(models.TextChoices):
 class EndOfServiceOptions(models.TextChoices):
     RETIREMENT_BENEFIT = "RETIREMENT BENEFIT", _("Retirement Benefit")
     LONG_SERVICE = "LONG SERVICE", _("Long Service")
+
+
+class TaxType(models.TextChoices):
+    ANNUAL = "ANNUAL", _("Annual")
+    MONTHLY = "MONTHLY", _("Monthly")
+
+
+class DimensionValueType(models.TextChoices):
+    STANDARD = "STANDARD", _("Standard")
+    HEADING = "HEADING", _("Heading")
+    TOTAL = "TOTAL", _("Total")
+    BEGIN_TOTAL = "BEGIN TOTAL", _("Begin Total")
+    END_TOTAL = "END TOTAL", _("End Total")
+
+
+class ReviewType(models.TextChoices):
+    ANNUAL_REVIEW = "ANNUAL REVIEW", _("Annual Review")
+    MERIT_INCREASE = "MERIT INCREASE", _("Merit Review") 
