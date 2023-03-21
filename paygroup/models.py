@@ -79,3 +79,6 @@ class TaxReliefs(models.Model):
 
 class Currency(models.Model):
     code = models.CharField(_("Code"), max_length=50)
+
+    def __str__(self) -> str:
+        return self.code

@@ -105,7 +105,7 @@ class EmployeeAppraisal(models.Model):
     appraiser = models.CharField(verbose_name="Appraiser", max_length=200, blank=True, null=True)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False, blank=True,
                                         null=True)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE, blank=True, null=True)
+    user_id = models.CharField(_("User ID"), max_length=50)
     no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"), blank=True, null=True)
 
@@ -155,7 +155,7 @@ class EmployeePromotion(models.Model):
     new_basic_salary = models.DecimalField(_("New Basic Salary"), max_digits=5, decimal_places=2)
     comment = models.CharField(_("Comment"), max_length=250)
     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
     effective_date = models.DateField(_("Effective Date"), auto_now=False, auto_now_add=False)
@@ -188,7 +188,7 @@ class EmployeeMedicals(models.Model):
     dependant_name = models.CharField(_("Department Name"), max_length=50)
     dependant_code = models.CharField(_("Dependant Code"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
@@ -218,7 +218,7 @@ class EmployeeDisciplinaryActions(models.Model):
     effective_date = models.DateField(_("Effective Date"), blank=True, null=True, auto_now=False, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), blank=True, null=True, auto_now=False,
                                         auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -254,7 +254,7 @@ class EmployeePayReview(models.Model):
     start_date = models.DateField(_("Start Date"), auto_now=True, auto_now_add=False)
     end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
     effective_date = models.DateField(_("Effective Date"), auto_now=True, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))

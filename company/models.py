@@ -135,8 +135,8 @@ class Property(models.Model):
 
 class PropertyAssignment(models.Model):
     no = models.CharField(_("No."), max_length=50)
-    emp_code = models.CharField(_("Employee Code"), max_length=200)
-    emp_name = models.ForeignKey("employee.Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE)
+    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
+    emp_name = models.CharField(_("Employee Name"), max_length=200)
     asset_code = models.ForeignKey("company.Property", verbose_name=_("Asset Code"), on_delete=models.CASCADE)
     asset_description = models.TextField(_("Asset Description"))
     assignment_date = models.DateField(_("Assignment Date"), auto_now=True, auto_now_add=False)
@@ -239,7 +239,7 @@ class Job(models.Model):
         verbose_name_plural = 'Jobs'
 
     def __str__(self):
-        return f"{self.job_code} {self.job_title}"
+        return f"{self.job_code}"
 
 
 class MinimumQualification(models.Model):
@@ -275,8 +275,8 @@ class QualificationMetricSQEF(models.Model):
 class JobOpening(models.Model):
     department_name = models.ForeignKey("Department", verbose_name=_("Department Name"), on_delete=models.CASCADE)
     position = models.CharField(_("Position"), max_length=50)
-    job_title_code = models.CharField(_("Job Title Code"), max_length=50)
-    job_title = models.ForeignKey("company.Job", verbose_name=_("Job Title"), on_delete=models.CASCADE)
+    job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title Code"), on_delete=models.CASCADE)
+    job_title = models.CharField(_("Job Title"), max_length=50)
     min_qualification = models.ForeignKey("company.MinimumQualification", verbose_name=_("Minimum Qualification"),
                                           on_delete=models.CASCADE)
     min_age = models.PositiveIntegerField(_("Minimum Age"))
@@ -323,7 +323,7 @@ class Application(models.Model):
 
 
 class ApplicationPool(Application):
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     posted = models.BooleanField(_("Posted"))
     archived = models.BooleanField(_("Archieved"))
@@ -530,7 +530,7 @@ class HRAlerts(models.Model):
     alert_date = models.DateField(_("Alert Date"), auto_now=True, auto_now_add=False)
     dismissed = models.BooleanField(_("Dismissed"))
     date_dismissed = models.DateField(_("Date Dismissed"), auto_now=True, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
 
 
 class Meta:
@@ -559,7 +559,7 @@ class WorkmenCompensation(models.Model):
     compensation_date = models.DateField(_("Compensation Date"), auto_now=True, auto_now_add=False)
     name_of_issuer = models.CharField(_("Name Of Issuer"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
@@ -602,7 +602,7 @@ class Expatriates(models.Model):
 
 
 class ExpatriateApplication(models.Model):
-    expatriate_no = models.ForeignKey("Expatriates", verbose_name=_("Expatriate No."), on_delete=models.CASCADE)
+    expatriate_no = models.CharField(_("Expatriate No."), max_length=50)
     application_no = models.PositiveIntegerField(_("Application No."))
     date_of_application = models.DateField(_("Date Of Application"), auto_now=True, auto_now_add=False)
     date_received = models.DateField(_("Date Received"), auto_now=True, auto_now_add=False)
@@ -624,10 +624,10 @@ class ExpatriateApplication(models.Model):
 
 
 class CompanyStaffBreakdown(models.Model):
-    company_code = models.ForeignKey("Company", verbose_name=_("Company Code"), on_delete=models.CASCADE)
-    field_code = models.ForeignKey("CompanyField", verbose_name=_("Field Code"), on_delete=models.CASCADE)
+    company_code = models.CharField(_("Company Code"), max_length=50)
+    field_code = models.CharField(_("Field Code"), max_length=50)
     employee_type = models.CharField(_("Employee Type"), choices=text_options.CompanyEmployeeType.choices,
-                                     max_length=50)
+                                     max_length=150)
     fieldname = models.CharField(_("Field Name"), max_length=50)
     management = models.PositiveIntegerField(_("Management"))
     senior_staff = models.PositiveIntegerField(_("Senior Staff"))
@@ -648,8 +648,8 @@ class CompanyStaffBreakdown(models.Model):
 
 class PassportIssues(models.Model):
     entry_no = models.PositiveIntegerField(_("Entry No."))
-    emp_code = models.CharField(_("Employee Code"), max_length=150)
-    emp_name = models.ForeignKey("employee.Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE)
+    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
+    emp_name = models.CharField(_("Employee Name"), max_length=150)
     passport_no = models.CharField(_("Passport No"), max_length=50)
     date_of_issue = models.DateField(_("Date Of Issue"), auto_now=True, auto_now_add=False)
     date_of_expiry = models.DateField(_("Date Of Expiry"), auto_now=True, auto_now_add=False)
@@ -659,7 +659,7 @@ class PassportIssues(models.Model):
     return_date = models.DateField(_("Return Date"), auto_now=True, auto_now_add=False)
     purpose_of_trip = models.CharField(_("Purpose Of Trip"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
+    user_id = models.CharField(_("User ID"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -677,8 +677,8 @@ class PassportIssues(models.Model):
 class PerformanceOverview(models.Model):
     type = models.CharField(_("Type"), choices=text_options.PerformanceOverviewType.choices, max_length=50)
     no = models.CharField(_("No."), max_length=50)
-    emp_code = models.CharField(_("Employee Name"), max_length=150)
-    emp_name = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
+    emp_code = models.CharField(_("Employee Name"), max_length=50)
+    emp_name = models.CharField(_("Employee Name"), max_length=150)
     supervisor_name = models.CharField(_("Supervisor Name"), max_length=150)
     next_supervisor_name = models.CharField(_("Next Supervisor"), max_length=150)
     entry_date = models.DateField(_("Entry Date"), auto_now=True, auto_now_add=False)
