@@ -20,7 +20,7 @@ router.register('jobopening', views.JobViewSet, basename='jobopening')
 router.register('applicationpool', views.ApplicationPoolViewSet, basename='applicationpool')
 router.register('shortlistedapplication', views.ShortListedApplicationViewSet, basename='shortlistedapplication')
 router.register('applicationreference', views.ApplicationReferencesViewSet, basename='applicarionreference')
-router.register('applicationqe', views.ApplicationQEViewSet, basename='applicationqe')
+router.register('application', views.ApplicationQEViewSet, basename='applicationqe')
 router.register('jobapplication', views.JobApplicationViewSet, basename='jobapplication')
 router.register('jobappplicationqualification', views.JobApplicationQualificationViewSet,
                 basename='jobappplicationqualification')
