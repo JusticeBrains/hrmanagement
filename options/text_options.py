@@ -213,7 +213,7 @@ class QualificationMetricOption(models.TextChoices):
 
 
 class WorkmenOption(models.TextChoices):
-    INCIDENT = "INCODENT", _("Incident")
+    INCIDENT = "INCIDENT", _("Incident")
     COMPENSATION_CLAIM = "COMPENSATION CLAIM", _("Compensation Claim")
 
 
