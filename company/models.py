@@ -12,7 +12,7 @@ User = get_user_model()
 
 class Company(models.Model):
     code = models.CharField(_("Code"), max_length=50)
-    comp_name = models.CharField(_("Company Name"), max_length=50)
+    comp_name = models.CharField(_("Company Name"), max_length=150)
     comp_type = models.OneToOneField("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE)
     address = models.CharField(_("Address"), max_length=50)
     address_2 = models.CharField(_("Address 2"), max_length=50)
