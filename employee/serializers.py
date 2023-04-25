@@ -3,6 +3,7 @@ from . import models as employee_model
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    fullname = serializers.SerializerMethodField()
     class Meta:
         model = employee_model.Employee
         fields = "__all__"
@@ -49,8 +50,9 @@ class EmployeePolicySerializer(serializers.ModelSerializer):
         model = employee_model.EmployeePolicy
         fields = "__all__"
 
-
 class EmployeePayReviewSerializer(serializers.ModelSerializer):
+    new_base_pay = serializers.SerializerMethodField()
     class Meta:
         model = employee_model.EmployeePayReview
-        fields = "__all__"
+        fields = ['no', 'review_type','emp_code', 'emp_name', 'job_title_code', 'job_title', 'base_pay', 'new_base_pay']
+    
