@@ -46,11 +46,13 @@ urlpatterns = [
     path('trainingapplication/', include('trainingapplication.urls')),
     path('paygroup/', include("paygroup.urls")),
     path('company/', include('company.urls')),
+
     path('api-auth/', include('rest_framework.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    # path('auth/', include('dj_rest_auth.urls')),
+    path('auth/', include('djoser.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
