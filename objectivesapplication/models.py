@@ -36,7 +36,6 @@ class CooperateObjectives(models.Model):
     end_date = models.DateField(_("End Date"), auto_now=True, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -140,7 +139,6 @@ class IndividualObjectiveBase(models.Model):
     next_supervisor_signed_date = models.DateField(_("Next Supervisor Signed Date"), auto_now=True, auto_now_add=False)
     transation_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.CharField(_("No. Series"), max_length=50)
 
     class Meta:
         abstract = True

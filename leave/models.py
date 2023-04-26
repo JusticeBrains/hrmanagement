@@ -35,7 +35,6 @@ class Assignment(models.Model):
     automatically_roll_over = models.BooleanField(_("Automatically Roll Over"))
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -64,7 +63,6 @@ class RequestTransaction(models.Model):
     deferred_reason = models.TextField(_("Deferred Reason"))
     transaction_date = models.DateField(_("Transaction"), auto_now=False, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(verbose_name="No. Series", max_length=100)
     relieving_officer_no = models.CharField(_("Relieving Officer No."), max_length=50)
     relieving_officer_name = models.CharField(_("Relieving Officer's Name"), max_length=150)
     posted = models.BooleanField(_("Posted"))
@@ -110,7 +108,6 @@ class LeavePlan(models.Model):
     department_code = models.ForeignKey("company.Department", verbose_name=_("Department Code"),
                                         on_delete=models.CASCADE)
     department_name = models.CharField(_("Department Name"), max_length=50)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
