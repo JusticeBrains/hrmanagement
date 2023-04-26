@@ -141,7 +141,7 @@ class EmployeePromotion(models.Model):
     emp_name = models.ForeignKey("Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE)
     paygroup = models.ForeignKey("paygroup.PayGroup", verbose_name=_("Pay Group"), on_delete=models.CASCADE)
     current_job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Current Job"), on_delete=models.CASCADE)
-    current_job_title = models.CharField(_("Current Job Title"), max_length=50)
+    current_job_title = models.CharField(_("Current Job Title"), max_length=50, blank=True, null=True)
     new_job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("New Job Title Code"), on_delete=models.CASCADE, related_name="new_job_title_code")
     new_job_title = models.CharField(_("New Job Title"), max_length=50)
     current_salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Current Salary Grade"), on_delete=models.CASCADE, related_name="current_salary_grade")
