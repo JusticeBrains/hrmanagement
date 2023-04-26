@@ -31,7 +31,6 @@ class JobAnalysis(models.Model):
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     userId = models.ForeignKey(User, verbose_name=_(""), on_delete=models.CASCADE)
-    no_series_code = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:

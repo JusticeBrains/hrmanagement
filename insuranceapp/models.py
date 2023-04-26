@@ -18,7 +18,6 @@ class InsurancePremiumPayments(models.Model):
     remarks = models.CharField(_("Remarks"), max_length=100)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -53,7 +52,6 @@ class GroupTravel(models.Model):
     amount = models.DecimalField(_("Amount"), max_digits=5, decimal_places=2)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
