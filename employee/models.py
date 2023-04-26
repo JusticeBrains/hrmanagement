@@ -239,7 +239,7 @@ class EmployeePolicy(LeaveRequest):
 
 class EmployeePayReview(models.Model):
     no = models.CharField(_("Code"), max_length=50)
-    review_type = models.CharField(_("Review Type"),choices=ReviewType.choices, max_length=50)
+    review_type = models.CharField(_("Review Type"),choices=ReviewType.choices,default=ReviewType.ANNUAL_REVIEW ,max_length=50)
     emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
     emp_name = models.CharField(_("Employee Name"), max_length=150)
     job_title_code = models.CharField(_("Job Title Code"), max_length=150)
