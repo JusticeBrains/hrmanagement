@@ -96,7 +96,7 @@ class EmployeeAppraisal(models.Model):
                                  related_name="emp_code")
     emp_name = models.CharField(verbose_name=_("Employee Name"), max_length=50)
     paygroup_code = models.ForeignKey("paygroup.PayGroup", verbose_name=_("Pay Groups"), on_delete=models.CASCADE, related_name="paygroup_code")
-    job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title"), on_delete=models.CASCADE)
+    job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title"), on_delete=models.CASCADE, blank=True, null=True)
     job_title = models.CharField(_("Job Title"), max_length=150)
     appraisal_date = models.DateField(_("Appraisal Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     appraisal_venue = models.CharField(_("Appraisal Venue"), max_length=50, blank=True, null=True)
