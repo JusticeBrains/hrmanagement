@@ -12,7 +12,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'username')
 
         error_messages = {
-            "username": {"unique": _("Username already takne")},
+            "username": {"unique": _("Username already taken")},
             "email": {"unique": _("This email belongs to an existing user")}
         }
 
