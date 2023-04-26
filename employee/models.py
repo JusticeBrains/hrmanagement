@@ -98,15 +98,12 @@ class EmployeeAppraisal(models.Model):
     paygroup_code = models.ForeignKey("paygroup.PayGroup", verbose_name=_("Pay Groups"), on_delete=models.CASCADE, related_name="paygroup_code")
     job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title"), on_delete=models.CASCADE)
     job_title = models.CharField(_("Job Title"), max_length=150)
-    dimension_code_1 = models.ForeignKey("company.DimensionValue", verbose_name=_("Dimension 1 Code"), on_delete=models.CASCADE, related_name="dimension_code_1")
-    dimension_code_2 = models.ForeignKey("company.DimensionValue", verbose_name=_("Dimension 2 Code"), on_delete=models.CASCADE, related_name="dimension_code_2")
     appraisal_date = models.DateField(_("Appraisal Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     appraisal_venue = models.CharField(_("Appraisal Venue"), max_length=50, blank=True, null=True)
     appraiser = models.CharField(verbose_name="Appraiser", max_length=200, blank=True, null=True)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False, blank=True,
                                         null=True)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"), blank=True, null=True)
 
     class Meta:
@@ -156,7 +153,6 @@ class EmployeePromotion(models.Model):
     comment = models.CharField(_("Comment"), max_length=250)
     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
     effective_date = models.DateField(_("Effective Date"), auto_now=False, auto_now_add=False)
 
@@ -189,7 +185,6 @@ class EmployeeMedicals(models.Model):
     dependant_code = models.CharField(_("Dependant Code"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -256,7 +251,6 @@ class EmployeePayReview(models.Model):
     effective_date = models.DateField(_("Effective Date"), auto_now=True, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
-    no_series = models.ForeignKey("company.NoSeries", verbose_name=_("No Series"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:

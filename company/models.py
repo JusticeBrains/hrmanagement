@@ -28,7 +28,6 @@ class Company(models.Model):
     job_decription = models.BooleanField(_("Job Descriptions"))
     job_desc_submission_date = models.DateField(_("Job Desc. Submission Date"), auto_now=False, auto_now_add=False)
     comments = models.TextField(_("Comments"))
-    number_series = models.CharField(_("No. Series"), max_length=50)
 
     class Meta:
         verbose_name = 'Company'
@@ -144,7 +143,7 @@ class PropertyAssignment(models.Model):
     comment = models.CharField(_("Comment"), max_length=250)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
+
     posted = models.BooleanField(_("Posted"))
     retrieved = models.BooleanField(_("Retrieved"))
     retrieval_date = models.DateField(_("Retrieval Date"), auto_now=True, auto_now_add=False)
@@ -196,17 +195,6 @@ class SalaryGrade(models.Model):
 
     def __str__(self) -> str:
         return self.code
-
-class NoSeries(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    description = models.CharField(_("Description"), max_length=50)
-    default_nos = models.BooleanField(_("Default Nos."))
-    manual_nos = models.BooleanField(_("Manual Nos."))
-    date_order = models.BooleanField(_("Date Order"))
-
-    class Meta:
-        verbose_name = "No. Series"
-        verbose_name_plural = "No. Series"
 
 
 class JobTitles(models.Model):
@@ -288,7 +276,6 @@ class JobOpening(models.Model):
     requisition_date = models.DateField(_("Requisition Date"), auto_now=False, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     description = models.CharField(_("Job Description"), max_length=250)
     justification = models.CharField(_("Justification"), max_length=250)
 
@@ -560,7 +547,6 @@ class WorkmenCompensation(models.Model):
     name_of_issuer = models.CharField(_("Name Of Issuer"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -738,7 +724,6 @@ class GrievanceHeader(models.Model):
     next_response_posted = models.BooleanField(_("Next Response Posted"))
     transation_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.CharField(_("User ID"), max_length=50)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -792,7 +777,6 @@ class GrievanceEntry(models.Model):
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True
                                         , auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -832,7 +816,6 @@ class Travels(models.Model):
     currency_code = models.CharField(_("Curremt Code"), max_length=50)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
     total_expense = models.DecimalField(_("Total Expense"), max_digits=5, decimal_places=2)
 
@@ -878,7 +861,6 @@ class CourierServiceRequisition(models.Model):
     date_of_delivery_to_courier = models.DateField(_("Date Of Delivery To Courier"), auto_now=True, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     courier_no = models.PositiveIntegerField(_("Courier No."))
     courier_service_operator = models.CharField(_("Courier Service Operator"), max_length=50)
     document_serial_no = models.CharField(_("Document Serial No"), max_length=50)
@@ -912,7 +894,6 @@ class HospitalityServices(models.Model):
     comments = models.TextField(_("Comments"))
     user_id = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
-    no_series = models.CharField(_("No. Series"), max_length=50)
 
     class Meta:
         verbose_name = "Hospitality Services"
@@ -929,7 +910,6 @@ class CollectiveBargaining(models.Model):
     expiry_date = models.DateField(_("Expiry Date"), auto_now=True, auto_now_add=False)
     transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    no_series = models.CharField(_("No. Series"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -1015,29 +995,6 @@ class EndOfServiceEntry(CashService):
         return self.end_of_service_date - self.employment_date
 
 
-class DimensionValue(models.Model):
-    id = models.UUIDField(_("ID"),primary_key=True,default=uuid.uuid4, editable=False)
-    dimension_code = models.CharField(_("Dimension Code"), max_length=50)
-    code = models.CharField(_("Code"), max_length=50)
-    name = models.CharField(_("Name"), max_length=150)
-    dimension_value_type = models.CharField(_("Dimension Value Type"),choices=text_options.DimensionValueType.choices, max_length=50)
-    totaling = models.CharField(_("Totaling"), max_length=50)
-    blocked = models.BooleanField(_("Blocked"))
-    consolidation_code = models.CharField(_("Consolidation Code"), max_length=50)
-    indentation = models.PositiveIntegerField(_("Indentation"))
-    global_dimension_no = models.PositiveIntegerField(_("Global Dimension No"))
-    map_to_ic_dimension_code = models.CharField(_("Map To IC Dimension Code"), max_length=50)
-    map_to_ic_dimension_value_code = models.CharField(_("Map To IC Dimension Value Code"), max_length=50)
-    dimension_value_id = models.PositiveIntegerField(_("Dimension Value ID"))
-    last_modified_date_time = models.DateTimeField(_("Last Modified Date Time"), auto_now=False, auto_now_add=False)
-
-    class Meta:
-        verbose_name = "Dimension Value"
-        verbose_name_plural = "Dimension Values"
-    
-
-    def __str__(self) -> str:
-        return self.name
 
 
 class FirstCategoryLevel(models.Model):
