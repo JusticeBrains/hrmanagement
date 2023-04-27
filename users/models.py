@@ -8,28 +8,16 @@ import uuid
 from .managers import CustomUserManager
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractUser):
     id = models.UUIDField(_("Id"), primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(_("Fullname"), max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(_("Email"), max_length=254, unique=True)
-    profile_pic = models.ImageField(_("Profile Pic"),
-                                    upload_to='users/profile_pic',
-                                    height_field=None, width_field=None,
-                                    max_length=None, null=True, blank=True)
     assigned_Area = models.CharField(_("Assigned Area"), max_length=50, choices=ASSIGNEDAREA.choices)
+    email = models.EmailField(_("Email"), max_length=254, unique=False)
     received_notifications = models.BooleanField(_("Received Notifications"), blank=True, null=True)
-    is_active = models.BooleanField(_("Is Active"), default=True)
-    is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
     first_name = models.CharField(_("First Name"), max_length=50, blank=True, null=True)
     last_name = models.CharField(_("Last Name"), max_length=50, blank=True, null=True)
     is_super = models.PositiveIntegerField(_("Is Super"), default=0)
     is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email',]
-
-    objects = CustomUserManager()
 
     class Meta:
         verbose_name = "User"
