@@ -51,10 +51,10 @@ urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('auth/', include('dj_rest_auth.urls')),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-    path('auth/',include('djoser.urls.authtoken')),
+    path('auth/', include('dj_rest_auth.urls')),
+    # path('api-auth/', include('djoser.urls')),
+    # path('api-auth/', include('djoser.urls.jwt')),
+    # path('user-auth/',include('djoser.urls.authtoken')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
