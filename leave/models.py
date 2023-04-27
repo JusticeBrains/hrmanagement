@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+import uuid
+from datetime import datetime, timedelta
 
 from options import text_options
 
@@ -104,7 +106,6 @@ class LeavePlan(models.Model):
     leave_description = models.CharField(_("Leave Description"), max_length=50)
     no_of_planned_days = models.PositiveIntegerField(_("No. Of Planned Days"))
     start_date = models.DateField(_("Start Date"), auto_now=True, auto_now_add=False)
-    end_date = models.DateField(_("End Date"), auto_now=True, auto_now_add=False)
     department_code = models.ForeignKey("company.Department", verbose_name=_("Department Code"),
                                         on_delete=models.CASCADE)
     department_name = models.CharField(_("Department Name"), max_length=50)
@@ -112,9 +113,63 @@ class LeavePlan(models.Model):
     user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
     posted = models.BooleanField(_("Posted"))
 
+
+    @property
+    def end_date(self):
+        current_date = datetime.now().date()
+        start_date = max(self.start_date, current_date)
+        days_added = 0
+
+        while days_added < self.no_of_planned_days:
+            start_date += timedelta(days=1)
+            if start_date.weekday >= 5:
+                continue
+            days_added += 1
+        return start_date
+
     class Meta:
         verbose_name = "Leave Plan"
         verbose_name_plural = "Leave Plans"
 
     def __str__(self):
-        return self.no_of_planned_days
+        return f"{self.no_of_planned_days} - {self.end_date}"
+
+
+class LeaveType(models.Model):
+    code = models.UUIDField(_("Code"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=50)
+
+    class Meta:
+        verbose_name = "Leave Type"
+        verbose_name_plural = "Leave Types"
+
+    def __str__(self):
+        return f"{self.code} - {self.name}"
+
+
+class LeaveLimits(models.Model):
+    code = models.UUIDField(_("Code"), primary_key=True, editable=False, default=uuid.uuid4)
+    staff_category = models.CharField(_("Staff Category"), max_length=50)
+    leave_type = models.ForeignKey("leave.LeaveType", verbose_name=_("Leave Type"), on_delete=models.CASCADE)
+    no_of_days_allowed = models.PositiveIntegerField(_("No. Of Days Allowed"))
+
+    class Meta:
+        verbose_name = "Leave Limits"
+        verbose_name_plural = "Leave Limits"
+
+    def __str__(self):
+        return f"{self.leave_type} - {self.no_of_days_allowed}"
+
+
+class LeaveLedger(models.Model):
+    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE)
+    leave_type = models.ForeignKey("leave.LeaveType", verbose_name=_("Leave Type"), on_delete=models.CASCADE)
+    no_of_days_taken = models.PositiveIntegerField(_("No. Of Days Taken"))
+    limit = models.PositiveIntegerField(_("Leave Limit"))
+
+    class Meta:
+        verbose_name = "Leave Ledger"
+        verbose_name_plural = "Leave Ledgers"
+    
+    def __str__(self):
+        return f"{self.employee} - {self.leave_type}"
