@@ -2,9 +2,9 @@ from django_property_filter import PropertyDateFilter, PropertyFilterSet
 from rest_framework import viewsets
 from . import models as leavemodel
 
-from .serializers import (LeavePlanSerializer,
+from .serializers import (LeaveLedgerSerializer, LeaveLimitsSerializer, LeavePlanSerializer,
                           LeaveRequestSerializer,
-                          LeaveTransactionSerializer,
+                          LeaveTransactionSerializer, LeaveTypeSerializer,
                           PolicySerializer,
                           AssignmentSerializer
                           )
@@ -43,3 +43,18 @@ class PolicyViewSet(viewsets.ModelViewSet):
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.Assignment.objects.all()
     serializer_class = AssignmentSerializer
+
+
+class LeaveLimitsViewSet(viewsets.ModelViewSet):
+    queryset = leavemodel.LeaveLimits.objects.all()
+    serializer_class = LeaveLimitsSerializer
+
+
+class LeaveTypeViewSet(viewsets.ModelViewSet):
+    queryset = leavemodel.LeaveType.objects.all()
+    serializer_class = LeaveTypeSerializer
+
+
+class LeaveLedgerViewSet(viewsets.ModelViewSet):
+    queryset = leavemodel.LeaveLedger.objects.all()
+    serializer_class = LeaveLedgerSerializer
