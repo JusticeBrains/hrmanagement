@@ -2,6 +2,9 @@ from rest_framework import serializers
 from django_property_filter import PropertyDateFilter
 
 from .models import (
+    LeaveLedger,
+    LeaveLimits,
+    LeaveType,
     Policy,
     Assignment,
     LeaveRequest,
@@ -38,4 +41,22 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     class Meta:
         model = LeavePlan
+        fields = "__all__"
+
+
+class LeaveLimitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveLimits
+        fields = "__all__"
+
+
+class LeaveTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveType
+        fields = "__all__"
+
+
+class LeaveLedgerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveLedger
         fields = "__all__"
