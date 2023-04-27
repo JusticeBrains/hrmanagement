@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django_property_filter import PropertyDateFilter
 
 from .models import (
     Policy,
@@ -34,6 +35,7 @@ class LeaveTransactionSerializer(serializers.ModelSerializer):
 
 
 class LeavePlanSerializer(serializers.ModelSerializer):
+    end_date = serializers.SerializerMethodField()
     class Meta:
         model = LeavePlan
         fields = "__all__"
