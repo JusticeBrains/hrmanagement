@@ -10,7 +10,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(_("Id"), primary_key=True, default=uuid.uuid4, editable=False)
-    assigned_Area = models.CharField(_("Assigned Area"), max_length=50, choices=ASSIGNEDAREA.choices)
+    assigned_Area = models.CharField(_("Assigned Area"), max_length=50, choices=ASSIGNEDAREA.choices, null=True, blank=True)
     email = models.EmailField(_("Email"), max_length=254, unique=False)
     received_notifications = models.BooleanField(_("Received Notifications"), blank=True, null=True)
     first_name = models.CharField(_("First Name"), max_length=50, blank=True, null=True)
