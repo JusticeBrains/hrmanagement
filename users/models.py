@@ -17,7 +17,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_("Last Name"), max_length=50, blank=True, null=True)
     is_super = models.PositiveIntegerField(_("Is Super"), default=0)
     is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
-    is_active = models.PositiveIntegerField(_("Is Active"), null=True, blank=True)
+    is_active = models.PositiveIntegerField(_("Is Active"), null=True, blank=True, default=0)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
     is_verified = models.CharField(_("Is Verified"), max_length=50, blank=True, null=True, default=0)
