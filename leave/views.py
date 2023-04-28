@@ -22,7 +22,7 @@ class LeavePlanFilter(PropertyFilterSet):
 class LeavePlanViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeavePlan.objects.all()
     serializer_class = LeavePlanSerializer
-    filterset_class = LeavePlanFilter
+    # filterset_class = LeavePlanFilter
 
 
 class LeaveRequestViewSet(viewsets.ModelViewSet):
