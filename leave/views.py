@@ -17,7 +17,7 @@ class LeavePlanFilter(PropertyFilterSet):
         property_fields = [
             ('end_date',),
         ]
-        fields = "__all__"
+        fields = ['end_date',]
 
 class LeavePlanViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeavePlan.objects.all()
