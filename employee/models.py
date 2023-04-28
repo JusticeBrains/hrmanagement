@@ -59,7 +59,6 @@ class Employee(models.Model):
     inactive_date = models.CharField(_("Inactive Date"), max_length=50, blank=True, null=True)
     cause_of_inactivity_code = models.CharField(_("Cause of Inactive Code"), max_length=50, blank=True, null=True)
     termination_date = models.CharField(_("Termination Date"), max_length=50, blank=True, null=True)
-    # reason_for_termination__code = models.CharField(_("Termination Reason Code"), max_length=50, blank=True, null=True)
     employement_contract_code = models.CharField(_("Employement Contract Code"), max_length=50, blank=True, null=True)
     statistics_group_code = models.CharField(_("Statistics Group Code"), max_length=50, null=True, blank=True)
     resource_no = models.CharField(_("Resource No"), max_length=50, blank=True, null=True)
@@ -88,6 +87,7 @@ class Employee(models.Model):
     swift_code = models.CharField(_("Swift Code"), max_length=50, blank=True, null=True)
     phone_no = models.CharField(_("Phone Number"), max_length=50, blank=True, null=True)
     nationality = models.CharField(_("Nationality"), max_length=50, blank=True, null=True)
+    grounds_for_term = models.CharField(_("Grounds For Termination"), max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee"
