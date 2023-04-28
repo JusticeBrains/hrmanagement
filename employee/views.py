@@ -1,13 +1,13 @@
 from django.shortcuts import render
 
-from django_property_filter import PropertyFilterSet, PropertyNumberFilter, PropertyCharFilter
+from django_property_filter import PropertyFilterSet, PropertyNumberFilter,  PropertyAllValuesFilter
 from rest_framework import viewsets
 from . import models as employee_model
 from . import serializers
 
 
 class EmployeeFilterSet(PropertyFilterSet):
-    fullname = PropertyCharFilter(field_name='fullname')
+    fullname = PropertyAllValuesFilter(field_name='fullname')
     
     class Meta:
         model = employee_model.Employee
@@ -15,6 +15,7 @@ class EmployeeFilterSet(PropertyFilterSet):
             ('fullname',),
         ]
         fields = "__all__"
+
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Employee.objects.all()

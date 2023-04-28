@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from employee import models as emodels
+
+admin.site.register(emodels.Employee)

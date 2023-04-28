@@ -8,6 +8,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = employee_model.Employee
         fields = "__all__"
 
+    def get_fullname(self, obj):
+        if obj.middle_name:
+            return f"{obj.last_name}, {obj.first_name} {obj.middle_name}"
+        return f"{obj.last_name}, {obj.first_name}"
+
 
 class AppraisalAreaSerializer(serializers.ModelSerializer):
     class Meta:
