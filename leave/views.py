@@ -17,12 +17,12 @@ class LeavePlanFilter(PropertyFilterSet):
         property_fields = [
             ('end_date',),
         ]
-        fields = ['end_date',]
+        fields = ['start_date', 'no_of_planned_days', 'end_date',]
 
 class LeavePlanViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeavePlan.objects.all()
     serializer_class = LeavePlanSerializer
-    # filterset_class = LeavePlanFilter
+    filterset_fields = ['start_date', 'no_of_planned_days',]
 
 
 class LeaveRequestViewSet(viewsets.ModelViewSet):
