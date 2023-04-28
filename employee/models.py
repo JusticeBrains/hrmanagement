@@ -24,51 +24,24 @@ User = get_user_model()
 
 class Employee(models.Model):
     code = models.CharField(max_length=20, unique=True)
-    gender = models.CharField(max_length=10, choices=GENDER.choices, default=GENDER.Male, null=True, blank=True)
     first_name = models.CharField(max_length=80)
     middle_name = models.CharField(max_length=80, blank=True, null=True)
     last_name = models.CharField(max_length=80)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    bank = models.CharField(max_length=100, blank=True, null=True)
-    bank_branch = models.CharField(max_length=150, null=True, blank=True)
-    account_number = models.CharField(max_length=100, null=True, blank=True)
     job_title = models.CharField(max_length=150, blank=True, null=True)
-    employee_category = models.CharField(max_length=120, blank=True, null=True)
-    ssnit_number = models.CharField(max_length=13)
-    national_id = models.CharField(max_length=40)
-    date_of_birth = models.DateField(null=True, blank=True)
-    employement_date = models.DateField(null=True, blank=True)
     status = models.CharField(_("Status"), max_length=50, choices=EMPLOYEESTATUS.choices, default=EMPLOYEESTATUS.ACTIVE)
-    nationality = models.CharField(_("Nationality"), max_length=50)
-    tin = models.CharField(max_length=40, blank=True, null=True)
-    hometown = models.CharField(_("HomeTown"), max_length=50, blank=True, null=True)
-    region_name = models.CharField(_("Region Name"), max_length=50, blank=True, null=True)
-    username = models.CharField(max_length=50, null=True, blank=True)
-    emergency_no = models.CharField(_("Emergency No"), max_length=50, blank=True, null=True)
-    marital_status = models.CharField(_("Marital Status"), max_length=50, choices=MARITALSTATUS.choices,
-                                      default=MARITALSTATUS.NONE)
-    email = models.EmailField(null=True, blank=True)
+    initials = models.CharField(_("Initials"),max_length=40, blank=True, null=True)
+    country_region_code = models.CharField(_("Country Region Code"), max_length=50, blank=True, null=True)
+    phone_no = models.CharField(_("Phone Number"), max_length=50, blank=True, null=True)
+    extension = models.CharField(_("Extension"), max_length=50, blank=True, null=True)
     mobile_no = models.CharField(max_length=20, null=True, blank=True)
-    password = models.CharField(max_length=200, null=True, blank=True)
-    address = models.CharField(max_length=200, null=True, blank=True)
-    address1 = models.CharField(max_length=200, blank=True, null=True)
-    is_active = models.IntegerField(default=1)
-    is_verify = models.IntegerField(default=0)
-    token = models.CharField(max_length=200, null=True, blank=True)
-    password_reset_code = models.CharField(max_length=200, null=True, blank=True)
-    reason = models.CharField(max_length=200, blank=True, null=True)
-    last_ip = models.CharField(max_length=30, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(blank=True, null=True)
-    emp_picture = models.TextField(blank=True, null=True)
-    national_id_pic = models.TextField(null=True, blank=True)
-    gh_post_gps = models.CharField(max_length=40, blank=True, null=True)
+    nationality = models.CharField(_("Nationality"), max_length=50, blank=True, null=True)
     company_email = models.EmailField(_("Company Email"), max_length=254, blank=True, null=True)
-    cause_of_absence_filter = models.CharField(_("Cause Of Absence Filter"), max_length=50, blank=True, null=True)
-    total_absence_base = models.CharField(_("Total Absence (Base)"), max_length=50, blank=True, null=True)
-    grounds_for_termination_code = models.CharField(_("Grounds for Termination Code"), max_length=50, blank=True,
-                                                    null=True)
-    termination_date = models.DateField(_("Termination Date"), auto_now=False, auto_now_add=False)
+    salary_grade = models.CharField(_("Salary Grade"), max_length=50, blank=True, null=True)
+    notch = models.CharField(_("Notch"), max_length=50, blank=True, null=True)
+    privacy_blocked = models.CharField(_("Privacy Blocked"), max_length=50, blank=True, null=True)
+    search_name = models.CharField(_("Search Name"), max_length=50, blank=True, null=True)
+    pay_group_code = models.CharField(_("Pay Group Code"), max_length=50, blank=True, null=True)
+    comment = models.CharField(_("Comment"), max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee"
@@ -79,6 +52,8 @@ class Employee(models.Model):
 
     @property
     def fullname(self):
+        if self.middle_name:
+            return f"{self.last_name}, {self.first_name} {self.middle_name}"
         return f"{self.last_name}, {self.first_name}"
 
 
