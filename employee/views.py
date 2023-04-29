@@ -14,13 +14,13 @@ class EmployeeFilterSet(PropertyFilterSet):
         property_fields = [
             ('fullname',),
         ]
-        fields = ['code', 'first_name', 'last_name', 'pay_group_code', 'fullname']
+        fields = "__all__"
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
-    filterset_fields = ['code', 'first_name', 'last_name', 'pay_group_code']
+    filterset_class = EmployeeFilterSet
 
 
 class AppraisalAreaViewSet(viewsets.ModelViewSet):
