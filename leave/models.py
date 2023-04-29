@@ -30,13 +30,17 @@ class LeaveRequest(models.Model):
     hr_status = models.CharField(_("HR Status"), max_length=50, null=True,blank=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True,blank=True)
     hr_remarks_date = models.DateField(_("HR Remarks Date"), auto_now=True)
+    emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
+    dep_code = models.CharField(_("Department Code"), max_length=50, null=True, blank=True)
+    dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
+    supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
 
     @property
     def end_date(self):
         current_date = datetime.now().date()
         start_date = max(self.start_date, current_date)
         days_added = 0
-
+        
         while days_added < self.no_of_days_requested:
             start_date += timedelta(days=1)
             if start_date.weekday() >= 5:
