@@ -21,6 +21,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
     is_verified = models.CharField(_("Is Verified"), max_length=50, blank=True, null=True, default=0)
+    emp_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email',]
