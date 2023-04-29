@@ -88,6 +88,7 @@ class Employee(models.Model):
     phone_no = models.CharField(_("Phone Number"), max_length=50, blank=True, null=True)
     nationality = models.CharField(_("Nationality"), max_length=50, blank=True, null=True)
     grounds_for_term = models.CharField(_("Grounds For Termination"), max_length=50, blank=True, null=True)
+    employee_level = models.CharField(_("Employee Level"), max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee"
