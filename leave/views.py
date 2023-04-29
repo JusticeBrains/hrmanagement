@@ -21,8 +21,8 @@ class LeavePlanFilter(PropertyFilterSet):
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
-    # filterset_fields = ['start_date', 'no_of_days_requested',]
-    filterset_class = LeavePlanFilter
+    filterset_fields = ['start_date', 'no_of_days_requested',]
+    # filterset_class = LeavePlanFilter
     
 
 
