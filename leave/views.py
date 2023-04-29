@@ -2,47 +2,28 @@ from django_property_filter import PropertyDateFilter, PropertyFilterSet
 from rest_framework import viewsets
 from . import models as leavemodel
 
-from .serializers import (LeaveLedgerSerializer, LeaveLimitsSerializer, LeavePlanSerializer,
+from .serializers import ( LeaveLimitsSerializer, 
                           LeaveRequestSerializer,
-                          LeaveTransactionSerializer, LeaveTypeSerializer,
-                          PolicySerializer,
-                          AssignmentSerializer
+                          LeaveTypeSerializer,
                           )
 
 class LeavePlanFilter(PropertyFilterSet):
     end_date = PropertyDateFilter(field_name='end_date')
 
     class Meta:
-        model = leavemodel.LeavePlan
+        model = leavemodel.LeaveRequest
         property_fields = [
             ('end_date',),
         ]
-        fields = ['start_date', 'no_of_planned_days', 'end_date',]
-
-class LeavePlanViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.LeavePlan.objects.all()
-    serializer_class = LeavePlanSerializer
-    filterset_fields = ['start_date', 'no_of_planned_days',]
+        fields = "__all__"
 
 
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
-
-
-class LeaveTransactionViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.LeaveTransaction.objects.all()
-    serializer_class = LeaveTransactionSerializer
-
-
-class PolicyViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.Policy.objects.all()
-    serializer_class = PolicySerializer
-
-
-class AssignmentViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.Assignment.objects.all()
-    serializer_class = AssignmentSerializer
+    # filterset_fields = ['start_date', 'no_of_days_requested',]
+    filterset_class = LeavePlanFilter
+    
 
 
 class LeaveLimitsViewSet(viewsets.ModelViewSet):
@@ -55,6 +36,3 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
     serializer_class = LeaveTypeSerializer
 
 
-class LeaveLedgerViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.LeaveLedger.objects.all()
-    serializer_class = LeaveLedgerSerializer

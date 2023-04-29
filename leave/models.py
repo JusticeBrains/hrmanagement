@@ -5,114 +5,31 @@ import uuid
 from datetime import datetime, timedelta
 
 from options import text_options
+from django.utils import timezone
 
 User = get_user_model()
 
 
-class Policy(models.Model):
-    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
-    description = models.CharField(_("Description"), max_length=100, blank=True, null=True)
-    job_level_code = models.CharField(_("Job Level Code"), max_length=50, blank=True, null=True)
-    job_title = models.ForeignKey("company.Job", verbose_name=_("Job Title"), on_delete=models.CASCADE, blank=True, null=True)
-    no_of_days = models.PositiveIntegerField(_("No. Of Days"))
-    accrued = models.BooleanField(_("Accrued"))
-    automatically_roll_over = models.BooleanField(_("Automatically"))
-    blocked = models.BooleanField(_("Blocked"))
 
-    class Meta:
-        verbose_name = "Policy"
-        verbose_name_plural = 'Policies'
-
-    def __str__(self):
-        return f"{self.description}, {self.code}"
-
-
-class Assignment(models.Model):
-    input_option = models.CharField(_("Input Option"), max_length=50, blank=True, null=True)
-    input_code = models.CharField(_("Input Code"), max_length=50, blank=True, null=True)
-    leave_code = models.CharField(_("Leave Code"), max_length=50, blank=True, null=True)
-    leave_description = models.ForeignKey("Policy", verbose_name=_("Leave Description"), on_delete=models.CASCADE, blank=True, null=True)
-    no_of_days = models.PositiveIntegerField(_("No. Of Days"))
-    accrued = models.BooleanField(_("Accrued"))
-    automatically_roll_over = models.BooleanField(_("Automatically Roll Over"), blank=True, null=True)
-    transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE, blank=True, null=True)
-    posted = models.BooleanField(_("Posted"), blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Assignment"
-        verbose_name_plural = "Assignments"
-
-    def __str__(self):
-        return f"{self.input_code}, {self.leave_description}"
-
-
-class RequestTransaction(models.Model):
-    no = models.CharField(_("No."), max_length=50)
-    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE, blank=True, null=True)
-    emp_name = models.CharField(_("Employee Name"), max_length=50, blank=True, null=True)
-    contact_address = models.CharField(_("Contact Text"), max_length=50, blank=True, null=True)
-    phone_number = models.CharField(_("Phone No."), max_length=50, blank=True, null=True)
-    leave_code = models.ForeignKey("Policy", verbose_name=_("Leave Code"), on_delete=models.CASCADE, blank=True, null=True)
-    leave_description = models.TextField(_("Leave Description"), blank=True, null=True)
-    total_leave_days = models.PositiveIntegerField(_("Total Leave Days"), blank=True, null=True)
-    outstanding_leave_days = models.PositiveIntegerField(_("Outstanding Leave Days"), blank=True, null=True)
-    no_of_days_requested = models.PositiveIntegerField(_("No. Of Days Requested"))
-    start_date = models.DateField(_("Start Date"), auto_now=False, auto_now_add=False)
-    end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
-    request_status = models.CharField(_("Request Status"), choices=text_options.LEAVEREQUESTSTATUS.choices,
-                                      max_length=50, blank=True, null=True)
-    deferred_reason = models.TextField(_("Deferred Reason"), blank=True, null=True)
-    transaction_date = models.DateField(_("Transaction"), auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE, blank=True, null=True)
-    relieving_officer_no = models.CharField(_("Relieving Officer No."), max_length=50, blank=True, null=True)
-    relieving_officer_name = models.CharField(_("Relieving Officer's Name"), max_length=150, blank=True, null=True)
-    posted = models.BooleanField(_("Posted"), blank=True, null=True)
-    job_title_code = models.ForeignKey("company.Job", verbose_name=_("Job Title Code"), on_delete=models.CASCADE, blank=True, null=True)
-    department_code = models.ForeignKey("company.Department", verbose_name=_("Department"), on_delete=models.CASCADE,
-                                        blank=True, null=True)
-
-    class Meta:
-        abstract = True
-
-
-class LeaveRequest(RequestTransaction):
-    class Meta:
-        verbose_name = "Leave Request"
-        verbose_name_plural = "Leave Requests"
-
-    def __str__(self):
-        return f"{self.emp_name}, {self.emp_code}, {self.start_date}"
-
-
-class LeaveTransaction(RequestTransaction):
-    reason_recall = models.BooleanField(_("Recalled"), blank=True, null=True)
-    reason_for_recall = models.CharField(_("Reason For Recall"), max_length=100, blank=True, null=True)
-    approved_from_deferred = models.BooleanField(_("Approved From Deferred"), blank=True, null=True)
-    recall_amount = models.DecimalField(_("Recall Amount"), max_digits=5, decimal_places=2, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Leave Transaction"
-        verbose_name_plural = "Leave Transactions"
-
-    def __str__(self):
-        return f"{self.reason_for_recall}, {self.reason_recall}"
-
-
-class LeavePlan(models.Model):
-    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE, blank=True, null=True)
-    emp_name = models.CharField(_("Employee Name"), max_length=200, blank=True, null=True)
-    leave_code = models.CharField(_("Leave Code"), max_length=50, blank=True, null=True)
-    leave_description = models.CharField(_("Leave Description"), max_length=50, blank=True, null=True)
-    no_of_planned_days = models.PositiveIntegerField(_("No. Of Planned Days"))
-    start_date = models.DateField(_("Start Date"),)
-    department_code = models.ForeignKey("company.Department", verbose_name=_("Department Code"),
-                                        on_delete=models.CASCADE, blank=True, null=True)
-    department_name = models.CharField(_("Department Name"), max_length=50, blank=True, null=True)
-    transaction_date = models.DateField(_("Transaction Date"), auto_now=True, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE, blank=True, null=True)
-    posted = models.BooleanField(_("Posted"), blank=True, null=True)
-
+class LeaveRequest(models.Model):
+    leave_type = models.CharField(_("Leave Type"), max_length=50, null=True,blank=True)
+    leave_description = models.CharField(_("Leave Description"), max_length=150, null=True,blank=True)
+    start_date = models.DateField(_("From Date"), auto_now=False, auto_now_add=False, null=True,blank=True)
+    no_of_days_requested = models.PositiveIntegerField(_("No Of Days Requested"))
+    job_decription = models.CharField(_("Job Description"), max_length=150, null=True,blank=True)
+    job_title = models.CharField(_("Job Title"), max_length=50, null=True,blank=True)
+    employee_unit = models.CharField(_("Employee Unit"), max_length=80, null=True,blank=True)
+    employee_branch = models.CharField(_("Employee Branch"), max_length=150, null=True,blank=True)
+    employee_level = models.CharField(_("Employee Level"), max_length=50, null=True,blank=True)
+    date_applied = models.DateField(_("Date Applied"),default=timezone.now)
+    status = models.CharField(_("Status"), max_length=150, null=True,blank=True)
+    hod_status = models.CharField(_("HOD Status"), max_length=150, null=True,blank=True)
+    hod_remarks = models.CharField(_("HOD Remarks"), max_length=250, null=True,blank=True)
+    relieving_officer_name = models.CharField(_("Relieving Officer Name"), max_length=250, null=True,blank=True)
+    hod_remarks_date = models.DateField(_("HOD Remarks Date"), auto_now=True,)
+    hr_status = models.CharField(_("HR Status"), max_length=50, null=True,blank=True)
+    hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True,blank=True)
+    hr_remarks_date = models.DateField(_("HR Remarks Date"), auto_now=True)
 
     @property
     def end_date(self):
@@ -120,19 +37,62 @@ class LeavePlan(models.Model):
         start_date = max(self.start_date, current_date)
         days_added = 0
 
-        while days_added < self.no_of_planned_days:
+        while days_added < self.no_of_days_requested:
             start_date += timedelta(days=1)
             if start_date.weekday() >= 5:
                 continue
             days_added += 1
         return start_date
-
+    
     class Meta:
-        verbose_name = "Leave Plan"
-        verbose_name_plural = "Leave Plans"
+        verbose_name = "Leave Request"
+        verbose_name_plural = "Leave Requests"
+
 
     def __str__(self):
-        return f"{self.no_of_planned_days} - {self.end_date}"
+        return f"{self.leave_type}, {self.start_date} {self.no_of_days_requested}"
+
+
+
+class Base(models.Model):
+    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class Department(Base):
+    first_category_code = models.CharField(_("First Category Code"), max_length=50,blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Department"
+        verbose_name_plural = "Departments"
+    
+    def __str__(self):
+        return f"{self.code} - {self.first_category_code}"
+
+
+class Unit(Base):
+    second_category_code = models.CharField(_("Second Category Code"), max_length=50, blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Unit"
+        verbose_name_plural = "Units"
+    
+    def __str__(self):
+        return f"{self.code} - {self.second_category_code}"
+
+
+class Branch(Base):
+    third_category_code = models.CharField(_("Third Category Code"), max_length=50, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Branch"
+        verbose_name_plural = "Branches"
+    
+    def __str__(self):
+        return f"{self.code} - {self.third_category_code}"
 
 
 class LeaveType(models.Model):
@@ -160,16 +120,3 @@ class LeaveLimits(models.Model):
     def __str__(self):
         return f"{self.leave_type} - {self.no_of_days_allowed}"
 
-
-class LeaveLedger(models.Model):
-    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE)
-    leave_type = models.ForeignKey("leave.LeaveType", verbose_name=_("Leave Type"), on_delete=models.CASCADE)
-    no_of_days_taken = models.PositiveIntegerField(_("No. Of Days Taken"))
-    limit = models.PositiveIntegerField(_("Leave Limit"), blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Leave Ledger"
-        verbose_name_plural = "Leave Ledgers"
-    
-    def __str__(self):
-        return f"{self.employee} - {self.leave_type}"
