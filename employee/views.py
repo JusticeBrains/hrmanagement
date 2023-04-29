@@ -20,7 +20,8 @@ class EmployeeFilterSet(PropertyFilterSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
-    filterset_class = EmployeeFilterSet
+    # filterset_class = EmployeeFilterSet
+    filterset_fields= ['code', 'job_title', 'nationality']
 
 
 class AppraisalAreaViewSet(viewsets.ModelViewSet):
