@@ -89,6 +89,7 @@ class Employee(models.Model):
     nationality = models.CharField(_("Nationality"), max_length=50, blank=True, null=True)
     grounds_for_term = models.CharField(_("Grounds For Termination"), max_length=50, blank=True, null=True)
     employee_level = models.CharField(_("Employee Level"), max_length=50, blank=True, null=True)
+    profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
 
     class Meta:
         verbose_name = "Employee"
