@@ -6,10 +6,7 @@ from .models import (
     LeaveLimits,
     LeaveType,
     LeaveRequest,
-
 )
-
-
 
 
 class LeaveRequestSerializer(serializers.ModelSerializer):
@@ -44,4 +41,6 @@ class LeaveTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeaveType
         fields = "__all__"
+
+
 

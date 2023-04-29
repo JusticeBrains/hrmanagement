@@ -288,3 +288,63 @@ class EmployeePayReview(models.Model):
 
     def __str__(self):
         return self.new_base_pay
+
+
+class Base(models.Model):
+    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class StaffCategory(Base):
+    max_number_of_days = models.PositiveIntegerField(_("Max Number Of Days"))
+
+    class Meta:
+        verbose_name = "Staff Category"
+        verbose_name_plural = "Staff Categories"
+
+    def __str__(self):
+        return f"{self.code} - {self.name} - {self.max_number_of_days}"
+
+
+class Department(Base):
+    first_category_code = models.CharField(
+        _("First Category Code"), max_length=50, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Department"
+        verbose_name_plural = "Departments"
+
+    def __str__(self):
+        return f"{self.code} - {self.first_category_code}"
+
+
+class Unit(Base):
+    second_category_code = models.CharField(
+        _("Second Category Code"), max_length=50, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Unit"
+        verbose_name_plural = "Units"
+
+    def __str__(self):
+        return f"{self.code} - {self.second_category_code}"
+
+
+class Branch(Base):
+    third_category_code = models.CharField(
+        _("Third Category Code"), max_length=50, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Branch"
+        verbose_name_plural = "Branches"
+
+    def __str__(self):
+        return f"{self.code} - {self.third_category_code}"
+
+

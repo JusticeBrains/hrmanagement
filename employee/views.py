@@ -72,3 +72,18 @@ class EmployeePayReviewViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeePayReview.objects.all()
     serializer_class = serializers.EmployeePayReviewSerializer
     filterset_class = EmployeePayReviewFilterSet
+
+
+class StaffCategoryViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.StaffCategory.objects.all()
+    serializer_class = serializers.StaffCategorySerializer
+
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.Department.objects.all()
+    serializer_class = serializers.DepartmentSerializer
+
+
+class UnitViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.Unit.objects.all()
+    serializer_class = serializers.UnitSerializer

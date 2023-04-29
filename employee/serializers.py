@@ -60,4 +60,21 @@ class EmployeePayReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.EmployeePayReview
         fields = ['no', 'review_type','emp_code', 'emp_name', 'job_title_code', 'job_title', 'base_pay', 'new_base_pay']
-    
+
+
+class StaffCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model =employee_model.StaffCategory
+        fields = "__all__"
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.Department
+        fields = "__all__"
+
+
+class UnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.Unit
+        fields = "__all__"

@@ -16,8 +16,3 @@ class LeaveRequestAdmin(admin.ModelAdmin):
         "date_applied",
     ]
 
-
-admin.site.register(lmodels.StaffCategory)
-admin.site.register(lmodels.Department)
-admin.site.register(lmodels.Unit)
-admin.site.register(lmodels.Branch)
