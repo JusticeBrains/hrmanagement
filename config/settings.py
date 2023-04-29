@@ -47,6 +47,11 @@ THIRD_PARTY_APPS = [
     'djoser',
     'drf_yasg',
     'django_property_filter',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'django_filters',
 ]
 
 LOCAL_APPS = [
