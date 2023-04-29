@@ -9,3 +9,4 @@ User = get_user_model()
 class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
+    filterset_fields = "__all__"
