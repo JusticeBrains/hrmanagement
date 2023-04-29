@@ -19,9 +19,9 @@ class CompanyFieldViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CompanyFieldSerializer
 
 
-class DepartmentViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.Department.objects.all()
-    serializer_class = serializers.DepartmentSerializer
+# class DepartmentViewSet(viewsets.ModelViewSet):
+#     queryset = comp_models.Department.objects.all()
+#     serializer_class = serializers.DepartmentSerializer
 
 
 class HolidayViewSet(viewsets.ModelViewSet):
