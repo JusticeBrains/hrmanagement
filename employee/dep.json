@@ -1,0 +1,107 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/SecondLevel",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBeEFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODAwOyc=\"",
+			"Code": "DEP001",
+			"First_Category_Code": "NLA",
+			"Name": "Sales"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBeUFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODEwOyc=\"",
+			"Code": "DEP002",
+			"First_Category_Code": "NLA",
+			"Name": "Administration"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBekFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODIwOyc=\"",
+			"Code": "DEP003",
+			"First_Category_Code": "NLA",
+			"Name": "Operations"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBMEFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODMwOyc=\"",
+			"Code": "DEP004",
+			"First_Category_Code": "NLA",
+			"Name": "Finance"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBMUFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODQwOyc=\"",
+			"Code": "DEP005",
+			"First_Category_Code": "NLA",
+			"Name": "ICT"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBMkFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODUwOyc=\"",
+			"Code": "DEP006",
+			"First_Category_Code": "NLA",
+			"Name": "Security"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBM0FBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODYwOyc=\"",
+			"Code": "DEP007",
+			"First_Category_Code": "NLA",
+			"Name": "Internal Audit"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBNEFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODcwOyc=\"",
+			"Code": "DEP008",
+			"First_Category_Code": "NLA",
+			"Name": "Human Resource"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTUFBNUFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODgwOyc=\"",
+			"Code": "DEP009",
+			"First_Category_Code": "NLA",
+			"Name": "Marketing & Caritas"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBd0FBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4ODkwOyc=\"",
+			"Code": "DEP010",
+			"First_Category_Code": "NLA",
+			"Name": "Legal"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBeEFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTAwOyc=\"",
+			"Code": "DEP011",
+			"First_Category_Code": "NLA",
+			"Name": "Customer Service"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBeUFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTEwOyc=\"",
+			"Code": "DEP012",
+			"First_Category_Code": "NLA",
+			"Name": "Procurement"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBekFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTIwOyc=\"",
+			"Code": "DEP013",
+			"First_Category_Code": "NLA",
+			"Name": "Enterprise Risk & Quality Assuarance"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBMEFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTMwOyc=\"",
+			"Code": "DEP014",
+			"First_Category_Code": "NLA",
+			"Name": "Corporate Affairs"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBMUFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTQwOyc=\"",
+			"Code": "DEP015",
+			"First_Category_Code": "NLA",
+			"Name": "Director General Secretariat"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBMkFBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTUwOyc=\"",
+			"Code": "DEP016",
+			"First_Category_Code": "NLA",
+			"Name": "Strategy & Business Development"
+		},
+		{
+			"@odata.etag": "W/\"JzQ4O2s4TUFBQUo3LzBRQVJRQlFBREFBTVFBM0FBQUFBbnYvVGdCTUFFRUFBQUFBQUE9PTg7NDA5ODQ4OTYwOyc=\"",
+			"Code": "DEP017",
+			"First_Category_Code": "NLA",
+			"Name": "DDG's Secretariat"
+		}
+	]
+}

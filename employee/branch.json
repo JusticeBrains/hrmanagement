@@ -1,0 +1,581 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/FourthLevel",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyNzQwOyc=\"",
+			"Code": "LOC0001",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Abeka"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMzgwOyc=\"",
+			"Code": "LOC0001",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Abeka"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzNDcwOyc=\"",
+			"Code": "LOC0001",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Abeka"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyODkwOyc=\"",
+			"Code": "LOC0002",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Koforidua"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEyNzUwOyc=\"",
+			"Code": "LOC0002",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Koforidua"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEyODEwOyc=\"",
+			"Code": "LOC0002",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Koforidua"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMTYwOyc=\"",
+			"Code": "LOC0002",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Koforidua"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzMzAwOyc=\"",
+			"Code": "LOC0002",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Koforidua"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyOTUwOyc=\"",
+			"Code": "LOC0003",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMDcwOyc=\"",
+			"Code": "LOC0003",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEyNzYwOyc=\"",
+			"Code": "LOC0003",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzMzUwOyc=\"",
+			"Code": "LOC0003",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FETUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMzcwOyc=\"",
+			"Code": "LOC0003",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyNzcwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMjMwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNDEwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzNTQwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzNDMwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1nQTBBQUFBQUFBPTg7NDA5OTEzNjUwOyc=\"",
+			"Code": "LOC0004",
+			"Third_Category_Code": "UNT0024",
+			"Name": "Ho"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyOTYwOyc=\"",
+			"Code": "LOC0005",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMjYwOyc=\"",
+			"Code": "LOC0005",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNjMwOyc=\"",
+			"Code": "LOC0005",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEyNzgwOyc=\"",
+			"Code": "LOC0005",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzMzEwOyc=\"",
+			"Code": "LOC0005",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyNzkwOyc=\"",
+			"Code": "LOC0006",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Greater Accra"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEyOTkwOyc=\"",
+			"Code": "LOC0006",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Greater Accra"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMzkwOyc=\"",
+			"Code": "LOC0006",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Greater Accra"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzMTkwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEyODUwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzMTQwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEyODAwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTFBQUFBQUFBPTg7NDA5OTEyODYwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0005",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzMTIwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTNBQUFBQUFBPTg7NDA5OTEyODgwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0007",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTRBQUFBQUFBPTg7NDA5OTEyOTAwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0008",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMTEwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQXhBQUFBQUFBPTg7NDA5OTEzMDQwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0011",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQXlBQUFBQUFBPTg7NDA5OTEzMDUwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0012",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQXpBQUFBQUFBPTg7NDA5OTEzMTgwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0013",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTBBQUFBQUFBPTg7NDA5OTEzMjIwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0014",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTFBQUFBQUFBPTg7NDA5OTEzMjcwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0015",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTJBQUFBQUFBPTg7NDA5OTEzNDAwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0016",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTNBQUFBQUFBPTg7NDA5OTEzNDIwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0017",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTRBQUFBQUFBPTg7NDA5OTEzNDkwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0018",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1RQTVBQUFBQUFBPTg7NDA5OTEzNTEwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0019",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQXdBQUFBQUFBPTg7NDA5OTEzNTIwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0020",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQXhBQUFBQUFBPTg7NDA5OTEzNTMwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0021",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQXlBQUFBQUFBPTg7NDA5OTEzNTUwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0022",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQXpBQUFBQUFBPTg7NDA5OTEzNTcwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0023",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQTBBQUFBQUFBPTg7NDA5OTEzNTgwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0024",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQTFBQUFBQUFBPTg7NDA5OTEzNjYwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0025",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQTJBQUFBQUFBPTg7NDA5OTEzNjcwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0026",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQTNBQUFBQUFBPTg7NDA5OTEzNjgwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0027",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEY0FBQUFDZS85VkFFNEFWQUF3QURBQU1nQTRBQUFBQUFBPTg7NDA5OTEzNjkwOyc=\"",
+			"Code": "LOC0007",
+			"Third_Category_Code": "UNT0028",
+			"Name": "Head Office"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEZ0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzNTkwOyc=\"",
+			"Code": "LOC0008",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Wa"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEZ0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMjEwOyc=\"",
+			"Code": "LOC0008",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Wa"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEZ0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEyODMwOyc=\"",
+			"Code": "LOC0008",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Wa"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEZ0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEyODIwOyc=\"",
+			"Code": "LOC0008",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Wa"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEa0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzNDgwOyc=\"",
+			"Code": "LOC0009",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Sefwi Tanoso"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEa0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEyOTgwOyc=\"",
+			"Code": "LOC0009",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Sefwi Tanoso"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEa0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEyODQwOyc=\"",
+			"Code": "LOC0009",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Sefwi Tanoso"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBd0FEa0FBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzNjQwOyc=\"",
+			"Code": "LOC0009",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Sefwi Tanoso"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzMDIwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMjkwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNjEwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMzMwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEyODcwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEQUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMDMwOyc=\"",
+			"Code": "LOC0010",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzMDgwOyc=\"",
+			"Code": "LOC0011",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Bolga"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMzQwOyc=\"",
+			"Code": "LOC0011",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Bolga"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEyOTEwOyc=\"",
+			"Code": "LOC0011",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Bolga"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFERUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMjAwOyc=\"",
+			"Code": "LOC0011",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Bolga"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyOTIwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMjQwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNDQwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzNjIwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEyOTMwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFESUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMTMwOyc=\"",
+			"Code": "LOC0012",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Cape Coast"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzMDAwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEyOTQwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzMTAwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMTUwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTFBQUFBQUFBPTg7NDA5OTEzNDUwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0005",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXdBQUFBQUFBPTg7NDA5OTEzMjgwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0010",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFETUFBQUFDZS85VkFFNEFWQUF3QURBQU1RQXlBQUFBQUFBPTg7NDA5OTEzNDYwOyc=\"",
+			"Code": "LOC0013",
+			"Third_Category_Code": "UNT0012",
+			"Name": "Kumasi"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEyOTcwOyc=\"",
+			"Code": "LOC0014",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMDYwOyc=\"",
+			"Code": "LOC0014",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNTYwOyc=\"",
+			"Code": "LOC0014",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMDEwOyc=\"",
+			"Code": "LOC0014",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEUUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTJBQUFBQUFBPTg7NDA5OTEzMDkwOyc=\"",
+			"Code": "LOC0014",
+			"Third_Category_Code": "UNT0006",
+			"Name": "Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzMzIwOyc=\"",
+			"Code": "LOC0015",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Tema"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEVUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMTcwOyc=\"",
+			"Code": "LOC0015",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Tema"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXhBQUFBQUFBPTg7NDA5OTEzNjAwOyc=\"",
+			"Code": "LOC0016",
+			"Third_Category_Code": "UNT0001",
+			"Name": "Akim Oda"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXlBQUFBQUFBPTg7NDA5OTEzMzYwOyc=\"",
+			"Code": "LOC0016",
+			"Third_Category_Code": "UNT0002",
+			"Name": "Akim Oda"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQXpBQUFBQUFBPTg7NDA5OTEzNTAwOyc=\"",
+			"Code": "LOC0016",
+			"Third_Category_Code": "UNT0003",
+			"Name": "Akim Oda"
+		},
+		{
+			"@odata.etag": "W/\"JzYwO2xjTUFBQUo3LzB3QVR3QkRBREFBTUFBeEFEWUFBQUFDZS85VkFFNEFWQUF3QURBQU1BQTBBQUFBQUFBPTg7NDA5OTEzMjUwOyc=\"",
+			"Code": "LOC0016",
+			"Third_Category_Code": "UNT0004",
+			"Name": "Akim Oda"
+		}
+	]
+}

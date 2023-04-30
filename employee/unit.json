@@ -1,0 +1,191 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/ThirdLevel",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FERUFBQUFDZS85RUFFVUFVQUF3QURBQU1RQUFBQUFBODs0MDk4NDk3NTA7Jw==\"",
+			"Code": "UNT0001",
+			"Second_Category_Code": "DEP001",
+			"Name": "Sales"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FERUFBQUFDZS85RUFFVUFVQUF3QURBQU5BQUFBQUFBODs0MDk4NTAwMDA7Jw==\"",
+			"Code": "UNT0001",
+			"Second_Category_Code": "DEP004",
+			"Name": "Sales"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FESUFBQUFDZS85RUFFVUFVQUF3QURBQU1nQUFBQUFBODs0MDk4NDk3NjA7Jw==\"",
+			"Code": "UNT0002",
+			"Second_Category_Code": "DEP002",
+			"Name": "Transport"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FETUFBQUFDZS85RUFFVUFVQUF3QURBQU13QUFBQUFBODs0MDk4NDk3NzA7Jw==\"",
+			"Code": "UNT0003",
+			"Second_Category_Code": "DEP003",
+			"Name": "Lotto School"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEUUFBQUFDZS85RUFFVUFVQUF3QURBQU5BQUFBQUFBODs0MDk4NDk3ODA7Jw==\"",
+			"Code": "UNT0004",
+			"Second_Category_Code": "DEP004",
+			"Name": "Finance"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEUUFBQUFDZS85RUFFVUFVQUF3QURBQU53QUFBQUFBODs0MDk4NDk5MjA7Jw==\"",
+			"Code": "UNT0004",
+			"Second_Category_Code": "DEP007",
+			"Name": "Finance"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEVUFBQUFDZS85RUFFVUFVQUF3QURBQU13QUFBQUFBODs0MDk4NTAwNDA7Jw==\"",
+			"Code": "UNT0005",
+			"Second_Category_Code": "DEP003",
+			"Name": "ICT"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEVUFBQUFDZS85RUFFVUFVQUF3QURBQU5RQUFBQUFBODs0MDk4NDk3OTA7Jw==\"",
+			"Code": "UNT0005",
+			"Second_Category_Code": "DEP005",
+			"Name": "ICT"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEWUFBQUFDZS85RUFFVUFVQUF3QURBQU5nQUFBQUFBODs0MDk4NDk4MDA7Jw==\"",
+			"Code": "UNT0006",
+			"Second_Category_Code": "DEP006",
+			"Name": "Security"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEY0FBQUFDZS85RUFFVUFVQUF3QURBQU53QUFBQUFBODs0MDk4NDk4MTA7Jw==\"",
+			"Code": "UNT0007",
+			"Second_Category_Code": "DEP007",
+			"Name": "Internal Audit"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEZ0FBQUFDZS85RUFFVUFVQUF3QURBQU9BQUFBQUFBODs0MDk4NDk4MjA7Jw==\"",
+			"Code": "UNT0008",
+			"Second_Category_Code": "DEP008",
+			"Name": "Human Resources"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBd0FEa0FBQUFDZS85RUFFVUFVQUF3QURBQU1RQUFBQUFBODs0MDk4NDk4MzA7Jw==\"",
+			"Code": "UNT0009",
+			"Second_Category_Code": "DEP001",
+			"Name": "Sales"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEQUFBQUFDZS85RUFFVUFVQUF3QURBQU1nQUFBQUFBODs0MDk4NDk4NDA7Jw==\"",
+			"Code": "UNT0010",
+			"Second_Category_Code": "DEP002",
+			"Name": "General Services"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFERUFBQUFDZS85RUFFVUFVQUF3QURBQU5BQUFBQUFBODs0MDk4NDk4NTA7Jw==\"",
+			"Code": "UNT0011",
+			"Second_Category_Code": "DEP004",
+			"Name": "Logistics & Inventory"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFESUFBQUFDZS85RUFFVUFVQUF3QURBQU9RQUFBQUFBODs0MDk4NDk4NjA7Jw==\"",
+			"Code": "UNT0012",
+			"Second_Category_Code": "DEP009",
+			"Name": "Marketing"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFETUFBQUFDZS85RUFFVUFVQUF3QURBQU13QUFBQUFBODs0MDk4NDk4NzA7Jw==\"",
+			"Code": "UNT0013",
+			"Second_Category_Code": "DEP003",
+			"Name": "Operations"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEUUFBQUFDZS85RUFFVUFVQUF3QURBQU5BQUFBQUFBODs0MDk4NDk4ODA7Jw==\"",
+			"Code": "UNT0014",
+			"Second_Category_Code": "DEP004",
+			"Name": "Treasury"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEVUFBQUFDZS85RUFFVUFVQUF3QURFQU1BQUFBQUFBODs0MDk4NDk4OTA7Jw==\"",
+			"Code": "UNT0015",
+			"Second_Category_Code": "DEP010",
+			"Name": "Legal"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEWUFBQUFDZS85RUFFVUFVQUF3QURFQU1RQUFBQUFBODs0MDk4NDk5MDA7Jw==\"",
+			"Code": "UNT0016",
+			"Second_Category_Code": "DEP011",
+			"Name": "Customer Services"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEY0FBQUFDZS85RUFFVUFVQUF3QURBQU13QUFBQUFBODs0MDk4NDk5MTA7Jw==\"",
+			"Code": "UNT0017",
+			"Second_Category_Code": "DEP003",
+			"Name": "Draw"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEZ0FBQUFDZS85RUFFVUFVQUF3QURFQU1nQUFBQUFBODs0MDk4NDk5MzA7Jw==\"",
+			"Code": "UNT0018",
+			"Second_Category_Code": "DEP012",
+			"Name": "Procurement"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeEFEa0FBQUFDZS85RUFFVUFVQUF3QURFQU13QUFBQUFBODs0MDk4NDk5NDA7Jw==\"",
+			"Code": "UNT0019",
+			"Second_Category_Code": "DEP013",
+			"Name": "Enterprise Risk & Quality Assuarance"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEQUFBQUFDZS85RUFFVUFVQUF3QURFQU5BQUFBQUFBODs0MDk4NDk5NTA7Jw==\"",
+			"Code": "UNT0020",
+			"Second_Category_Code": "DEP014",
+			"Name": "Corporate Affairs"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFERUFBQUFDZS85RUFFVUFVQUF3QURBQU5BQUFBQUFBODs0MDk4NDk5NjA7Jw==\"",
+			"Code": "UNT0021",
+			"Second_Category_Code": "DEP004",
+			"Name": "Logistics & Inventory"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFESUFBQUFDZS85RUFFVUFVQUF3QURFQU5RQUFBQUFBODs0MDk4NDk5NzA7Jw==\"",
+			"Code": "UNT0022",
+			"Second_Category_Code": "DEP015",
+			"Name": "Good Causes Foundation"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFETUFBQUFDZS85RUFFVUFVQUF3QURBQU13QUFBQUFBODs0MDk4NDk5ODA7Jw==\"",
+			"Code": "UNT0023",
+			"Second_Category_Code": "DEP003",
+			"Name": "Draw Unit"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEUUFBQUFDZS85RUFFVUFVQUF3QURBQU1nQUFBQUFBODs0MDk4NDk5OTA7Jw==\"",
+			"Code": "UNT0024",
+			"Second_Category_Code": "DEP002",
+			"Name": "Admin"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEVUFBQUFDZS85RUFFVUFVQUF3QURFQU5nQUFBQUFBODs0MDk4NTAwMTA7Jw==\"",
+			"Code": "UNT0025",
+			"Second_Category_Code": "DEP016",
+			"Name": "Strategy & Business Development"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEWUFBQUFDZS85RUFFVUFVQUF3QURBQU9RQUFBQUFBODs0MDk4NTAwMjA7Jw==\"",
+			"Code": "UNT0026",
+			"Second_Category_Code": "DEP009",
+			"Name": "Caritas"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEY0FBQUFDZS85RUFFVUFVQUF3QURFQU5RQUFBQUFBODs0MDk4NTAwMzA7Jw==\"",
+			"Code": "UNT0027",
+			"Second_Category_Code": "DEP015",
+			"Name": "Director General Secretariat"
+		},
+		{
+			"@odata.etag": "W/\"JzU2O2xNTUFBQUo3LzFVQVRnQlVBREFBTUFBeUFEZ0FBQUFDZS85RUFFVUFVQUF3QURFQU53QUFBQUFBODs0MDk4NTAwNTA7Jw==\"",
+			"Code": "UNT0028",
+			"Second_Category_Code": "DEP017",
+			"Name": "DDG's Secretariat"
+		}
+	]
+}
