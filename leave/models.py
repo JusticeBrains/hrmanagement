@@ -19,7 +19,7 @@ class LeaveRequest(models.Model):
         _("From Date"), auto_now=False, auto_now_add=False, null=True, blank=True
     )
     no_of_days_requested = models.PositiveIntegerField(_("No Of Days Requested"))
-    job_decription = models.CharField(
+    job_description = models.CharField(
         _("Job Description"), max_length=150, null=True, blank=True
     )
     job_title = models.CharField(_("Job Title"), max_length=50, null=True, blank=True)
@@ -84,9 +84,9 @@ class LeaveRequest(models.Model):
     def clean(self):
         max_days = self.employee.staff_category.max_number_of_days
 
-        if self.no_of_days_requested > max_days:
+        if self.no_of_days_requested > max_days and self.no_of_days_requested > self.employee.days_left:
             raise ValueError(
-                f"Number of planned Days Exceed Maximum Days Which is {max_days}"
+                f"Number of planned Days Exceed  Either Maximum Days {max_days} or days outstanding {self.employee.days_left}"
             )
 
         self.no_of_days_taken = max_days - self.no_of_days_requested
