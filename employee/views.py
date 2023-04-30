@@ -12,7 +12,7 @@ class EmployeeFilterSet(PropertyFilterSet):
     class Meta:
         model = employee_model.Employee
         property_fields = [
-            ('fullname',),
+            ('fullname',PropertyAllValuesFilter, ['exact',]),
         ]
         fields = "__all__"
 
@@ -20,8 +20,7 @@ class EmployeeFilterSet(PropertyFilterSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
-    # filterset_class = EmployeeFilterSet
-    filterset_fields= ['code', 'job_title', 'nationality']
+    filterset_class = EmployeeFilterSet
 
 
 class AppraisalAreaViewSet(viewsets.ModelViewSet):
