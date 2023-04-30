@@ -25,7 +25,6 @@ class EmployeeFilterSet(PropertyFilterSet):
             ),
         ]
         fields = [
-            "id",
             "code",
             "first_name",
             "last_name",
@@ -116,11 +115,12 @@ class EmployeePayReviewViewSet(viewsets.ModelViewSet):
 class StaffCategoryViewSet(viewsets.ModelViewSet):
     queryset = employee_model.StaffCategory.objects.all()
     serializer_class = serializers.StaffCategorySerializer
-
+    filterset_fields = ['code', 'name', 'max_number_of_days',]
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Department.objects.all()
     serializer_class = serializers.DepartmentSerializer
+    filterset_fields = ['code', ]
 
 
 class UnitViewSet(viewsets.ModelViewSet):
