@@ -22,7 +22,7 @@ class Command(BaseCommand):
         print(f"--Loading Departments --")
         for val in dep["value"]:
             print(f"--Startng--{val['Code']} ")
-            if not Department.objects.filter(code=val['Code']).exists:
+            if not Department.objects.filter(code=val['Code']):
                 Department.objects.create(
                     code=val["Code"],
                     name=val["Name"],
