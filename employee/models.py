@@ -175,6 +175,7 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
+    days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True)
 
     class Meta:
         verbose_name = "Employee"

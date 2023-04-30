@@ -1,20 +1,58 @@
 from django.shortcuts import render
 
-from django_property_filter import PropertyFilterSet, PropertyNumberFilter,  PropertyAllValuesFilter
+from django_property_filter import (
+    PropertyFilterSet,
+    PropertyNumberFilter,
+    PropertyAllValuesFilter,
+)
 from rest_framework import viewsets
 from . import models as employee_model
 from . import serializers
 
 
 class EmployeeFilterSet(PropertyFilterSet):
-    fullname = PropertyAllValuesFilter(field_name='fullname')
-    
+    fullname = PropertyAllValuesFilter(field_name="fullname")
+
     class Meta:
         model = employee_model.Employee
         property_fields = [
-            ('fullname',PropertyAllValuesFilter, ['exact',]),
+            (
+                "fullname",
+                PropertyAllValuesFilter,
+                [
+                    "exact",
+                ],
+            ),
         ]
-        fields = "__all__"
+        fields = [
+            "id",
+            "code",
+            "first_name",
+            "last_name",
+            "middle_name",
+            "job_title",
+            "gender",
+            "company_email",
+            "job_titles",
+            "job_title_description",
+            "pager",
+            "first_category_level",
+            "second_category_level",
+            "third_category_level",
+            "fourth_category_level",
+            "fifth_category_level",
+            "employment_date",
+            "status",
+            "termination_date",
+            "employement_contract_code",
+            "birth_date",
+            "ssno",
+            "pay_group_code",
+            "salary_grade",
+            "payment_mode",
+            "payment_method",
+            "days_left",
+        ]
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -57,15 +95,17 @@ class EmployeePolicyViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeePolicy.objects.all()
     serializer_class = serializers.EmployeePolicySerializer
 
+
 class EmployeePayReviewFilterSet(PropertyFilterSet):
-    new_base_pay = PropertyNumberFilter(field_name='new_base_pay')
-    
+    new_base_pay = PropertyNumberFilter(field_name="new_base_pay")
+
     class Meta:
         model = employee_model.EmployeePayReview
         property_fields = [
-            ('new_base_pay',PropertyNumberFilter, ['lte', 'gte']),
+            ("new_base_pay", PropertyNumberFilter, ["lte", "gte"]),
         ]
         fields = "__all__"
+
 
 class EmployeePayReviewViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeePayReview.objects.all()
