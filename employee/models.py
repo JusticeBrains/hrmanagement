@@ -491,7 +491,7 @@ class EmployeePayReview(models.Model):
 
 
 class Base(models.Model):
-    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
+    code = models.CharField(_("Code"), max_length=50,unique=True, primary_key=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
 
     class Meta:
