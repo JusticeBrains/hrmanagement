@@ -50,9 +50,7 @@ class LeaveRequest(models.Model):
     hr_status = models.CharField(_("HR Status"), max_length=50, null=True, blank=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
     hr_remarks_date = models.DateField(_("HR Remarks Date"), auto_now=True)
-    emp_code = models.CharField(
-        _("Employee Code"), max_length=50, null=True, blank=True
-    )
+    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, null=True, blank=True)
     dep_code = models.CharField(
         _("Department Code"), max_length=50, null=True, blank=True
     )
@@ -61,13 +59,14 @@ class LeaveRequest(models.Model):
     days_left = models.PositiveIntegerField(
         _("Number of Days Taken"), editable=False, null=True, blank=True
     )
-    staff_category = models.ForeignKey(
-        "employee.StaffCategory",
-        verbose_name=_("Staff Category"),
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
+    # staff_category = models.ForeignKey(
+    #     "employee.StaffCategory",
+    #     verbose_name=_("Staff Category"),
+    #     on_delete=models.CASCADE,
+    #     null=True,
+    #     blank=True,
+    # )
+    emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
 
     @property
     def end_date(self):
@@ -83,7 +82,7 @@ class LeaveRequest(models.Model):
         return start_date
 
     def clean(self):
-        max_days = self.staff_category.max_number_of_days
+        max_days = self.employee.staff_category.max_number_of_days
 
         if self.no_of_days_requested > max_days:
             raise ValueError(
