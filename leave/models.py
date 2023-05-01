@@ -47,11 +47,10 @@ class LeaveRequest(models.Model):
     )
     hod_remarks_date = models.DateField(
         _("HOD Remarks Date"),
-        auto_now_add=True,
     )
     hr_status = models.CharField(_("HR Status"), max_length=50, null=True, blank=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
-    hr_remarks_date = models.DateField(_("HR Remarks Date"),auto_now_add=True)
+    hr_remarks_date = models.DateField(_("HR Remarks Date"))
     employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, null=True, blank=True)
     dep_code = models.CharField(
         _("Department Code"), max_length=50, null=True, blank=True
