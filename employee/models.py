@@ -1,6 +1,5 @@
-from django.db.models import DecimalField
 
-from company.models import Job, Company
+import uuid
 from options.text_options import (
     GENDER,
     EMPLOYEESTATUS,
@@ -12,7 +11,7 @@ from options.text_options import (
     OffenseType,
     RecommendedAction,
 )
-
+from django.db import connection
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -490,8 +489,10 @@ class EmployeePayReview(models.Model):
         return self.new_base_pay
 
 
+
 class Base(models.Model):
-    code = models.CharField(_("Code"), max_length=50,unique=True, primary_key=True)
+    # id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    code = models.CharField(_("Code"), max_length=50, unique=True, primary_key=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
 
     class Meta:
@@ -508,6 +509,10 @@ class StaffCategory(Base):
     def __str__(self):
         return f"{self.code} - {self.name} - {self.max_number_of_days}"
 
+# Set the data type of the primary key to VARCHAR in PostgreSQL
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)')
 
 class Department(Base):
     first_category_code = models.CharField(
@@ -520,6 +525,11 @@ class Department(Base):
 
     def __str__(self):
         return f"{self.code} - {self.first_category_code}"
+    
+# Set the data type of the primary key to VARCHAR in PostgreSQL
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)')
 
 
 class Unit(Base):
@@ -534,6 +544,10 @@ class Unit(Base):
     def __str__(self):
         return f"{self.code} - {self.second_category_code}"
 
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
+
 
 class Branch(Base):
     third_category_code = models.CharField(
@@ -546,3 +560,8 @@ class Branch(Base):
 
     def __str__(self):
         return f"{self.code} - {self.third_category_code}"
+
+# # Set the data type of the primary key to VARCHAR in PostgreSQL
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)')
