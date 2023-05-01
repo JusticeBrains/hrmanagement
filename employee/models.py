@@ -510,9 +510,9 @@ class StaffCategory(Base):
         return f"{self.code} - {self.name} - {self.max_number_of_days}"
 
 # Set the data type of the primary key to VARCHAR in PostgreSQL
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute('ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)')
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)')
 
 class Department(Base):
     first_category_code = models.CharField(
@@ -527,9 +527,9 @@ class Department(Base):
         return f"{self.code} - {self.first_category_code}"
     
 # Set the data type of the primary key to VARCHAR in PostgreSQL
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute('ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)')
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)')
 
 
 class Unit(Base):
@@ -544,9 +544,9 @@ class Unit(Base):
     def __str__(self):
         return f"{self.code} - {self.second_category_code}"
 
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
 
 
 class Branch(Base):
@@ -562,6 +562,6 @@ class Branch(Base):
         return f"{self.code} - {self.third_category_code}"
 
 # # Set the data type of the primary key to VARCHAR in PostgreSQL
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute('ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)')
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute('ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)')
