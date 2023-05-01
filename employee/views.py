@@ -120,14 +120,17 @@ class StaffCategoryViewSet(viewsets.ModelViewSet):
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Department.objects.all()
     serializer_class = serializers.DepartmentSerializer
-    filterset_fields = ['code', ]
+    filterset_fields = ['code', 'name', 'first_category_code' ]
 
 
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Unit.objects.all()
     serializer_class = serializers.UnitSerializer
+    filterset_fields = ['code', 'name', 'second_category_code',]
+
 
 
 class BranchViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Branch.objects.all()
     serializer_class = serializers.BranchSerializer
+    filterset_fields = ['code', 'name', 'third_category_code',]
