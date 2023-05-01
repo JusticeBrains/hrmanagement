@@ -11,8 +11,8 @@ class LeaveRequestAdmin(admin.ModelAdmin):
     list_display = [
         "start_date",
         "end_date",
-        "days_left",
         "no_of_days_requested",
+        'no_of_days_left',
         "date_applied",
     ]
 
