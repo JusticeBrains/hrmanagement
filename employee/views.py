@@ -126,3 +126,8 @@ class DepartmentViewSet(viewsets.ModelViewSet):
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Unit.objects.all()
     serializer_class = serializers.UnitSerializer
+
+
+class BranchViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.Branch.objects.all()
+    serializer_class = serializers.BranchSerializer

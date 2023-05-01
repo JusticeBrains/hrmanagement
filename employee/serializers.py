@@ -78,3 +78,8 @@ class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.Unit
         fields = "__all__"
+
+class BranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.Branch
+        fields = "__all__"
