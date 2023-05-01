@@ -25,6 +25,7 @@ class EmployeeFilterSet(PropertyFilterSet):
             ),
         ]
         fields = [
+            "id",
             "code",
             "first_name",
             "last_name",
