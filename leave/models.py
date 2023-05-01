@@ -93,11 +93,11 @@ class LeaveRequest(models.Model):
                 self.no_of_days_left = emp_days_left - self.no_of_days_requested
 
         if self.employee.no_of_days_exhausted == max_days:
-            self.no_of_days_requested = None
+            self.no_of_days_requested = 0
             self._meta.get_field("no_of_days_requested").editable = False
         else:
             self._meta.get_field("no_of_days_requested").editable = True
-            
+
 
 
     # def save(self, *args, **kwargs):
