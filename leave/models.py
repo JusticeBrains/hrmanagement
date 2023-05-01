@@ -46,11 +46,11 @@ class LeaveRequest(models.Model):
         _("Relieving Officer Name"), max_length=250, null=True, blank=True
     )
     hod_remarks_date = models.DateField(
-        _("HOD Remarks Date"),
+        _("HOD Remarks Date"), blank=True, null=True
     )
     hr_status = models.CharField(_("HR Status"), max_length=50, null=True, blank=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
-    hr_remarks_date = models.DateField(_("HR Remarks Date"))
+    hr_remarks_date = models.DateField(_("HR Remarks Date"), blank=True, null=True)
     employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, null=True, blank=True)
     dep_code = models.CharField(
         _("Department Code"), max_length=50, null=True, blank=True
@@ -77,13 +77,18 @@ class LeaveRequest(models.Model):
 
     def clean(self):
         max_days = self.employee.staff_category_code.max_number_of_days
+        emp_days_left = self.employee.days_left
 
-        if self.no_of_days_requested > max_days and self.no_of_days_requested > self.employee.days_left:
+        if self.no_of_days_requested > max_days and self.no_of_days_requested > emp_days_left:
             raise ValueError(
                 f"Number of planned Days Exceed  Either Maximum Days {max_days} or days outstanding {self.employee.days_left}"
             )
+        
+        if self.no_of_days_requested <= emp_days_left:
+            self.no_of_days_left = emp_days_left - self.no_of_days_requested
 
-        self.no_of_days_left = max_days - self.no_of_days_requested
+        elif self.no_of_days_requested > emp_days_left and self.no_of_days_requested < max_days:
+            self.no_of_days_left = max_days - self.no_of_days_requested
 
         if self.employee.no_of_days_exhausted == max_days:
             self.no_of_days_requested = None
