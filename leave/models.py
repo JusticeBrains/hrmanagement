@@ -60,8 +60,7 @@ class LeaveRequest(models.Model):
     no_of_days_left = models.PositiveIntegerField(
         _("Number of Days Left"), editable=False, null=True, blank=True
     )
-    emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
-
+    
     @property
     def end_date(self):
         current_date = datetime.now().date()
