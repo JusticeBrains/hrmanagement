@@ -6,7 +6,23 @@ from .serializers import CustomUserSerializer
 
 User = get_user_model()
 
+
 class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    filterset_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "username",
+        "assigned_Area",
+        "email",
+        "first_name",
+        "last_name",
+        "is_super",
+        "is_hr",
+        "is_active",
+        "is_super_hr",
+        "staff_category",
+        "employee_level",
+        "emp_code",
+        "is_verified"
+    ]
