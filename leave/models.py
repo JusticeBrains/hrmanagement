@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
 from datetime import datetime, timedelta
+# from django.db.models import F
+# from employee.models import Employee
 
 from options import text_options
 from django.utils import timezone
@@ -45,27 +47,20 @@ class LeaveRequest(models.Model):
     )
     hod_remarks_date = models.DateField(
         _("HOD Remarks Date"),
-        auto_now=True,
+        auto_now_add=True,
     )
     hr_status = models.CharField(_("HR Status"), max_length=50, null=True, blank=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
-    hr_remarks_date = models.DateField(_("HR Remarks Date"), auto_now=True)
+    hr_remarks_date = models.DateField(_("HR Remarks Date"),auto_now_add=True)
     employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, null=True, blank=True)
     dep_code = models.CharField(
         _("Department Code"), max_length=50, null=True, blank=True
     )
     dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
     supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
-    days_left = models.PositiveIntegerField(
-        _("Number of Days Taken"), editable=False, null=True, blank=True
+    no_of_days_left = models.PositiveIntegerField(
+        _("Number of Days Left"), editable=False, null=True, blank=True
     )
-    # staff_category = models.ForeignKey(
-    #     "employee.StaffCategory",
-    #     verbose_name=_("Staff Category"),
-    #     on_delete=models.CASCADE,
-    #     null=True,
-    #     blank=True,
-    # )
     emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
 
     @property
@@ -82,20 +77,28 @@ class LeaveRequest(models.Model):
         return start_date
 
     def clean(self):
-        max_days = self.employee.staff_category.max_number_of_days
+        max_days = self.employee.staff_category_code.max_number_of_days
 
         if self.no_of_days_requested > max_days and self.no_of_days_requested > self.employee.days_left:
             raise ValueError(
                 f"Number of planned Days Exceed  Either Maximum Days {max_days} or days outstanding {self.employee.days_left}"
             )
 
-        self.no_of_days_taken = max_days - self.no_of_days_requested
+        self.no_of_days_left = max_days - self.no_of_days_requested
 
-        if self.days_left == max_days:
+        if self.employee.no_of_days_exhausted == max_days:
             self.no_of_days_requested = None
             self._meta.get_field("no_of_days_requested").editable = False
         else:
             self._meta.get_field("no_of_days_requested").editable = True
+
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     # update employee days_left field after leave request is saved
+    #     Employee.objects.filter(id=self.employee.id).update(
+    #         days_left=self.no_of_days_left, no_of_days_exhausted=self.no_of_days_requested
+    #     )
 
     class Meta:
         verbose_name = "Leave Request"
