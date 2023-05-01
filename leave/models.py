@@ -83,25 +83,21 @@ class LeaveRequest(models.Model):
         # else:
         emp_days_left = self.employee.days_left
 
-        if self.no_of_days_requested > max_days and self.no_of_days_requested > emp_days_left:
+        if self.no_of_days_requested > emp_days_left:
             raise ValueError(
-                f"Number of planned Days Exceed  Either Maximum Days {max_days} or days outstanding {self.employee.days_left}"
+                f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
             )
         
-        if emp_days_left is not None and max_days is not None:
+        if emp_days_left is not None:
             if self.no_of_days_requested <= emp_days_left:
                 self.no_of_days_left = emp_days_left - self.no_of_days_requested
-            elif self.no_of_days_requested > emp_days_left and self.no_of_days_requested <= max_days:
-                self.no_of_days_left = max_days - self.no_of_days_requested
-            else:
-                self.no_of_days_left = 0
-        
 
         if self.employee.no_of_days_exhausted == max_days:
             self.no_of_days_requested = None
             self._meta.get_field("no_of_days_requested").editable = False
         else:
             self._meta.get_field("no_of_days_requested").editable = True
+            
 
 
     # def save(self, *args, **kwargs):
