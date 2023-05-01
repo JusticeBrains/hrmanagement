@@ -174,7 +174,7 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True)
+    days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True, default=0)
     no_of_days_exhausted = models.PositiveIntegerField(_("No. Of Days Exhausted"), blank=True, null=True)
 
     class Meta:

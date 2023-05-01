@@ -76,6 +76,10 @@ class LeaveRequest(models.Model):
 
     def clean(self):
         max_days = self.employee.staff_category_code.max_number_of_days
+
+        # if self.employee.days_left is None:
+        #     emp_days_left = 0
+        # else:
         emp_days_left = self.employee.days_left
 
         if self.no_of_days_requested > max_days and self.no_of_days_requested > emp_days_left:
@@ -83,11 +87,14 @@ class LeaveRequest(models.Model):
                 f"Number of planned Days Exceed  Either Maximum Days {max_days} or days outstanding {self.employee.days_left}"
             )
         
-        if self.no_of_days_requested <= emp_days_left:
-            self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-        elif self.no_of_days_requested > emp_days_left and self.no_of_days_requested < max_days:
-            self.no_of_days_left = max_days - self.no_of_days_requested
+        if emp_days_left is not None and max_days is not None:
+            if self.no_of_days_requested <= emp_days_left:
+                self.no_of_days_left = emp_days_left - self.no_of_days_requested
+            elif self.no_of_days_requested > emp_days_left and self.no_of_days_requested <= max_days:
+                self.no_of_days_left = max_days - self.no_of_days_requested
+            else:
+                self.no_of_days_left = 0
+        
 
         if self.employee.no_of_days_exhausted == max_days:
             self.no_of_days_requested = None
