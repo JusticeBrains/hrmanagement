@@ -30,7 +30,6 @@ class LeavePlanFilter(PropertyFilterSet):
             "relieving_officer_name",
             'hr_status',
             'hr_remarks',
-            'emp_code',
             'dep_code',
         ]
 
