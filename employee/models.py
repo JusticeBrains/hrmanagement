@@ -175,6 +175,7 @@ class Employee(models.Model):
         blank=True,
     )
     days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True)
+    no_of_days_exhausted = models.PositiveIntegerField(_("No. Of Days Exhausted"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee"
@@ -513,6 +514,8 @@ class StaffCategory(Base):
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
         cursor.execute('ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)')
+
+
 
 class Department(Base):
     first_category_code = models.CharField(
