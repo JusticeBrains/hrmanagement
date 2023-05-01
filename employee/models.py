@@ -167,7 +167,7 @@ class Employee(models.Model):
         _("Employee Level"), max_length=50, blank=True, null=True
     )
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
-    staff_category = models.ForeignKey(
+    staff_category_code = models.ForeignKey(
         "employee.StaffCategory",
         verbose_name=_("Staff Category"),
         on_delete=models.CASCADE,
