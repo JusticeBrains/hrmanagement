@@ -48,3 +48,4 @@ class LeaveLimitsViewSet(viewsets.ModelViewSet):
 class LeaveTypeViewSet(viewsets.ModelViewSet):
     queryset = leavemodel.LeaveType.objects.all()
     serializer_class = LeaveTypeSerializer
+    filterset_fields = "__all__"
