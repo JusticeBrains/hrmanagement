@@ -31,6 +31,8 @@ class LeavePlanFilter(PropertyFilterSet):
             'hr_status',
             'hr_remarks',
             'dep_code',
+            'no_of_days_left',
+            'emp_code'
         ]
 
 
