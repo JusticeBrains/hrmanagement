@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
 from datetime import datetime, timedelta
-# from employee.models import Employee
+from employee.models import Employee
 # from django.db.models import F
 # from employee.models import Employee
 
@@ -113,18 +113,18 @@ class LeaveRequest(LeaveBase):
 
 
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     # Get existing no_of_days_exhausted in the employee table 
-    #     # making sure it's not none and append the number of days requested
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Get existing no_of_days_exhausted in the employee table 
+        # making sure it's not none and append the number of days requested
 
-    #     no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
-    #     no_of_days_exhausted += self.no_of_days_requested
+        no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
+        no_of_days_exhausted += self.no_of_days_requested
 
-    #     # update employee with new values of days_left and no_of_days_exhausted
-    #     Employee.objects.filter(id=self.employee.id).update(
-    #         days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-    #     )
+        # update employee with new values of days_left and no_of_days_exhausted
+        Employee.objects.filter(id=self.employee.id).update(
+            days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
+        )
 
     class Meta:
         verbose_name = "Leave Request"
