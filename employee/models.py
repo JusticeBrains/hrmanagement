@@ -174,6 +174,9 @@ class Employee(models.Model):
     )
     days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True, default=0)
     no_of_days_exhausted = models.PositiveIntegerField(_("No. Of Days Exhausted"), blank=True, null=True)
+    plan_days_left = models.PositiveIntegerField(_("Plan Days Left"), null=True, blank=True, default=0)
+    pan_no_of_days_exhausted = models.PositiveIntegerField(_("Plan No. Of Days Exhausted"), blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Employee"
