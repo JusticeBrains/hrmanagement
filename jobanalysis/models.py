@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from company.models import Job
-from employee.models import Employee
 
 from options.text_options import (
     FREQUENCY,
@@ -18,7 +17,7 @@ User = get_user_model()
 
 
 class JobAnalysis(models.Model):
-    emp_code = models.ForeignKey(Employee, verbose_name=_("Employee Code"), on_delete=models.CASCADE)
+    emp_code = models.ForeignKey("employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE)
     emp_name = models.CharField(_("Employee Name"), max_length=50)
     job_title_code = models.ForeignKey(Job, verbose_name=_(""), on_delete=models.CASCADE, related_name="jobcode")
     job_title = models.ForeignKey(Job, verbose_name=_(""), on_delete=models.CASCADE, related_name="jobtitle")
@@ -122,7 +121,7 @@ class JobAnalysisRequirement(models.Model):
 
 class JobEvaluation(models.Model):
     entry_no = models.PositiveIntegerField(_("Entry No."))
-    emp_code = models.ForeignKey(Employee, verbose_name=_(""), on_delete=models.CASCADE)
+    emp_code = models.ForeignKey("employee.Employee", verbose_name=_(""), on_delete=models.CASCADE)
     emp_name = models.CharField(_("Employee Name"), max_length=50)
     department = models.CharField(_("Department"), max_length=50)
     job_title = models.ForeignKey(Job, verbose_name=_("Job Title"), on_delete=models.CASCADE)
