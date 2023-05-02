@@ -50,10 +50,10 @@ class EmployeeDisciplinaryActionsSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class EmployeePolicySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.EmployeePolicy
-        fields = "__all__"
+# class EmployeePolicySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = employee_model.EmployeePolicy
+#         fields = "__all__"
 
 class EmployeePayReviewSerializer(serializers.ModelSerializer):
     new_base_pay = serializers.SerializerMethodField()

@@ -12,7 +12,7 @@ router.register('employeepromotion', employee_views.EmployeePromotionViewSet, ba
 router.register('employeemedical', employee_views.EmployeeMedicalViewSet, basename='employeemedical')
 router.register('employeedisciplinaryactions', employee_views.EmployeeDisciplinaryActionViewSet,
                 basename='employeedisciplinaryactions')
-router.register('employeepolicy', employee_views.EmployeePolicyViewSet, basename='employeepolicy')
+# router.register('employeepolicy', employee_views.EmployeePolicyViewSet, basename='employeepolicy')
 router.register('employeepayreview', employee_views.EmployeePayReviewViewSet, basename='employeepayreview')
 router.register('staff-category', employee_views.StaffCategoryViewSet, basename='staff-category')
 router.register('department', employee_views.DepartmentViewSet, basename='department')

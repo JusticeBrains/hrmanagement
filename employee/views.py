@@ -91,9 +91,9 @@ class EmployeeDisciplinaryActionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EmployeeDisciplinaryActionsSerializer
 
 
-class EmployeePolicyViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeePolicy.objects.all()
-    serializer_class = serializers.EmployeePolicySerializer
+# class EmployeePolicyViewSet(viewsets.ModelViewSet):
+#     queryset = employee_model.EmployeePolicy.objects.all()
+#     serializer_class = serializers.EmployeePolicySerializer
 
 
 class EmployeePayReviewFilterSet(PropertyFilterSet):
