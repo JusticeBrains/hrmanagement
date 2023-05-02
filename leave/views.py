@@ -33,6 +33,7 @@ class LeavePlanFilter(PropertyFilterSet):
             'dep_code',
             'no_of_days_left',
             'emp_code'
+            'status',
         ]
 
 
