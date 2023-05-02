@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
 from datetime import datetime, timedelta
+from employee.models import Employee
 # from django.db.models import F
 # from employee.models import Employee
 
@@ -58,7 +59,7 @@ class LeaveRequest(models.Model):
     dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
     supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
     no_of_days_left = models.PositiveIntegerField(
-        _("Number of Days Left"), editable=False, null=True, blank=True
+        _("Number of Days Left"), null=True, blank=True
     )
     emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
 
@@ -85,13 +86,23 @@ class LeaveRequest(models.Model):
         emp_days_left = self.employee.days_left
 
         if self.no_of_days_requested > emp_days_left:
-            raise ValueError(
-                f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-            )
+            # raise ValueError(
+            #     f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
+            # )
+            self.no_of_days_requested = 0
+            self._meta.get_field("no_of_days_requested").editable = False
+
         
         if emp_days_left is not None:
             if self.no_of_days_requested <= emp_days_left:
                 self.no_of_days_left = emp_days_left - self.no_of_days_requested
+                
+        self.emp_code = self.employee.code
+        self.employee_branch = self.employee.third_category_level
+        self.job_title = self.employee.job_title
+        self.job_description = self.employee.job_title_description
+        self.dep = self.employee.first_category_level
+        self.employee_unit = self.employee.second_category_level
 
         if self.employee.no_of_days_exhausted == max_days:
             self.no_of_days_requested = 0
@@ -103,9 +114,15 @@ class LeaveRequest(models.Model):
 
     # def save(self, *args, **kwargs):
     #     super().save(*args, **kwargs)
-    #     # update employee days_left field after leave request is saved
+    #     # Get existing no_of_days_exhausted in the employee table 
+    #     # making sure it's not none and append the number of days requested
+
+    #     no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
+    #     no_of_days_exhausted += self.no_of_days_requested
+
+    #     # update employee with new values of days_left and no_of_days_exhausted
     #     Employee.objects.filter(id=self.employee.id).update(
-    #         days_left=self.no_of_days_left, no_of_days_exhausted=self.no_of_days_requested
+    #         days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
     #     )
 
     class Meta:
