@@ -58,7 +58,7 @@ class LeaveRequest(models.Model):
     dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
     supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
     no_of_days_left = models.PositiveIntegerField(
-        _("Number of Days Left"), editable=True, null=True, blank=True
+        _("Number of Days Left"), editable=False, null=True, blank=True
     )
     emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
 
