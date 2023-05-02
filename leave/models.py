@@ -13,11 +13,8 @@ from django.utils import timezone
 User = get_user_model()
 
 
-class LeaveRequest(models.Model):
+class LeaveBase(models.Model):
     leave_type = models.CharField(_("Leave Type"), max_length=50, null=True, blank=True)
-    leave_description = models.CharField(
-        _("Leave Description"), max_length=150, null=True, blank=True
-    )
     start_date = models.DateField(
         _("From Date"), auto_now=False, auto_now_add=False, null=True, blank=True
     )
@@ -63,6 +60,11 @@ class LeaveRequest(models.Model):
     )
     emp_code = models.CharField(_("Employee Code"), max_length=50, null=True, blank=True)
 
+    class Meta:
+        abstract = True
+
+
+class LeaveRequest(LeaveBase):
     @property
     def end_date(self):
         current_date = datetime.now().date()
@@ -100,7 +102,6 @@ class LeaveRequest(models.Model):
         self.emp_code = self.employee.code
         self.employee_branch = self.employee.third_category_level
         self.job_title = self.employee.job_title
-        self.job_description = self.employee.job_title_description
         self.dep = self.employee.first_category_level
         self.employee_unit = self.employee.second_category_level
 
@@ -133,11 +134,31 @@ class LeaveRequest(models.Model):
         return f"{self.leave_type}, {self.start_date} - {self.no_of_days_requested}"
 
 
+class LeavePlan(LeaveBase):
+    @property
+    def end_date(self):
+        current_date = datetime.now().date()
+        start_date = max(self.start_date, current_date)
+        days_added = 0
+
+        while days_added < self.no_of_days_requested:
+            start_date += timedelta(days=1)
+            if start_date.weekday() >= 5:
+                continue
+            days_added += 1
+        return start_date
+    
+    class Meta:
+        verbose_name = "Leave Plan"
+        verbose_name_plural = "Leave Plans"
+
+
 class LeaveType(models.Model):
     code = models.UUIDField(
         _("Code"), primary_key=True, editable=False, default=uuid.uuid4
     )
     name = models.CharField(_("Name"), max_length=50, blank=True, null=True)
+    max_number_of_days = models.PositiveIntegerField(_("Max Number Of Days"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Leave Type"
