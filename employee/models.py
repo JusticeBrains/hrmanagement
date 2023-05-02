@@ -16,8 +16,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
-from leave.models import LeaveRequest
-
 User = get_user_model()
 
 
@@ -432,19 +430,19 @@ class EmployeeDisciplinaryActions(models.Model):
         return f"{self.emp_name}, {self.disciplinary_code}, {self.recommended_action}"
 
 
-class EmployeePolicy(LeaveRequest):
-    assignment_no = models.CharField(_("Assignment No."), max_length=50)
-    last_date_modified = models.DateField(
-        _("Last Date Modified"), auto_now=False, auto_now_add=False
-    )
-    closed = models.BooleanField(_("Closed"))
+# class EmployeePolicy(LeaveRequest):
+#     assignment_no = models.CharField(_("Assignment No."), max_length=50)
+#     last_date_modified = models.DateField(
+#         _("Last Date Modified"), auto_now=False, auto_now_add=False
+#     )
+#     closed = models.BooleanField(_("Closed"))
 
-    class Meta:
-        verbose_name = "Employee Policy"
-        verbose_name_plural = "Employee Policies"
+#     class Meta:
+#         verbose_name = "Employee Policy"
+#         verbose_name_plural = "Employee Policies"
 
-    def __str__(self):
-        return self.assignment_no
+#     def __str__(self):
+#         return self.assignment_no
 
 
 class EmployeePayReview(models.Model):
