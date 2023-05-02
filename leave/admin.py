@@ -9,6 +9,8 @@ admin.site.register(lmodels.LeaveType)
 @admin.register(lmodels.LeaveRequest)
 class LeaveRequestAdmin(admin.ModelAdmin):
     list_display = [
+        "employee",
+        "emp_code",
         "start_date",
         "end_date",
         "no_of_days_requested",
@@ -16,3 +18,14 @@ class LeaveRequestAdmin(admin.ModelAdmin):
         "date_applied",
     ]
 
+@admin.register(lmodels.LeavePlan)
+class LeavePlanAdmin(admin.ModelAdmin):
+    list_display = [
+        "employee",
+        "emp_code",
+        "start_date",
+        "end_date",
+        "no_of_days_requested",
+        'no_of_days_left',
+        "date_applied",
+    ]
