@@ -66,7 +66,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
-    plan_days_left = serializers.SerializerMethodField()
+    plan_days_left = serializers.IntegerField(required=False)
     hr_status = serializers.IntegerField(required=False)
 
     def get_end_date(self, obj):
@@ -86,7 +86,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
         print(type(end_date)) 
         return start_date
     
-    def get_no_of_days_left(self, obj):
+    def get_plan_days_left(self, obj):
         employee = obj.employee
         max_days = obj.leave_type.calculate_max_days(employee)
         emp_days_left = employee.plan_days_left
