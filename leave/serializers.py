@@ -1,17 +1,25 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta, time
 from rest_framework import serializers
 from django_property_filter import PropertyDateFilter
 
 from .models import (
-    LeaveLimits,
     LeaveType,
     LeaveRequest,
     LeavePlan
 )
 
 
+from django.utils import timezone
+
+class DateOnlyField(serializers.ReadOnlyField):
+    def to_representation(self, value):
+        return value.strftime('%Y-%m-%d')
+    
+
 class LeaveRequestSerializer(serializers.ModelSerializer):
-    end_date = serializers.SerializerMethodField()
+    start_date = serializers.DateField()
+    end_date = DateOnlyField(source='get_end_date')
+
     class Meta:
         model = LeaveRequest
         fields = "__all__"
@@ -27,10 +35,12 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             if start_date.weekday() >= 5:
                 continue
             days_added += 1
+
         return start_date
 
 
 class LeavePlanSerializer(serializers.ModelSerializer):
+    start_date = serializers.DateField()
     end_date = serializers.SerializerMethodField()
     class Meta:
         model = LeavePlan
@@ -51,10 +61,10 @@ class LeavePlanSerializer(serializers.ModelSerializer):
 
 
 
-class LeaveLimitsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = LeaveLimits
-        fields = "__all__"
+# class LeaveLimitsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = LeaveLimits
+#         fields = "__all__"
 
 
 class LeaveTypeSerializer(serializers.ModelSerializer):

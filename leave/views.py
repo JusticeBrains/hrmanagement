@@ -3,7 +3,6 @@ from rest_framework import viewsets
 from . import models as leavemodel
 
 from .serializers import (
-    LeaveLimitsSerializer,
     LeaveRequestSerializer,
     LeaveTypeSerializer,
     LeavePlanSerializer
@@ -76,9 +75,9 @@ class LeavePlanViewSet(viewsets.ModelViewSet):
     filterset_class = LeavePlanFilter
 
 
-class LeaveLimitsViewSet(viewsets.ModelViewSet):
-    queryset = leavemodel.LeaveLimits.objects.all()
-    serializer_class = LeaveLimitsSerializer
+# class LeaveLimitsViewSet(viewsets.ModelViewSet):
+#     queryset = leavemodel.LeaveLimits.objects.all()
+#     serializer_class = LeaveLimitsSerializer
 
 
 class LeaveTypeViewSet(viewsets.ModelViewSet):
