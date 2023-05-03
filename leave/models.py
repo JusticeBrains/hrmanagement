@@ -213,24 +213,6 @@ class LeaveRequest(LeaveBase):
         return f"{self.leave_type}, {self.start_date} - {self.no_of_days_requested}"
 
 
-# class LeavePlan(LeaveBase):
-#     @property
-#     def end_date(self):
-#         current_date = date.today()
-#         start_date = max(self.start_date, current_date)
-#         days_added = 0
-
-#         while days_added < self.no_of_days_requested:
-#             start_date += timedelta(days=1)
-#             if start_date.weekday() >= 5:
-#                 continue
-#             days_added += 1
-#         return start_date
-
-#     class Meta:
-#         verbose_name = "Leave Plan"
-#         verbose_name_plural = "Leave Plans"
-
 class LeavePlan(LeaveBase):
     @property
     def end_date(self):
