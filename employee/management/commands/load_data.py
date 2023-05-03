@@ -1,7 +1,7 @@
 from typing import Any, Optional
 from django.core.management.base import BaseCommand
 from company.models import SalaryGrade, JobTitles
-from employee.models import Department, Branch, Unit
+from employee.models import Department, Branch, Notch, PayCategoryList, Unit
 import json
 from pprint import pprint
 
@@ -24,6 +24,12 @@ class Command(BaseCommand):
 
         with open("employee/salarylevel.json", 'r') as file:
             salarylevel = json.load(file)
+
+        with open("employee/notches.json", 'r') as file:
+            notches = json.load(file)
+
+        with open("employee/paycat.json", 'r') as file:
+            paycat = json.load(file)
 
         print(f"--Loading Departments --")
         for val in dep["value"]:
@@ -90,3 +96,37 @@ class Command(BaseCommand):
                 )
             print(f"--End-- {val['Code']}")
         print(f"Done -- Unit -- {SalaryGrade.objects.all().count()}")
+
+
+        print(f"--Loading SalaryGrade --")
+        for val in notches["value"]:
+            print(f"--Startng--{val['Payroll_Structure_Code']} ")
+            if not Notch.objects.filter(no=val['No'],payroll_structure_code=val["Payroll_Structure_Code"],salary_grade=val['Salary_Grade']):
+                Notch.objects.create(
+                    no=val['No'],
+                    payroll_structure_code=val["Payroll_Structure_Code"],
+                    amount=val["Amount"],
+                    salary_grade=val['Salary_Grade']
+                )
+            print(f"--End-- {val['Payroll_Structure_Code']}")
+        print(f"Done -- Notch -- {Notch.objects.all().count()}")
+
+
+        print(f"--Loading SalaryGrade --")
+        for val in paycat["value"]:
+            print(f"--Startng--{val['Description']} ")
+            if not PayCategoryList.objects.filter(no=val['No'], ):
+                PayCategoryList.objects.create(
+                    no=val['No'],
+                    description=val["Description"],
+                    taxable_income_code=val["Taxable_Income_Code"],
+                    taxable_income_description=val['Taxable_Income_Description'],
+                    tax_code=val['Tax_Code'],
+                    gross_income_code=val['Tax_Description'],
+                    gross_income_description=val['Gross_Income_Code'],
+                    bonus_tax_code=val['Gross_Income_Description'],
+                    bonus_tax_description=val['Bonus_Tax_Code'],
+                    currency_code=val['Currency_Code'],
+                )
+            print(f"--End-- {val['Description']}")
+        print(f"Done -- PayCategory -- {PayCategoryList.objects.all().count()}")
