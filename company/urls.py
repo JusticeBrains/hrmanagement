@@ -50,5 +50,7 @@ router.register('cbaissues', views.CBAIssuesViewSet, basename='cbaissues')
 router.register('sjncmembers', views.SJNCMembersViewSet, basename='sjncmembers')
 router.register('cashbenefitpayment', views.CashBenefitPaymentViewSet, basename='cashbenefitpayment')
 router.register('endofserviceentry', views.EndOfServiceEntryViewSet, basename='endofserviceentry')
+router.register('jobtitles', views.JobTitleViewSet, basename='jobtitles')
+router.register('salarygrade', views.SalaryGradeViewSet, basename='salarygrade')
 
 urlpatterns = router.urls

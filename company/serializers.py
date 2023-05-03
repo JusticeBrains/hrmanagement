@@ -21,10 +21,16 @@ class CompanyFieldSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# class DepartmentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = comp_models.Department
-#         fields = "__all__"
+class JobTitlesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = comp_models.JobTitles
+        fields = "__all__"
+
+
+class SalaryGradeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = comp_models.SalaryGrade
+        fields = "__all__"
 
 
 class HolidaySerializer(serializers.ModelSerializer):
