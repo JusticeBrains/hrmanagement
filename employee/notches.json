@@ -1,0 +1,789 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/Notches",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjk0MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "1",
+			"Amount": 1982.35
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjk0NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "2",
+			"Amount": 2041.82
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk13QUFBQUFBODs0MDIzMjk0NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "3",
+			"Amount": 2103.06
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjk0NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "4",
+			"Amount": 2166.18
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk0NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "5",
+			"Amount": 2231.14
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk0ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "6",
+			"Amount": 2298.1
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk0OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J1",
+			"No": "7",
+			"Amount": 2367.05
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjk1MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "1",
+			"Amount": 1632.53
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjk1MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "2",
+			"Amount": 1681.51
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk13QUFBQUFBODs0MDIzMjk1MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "3",
+			"Amount": 1731.95
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjk1MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "4",
+			"Amount": 1783.89
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk1NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "5",
+			"Amount": 1837.41
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk1NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "6",
+			"Amount": 1892.56
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk1NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J2",
+			"No": "7",
+			"Amount": 1949.32
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjk1NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "1",
+			"Amount": 1346.64
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjk1ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "2",
+			"Amount": 1387.05
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk13QUFBQUFBODs0MDIzMjk1OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "3",
+			"Amount": 1428.64
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjk2MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "4",
+			"Amount": 1471.52
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk2MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "5",
+			"Amount": 1515.65
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk2MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "6",
+			"Amount": 1561.13
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk2NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J3",
+			"No": "7",
+			"Amount": 1607.95
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjk2NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "1",
+			"Amount": 1109.66
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjk2NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "2",
+			"Amount": 1142.95
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk13QUFBQUFBODs0MDIzMjk2NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "3",
+			"Amount": 1177.26
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjk2ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "4",
+			"Amount": 1212.54
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk2OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "5",
+			"Amount": 1248.95
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk3MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "6",
+			"Amount": 1286.42
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk3MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J4",
+			"No": "7",
+			"Amount": 1325.02
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjk3MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "1",
+			"Amount": 914.06
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjk3MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "2",
+			"Amount": 941.49
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk13QUFBQUFBODs0MDIzMjk3NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "3",
+			"Amount": 969.73
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjk3NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "4",
+			"Amount": 998.82
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk3NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "5",
+			"Amount": 1028.78
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk3NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "6",
+			"Amount": 1059.64
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk3ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "J5",
+			"No": "7",
+			"Amount": 1091.46
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzAzOTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "1",
+			"Amount": 22051.49
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA0MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "2",
+			"Amount": 22713.04
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA0MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "3",
+			"Amount": 23394.43
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA0MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "4",
+			"Amount": 24096.27
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA0NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "5",
+			"Amount": 24819.14
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA0NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "6",
+			"Amount": 25563.72
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXhBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA0NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M1",
+			"No": "7",
+			"Amount": 26330.63
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzA0NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "1",
+			"Amount": 16461.88
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA0ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "2",
+			"Amount": 16955.74
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA0OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "3",
+			"Amount": 17464.42
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA1MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "4",
+			"Amount": 17988.35
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA1MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "5",
+			"Amount": 18528.01
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA1MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "6",
+			"Amount": 19083.84
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXlBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA1MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M2",
+			"No": "7",
+			"Amount": 19656.36
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzA1NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "1",
+			"Amount": 12944.17
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA1NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "2",
+			"Amount": 13332.48
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA1NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "3",
+			"Amount": 13732.46
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA1NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "4",
+			"Amount": 14144.42
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA1ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "5",
+			"Amount": 14568.76
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA1OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "6",
+			"Amount": 15005.84
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQXpBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA2MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M3",
+			"No": "7",
+			"Amount": 15456.01
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzA2MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "1",
+			"Amount": 10524.78
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA2MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "2",
+			"Amount": 10840.53
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA2MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "3",
+			"Amount": 11165.74
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA2NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "4",
+			"Amount": 11500.71
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA2NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "5",
+			"Amount": 11845.75
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA2NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "6",
+			"Amount": 12201.13
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTBBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA2NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M4",
+			"No": "7",
+			"Amount": 12567.14
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzA2ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "1",
+			"Amount": 8672.03
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA2OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "2",
+			"Amount": 8932.2
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA3MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "3",
+			"Amount": 9200.14
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA3MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "4",
+			"Amount": 9476.18
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA3MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "5",
+			"Amount": 9760.47
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA3MzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "6",
+			"Amount": 10053.27
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTFBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA3NDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M5",
+			"No": "7",
+			"Amount": 10354.86
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk1RQUFBQUFBODs0MDE4MzA3NTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "1",
+			"Amount": 7145.76
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk1nQUFBQUFBODs0MDE4MzA3NjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "2",
+			"Amount": 7360.13
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk13QUFBQUFBODs0MDE4MzA3NzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "3",
+			"Amount": 7580.94
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk5BQUFBQUFBODs0MDE4MzA3ODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "4",
+			"Amount": 7808.38
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk5RQUFBQUFBODs0MDE4MzA3OTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "5",
+			"Amount": 8042.64
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk5nQUFBQUFBODs0MDE4MzA4MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "6",
+			"Amount": 8283.89
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1RRQTJBQUFBQW5zQk53QUFBQUFBODs0MDE4MzA4MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "M6",
+			"No": "7",
+			"Amount": 8532.44
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjkwODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "1",
+			"Amount": 5500.07
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjkwOTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "2",
+			"Amount": 5665.07
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk13QUFBQUFBODs0MDIzMjkxMDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "3",
+			"Amount": 5835.03
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjkxMTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "4",
+			"Amount": 6010.07
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjkxMjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "5",
+			"Amount": 6190.36
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjkxMzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "6",
+			"Amount": 6376.09
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQW5zQk53QUFBQUFBODs0MDIzMjkxNDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S1",
+			"No": "7",
+			"Amount": 6567.36
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjkxNTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "1",
+			"Amount": 4531.98
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjkxNjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "2",
+			"Amount": 4667.95
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk13QUFBQUFBODs0MDIzMjkxNzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "3",
+			"Amount": 4808
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjkxODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "4",
+			"Amount": 4952.25
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjkxOTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "5",
+			"Amount": 5100.82
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjkyMDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "6",
+			"Amount": 5253.84
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQW5zQk53QUFBQUFBODs0MDIzMjkyMTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S2",
+			"No": "7",
+			"Amount": 5411.45
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjkyMjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "1",
+			"Amount": 3735.67
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjkyMzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "2",
+			"Amount": 3847.74
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk13QUFBQUFBODs0MDIzMjkyNDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "3",
+			"Amount": 3963.17
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjkyNTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "4",
+			"Amount": 4082.08
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjkyNjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "5",
+			"Amount": 4204.54
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjkyNzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "6",
+			"Amount": 4330.69
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQW5zQk53QUFBQUFBODs0MDIzMjkyODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S3",
+			"No": "7",
+			"Amount": 4460.6
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjkyOTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "1",
+			"Amount": 3079.88
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjkzMDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "2",
+			"Amount": 3172.29
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk13QUFBQUFBODs0MDIzMjkzMTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "3",
+			"Amount": 3267.44
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjkzMjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "4",
+			"Amount": 3365.46
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjkzMzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "5",
+			"Amount": 3466.44
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjkzNDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "6",
+			"Amount": 3570.43
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQW5zQk53QUFBQUFBODs0MDIzMjkzNTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S4",
+			"No": "7",
+			"Amount": 3677.55
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk1RQUFBQUFBODs0MDIzMjkzNjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "1",
+			"Amount": 2537.28
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk1nQUFBQUFBODs0MDIzMjkzNzA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "2",
+			"Amount": 2613.4
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk13QUFBQUFBODs0MDIzMjkzODA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "3",
+			"Amount": 2691.82
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk5BQUFBQUFBODs0MDIzMjkzOTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "4",
+			"Amount": 2772.56
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk5RQUFBQUFBODs0MDIzMjk0MDA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "5",
+			"Amount": 2855.73
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk5nQUFBQUFBODs0MDIzMjk0MTA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "6",
+			"Amount": 2941.41
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1ZNTUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQW5zQk53QUFBQUFBODs0MDIzMjk0MjA7Jw==\"",
+			"Payroll_Structure_Code": "NLA",
+			"Salary_Grade": "S5",
+			"No": "7",
+			"Amount": 3029.64
+		}
+	]
+}

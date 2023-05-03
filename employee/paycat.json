@@ -1,0 +1,62 @@
+
+{
+"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/PayCategoryList",
+"value": [
+    {
+        "@odata.etag": "W/\"JzMyO2g4TUFBQUo3LzBNQVFRQlRBRlVBUVFCTUFBQUFBQUE9ODs0MDE4MzUwNDA7Jw==\"",
+        "No": "CASUAL",
+        "Description": "Casual Staff",
+        "Taxable_Income_Code": "TAXABLE",
+        "Taxable_Income_Description": "Taxable Income Formula",
+        "Tax_Code": "GHANA",
+        "Tax_Description": "Ghana Tax",
+        "Gross_Income_Code": "GROSS",
+        "Gross_Income_Description": "Gross Income Formula",
+        "Bonus_Tax_Code": "BONUS",
+        "Bonus_Tax_Description": "",
+        "Currency_Code": ""
+    },
+    {
+        "@odata.etag": "W/\"JzM2O2g4TUFBQUo3LzBNQVR3Qk9BRlFBVWdCQkFFTUFWQUFBQUFBQTg7NDAxODM1MDUwOyc=\"",
+        "No": "CONTRACT",
+        "Description": "Contract Staff",
+        "Taxable_Income_Code": "TAXABLE",
+        "Taxable_Income_Description": "Taxable Income Formula",
+        "Tax_Code": "CONTRACT",
+        "Tax_Description": "Contract Staff",
+        "Gross_Income_Code": "GROSS",
+        "Gross_Income_Description": "Gross Income Formula",
+        "Bonus_Tax_Code": "BONUS",
+        "Bonus_Tax_Description": "",
+        "Currency_Code": ""
+    },
+    {
+        "@odata.etag": "W/\"JzQ4O2g4TUFBQUo3LzBvQVZRQk9BRWtBVHdCU0FDQUFVd0JVQUVFQVJnQkdBQUFBQUFBPTg7NDAxODM1MDYwOyc=\"",
+        "No": "JUNIOR STAFF",
+        "Description": "Junior Staff",
+        "Taxable_Income_Code": "TAXABLE",
+        "Taxable_Income_Description": "Taxable Income Formula",
+        "Tax_Code": "GHANA",
+        "Tax_Description": "Ghana Tax",
+        "Gross_Income_Code": "GROSS",
+        "Gross_Income_Description": "Gross Income Formula",
+        "Bonus_Tax_Code": "BONUS",
+        "Bonus_Tax_Description": "",
+        "Currency_Code": ""
+    },
+    {
+        "@odata.etag": "W/\"JzQ4O2g4TUFBQUo3LzFNQVJRQk9BRWtBVHdCU0FDQUFVd0JVQUVFQVJnQkdBQUFBQUFBPTg7NDAxODM1MDgwOyc=\"",
+        "No": "SENIOR STAFF",
+        "Description": "Senior Staff",
+        "Taxable_Income_Code": "TAXABLE",
+        "Taxable_Income_Description": "Taxable Income Formula",
+        "Tax_Code": "GHANA",
+        "Tax_Description": "Ghana Tax",
+        "Gross_Income_Code": "GROSS",
+        "Gross_Income_Description": "Gross Income Formula",
+        "Bonus_Tax_Code": "BONUS",
+        "Bonus_Tax_Description": "",
+        "Currency_Code": ""
+    }
+]
+}
