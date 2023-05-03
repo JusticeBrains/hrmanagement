@@ -22,11 +22,14 @@ class CompanyFieldViewSet(viewsets.ModelViewSet):
 class JobTitleViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobTitles.objects.all()
     serializer_class = serializers.JobTitlesSerializer
+    filterset_fields = ['code', 'payroll_structure', 'salary_grade', 'description']
 
 
 class SalaryGradeViewSet(viewsets.ModelViewSet):
     queryset = comp_models.SalaryGrade.objects.all()
     serializer_class = serializers.SalaryGradeSerializer
+    filterset_fields = ['code', 'payroll_structure', 'job_titles', 'transport_rate']
+
 
 
 class HolidayViewSet(viewsets.ModelViewSet):
