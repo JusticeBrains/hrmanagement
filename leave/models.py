@@ -1,4 +1,5 @@
 from django.db import connection, models
+from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
@@ -20,8 +21,8 @@ class LeaveBase(models.Model):
         null=True,
         blank=True,
     )
-    start_date = models.DateField(
-        _("From Date"), auto_now=False, auto_now_add=False, null=True, blank=True
+    start_date = models.CharField(
+        _("From Date"), null=True, blank=True
     )
     no_of_days_requested = models.PositiveIntegerField(_("No Of Days Requested"))
     job_description = models.CharField(
@@ -68,6 +69,7 @@ class LeaveBase(models.Model):
     emp_code = models.CharField(
         _("Employee Code"), max_length=50, null=True, blank=True
     )
+    leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -76,8 +78,14 @@ class LeaveBase(models.Model):
 class LeaveRequest(LeaveBase):
     @property
     def end_date(self):
-        current_date = date.today()
-        start_date = max(self.start_date, current_date)
+        # current_date = timezone.now()  # use timezone.now() instead of datetime.now()
+
+        # start_date_local = timezone.make_aware(self.start_date, timezone=timezone.get_default_timezone()) # add timezone information to the naive datetime object using the default timezone of your Django project
+        # start_date_utc = timezone.make_aware(start_date_local.astimezone(timezone.utc), timezone=timezone.utc) # 
+        # start_date = max(start_date_utc, current_date)
+        current_date = datetime.now().date()
+        start_date = datetime.strptime(self.start_date, "%Y-%m-%d").date()
+        start_date = max(current_date, start_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
@@ -103,17 +111,15 @@ class LeaveRequest(LeaveBase):
     def clean(self):
         employee = self.employee  # get the currently selected employee
         max_days = self.leave_type.calculate_max_days(employee)
-        max_days = self.employee.staff_category_code.max_number_of_days
+        # max_days = self.employee.staff_category_code.max_number_of_days
 
         emp_days_left = employee.days_left
         self.no_of_days_requested = self.no_of_days_requested or 0
 
         if self.no_of_days_requested > emp_days_left:
-            raise ValueError(
+            raise ValidationError(
                 f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
             )
-            # self.no_of_days_requested = 0
-            # self._meta.get_field("no_of_days_requested").editable = False
 
         if emp_days_left is not None:
             if self.no_of_days_requested <= emp_days_left:
@@ -140,11 +146,24 @@ class LeaveRequest(LeaveBase):
 
             elif self.leave_type.name == "Annual":
                 self.no_of_days_requested = self.no_of_days_requested
+                employee = self.employee
+                emp_days_left = employee.days_left
+                if emp_days_left is not None:
+                    if self.no_of_days_requested <= emp_days_left:
+                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+
+
 
             elif self.leave_type.name == "Medical":
                 self.no_of_days_requested = self.no_of_days_requested
 
-            no_of_days_exhausted = None or 0
+                employee = self.employee
+                emp_days_left = employee.days_left
+                if emp_days_left is not None:
+                    if self.no_of_days_requested <= emp_days_left:
+                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+
+            no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
             no_of_days_exhausted += self.no_of_days_requested
 
             # update employee with new values of days_left and no_of_days_exhausted
