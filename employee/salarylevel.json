@@ -1,0 +1,75 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/SalaryLevel",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXhBQUFBQUFBPTg7NDM3NjY2ODcwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "J1",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXlBQUFBQUFBPTg7NDM3NjY2ODgwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "J2",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQXpBQUFBQUFBPTg7NDM3NjY2ODkwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "J3",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTBBQUFBQUFBPTg7NDM3NjY2OTAwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "J4",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1NnQTFBQUFBQUFBPTg7NDM3NjY2OTEwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "J5",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXhBQUFBQUFBPTg7NDM3NjY2OTIwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "S1",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXlBQUFBQUFBPTg7NDM3NjY2OTMwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "S2",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QXpBQUFBQUFBPTg7NDM3NjY2OTQwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "S3",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTBBQUFBQUFBPTg7NDM3NjY2OTUwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "S4",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		},
+		{
+			"@odata.etag": "W/\"JzM2O2M4TUFBQUo3LzA0QVRBQkJBQUFBQW52L1V3QTFBQUFBQUFBPTg7NDM3NjY2OTYwOyc=\"",
+			"Payroll_Structure_Code": "NLA",
+			"Code": "S5",
+			"Job_Titles": "",
+			"Transport_Rate": 0
+		}
+	]
+}
