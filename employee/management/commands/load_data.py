@@ -85,7 +85,7 @@ class Command(BaseCommand):
                 SalaryGrade.objects.create(
                     code=val["Code"],
                     payroll_structure=val["Payroll_Structure_Code"],
-                    job_tiles=val["Job_Titles"],
+                    job_titles=val["Job_Titles"],
                     transport_rate=val['Transport_Rate']
                 )
             print(f"--End-- {val['Code']}")
