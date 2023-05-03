@@ -208,6 +208,10 @@ class LeaveType(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    class Meta:
+        verbose_name = "Leave Type"
+        verbose_name_plural = "Leave Types"
+
 
 # if connection.vendor == 'postgresql':
 #     with connection.cursor() as cursor:
@@ -229,9 +233,3 @@ if connection.vendor == "postgresql":
                 "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
             )
 
-    class Meta:
-        verbose_name = "Leave Type"
-        verbose_name_plural = "Leave Types"
-
-    def __str__(self):
-        return f"{self.code} - {self.name}"
