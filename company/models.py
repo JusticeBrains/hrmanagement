@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import connection, models
 import uuid
 
 from django.utils.translation import gettext_lazy as _
@@ -182,10 +182,15 @@ class PayrollStructure(models.Model):
     closed = models.BooleanField(_("Closed"))
 
 
-class SalaryGrade(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure")
-                                          , on_delete=models.CASCADE)
+class BaseCom(models.Model):
+    code = models.CharField(_("Code"), max_length=50, unique=True, primary_key=True)
+    payroll_structure = models.CharField(verbose_name=_("Payroll Structure"), blank=True, null=True, max_length=50)
+    
+    class Meta:
+        abstract = True
+
+
+class SalaryGrade(BaseCom):
     job_tiles = models.CharField(_("Job Titles"), max_length=150)
     transport_rate = models.DecimalField(_("Transport Rate"), max_digits=5, decimal_places=2)
 
@@ -194,22 +199,44 @@ class SalaryGrade(models.Model):
         verbose_name_plural = "Salary Grades"
 
     def __str__(self) -> str:
-        return self.code
+        return f"{self.code} - {self.payroll_structure}"
+
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'company_salarygrade' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE company_salarygrade ALTER COLUMN code TYPE VARCHAR(50)")
 
 
-class JobTitles(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure"), on_delete=models.CASCADE)
-    salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Salary Grade"), on_delete=models.CASCADE)
-    accept_disability = models.BooleanField(_("Accept Disability"))
-    minimum_age = models.PositiveIntegerField(_("Minimum Age"))
-    minimum_years_of_experience = models.PositiveIntegerField(_("Minimum Years Of Experience"))
+class JobTitles(BaseCom):
+    salary_grade = models.CharField(verbose_name=_("Salary Grade"), blank=True, null=True, max_length=50)
     description = models.CharField(_("Description"), max_length=80)
-    level = models.CharField(_("Level"), max_length=50)
 
     class Meta:
         verbose_name = "Job Titles"
         verbose_name_plural = "Job Titles"
+
+    def __str__(self):
+        return f"{self.code} - {self.payroll_structure} - {self.salary_grade}"
+
+
+if connection.vendor == 'postgresql':
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'company_jobtitles' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE company_jobtitles ALTER COLUMN code TYPE VARCHAR(50)")
 
 
 class Job(models.Model):
