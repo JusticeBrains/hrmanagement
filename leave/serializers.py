@@ -66,7 +66,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
-    no_of_days_left = serializers.SerializerMethodField()
+    plan_days_left = serializers.SerializerMethodField()
     hr_status = serializers.IntegerField(required=False)
 
     def get_end_date(self, obj):
@@ -89,15 +89,15 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     def get_no_of_days_left(self, obj):
         employee = obj.employee
         max_days = obj.leave_type.calculate_max_days(employee)
-        emp_days_left = employee.days_left
-        if employee.days_left is not None:
+        emp_days_left = employee.plan_days_left
+        if employee.plan_days_left is not None:
             if obj.no_of_days_requested > emp_days_left:
                 raise serializers.ValidationError("error")
         return emp_days_left - obj.no_of_days_requested
 
     def validate(self, data):
-        if data['employee'].days_left is not None:
-            if data['no_of_days_requested'] > data['employee'].days_left:
+        if data['employee'].plan_days_left is not None:
+            if data['no_of_days_requested'] > data['employee'].plan_days_left:
                 raise ValidationError("Number of planned days exceed maximum days left")
             
         return data   
