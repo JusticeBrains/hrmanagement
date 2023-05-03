@@ -39,21 +39,21 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
         print(type(end_date)) 
         return start_date
     
-    def get_no_of_days_left(self, obj):
-        employee = obj.employee
-        max_days = obj.leave_type.calculate_max_days(employee)
-        emp_days_left = employee.days_left
-        if employee.days_left is not None:
-            if obj.no_of_days_requested > emp_days_left:
-                raise serializers.ValidationError("error")
-        return emp_days_left - obj.no_of_days_requested
+    # def get_no_of_days_left(self, obj):
+    #     employee = obj.employee
+    #     max_days = obj.leave_type.calculate_max_days(employee)
+    #     emp_days_left = employee.days_left
+    #     if employee.days_left is not None:
+    #         if obj.no_of_days_requested > emp_days_left:
+    #             raise serializers.ValidationError("error")
+    #     return emp_days_left - obj.no_of_days_requested
 
-    def validate(self, data):
-        if data['employee'].days_left is not None:
-            if data['no_of_days_requested'] > data['employee'].days_left:
-                raise ValidationError("Number of planned days exceed maximum days left")
+    # def validate(self, data):
+    #     if data['employee'].days_left is not None:
+    #         if data['no_of_days_requested'] > data['employee'].days_left:
+    #             raise ValidationError("Number of planned days exceed maximum days left")
             
-        return data   
+    #     return data   
 
     class Meta:
         model = LeaveRequest
@@ -86,21 +86,21 @@ class LeavePlanSerializer(serializers.ModelSerializer):
         print(type(end_date)) 
         return start_date
     
-    def get_plan_days_left(self, obj):
-        employee = obj.employee
-        max_days = obj.leave_type.calculate_max_days(employee)
-        emp_days_left = employee.plan_days_left
-        if employee.plan_days_left is not None:
-            if obj.no_of_days_requested > emp_days_left:
-                raise serializers.ValidationError("error")
-        return emp_days_left - obj.no_of_days_requested
+    # def get_plan_days_left(self, obj):
+    #     employee = obj.employee
+    #     max_days = obj.leave_type.calculate_max_days(employee)
+    #     emp_days_left = employee.plan_days_left
+    #     if employee.plan_days_left is not None:
+    #         if obj.no_of_days_requested > emp_days_left:
+    #             raise serializers.ValidationError("error")
+    #     return emp_days_left - obj.no_of_days_requested
 
-    def validate(self, data):
-        if data['employee'].plan_days_left is not None:
-            if data['no_of_days_requested'] > data['employee'].plan_days_left:
-                raise ValidationError("Number of planned days exceed maximum days left")
+    # def validate(self, data):
+    #     if data['employee'].plan_days_left is not None:
+    #         if data['no_of_days_requested'] > data['employee'].plan_days_left:
+    #             raise ValidationError("Number of planned days exceed maximum days left")
             
-        return data   
+    #     return data   
     # start_date = serializers.DateField()
     # end_date = serializers.SerializerMethodField()
     class Meta:
