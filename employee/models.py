@@ -514,7 +514,15 @@ class StaffCategory(Base):
 # Set the data type of the primary key to VARCHAR in PostgreSQL
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
-        cursor.execute('ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)')
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'employee_staffcategory' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)")
 
 
 
@@ -530,10 +538,18 @@ class Department(Base):
     def __str__(self):
         return f"{self.code} - {self.first_category_code}"
     
-# Set the data type of the primary key to VARCHAR in PostgreSQL
+
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
-        cursor.execute('ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)')
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'employee_department' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)")
 
 
 class Unit(Base):
@@ -548,9 +564,28 @@ class Unit(Base):
     def __str__(self):
         return f"{self.code} - {self.second_category_code}"
 
+# if connection.vendor == 'postgresql':
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#             SELECT EXISTS(
+#                 SELECT * FROM employee_unit
+#             )
+#         """)
+#         cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
+
+
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
-        cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'employee_unit' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)")
+
 
 
 class Branch(Base):
@@ -568,4 +603,12 @@ class Branch(Base):
 # # Set the data type of the primary key to VARCHAR in PostgreSQL
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
-        cursor.execute('ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)')
+        cursor.execute("""
+            SELECT EXISTS(
+                SELECT * FROM information_schema.columns
+                WHERE table_name = 'employee_branch' AND column_name = 'code'
+            )
+        """)
+        column_exists = cursor.fetchone()[0]
+        if column_exists:
+            cursor.execute("ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)")
