@@ -598,7 +598,7 @@ class Notch(models.Model):
     amount = models.DecimalField(_("Amount"), max_digits=8, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.payroll_structure_code} - {self.salary_grade}"
+        return f"{self.payroll_structure_code} - {self.salary_grade} - {self.no} - {self.amount}"
     
     class Meta:
         verbose_name = "Notch"
