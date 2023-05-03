@@ -140,11 +140,11 @@ class LeaveRequest(LeaveBase):
 
     def save(self, *args, **kwargs):
         if self.hr_status == 2:
-            if self.leave_type.name == "Maternity":
-                self.no_of_days_requested = self.leave_type.max_number_of_days
-                self.no_of_days_left = self.employee.days_left
+            # if self.leave_type.name == "Maternity":
+            #     self.no_of_days_requested = self.leave_type.max_number_of_days
+            #     self.no_of_days_left = self.employee.days_left
 
-            elif self.leave_type.name == "Annual":
+            if self.leave_type.name == "Annual":
                 self.no_of_days_requested = self.no_of_days_requested
                 employee = self.employee
                 emp_days_left = employee.days_left
@@ -180,11 +180,35 @@ class LeaveRequest(LeaveBase):
         return f"{self.leave_type}, {self.start_date} - {self.no_of_days_requested}"
 
 
+# class LeavePlan(LeaveBase):
+#     @property
+#     def end_date(self):
+#         current_date = date.today()
+#         start_date = max(self.start_date, current_date)
+#         days_added = 0
+
+#         while days_added < self.no_of_days_requested:
+#             start_date += timedelta(days=1)
+#             if start_date.weekday() >= 5:
+#                 continue
+#             days_added += 1
+#         return start_date
+
+#     class Meta:
+#         verbose_name = "Leave Plan"
+#         verbose_name_plural = "Leave Plans"
+
 class LeavePlan(LeaveBase):
     @property
     def end_date(self):
-        current_date = date.today()
-        start_date = max(self.start_date, current_date)
+        # current_date = timezone.now()  # use timezone.now() instead of datetime.now()
+
+        # start_date_local = timezone.make_aware(self.start_date, timezone=timezone.get_default_timezone()) # add timezone information to the naive datetime object using the default timezone of your Django project
+        # start_date_utc = timezone.make_aware(start_date_local.astimezone(timezone.utc), timezone=timezone.utc) # 
+        # start_date = max(start_date_utc, current_date)
+        current_date = datetime.now().date()
+        start_date = datetime.strptime(self.start_date, "%Y-%m-%d").date()
+        start_date = max(current_date, start_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
@@ -194,9 +218,80 @@ class LeavePlan(LeaveBase):
             days_added += 1
         return start_date
 
-    class Meta:
-        verbose_name = "Leave Plan"
-        verbose_name_plural = "Leave Plans"
+    def calculate_max_days(self, employee):
+        if self.leave_type.name == "Medical":
+            self.leave_type.max_number_of_days = employee.days_left
+        elif self.leave_type.name == "Annual":
+            self.leave_type.max_number_of_days = employee.days_left
+        else:
+            self.leave_type.max_number_of_days = self.leave_type.max_number_of_days
+
+        if self.leave_type.staff_category == employee.staff_category_code:
+            return self.leave_type.max_number_of_days
+        else:
+            return 0
+
+    def clean(self):
+        employee = self.employee  # get the currently selected employee
+        max_days = self.leave_type.calculate_max_days(employee)
+        # max_days = self.employee.staff_category_code.max_number_of_days
+
+        emp_days_left = employee.days_left
+        self.no_of_days_requested = self.no_of_days_requested or 0
+
+        if self.no_of_days_requested > emp_days_left:
+            raise ValidationError(
+                f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
+            )
+
+        if emp_days_left is not None:
+            if self.no_of_days_requested <= emp_days_left:
+                self.no_of_days_left = emp_days_left - self.no_of_days_requested
+
+        self.emp_code = employee.code
+        self.employee_branch = employee.third_category_level
+        self.job_title = employee.job_title
+        self.dep = employee.first_category_level
+        self.employee_unit = employee.second_category_level
+
+        if employee.no_of_days_exhausted == max_days:
+            raise ValueError(
+                f"Number of Days Exhausted {employee.no_of_days_exhausted} == Maxdays {max_days} "
+            )
+        else:
+            self._meta.get_field("no_of_days_requested").editable = True
+
+    def save(self, *args, **kwargs):
+        if self.hr_status == 2:
+            # if self.leave_type.name == "Maternity":
+            #     self.no_of_days_requested = self.leave_type.max_number_of_days
+            #     self.no_of_days_left = self.employee.days_left
+
+            if self.leave_type.name == "Annual":
+                self.no_of_days_requested = self.no_of_days_requested
+                employee = self.employee
+                emp_days_left = employee.days_left
+                if emp_days_left is not None:
+                    if self.no_of_days_requested <= emp_days_left:
+                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+
+            elif self.leave_type.name == "Medical":
+                self.no_of_days_requested = self.no_of_days_requested
+
+                employee = self.employee
+                emp_days_left = employee.days_left
+                if emp_days_left is not None:
+                    if self.no_of_days_requested <= emp_days_left:
+                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+
+            no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
+            no_of_days_exhausted += self.no_of_days_requested
+
+            # update employee with new values of days_left and no_of_days_exhausted
+            Employee.objects.filter(id=self.employee.id).update(
+                days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
+            )
+        super(LeavePlan, self).save(*args, **kwargs)
 
 
 class LeaveType(models.Model):
