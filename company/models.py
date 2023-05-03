@@ -191,7 +191,7 @@ class BaseCom(models.Model):
 
 
 class SalaryGrade(BaseCom):
-    job_tiles = models.CharField(_("Job Titles"), max_length=150)
+    job_titles = models.CharField(_("Job Titles"), max_length=150)
     transport_rate = models.DecimalField(_("Transport Rate"), max_digits=5, decimal_places=2)
 
     class Meta:
