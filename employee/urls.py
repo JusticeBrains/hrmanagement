@@ -18,5 +18,7 @@ router.register('staff-category', employee_views.StaffCategoryViewSet, basename=
 router.register('department', employee_views.DepartmentViewSet, basename='department')
 router.register('unit', employee_views.UnitViewSet, basename='unit')
 router.register('branch', employee_views.BranchViewSet, basename='branch')
+router.register('notch', employee_views.NotchViewSet, basename='branch')
+router.register('paycategorylis', employee_views.PayCategoryListViewSet, basename='branch')
 
 urlpatterns = router.urls

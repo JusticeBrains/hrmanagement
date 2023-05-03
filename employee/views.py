@@ -135,3 +135,14 @@ class BranchViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Branch.objects.all()
     serializer_class = serializers.BranchSerializer
     filterset_fields = ['code', 'name', 'third_category_code',]
+
+
+
+class NotchViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.Notch.objects.all()
+    serializer_class = serializers.NotchesSerializer
+
+
+class PayCategoryListViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.PayCategoryList.objects.all()
+    serializer_class = serializers.PayCategoryListSerializer

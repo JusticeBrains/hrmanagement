@@ -83,3 +83,14 @@ class BranchSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.Branch
         fields = "__all__"
+
+class NotchesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.Notch
+        fields = "__all__"
+
+class PayCategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.PayCategoryList
+        fields = "__all__"
+
