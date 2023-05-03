@@ -15,7 +15,7 @@ from django.db import connection
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-
+import uuid
 User = get_user_model()
 
 
@@ -433,20 +433,6 @@ class EmployeeDisciplinaryActions(models.Model):
         return f"{self.emp_name}, {self.disciplinary_code}, {self.recommended_action}"
 
 
-# class EmployeePolicy(LeaveRequest):
-#     assignment_no = models.CharField(_("Assignment No."), max_length=50)
-#     last_date_modified = models.DateField(
-#         _("Last Date Modified"), auto_now=False, auto_now_add=False
-#     )
-#     closed = models.BooleanField(_("Closed"))
-
-#     class Meta:
-#         verbose_name = "Employee Policy"
-#         verbose_name_plural = "Employee Policies"
-
-#     def __str__(self):
-#         return self.assignment_no
-
 
 class EmployeePayReview(models.Model):
     no = models.CharField(_("Code"), max_length=50)
@@ -564,15 +550,6 @@ class Unit(Base):
     def __str__(self):
         return f"{self.code} - {self.second_category_code}"
 
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT EXISTS(
-#                 SELECT * FROM employee_unit
-#             )
-#         """)
-#         cursor.execute('ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)')
-
 
 if connection.vendor == 'postgresql':
     with connection.cursor() as cursor:
@@ -612,3 +589,38 @@ if connection.vendor == 'postgresql':
         column_exists = cursor.fetchone()[0]
         if column_exists:
             cursor.execute("ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)")
+
+class Notch(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    payroll_structure_code = models.CharField(_("Payroll Structure Code"), max_length=50,blank=True, null=True)
+    salary_grade = models.CharField(_("Salary Grade"), max_length=50, null=True, blank=True)
+    no = models.CharField(_("No"), max_length=50, blank=True, null=True)
+    amount = models.DecimalField(_("Amount"), max_digits=8, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.payroll_structure_code} - {self.salary_grade}"
+    
+    class Meta:
+        verbose_name = "Notch"
+        verbose_name_plural = "Notches"
+
+
+class PayCategoryList(models.Model):
+    no = models.CharField(_("No"), max_length=50, blank=True, null=True)
+    description = models.CharField(_("Description"), max_length=50, blank=True, null=True)
+    taxable_income_code = models.CharField(_("Taxable Income Code"), max_length=50, blank=True, null=True)
+    taxable_income_description = models.CharField(_("Taxable Income Description"), max_length=50, blank=True, null=True)
+    tax_code = models.CharField(_("Tax Code"), max_length=50, blank=True, null=True)
+    tax_description = models.CharField(_("Tax Description"), max_length=50, blank=True, null=True)
+    gross_income_code = models.CharField(_("Gross Income Code"), max_length=50, blank=True, null=True)
+    gross_income_description = models.CharField(_("Gross Income Description"), max_length=50, blank=True, null=True)
+    bonus_tax_code = models.CharField(_("Bonus Tax Code"), max_length=50, blank=True, null=True)
+    bonus_tax_description = models.CharField(_("Bonus Tax Description"), max_length=50, blank=True, null=True)
+    currency_code = models.CharField(_("Currency Code"), max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.no} - {self.description} - {self.taxable_income_code}"
+    
+    class Meta:
+        verbose_name = "Pay Category List"
+        verbose_name_plural = "Pay Category Lists"
