@@ -67,7 +67,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
 class LeavePlanSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
-    # no_of_days_requested = serializers.IntegerField(required=False)
+    no_of_days_requested = serializers.IntegerField(required=False)
     # plan_days_left = serializers.IntegerField(required=False)
     # hr_status = serializers.IntegerField(required=False)
 
