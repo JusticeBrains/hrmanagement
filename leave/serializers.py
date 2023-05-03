@@ -22,7 +22,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
     # no_of_days_left = serializers.IntegerField(required=False)
     # hr_status = serializers.IntegerField(required=False)
 
-    
+
 
     def get_end_date(self, obj):
         """custom method to compute duration"""
@@ -105,6 +105,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     #     return data   
     # start_date = serializers.DateField()
     # end_date = serializers.SerializerMethodField()
+    
     class Meta:
         model = LeavePlan
         fields = "__all__"
