@@ -21,7 +21,7 @@ class LeaveBase(models.Model):
         null=True,
         blank=True,
     )
-    start_date = models.DateField(_("Start Date"), default=timezone.now())
+    start_date = models.DateField(_("Start Date"), default=timezone.now)
     no_of_days_requested = models.PositiveIntegerField(_("No Of Days Requested"))
     job_description = models.CharField(
         _("Job Description"), max_length=150, null=True, blank=True
