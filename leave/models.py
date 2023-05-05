@@ -216,11 +216,6 @@ class LeaveRequest(LeaveBase):
 class LeavePlan(LeaveBase):
     @property
     def end_date(self):
-        # current_date = timezone.now()  # use timezone.now() instead of datetime.now()
-
-        # start_date_local = timezone.make_aware(self.start_date, timezone=timezone.get_default_timezone()) # add timezone information to the naive datetime object using the default timezone of your Django project
-        # start_date_utc = timezone.make_aware(start_date_local.astimezone(timezone.utc), timezone=timezone.utc) # 
-        # start_date = max(start_date_utc, current_date)
         current_date = datetime.now().date()
         start_date = datetime.strptime(self.start_date, "%Y-%m-%d").date()
         start_date = max(current_date, start_date)
@@ -268,7 +263,7 @@ class LeavePlan(LeaveBase):
             self.no_of_days_requested = self.leave_type.max_number_of_days
             self.no_of_days_left = self.employee.plan_days_left
 
-        if self.leave_type.name == "Medical":
+        elif self.leave_type.name == "Medical":
             self.no_of_days_requested = self.no_of_days_requested
             employee = self.employee
             emp_days_left = employee.plan_days_left
