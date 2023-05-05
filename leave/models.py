@@ -217,7 +217,10 @@ class LeavePlan(LeaveBase):
     @property
     def end_date(self):
         current_date = datetime.now().date()
-        start_date = datetime.strptime(self.start_date, "%Y-%m-%d").date()
+        start_date_str = self.start_date
+        if start_date_str is None:
+            raise ValidationError("Start Date Can't Be None")
+        start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
         start_date = max(current_date, start_date)
         days_added = 0
 
