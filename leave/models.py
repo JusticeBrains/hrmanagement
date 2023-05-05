@@ -13,6 +13,19 @@ from django.utils import timezone
 User = get_user_model()
 
 
+class HolidayCalender(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=80)
+    holiday_date = models.DateField(_("Holiday Date"), auto_now=False, auto_now_add=False)
+
+    class Meta:
+        verbose_name = "Holiday Calender"
+        verbose_name_plural = "Holiday Calenders"
+    
+    def __str__(self):
+        return f"{self.name} - {self.holiday_date}"
+
+
 class LeaveBase(models.Model):
     leave_type = models.ForeignKey(
         "leave.LeaveType",
@@ -76,16 +89,17 @@ class LeaveBase(models.Model):
 class LeaveRequest(LeaveBase):
     @property
     def end_date(self):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         current_date = datetime.now().date()
         start_date = max(self.start_date, current_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
             start_date += timedelta(days=1)
-            if start_date.weekday() >= 5:
+            if start_date.weekday() >= 5 or start_date in holidays:
                 continue
             days_added += 1
-        return start_date
+        return start_datemax_days
 
     def calculate_max_days(self, employee):
         if self.leave_type.name == "Medical":
@@ -225,13 +239,14 @@ class LeavePlan(LeaveBase):
 
     @property
     def end_date(self):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         current_date = datetime.now().date()
         start_date = max(self.start_date, current_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
             start_date += timedelta(days=1)
-            if start_date.weekday() >= 5:
+            if start_date.weekday() >= 5 or start_date in holidays:
                 continue
             days_added += 1
         return start_date
@@ -396,4 +411,5 @@ if connection.vendor == "postgresql":
             cursor.execute(
                 "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
             )
+
 
