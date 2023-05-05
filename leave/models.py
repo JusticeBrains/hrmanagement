@@ -21,9 +21,7 @@ class LeaveBase(models.Model):
         null=True,
         blank=True,
     )
-    start_date = models.CharField(
-        _("From Date"), null=True, blank=True
-    )
+    start_date = models.DateField(_("Start Date"), auto_now=False, auto_now_add=False)
     no_of_days_requested = models.PositiveIntegerField(_("No Of Days Requested"))
     job_description = models.CharField(
         _("Job Description"), max_length=150, null=True, blank=True
@@ -78,14 +76,8 @@ class LeaveBase(models.Model):
 class LeaveRequest(LeaveBase):
     @property
     def end_date(self):
-        # current_date = timezone.now()  # use timezone.now() instead of datetime.now()
-
-        # start_date_local = timezone.make_aware(self.start_date, timezone=timezone.get_default_timezone()) # add timezone information to the naive datetime object using the default timezone of your Django project
-        # start_date_utc = timezone.make_aware(start_date_local.astimezone(timezone.utc), timezone=timezone.utc) # 
-        # start_date = max(start_date_utc, current_date)
         current_date = datetime.now().date()
-        start_date = datetime.strptime(self.start_date, "%Y-%m-%d").date()
-        start_date = max(current_date, start_date)
+        start_date = max(self.start_date, current_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
@@ -214,14 +206,27 @@ class LeaveRequest(LeaveBase):
 
 
 class LeavePlan(LeaveBase):
+    # @property
+    # def end_date(self):
+    #     current_date = datetime.now().date()
+    #     start_date_str = self.start_date
+    #     if start_date_str is None:
+    #         raise ValidationError("Start Date Can't Be None")
+    #     start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+    #     start_date = max(current_date, start_date)
+    #     days_added = 0
+
+    #     while days_added < self.no_of_days_requested:
+    #         start_date += timedelta(days=1)
+    #         if start_date.weekday() >= 5:
+    #             continue
+    #         days_added += 1
+    #     return start_date
+
     @property
     def end_date(self):
         current_date = datetime.now().date()
-        start_date_str = self.start_date
-        if start_date_str is None:
-            raise ValidationError("Start Date Can't Be None")
-        start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
-        start_date = max(current_date, start_date)
+        start_date = max(self.start_date, current_date)
         days_added = 0
 
         while days_added < self.no_of_days_requested:
