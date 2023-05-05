@@ -5,6 +5,7 @@ from django_property_filter import PropertyDateFilter
 from django.utils import timezone
 
 from .models import (
+    HolidayCalender,
     LeaveType,
     LeaveRequest,
     LeavePlan
@@ -23,13 +24,14 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
 
     @property
     def get_end_date(self, obj):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         current_date = datetime.now().date()
         start_date = max(obj.start_date, current_date)
         days_added = 0
 
         while days_added < obj.no_of_days_requested:
             start_date += timedelta(days=1)
-            if start_date.weekday() >= 5:
+            if start_date.weekday() >= 5 or start_date in holidays:
                 continue
             days_added += 1
         print(type(start_date))
@@ -83,11 +85,12 @@ class LeavePlanSerializer(serializers.ModelSerializer):
 
     @property
     def get_end_date(self, obj):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         current_date = datetime.now().date()
         start_date = max(obj.start_date, current_date)
         days_added = 0
 
-        while days_added < obj.no_of_days_requested:
+        while days_added < obj.no_of_days_requested or start_date in holidays:
             start_date += timedelta(days=1)
             if start_date.weekday() >= 5:
                 continue
@@ -136,5 +139,8 @@ class LeaveTypeSerializer(serializers.ModelSerializer):
         model = LeaveType
         fields = "__all__"
 
-
+class HolidayCalenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HolidayCalender
+        fields = "__all__"
 
