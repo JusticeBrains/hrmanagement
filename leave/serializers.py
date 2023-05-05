@@ -21,11 +21,10 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
     no_of_days_requested = serializers.IntegerField(required=False)
 
 
+    @property
     def get_end_date(self, obj):
-        """custom method to compute duration"""
         current_date = datetime.now().date()
-        start_date = datetime.strptime(obj.start_date, "%Y-%m-%d").date()
-        start_date = max(current_date, start_date)
+        start_date = max(obj.start_date, current_date)
         days_added = 0
 
         while days_added < obj.no_of_days_requested:
@@ -33,10 +32,25 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             if start_date.weekday() >= 5:
                 continue
             days_added += 1
-
-        end_date = start_date
-        print(type(end_date)) 
+        print(type(start_date))
         return start_date
+
+    # def get_end_date(self, obj):
+    #     """custom method to compute duration"""
+    #     current_date = datetime.now().date()
+    #     start_date = datetime.strptime(obj.start_date, "%Y-%m-%d").date()
+    #     start_date = max(current_date, start_date)
+    #     days_added = 0
+
+    #     while days_added < obj.no_of_days_requested:
+    #         start_date += timedelta(days=1)
+    #         if start_date.weekday() >= 5:
+    #             continue
+    #         days_added += 1
+
+    #     end_date = start_date
+    #     print(type(end_date)) 
+    #     return start_date
     
     # def get_no_of_days_left(self, obj):
     #     employee = obj.employee
@@ -67,11 +81,10 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     no_of_days_requested = serializers.IntegerField(required=False)
 
 
+    @property
     def get_end_date(self, obj):
-        """custom method to compute duration"""
         current_date = datetime.now().date()
-        start_date = datetime.strptime(obj.start_date, "%Y-%m-%d").date()
-        start_date = max(current_date, start_date)
+        start_date = max(obj.start_date, current_date)
         days_added = 0
 
         while days_added < obj.no_of_days_requested:
@@ -79,9 +92,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
             if start_date.weekday() >= 5:
                 continue
             days_added += 1
-            
-        end_date = start_date
-        print(type(end_date)) 
+        print(type(start_date))
         return start_date
     
     # def get_plan_days_left(self, obj):
