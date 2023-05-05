@@ -99,7 +99,7 @@ class LeaveRequest(LeaveBase):
             if start_date.weekday() >= 5 or start_date in holidays:
                 continue
             days_added += 1
-        return start_datemax_days
+        return start_date
 
     def calculate_max_days(self, employee):
         if self.leave_type.name == "Medical":
