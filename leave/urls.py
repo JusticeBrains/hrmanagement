@@ -1,11 +1,12 @@
 from rest_framework.routers import SimpleRouter
 
-from .views import  LeaveRequestViewSet, LeaveTypeViewSet, LeavePlanViewSet
+from .views import  LeaveRequestViewSet, LeaveTypeViewSet, LeavePlanViewSet, HolidayCalenderViewset
 
 router = SimpleRouter()
 router.register('leaverequest', LeaveRequestViewSet, basename='leaverequest')
 router.register('leaveplan', LeavePlanViewSet, basename='leaveplan')
 router.register('leavetype', LeaveTypeViewSet, basename='leavetype')
+router.register('holidays', HolidayCalenderViewset, basename='holidays')
 
 
 urlpatterns = router.urls
