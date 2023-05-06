@@ -38,71 +38,71 @@ class Employee(models.Model):
     )
     job_titles = models.CharField(_("Job Titles"), max_length=50, blank=True, null=True)
     job_title_description = models.CharField(
-        _("Job Title Description"), max_length=50, null=True, blank=True
+        _("Job Title Description"), max_length=250, null=True, blank=True
     )
     privacy_blocked = models.CharField(
         _("Privacy Blocked"), max_length=50, blank=True, null=True
     )
-    address = models.CharField(_("Address"), max_length=50, blank=True, null=True)
-    address_2 = models.CharField(_("Address 2"), max_length=50, blank=True, null=True)
-    post_code = models.CharField(_("Post Code"), max_length=50, blank=True, null=True)
-    city = models.CharField(_("City"), max_length=50, blank=True, null=True)
+    address = models.CharField(_("Address"), max_length=250, blank=True, null=True)
+    address_2 = models.CharField(_("Address 2"), max_length=250, blank=True, null=True)
+    post_code = models.CharField(_("Post Code"), max_length=250, blank=True, null=True)
+    city = models.CharField(_("City"), max_length=250, blank=True, null=True)
     country_region_code = models.CharField(
         _("Country Region Code"), max_length=50, blank=True, null=True
     )
-    showmap = models.CharField(_("Show Map"), max_length=50, blank=True, null=True)
-    mobile_no = models.CharField(max_length=20, null=True, blank=True)
-    pager = models.CharField(_("Pager"), max_length=50, blank=True, null=True)
-    extension = models.CharField(_("Extension"), max_length=50, blank=True, null=True)
+    showmap = models.CharField(_("Show Map"), max_length=250, blank=True, null=True)
+    mobile_no = models.CharField(max_length=250, null=True, blank=True)
+    pager = models.CharField(_("Pager"), max_length=250, blank=True, null=True)
+    extension = models.CharField(_("Extension"), max_length=250, blank=True, null=True)
     email = models.CharField(_("Email"), max_length=150, blank=True, null=True)
     alt_address_code = models.CharField(
-        _("Alt Address Code"), max_length=50, blank=True, null=True
+        _("Alt Address Code"), max_length=250, blank=True, null=True
     )
     alt_address_start_date = models.CharField(
-        _("Alt Address Start Date"), max_length=50, blank=True, null=True
+        _("Alt Address Start Date"), max_length=250, blank=True, null=True
     )
     alt_address_end_date = models.CharField(
-        _("Alt Address End Date"), max_length=50, blank=True, null=True
+        _("Alt Address End Date"), max_length=250, blank=True, null=True
     )
     first_category_level = models.CharField(
-        _("First Category Level"), max_length=50, blank=True, null=True
+        _("First Category Level"), max_length=250, blank=True, null=True
     )
     second_category_level = models.CharField(
-        _("Second Category Level"), max_length=50, blank=True, null=True
+        _("Second Category Level"), max_length=250, blank=True, null=True
     )
     third_category_level = models.CharField(
-        _("Third Category Level"), max_length=50, blank=True, null=True
+        _("Third Category Level"), max_length=250, blank=True, null=True
     )
     fourth_category_level = models.CharField(
-        _("Fourth Category Level"), max_length=50, blank=True, null=True
+        _("Fourth Category Level"), max_length=250, blank=True, null=True
     )
     fifth_category_level = models.CharField(
-        _("Fifth Category Level"), max_length=50, blank=True, null=True
+        _("Fifth Category Level"), max_length=250, blank=True, null=True
     )
     employment_date = models.CharField(
-        _("Employement Date"), max_length=50, blank=True, null=True
+        _("Employement Date"), max_length=250, blank=True, null=True
     )
-    status = models.CharField(_("Status"), max_length=50, blank=True, null=True)
+    status = models.CharField(_("Status"), max_length=250, blank=True, null=True)
     inactive_date = models.CharField(
-        _("Inactive Date"), max_length=50, blank=True, null=True
+        _("Inactive Date"), max_length=250, blank=True, null=True
     )
     cause_of_inactivity_code = models.CharField(
-        _("Cause of Inactive Code"), max_length=50, blank=True, null=True
+        _("Cause of Inactive Code"), max_length=250, blank=True, null=True
     )
     termination_date = models.CharField(
-        _("Termination Date"), max_length=50, blank=True, null=True
+        _("Termination Date"), max_length=250, blank=True, null=True
     )
     employement_contract_code = models.CharField(
-        _("Employement Contract Code"), max_length=50, blank=True, null=True
+        _("Employement Contract Code"), max_length=250, blank=True, null=True
     )
     statistics_group_code = models.CharField(
-        _("Statistics Group Code"), max_length=50, null=True, blank=True
+        _("Statistics Group Code"), max_length=250, null=True, blank=True
     )
     resource_no = models.CharField(
-        _("Resource No"), max_length=50, blank=True, null=True
+        _("Resource No"), max_length=250, blank=True, null=True
     )
     salesperson_purch_code = models.CharField(
-        _("Salespers Purch Code"), max_length=50, null=True, blank=True
+        _("Salespers Purch Code"), max_length=250, null=True, blank=True
     )
     birth_date = models.CharField(_("Birth Date"), max_length=50, blank=True, null=True)
     ssno = models.CharField(
@@ -155,9 +155,6 @@ class Employee(models.Model):
     iban = models.CharField(_("IBAN"), max_length=50, null=True, blank=True)
     swift_code = models.CharField(_("Swift Code"), max_length=50, blank=True, null=True)
     phone_no = models.CharField(_("Phone Number"), max_length=50, blank=True, null=True)
-    nationality = models.CharField(
-        _("Nationality"), max_length=50, blank=True, null=True
-    )
     grounds_for_term = models.CharField(
         _("Grounds For Termination"), max_length=50, blank=True, null=True
     )
