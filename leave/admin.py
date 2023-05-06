@@ -16,6 +16,10 @@ class LeaveRequestAdmin(admin.ModelAdmin):
         "no_of_days_requested",
         'no_of_days_left',
         "date_applied",
+        'is_extend',
+        'no_of_extension_days',
+        'extension_date',
+        'hr_extension_status',
     ]
 
 @admin.register(lmodels.LeavePlan)
