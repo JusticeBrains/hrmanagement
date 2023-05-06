@@ -90,6 +90,9 @@ class LeaveRequest(LeaveBase):
     is_extend = models.PositiveIntegerField(_("Requestion for Extension"), blank=True, null=True)
     no_of_extension_days = models.PositiveIntegerField(_("No Of Extension Days"), blank=True, null=True)
     hr_extension_status = models.PositiveIntegerField(_("HR Extension Status"), blank=True, null=True)
+    total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), null=True, blank=True)
+    hod_extension_status = models.PositiveIntegerField(_("HOO Extension Status"), null=True, blank=True)
+    extension_status = models.PositiveIntegerField(_("Extension Status"), null=True, blank=True)
 
     @property
     def end_date(self):
