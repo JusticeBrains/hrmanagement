@@ -233,14 +233,14 @@ class LeaveRequest(LeaveBase):
                 emp_days_left = employee.days_left
                 if emp_days_left is not None:
                     if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+                        self.no_of_days_left = emp_days_left - self.no_of_extension_days
 
             elif self.leave_type.name == "Annual":
                 employee = self.employee
                 emp_days_left = employee.days_left
                 if emp_days_left is not None:
                     if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+                        self.no_of_days_left = emp_days_left - self.no_of_extension_days
 
             no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
             no_of_days_exhausted += self.no_of_extension_days

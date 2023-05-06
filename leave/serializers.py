@@ -19,7 +19,11 @@ class DateOnlyField(serializers.ReadOnlyField):
 class LeaveRequestSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
+    extension_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
+    no_of_extension_days = serializers.IntegerField(required=False)
+
+
 
 
     @property
@@ -37,38 +41,23 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
         print(type(start_date))
         return start_date
 
-    # def get_end_date(self, obj):
-    #     """custom method to compute duration"""
-    #     current_date = datetime.now().date()
-    #     start_date = datetime.strptime(obj.start_date, "%Y-%m-%d").date()
-    #     start_date = max(current_date, start_date)
-    #     days_added = 0
 
-    #     while days_added < obj.no_of_days_requested:
-    #         start_date += timedelta(days=1)
-    #         if start_date.weekday() >= 5:
-    #             continue
-    #         days_added += 1
+    @property
+    def extension_date(self, obj):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        current_date = datetime.now().date()
+        start_date = obj.end_date
+        start_date = max(start_date, current_date)
+        days_added = 0
 
-    #     end_date = start_date
-    #     print(type(end_date)) 
-    #     return start_date
+        while days_added < obj.no_of_extension_days:
+            start_date += timedelta(days=1)
+            if start_date.weekday() >= 5 or start_date in holidays:
+                continue
+            days_added += 1
+        print(type(start_date))
+        return start_date
     
-    # def get_no_of_days_left(self, obj):
-    #     employee = obj.employee
-    #     max_days = obj.leave_type.calculate_max_days(employee)
-    #     emp_days_left = employee.days_left
-    #     if employee.days_left is not None:
-    #         if obj.no_of_days_requested > emp_days_left:
-    #             raise serializers.ValidationError("error")
-    #     return emp_days_left - obj.no_of_days_requested
-
-    # def validate(self, data):
-    #     if data['employee'].days_left is not None:
-    #         if data['no_of_days_requested'] > data['employee'].days_left:
-    #             raise ValidationError("Number of planned days exceed maximum days left")
-            
-    #     return data   
 
     class Meta:
         model = LeaveRequest
