@@ -173,6 +173,7 @@ class Employee(models.Model):
     no_of_days_exhausted = models.PositiveIntegerField(_("No. Of Days Exhausted"), blank=True, null=True)
     plan_days_left = models.PositiveIntegerField(_("Plan Days Left"), null=True, blank=True, default=0)
     plan_no_of_days_exhausted = models.PositiveIntegerField(_("Plan No. Of Days Exhausted"), blank=True, null=True)
+    total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), null=True, blank=True)
 
 
     class Meta:
