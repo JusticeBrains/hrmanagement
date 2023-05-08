@@ -87,12 +87,18 @@ class LeaveBase(models.Model):
 
 
 class LeaveRequest(LeaveBase):
-    is_extend = models.PositiveIntegerField(_("Requestion for Extension"), blank=True, null=True)
+    is_extend = models.PositiveIntegerField(_("Requestion for Extension"), blank=True, null=True,default=0)
     no_of_extension_days = models.PositiveIntegerField(_("No Of Extension Days"), blank=True, null=True)
-    hr_extension_status = models.PositiveIntegerField(_("HR Extension Status"), blank=True, null=True)
+    hr_extension_status = models.PositiveIntegerField(_("HR Extension Status"), blank=True, null=True, default=0)
+    hod_extension_status = models.PositiveIntegerField(_("HOD Extension Status"), blank=True, null=True, default=0)
+    date_of_extension = models.CharField(_("Date of Extension"), null=True, blank=True, max_length=250)
+    hod_extension_date = models.CharField(_("HOD Extension Date"), null=True, blank=True, max_length=250)
+    hr_extension_date = models.CharField(_("HR Extension Date"), null=True, blank=True, max_length=250)
+    hod_extension_remarks = models.CharField(_("HOD Extension Remarks"), max_length=250)
+    hr_extension_remarks = models.CharField(_("HR Extension Remarks"), max_length=250)
     total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), null=True, blank=True)
     hod_extension_status = models.PositiveIntegerField(_("HOO Extension Status"), null=True, blank=True)
-    extension_status = models.PositiveIntegerField(_("Extension Status"), null=True, blank=True)
+    extension_status = models.PositiveIntegerField(_("Extension Status"),default=0, null=True, blank=True)
 
     @property
     def end_date(self):
