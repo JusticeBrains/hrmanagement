@@ -34,6 +34,7 @@ class LeaveRequestFilter(PropertyFilterSet):
             'no_of_days_left',
             'emp_code',
             'status',
+            'extension_status',
         ]
 
 
