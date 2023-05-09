@@ -94,11 +94,12 @@ class LeaveRequest(LeaveBase):
     date_of_extension = models.CharField(_("Date of Extension"), null=True, blank=True, max_length=250)
     hod_extension_date = models.CharField(_("HOD Extension Date"), null=True, blank=True, max_length=250)
     hr_extension_date = models.CharField(_("HR Extension Date"), null=True, blank=True, max_length=250)
-    hod_extension_remarks = models.CharField(_("HOD Extension Remarks"), max_length=250)
-    hr_extension_remarks = models.CharField(_("HR Extension Remarks"), max_length=250)
+    hod_extension_remarks = models.CharField(_("HOD Extension Remarks"), max_length=250, blank=True, null=True)
+    hr_extension_remarks = models.CharField(_("HR Extension Remarks"), max_length=250, blank=True, null=True)
     total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), null=True, blank=True)
     hod_extension_status = models.PositiveIntegerField(_("HOO Extension Status"), null=True, blank=True)
     extension_status = models.PositiveIntegerField(_("Extension Status"),default=0, null=True, blank=True)
+    extension_reason = models.CharField(_("Extension Reason"), max_length=250, null=True, blank=True)
 
     @property
     def end_date(self):
