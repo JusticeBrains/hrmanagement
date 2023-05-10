@@ -43,7 +43,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
 
 
     @property
-    def extension_date(self, obj):
+    def get_extension_date(self, obj):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         current_date = datetime.now().date()
         start_date = obj.end_date
