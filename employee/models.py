@@ -248,9 +248,6 @@ class EmployeeAppraisal(models.Model):
 class EmployeeAppraisalResponse(models.Model):
     appraisal_no = models.CharField(_("Appraisal No."), max_length=50)
     emp_code = models.CharField(verbose_name=_("Employee"), max_length=50)
-    appraisal_code = models.CharField(
-        verbose_name=_("Employee Appraisal Code"), max_length=50
-    )
     appraisal_description = models.TextField(_("Appraisal Description"))
     line_no = models.PositiveIntegerField(_("Line No"))
     question = models.CharField(_("Question"), max_length=250)
