@@ -12,11 +12,13 @@ from .serializers import (
 
 class LeaveRequestFilter(PropertyFilterSet):
     end_date = PropertyDateFilter(field_name="end_date")
+    extension_date = PropertyDateFilter(field_name="extension_date")
 
     class Meta:
         model = leavemodel.LeaveRequest
         property_fields = [
             ("end_date", PropertyDateFilter, ["exact", "gt", "gte"]),
+            ("extension_date", PropertyDateFilter, ["exact", "gt", "gte"]),
         ]
         fields = [
             "id",
