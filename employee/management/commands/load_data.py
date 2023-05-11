@@ -170,6 +170,7 @@ class Command(BaseCommand):
                         grounds_for_term=employee["Grounds_for_Term_Code"],
                         staff_category_code=staff_category,
                         total_number_of_leave_days=staff_category.max_number_of_days,
+                        days_left = staff_category.max_number_of_days
                 )
                     print(f"Ending -- Employee {employee['No']}")
                 except Employee.DoesNotExist:
@@ -241,6 +242,7 @@ class Command(BaseCommand):
                     grounds_for_term=employee["Grounds_for_Term_Code"],
                     staff_category_code=staff_category,
                     total_number_of_leave_days=staff_category.max_number_of_days,
+                    days_left = staff_category.max_number_of_days,
                 )
                     print(f"Ending -- Employee {employee['No']}")
                
