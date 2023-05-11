@@ -243,7 +243,7 @@ class EmployeeAppraisal(models.Model):
     
 
     def clean(self):
-        if self.emp_code:
+        if self.emp_id:
             self.emp_name = self.emp_id.fullname
             self.job_title = self.emp_id.job_titles
             self.department = self.emp_id.second_category_level
