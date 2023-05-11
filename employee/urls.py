@@ -4,9 +4,8 @@ from . import views as employee_views
 
 router = SimpleRouter()
 router.register('employee', employee_views.EmployeeViewSet, basename='employee')
-router.register('appraisalareas', employee_views.AppraisalAreaViewSet, basename='appraisalarea')
 router.register('employeeappraisal', employee_views.EmployeeAppraisalViewSet, basename='employeeappraisal')
-router.register('employeeappraisalresponse', employee_views.EmployeeAppraisalResponseViewSet,
+router.register('employeeappraisalresponse', employee_views.SelfAppraisalResponseViewSet,
                 basename='employeeappraisalresponse')
 router.register('employeepromotion', employee_views.EmployeePromotionViewSet, basename='employeepromotion')
 router.register('employeemedical', employee_views.EmployeeMedicalViewSet, basename='employeemedical')
@@ -20,5 +19,7 @@ router.register('unit', employee_views.UnitViewSet, basename='unit')
 router.register('branch', employee_views.BranchViewSet, basename='branch')
 router.register('notch', employee_views.NotchViewSet, basename='branch')
 router.register('paycategorylis', employee_views.PayCategoryListViewSet, basename='branch')
+router.register('appraisalgrading', employee_views.AppraisalGradingViewSet, basename='appraisalgrading')
+router.register('employeeappraisaldetail', employee_views.EmployeeAppraisalDetailViewSet, basename='employeeappraisaldetail')
 
 urlpatterns = router.urls

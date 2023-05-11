@@ -14,11 +14,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return f"{obj.last_name}, {obj.first_name}"
 
 
-class AppraisalAreaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.AppraisalAreas
-        fields = "__all__"
-
 
 class EmployeeAppraisalSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,9 +21,9 @@ class EmployeeAppraisalSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class EmployeeAppraisalResponseSerializer(serializers.ModelSerializer):
+class SelfAppraisalResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = employee_model.EmployeeAppraisalResponse
+        model = employee_model.SelfAppraisalResponse
         fields = "__all__"
 
 
@@ -49,11 +44,6 @@ class EmployeeDisciplinaryActionsSerializer(serializers.ModelSerializer):
         model = employee_model.EmployeeDisciplinaryActions
         fields = "__all__"
 
-
-# class EmployeePolicySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = employee_model.EmployeePolicy
-#         fields = "__all__"
 
 class EmployeePayReviewSerializer(serializers.ModelSerializer):
     new_base_pay = serializers.SerializerMethodField()
@@ -94,3 +84,14 @@ class PayCategoryListSerializer(serializers.ModelSerializer):
         model = employee_model.PayCategoryList
         fields = "__all__"
 
+
+class AppraisalGradingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.AppraisalGrading
+        fields = "__all__"
+
+
+class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.EmployeeAppraisalDetail
+        fields = "__all__"

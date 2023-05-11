@@ -60,20 +60,15 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EmployeeSerializer
     filterset_class = EmployeeFilterSet
 
-
-class AppraisalAreaViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.AppraisalAreas.objects.all()
-    serializer_class = serializers.AppraisalAreaSerializer
-
-
 class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeAppraisal.objects.all()
     serializer_class = serializers.EmployeeAppraisalSerializer
+    filterset_fields = ["emp_name", 'employee_code', "job_title", "appraiser", "department", "grade", "performance_score", "percentage_score", "period"]
 
 
-class EmployeeAppraisalResponseViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeeAppraisalResponse.objects.all()
-    serializer_class = serializers.EmployeeAppraisalResponseSerializer
+class SelfAppraisalResponseViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.SelfAppraisalResponse.objects.all()
+    serializer_class = serializers.SelfAppraisalResponseSerializer
 
 
 class EmployeePromotionViewSet(viewsets.ModelViewSet):
@@ -84,16 +79,13 @@ class EmployeePromotionViewSet(viewsets.ModelViewSet):
 class EmployeeMedicalViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeMedicals.objects.all()
     serializer_class = serializers.EmployeeMedicalSerializer
+    filterset_fields = "__all__"
 
 
 class EmployeeDisciplinaryActionViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeDisciplinaryActions.objects.all()
     serializer_class = serializers.EmployeeDisciplinaryActionsSerializer
-
-
-# class EmployeePolicyViewSet(viewsets.ModelViewSet):
-#     queryset = employee_model.EmployeePolicy.objects.all()
-#     serializer_class = serializers.EmployeePolicySerializer
+    filterset_fields = "__all__"
 
 
 class EmployeePayReviewFilterSet(PropertyFilterSet):
@@ -146,3 +138,15 @@ class NotchViewSet(viewsets.ModelViewSet):
 class PayCategoryListViewSet(viewsets.ModelViewSet):
     queryset = employee_model.PayCategoryList.objects.all()
     serializer_class = serializers.PayCategoryListSerializer
+
+
+class EmployeeAppraisalDetailViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.EmployeeAppraisal.objects.all()
+    serializer_class = serializers.EmployeeAppraisalDetailSerializer
+    filterset_fields = "__all__"
+
+
+class AppraisalGradingViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.AppraisalGrading.objects.all()
+    serializer_class = serializers.AppraisalGradingSerializer
+    filterset_fields = "__all__"
