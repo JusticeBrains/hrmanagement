@@ -232,7 +232,7 @@ class EmployeeAppraisal(models.Model):
         _("Percentage Score"), max_digits=3, decimal_places=2, null=True, blank=True
     )
     period = models.CharField(_("Period"), max_length=50, blank=True, null=True)
-    user_id = models.CharField(_("User ID"), max_length=50, blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -357,7 +357,6 @@ class EmployeePromotion(models.Model):
     )
     comment = models.CharField(_("Comment"), max_length=250)
     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    user_id = models.CharField(_("User ID"), max_length=50)
     posted = models.BooleanField(_("Posted"))
     effective_date = models.DateField(
         _("Effective Date"), auto_now=False, auto_now_add=False
@@ -408,7 +407,6 @@ class EmployeeMedicals(models.Model):
     transaction_date = models.DateField(
         _("Transaction Date"), auto_now=False, auto_now_add=False
     )
-    user_id = models.CharField(_("User ID"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -457,7 +455,6 @@ class EmployeeDisciplinaryActions(models.Model):
     transaction_date = models.DateField(
         _("Transaction Date"), blank=True, null=True, auto_now=False, auto_now_add=False
     )
-    user_id = models.CharField(_("User ID"), max_length=50)
     posted = models.BooleanField(_("Posted"))
 
     class Meta:
@@ -491,7 +488,6 @@ class EmployeePayReview(models.Model):
     effective_date = models.DateField(
         _("Effective Date"), auto_now=True, auto_now_add=False
     )
-    user_id = models.CharField(_("User ID"), max_length=50)
     transaction_date = models.DateField(
         _("Transaction Date"), auto_now=False, auto_now_add=False
     )
