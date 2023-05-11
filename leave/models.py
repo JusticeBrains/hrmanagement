@@ -143,7 +143,6 @@ class LeaveRequest(LeaveBase):
 
         if self.leave_type.name == "Medical":
             self.no_of_days_requested = self.no_of_days_requested
-            employee = self.employee
             emp_days_left = employee.days_left
             if emp_days_left is not None:
                 if self.no_of_days_requested <= emp_days_left:
@@ -154,7 +153,6 @@ class LeaveRequest(LeaveBase):
                     )
 
         elif self.leave_type.name == "Annual":
-            employee = self.employee
             emp_days_left = employee.days_left
             if emp_days_left is not None:
                 if self.no_of_days_requested <= emp_days_left:
@@ -187,7 +185,6 @@ class LeaveRequest(LeaveBase):
                         )
 
             elif self.leave_type.name == "Annual":
-                employee = self.employee
                 emp_days_left = employee.days_left
                 if emp_days_left is not None:
                     if self.no_of_extension_days <= emp_days_left:
@@ -205,62 +202,6 @@ class LeaveRequest(LeaveBase):
             self._meta.get_field("no_of_days_requested").editable = True
         
 
-    def save(self, *args, **kwargs):
-        if self.hr_status == 2 and self.hr_extension_status != 2 and self.is_extend != 1:
-            if self.leave_type.name == "Maternity":
-                self.no_of_days_requested = self.leave_type.max_number_of_days
-                self.no_of_days_left = self.employee.days_left
-
-            if self.leave_type.name == "Medical":
-                self.no_of_days_requested = self.no_of_days_requested
-                employee = self.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_days_requested <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-
-            elif self.leave_type.name == "Annual":
-                self.no_of_days_requested = self.no_of_days_requested
-
-                employee = self.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_days_requested <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-            no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
-            no_of_days_exhausted += self.no_of_days_requested
-
-            # update employee with new values of days_left and no_of_days_exhausted
-            Employee.objects.filter(id=self.employee.id).update(
-                days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-            )
-        
-        if self.hr_extension_status == 2 and self.is_extend == 1 and self.hr_status == 2:
-            if self.leave_type.name == "Medical":
-                employee = self.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_extension_days
-
-            elif self.leave_type.name == "Annual":
-                employee = self.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_extension_days
-
-            no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
-            no_of_days_exhausted += self.no_of_extension_days
-
-            # update employee with new values of days_left and no_of_days_exhausted
-            Employee.objects.filter(id=self.employee.id).update(
-                days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-            )
-
-        super(LeaveRequest, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Leave Request"
@@ -285,19 +226,6 @@ class LeavePlan(LeaveBase):
                 continue
             days_added += 1
         return start_date
-
-    # def calculate_max_days(self, employee):
-    #     if self.leave_type.name == "Medical":
-    #         self.leave_type.max_number_of_days = employee.plan_days_left
-    #     elif self.leave_type.name == "Annual":
-    #         self.leave_type.max_number_of_days = employee.plan_days_left
-    #     else:
-    #         self.leave_type.max_number_of_days = self.leave_type.max_number_of_days
-
-    #     if self.leave_type.staff_category == employee.staff_category_code:
-    #         return self.leave_type.max_number_of_days
-    #     else:
-    #         return 0
 
     def clean(self):
         employee = self.employee  # get the currently selected employee
