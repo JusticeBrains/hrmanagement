@@ -209,7 +209,8 @@ class EmployeeAppraisal(models.Model):
         Employee,
         verbose_name=_("Employee"),
         on_delete=models.CASCADE,
-        related_name="emp_code",
+        related_name="emp_id",
+        null=True
     )
     emp_name = models.CharField(
         verbose_name=_("Employee Name"), max_length=150, null=True, blank=True, editable=False
