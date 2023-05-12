@@ -23,6 +23,7 @@ jobs:
       PGHOST: localhost
       PGPORT: 5432
       SECRET_KEY: test-key-n)ot-12)3good
+      DATABASE_URL: postgresql://zerah:actionsdb123@localhost:5432/actiondb
     services:
       postgres_main:
         image: postgres:14
