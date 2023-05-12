@@ -1,0 +1,999 @@
+{
+	"@odata.context": "http://paymastergh.com:8049/NLA/ODataV4/$metadata#Company('NLA%20JUN%20AND%20SEN')/Jobs",
+	"value": [
+		{
+			"@odata.etag": "W/\"JzQwO1pjTUFBQUo3LzBNQVR3QkVBRVVBQUFBQ2V3QUFBQUo3QUFBQUFBQT04OzQwNzIxNzk1MDsn\"",
+			"Code": "CODE",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Description"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTc5NjA7Jw==\"",
+			"Code": "JT001",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Zonal Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTc5NzA7Jw==\"",
+			"Code": "JT002",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Driver"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTc5ODA7Jw==\"",
+			"Code": "JT003",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Training &Sales Admin. Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTc5OTA7Jw==\"",
+			"Code": "JT004",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Zonal Sales Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwMDA7Jw==\"",
+			"Code": "JT005",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Payment Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwMTA7Jw==\"",
+			"Code": "JT006",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Finance Reporting Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwMjA7Jw==\"",
+			"Code": "JT007",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Training Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwMzA7Jw==\"",
+			"Code": "JT008",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Intake Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwNDA7Jw==\"",
+			"Code": "JT009",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Training/Sales Admin Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwNTA7Jw==\"",
+			"Code": "JT010",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Finance Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwNjA7Jw==\"",
+			"Code": "JT011",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Dispatch Rider"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwNzA7Jw==\"",
+			"Code": "JT012",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "ICT Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwODA7Jw==\"",
+			"Code": "JT013",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Night Watchman"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgwOTA7Jw==\"",
+			"Code": "JT014",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Internal Auditor"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxMDA7Jw==\"",
+			"Code": "JT015",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Documentation Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxMTA7Jw==\"",
+			"Code": "JT016",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Training & Sales Admin. Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxMjA7Jw==\"",
+			"Code": "JT017",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Assistant Training Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxMzA7Jw==\"",
+			"Code": "JT018",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Treasury Manager, External"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREVBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxNDA7Jw==\"",
+			"Code": "JT019",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Air condition Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxNTA7Jw==\"",
+			"Code": "JT020",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Operations Coordinator"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxNjA7Jw==\"",
+			"Code": "JT021",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Help Desk Attendant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxNzA7Jw==\"",
+			"Code": "JT022",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxODA7Jw==\"",
+			"Code": "JT023",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Ground Operator"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgxOTA7Jw==\"",
+			"Code": "JT024",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Records/Documentation Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyMDA7Jw==\"",
+			"Code": "JT025",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Logistics & Inventory Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyMTA7Jw==\"",
+			"Code": "JT026",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "HR Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyMjA7Jw==\"",
+			"Code": "JT027",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Front Desk Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyMzA7Jw==\"",
+			"Code": "JT028",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Administration Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRElBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyNDA7Jw==\"",
+			"Code": "JT029",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Administration Support Aide"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyNTA7Jw==\"",
+			"Code": "JT030",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Office Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyNjA7Jw==\"",
+			"Code": "JT031",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Automation Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyNzA7Jw==\"",
+			"Code": "JT032",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Training Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyODA7Jw==\"",
+			"Code": "JT033",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Watchman"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgyOTA7Jw==\"",
+			"Code": "JT034",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Audit Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzMDA7Jw==\"",
+			"Code": "JT035",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "ICT Support Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzMTA7Jw==\"",
+			"Code": "JT036",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Adimin. Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzMjA7Jw==\"",
+			"Code": "JT037",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Intake Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzMzA7Jw==\"",
+			"Code": "JT038",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Data Documentation"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRE1BT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzNDA7Jw==\"",
+			"Code": "JT039",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Data Entry Staff"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzNTA7Jw==\"",
+			"Code": "JT040",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Accounts Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzNjA7Jw==\"",
+			"Code": "JT041",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "District Accountant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzNzA7Jw==\"",
+			"Code": "JT042",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Supervisor"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzODA7Jw==\"",
+			"Code": "JT043",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Administrative Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTgzOTA7Jw==\"",
+			"Code": "JT044",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Day watachman"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0MDA7Jw==\"",
+			"Code": "JT045",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Automation Coordinator"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0MTA7Jw==\"",
+			"Code": "JT046",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Day Watchman"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0MjA7Jw==\"",
+			"Code": "JT047",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Receptionist/Admin Aide Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0MzA7Jw==\"",
+			"Code": "JT048",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Carpenter"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFFBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0NDA7Jw==\"",
+			"Code": "JT049",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0NTA7Jw==\"",
+			"Code": "JT050",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Receptionist"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0NjA7Jw==\"",
+			"Code": "JT051",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Call Centre Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0NzA7Jw==\"",
+			"Code": "JT052",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Imprest Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0ODA7Jw==\"",
+			"Code": "JT053",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Draw Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg0OTA7Jw==\"",
+			"Code": "JT054",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Legal Education Officer (Southern Sector)"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1MDA7Jw==\"",
+			"Code": "JT055",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1MTA7Jw==\"",
+			"Code": "JT056",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Prize Payment Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1MjA7Jw==\"",
+			"Code": "JT057",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Cashier"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1MzA7Jw==\"",
+			"Code": "JT058",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Corporate Dispatch Rider"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFVBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1NDA7Jw==\"",
+			"Code": "JT059",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Electrician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1NTA7Jw==\"",
+			"Code": "JT060",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Chief Transport Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1NjA7Jw==\"",
+			"Code": "JT061",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Draw Manager"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1NzA7Jw==\"",
+			"Code": "JT062",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Security Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1ODA7Jw==\"",
+			"Code": "JT063",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Authentication Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg1OTA7Jw==\"",
+			"Code": "JT064",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Draw Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2MDA7Jw==\"",
+			"Code": "JT065",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Lotto Trainer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2MTA7Jw==\"",
+			"Code": "JT066",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Customer Service Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2MjA7Jw==\"",
+			"Code": "JT067",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Admin. Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2MzA7Jw==\"",
+			"Code": "JT068",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "District Sales Manager"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRFlBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2NDA7Jw==\"",
+			"Code": "JT069",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2NTA7Jw==\"",
+			"Code": "JT070",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Projects Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2NjA7Jw==\"",
+			"Code": "JT071",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Operations Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2NzA7Jw==\"",
+			"Code": "JT072",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Management Accountant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2ODA7Jw==\"",
+			"Code": "JT073",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Administrator"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg2OTA7Jw==\"",
+			"Code": "JT074",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Marketing Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3MDA7Jw==\"",
+			"Code": "JT075",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Business Development Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3MTA7Jw==\"",
+			"Code": "JT076",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Assistant Draw Manager"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3MjA7Jw==\"",
+			"Code": "JT077",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Support Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3MzA7Jw==\"",
+			"Code": "JT078",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Customer Service Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGNBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3NDA7Jw==\"",
+			"Code": "JT079",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Software Assurance Analyst"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3NTA7Jw==\"",
+			"Code": "JT080",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Analyst"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3NjA7Jw==\"",
+			"Code": "JT081",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3NzA7Jw==\"",
+			"Code": "JT082",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Legal Education Officer Northern Sector)"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3ODA7Jw==\"",
+			"Code": "JT083",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Lotto Payment Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg3OTA7Jw==\"",
+			"Code": "JT084",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Customer Service Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4MDA7Jw==\"",
+			"Code": "JT085",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Regional Accountant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4MTA7Jw==\"",
+			"Code": "JT086",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Brands Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4MjA7Jw==\"",
+			"Code": "JT087",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Technician Support Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4MzA7Jw==\"",
+			"Code": "JT088",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Marketing Support Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGdBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4NDA7Jw==\"",
+			"Code": "JT089",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Assistant Finance Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4NTA7Jw==\"",
+			"Code": "JT090",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Procurement Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4NjA7Jw==\"",
+			"Code": "JT091",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Internal Audit Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4NzA7Jw==\"",
+			"Code": "JT092",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Paralegal/Legal Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4ODA7Jw==\"",
+			"Code": "JT093",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Chief Security Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg4OTA7Jw==\"",
+			"Code": "JT094",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Assistant Draw Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5MDA7Jw==\"",
+			"Code": "JT095",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Social Media Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5MTA7Jw==\"",
+			"Code": "JT096",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Facilities and Maintenance Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5MjA7Jw==\"",
+			"Code": "JT097",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Facilities and Maintenance Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5MzA7Jw==\"",
+			"Code": "JT098",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Revenue Assurance Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBRGtBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5NDA7Jw==\"",
+			"Code": "JT099",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Protocol Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5NTA7Jw==\"",
+			"Code": "JT100",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Hohoe"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5NjA7Jw==\"",
+			"Code": "JT101",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Zonal Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5NzA7Jw==\"",
+			"Code": "JT102",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "ICT Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5ODA7Jw==\"",
+			"Code": "JT103",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Sunyani"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTg5OTA7Jw==\"",
+			"Code": "JT104",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Tamale"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwMDA7Jw==\"",
+			"Code": "JT105",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Wa"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwMTA7Jw==\"",
+			"Code": "JT106",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwMjA7Jw==\"",
+			"Code": "JT107",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Protocol Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwMzA7Jw==\"",
+			"Code": "JT108",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "HR Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREFBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwNDA7Jw==\"",
+			"Code": "JT109",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Internal Audit Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwNjA7Jw==\"",
+			"Code": "JT110",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Takoradi"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkwODA7Jw==\"",
+			"Code": "JT111",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Draw Admin. Support/Announcer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyMTA7Jw==\"",
+			"Code": "JT112",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "ICT Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyMzA7Jw==\"",
+			"Code": "JT113",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Intelligence Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyNDA7Jw==\"",
+			"Code": "JT114",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Akim Oda"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyNTA7Jw==\"",
+			"Code": "JT115",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Training Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyNjA7Jw==\"",
+			"Code": "JT116",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Officer, Good Causes Foundation"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyNzA7Jw==\"",
+			"Code": "JT117",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst - Sefwi"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyODA7Jw==\"",
+			"Code": "JT118",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "ICT Support Technician"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBREVBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkyOTA7Jw==\"",
+			"Code": "JT119",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Executive Driver"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzMDA7Jw==\"",
+			"Code": "JT120",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Executive Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzMTA7Jw==\"",
+			"Code": "JT121",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Senior Technical Officer, VAG and Private Lotto Operations"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzMjA7Jw==\"",
+			"Code": "JT122",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Software development Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzMzA7Jw==\"",
+			"Code": "JT123",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Compliance Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzNDA7Jw==\"",
+			"Code": "JT124",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Bilingual Communicator"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzNTA7Jw==\"",
+			"Code": "JT125",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Plumber"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzNjA7Jw==\"",
+			"Code": "JT126",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Public Relations Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzNzA7Jw==\"",
+			"Code": "JT127",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Research Analyst"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzODA7Jw==\"",
+			"Code": "JT128",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Transport Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRElBT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTkzOTA7Jw==\"",
+			"Code": "JT129",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Marketing Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0MDA7Jw==\"",
+			"Code": "JT130",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Treasury Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0MTA7Jw==\"",
+			"Code": "JT131",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Task Force Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTWdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0MjA7Jw==\"",
+			"Code": "JT132",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Digital Executive"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTXdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0MzA7Jw==\"",
+			"Code": "JT133",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Personal Assistant"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTkFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0NDA7Jw==\"",
+			"Code": "JT134",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Sales Support Analyst"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTlFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDcyMTk0NTA7Jw==\"",
+			"Code": "JT135",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "HR Advisor"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTmdBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgxODA7Jw==\"",
+			"Code": "JT136",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Executive Secretary"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BTndBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgyMzA7Jw==\"",
+			"Code": "JT137",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Administrative Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BT0FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgyNjA7Jw==\"",
+			"Code": "JT138",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Creative Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRE1BT1FBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgzMDA7Jw==\"",
+			"Code": "JT139",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Systems integration & Infrastructure Support Officer"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRFFBTUFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgzNTA7Jw==\"",
+			"Code": "JT140",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Database Administrator & Infrastructure Support"
+		},
+		{
+			"@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXhBRFFBTVFBQUFBSjdBQUFBQW5zQUFBQUFBQT09ODs0MDk4NDgzODA7Jw==\"",
+			"Code": "JT141",
+			"Payroll_Structure": "",
+			"Salary_Grade": "",
+			"Description": "Regional Manager"
+		}
+	]
+}

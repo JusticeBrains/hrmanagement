@@ -15,7 +15,7 @@ router.register('disciplinaryactions', views.DiscplinaryActionsViewSet, basename
 router.register('job', views.JobViewSet, basename='job')
 router.register('minimumqualification', views.MinimumQualificationViewSet, basename='minimumqualification')
 router.register('qualificationmetricsqef', views.QualificationMetricSQEFViewSet, basename='qualificationmetricsqef')
-router.register('jobopening', views.JobViewSet, basename='jobopening')
+router.register('jobopening', views.JobOpeningViewSet, basename='jobopening')
 router.register('applicationpool', views.ApplicationPoolViewSet, basename='applicationpool')
 router.register('shortlistedapplication', views.ShortListedApplicationViewSet, basename='shortlistedapplication')
 router.register('applicationreference', views.ApplicationReferencesViewSet, basename='applicarionreference')

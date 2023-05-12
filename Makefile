@@ -18,3 +18,6 @@ migrate:
 
 restart:
 	sudo systemctl restart gunicorn
+
+createsuperuser:
+	docker compose exec web python manage.py createsuperuser
