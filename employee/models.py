@@ -210,14 +210,24 @@ class EmployeeAppraisal(models.Model):
         verbose_name=_("Employee"),
         on_delete=models.CASCADE,
         related_name="emp_id",
-        null=True
+        null=True,
     )
     emp_name = models.CharField(
-        verbose_name=_("Employee Name"), max_length=150, null=True, blank=True, editable=False
+        verbose_name=_("Employee Name"),
+        max_length=150,
+        null=True,
+        blank=True,
+        editable=False,
     )
-    employee_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True, editable=False)
-    job_title = models.CharField(_("Job Title"), max_length=150, null=True, blank=True, editable=False)
-    appraisal_date = models.DateField(_("Appraisal Date"), default=timezone.now, blank=True, null=True)
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=50, blank=True, null=True, editable=False
+    )
+    job_title = models.CharField(
+        _("Job Title"), max_length=150, null=True, blank=True, editable=False
+    )
+    appraisal_date = models.DateField(
+        _("Appraisal Date"), default=timezone.now, blank=True, null=True
+    )
     appraiser = models.CharField(
         verbose_name="Appraiser", max_length=200, blank=True, null=True
     )
@@ -233,14 +243,12 @@ class EmployeeAppraisal(models.Model):
     )
     period = models.CharField(_("Period"), max_length=50, blank=True, null=True)
 
-
     class Meta:
         verbose_name = "Employee Appraisal"
         verbose_name_plural = "Employee Appraisals"
 
     def __str__(self) -> str:
         return f"{self.emp_name} {self.employee_code} - {self.grade}"
-    
 
     def clean(self):
         if self.emp_id:
@@ -271,7 +279,14 @@ class AppraisalGrading(models.Model):
 
 
 class EmployeeAppraisalDetail(models.Model):
-    employee_appraisal =models.ForeignKey("employee.EmployeeAppraisal", verbose_name=_("Employee Appraisal"), on_delete=models.CASCADE, related_name='employee_appraisal', blank=True, null=True)
+    employee_appraisal = models.ForeignKey(
+        "employee.EmployeeAppraisal",
+        verbose_name=_("Employee Appraisal"),
+        on_delete=models.CASCADE,
+        related_name="employee_appraisal",
+        blank=True,
+        null=True,
+    )
     emp_code = models.CharField(
         _("Employee Code"), max_length=150, null=True, blank=True
     )
@@ -279,8 +294,26 @@ class EmployeeAppraisalDetail(models.Model):
     kpi_appraisal_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
     )
-    score = models.DecimalField(_("Score"), max_digits=3, decimal_places=2, null=True, blank=True)
+    kpi_appraisal_area_description = models.TextField(
+        _("KPI / Appraisal Area Description"), null=True, blank=True
+    )
+    score = models.DecimalField(
+        _("Score"), max_digits=3, decimal_places=2, null=True, blank=True
+    )
+    emp_score = models.DecimalField(
+        _("Employee Score"), max_digits=2, decimal_places=2, blank=True, null=True
+    )
+    emp_comment = models.CharField(
+        _("Employee Comment"), max_length=50, null=True, blank=True
+    )
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
+    employee_id = models.ForeignKey(
+        Employee,
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        related_name="employee_appraisal_id",
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
@@ -288,24 +321,6 @@ class EmployeeAppraisalDetail(models.Model):
 
     def __str__(self):
         return f"{self.emp_code} - {self.period} - {self.score}"
-
-
-class SelfAppraisalResponse(models.Model):
-    emp_details = models.ForeignKey(
-        "employee.EmployeeAppraisalDetail", verbose_name=_(""), on_delete=models.CASCADE
-    )
-    appraisal_description = models.TextField(_("Appraisal Description"))
-    question = models.CharField(_("Question"), max_length=250)
-    score = models.PositiveIntegerField(_("Score"))
-    answer = models.CharField(_("Answer"), max_length=250)
-    comment = models.CharField(_("Comment"), max_length=250)
-
-    class Meta:
-        verbose_name = "Employee Appraisal Response"
-        verbose_name_plural = "Employee Appraisal Responses"
-
-    def __str__(self) -> str:
-        return f"{self.emp_details}, {self.emp_code}"
 
 
 class EmployeePromotion(models.Model):

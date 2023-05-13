@@ -9,7 +9,6 @@ defusedxml==0.7.1
 diff-match-patch==20200713
 dj-database-url==1.2.0
 dj-rest-auth==3.0.0
-Django==4.2.1
 django-allauth==0.52.0
 django-filter==22.1
 django-import-export==3.0.2

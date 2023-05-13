@@ -21,10 +21,10 @@ class EmployeeAppraisalSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class SelfAppraisalResponseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.SelfAppraisalResponse
-        fields = "__all__"
+# class SelfAppraisalResponseSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = employee_model.SelfAppraisalResponse
+#         fields = "__all__"
 
 
 class EmployeePromotionSerializer(serializers.ModelSerializer):
