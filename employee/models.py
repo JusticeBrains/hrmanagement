@@ -215,7 +215,7 @@ class EmployeeAppraisal(models.Model):
     emp_name = models.CharField(
         verbose_name=_("Employee Name"), max_length=150, null=True, blank=True, editable=False
     )
-    employee_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True)
+    employee_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True, editable=False)
     job_title = models.CharField(_("Job Title"), max_length=150, null=True, blank=True, editable=False)
     appraisal_date = models.DateField(_("Appraisal Date"), default=timezone.now)
     appraiser = models.CharField(
