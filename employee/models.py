@@ -217,7 +217,7 @@ class EmployeeAppraisal(models.Model):
     )
     employee_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True, editable=False)
     job_title = models.CharField(_("Job Title"), max_length=150, null=True, blank=True, editable=False)
-    appraisal_date = models.DateField(_("Appraisal Date"), default=timezone.now)
+    appraisal_date = models.DateField(_("Appraisal Date"), default=timezone.now, blank=True, null=True)
     appraiser = models.CharField(
         verbose_name="Appraiser", max_length=200, blank=True, null=True
     )
@@ -271,6 +271,7 @@ class AppraisalGrading(models.Model):
 
 
 class EmployeeAppraisalDetail(models.Model):
+    employee_appraisal =models.ForeignKey("employee.EmployeeAppraisal", verbose_name=_("Employee Appraisal"), on_delete=models.CASCADE, related_name='employee_appraisal', blank=True, null=True)
     emp_code = models.CharField(
         _("Employee Code"), max_length=150, null=True, blank=True
     )
@@ -278,8 +279,8 @@ class EmployeeAppraisalDetail(models.Model):
     kpi_appraisal_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
     )
-    score = models.DecimalField(_("Score"), max_digits=3, decimal_places=2)
-    narration = models.CharField(_("Narration"), max_length=250)
+    score = models.DecimalField(_("Score"), max_digits=3, decimal_places=2, null=True, blank=True)
+    narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
