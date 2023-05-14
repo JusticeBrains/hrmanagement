@@ -143,7 +143,7 @@ class PayCategoryListViewSet(viewsets.ModelViewSet):
 class EmployeeAppraisalDetailViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeAppraisalDetail.objects.all()
     serializer_class = serializers.EmployeeAppraisalDetailSerializer
-    filterset_fields = ["id","employee_appraisal", "emp_code", "period", "score",'kpi_appraisal_area']
+    filterset_fields = ["id","employee_appraisal", "emp_code", "period", "score",'kpi_appraisal_area', 'employee_id']
 
 
 class AppraisalGradingViewSet(viewsets.ModelViewSet):
