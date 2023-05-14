@@ -242,6 +242,7 @@ class EmployeeAppraisal(models.Model):
         _("Percentage Score"), max_digits=3, decimal_places=2, null=True, blank=True
     )
     period = models.CharField(_("Period"), max_length=50, blank=True, null=True)
+    recommendation = models.CharField(_("Recommendation"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -318,7 +319,6 @@ class EmployeeAppraisalDetail(models.Model):
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
-    recommendation = models.CharField(_("Recommendation"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
