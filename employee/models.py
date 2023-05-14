@@ -297,11 +297,11 @@ class EmployeeAppraisalDetail(models.Model):
     kpi_appraisal_area_description = models.TextField(
         _("KPI / Appraisal Area Description"), null=True, blank=True
     )
-    score = models.DecimalField(
-        _("Score"), max_digits=3, decimal_places=2, null=True, blank=True
+    score = models.IntegerField(
+        _("Score"),null=True, blank=True
     )
-    emp_score = models.DecimalField(
-        _("Employee Score"), max_digits=2, decimal_places=2, blank=True, null=True
+    emp_score = models.IntegerField(
+        _("Employee Score"), blank=True, null=True
     )
     emp_comment = models.CharField(
         _("Employee Comment"), max_length=50, null=True, blank=True
@@ -314,6 +314,10 @@ class EmployeeAppraisalDetail(models.Model):
         related_name="employee_appraisal_id",
         null=True,
     )
+    emp_name = models.CharField(_("Employee Name"), max_length=150, null=True, blank=True)
+    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
+    status = models.PositiveIntegerField(_("Status"), default=0)
+    due_date = models.DateField(_("Due Date"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
