@@ -318,6 +318,7 @@ class EmployeeAppraisalDetail(models.Model):
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
+    recommendation = models.CharField(_("Recommendation"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
