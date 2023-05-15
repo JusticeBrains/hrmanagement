@@ -288,16 +288,8 @@ class AppraisalGrading(models.Model):
 
 
 class EmployeeAppraisalDetail(models.Model):
-    employee_appraisal = models.ForeignKey(
-        "employee.EmployeeAppraisal",
-        verbose_name=_("Employee Appraisal"),
-        on_delete=models.CASCADE,
-        related_name="employee_appraisal",
-        blank=True,
-        null=True,
-    )
     emp_code = models.CharField(
-        _("Employee Code"), max_length=150, null=True, blank=True
+        _("Employee Code"), max_length=150, null=True, blank=True, editable=False
     )
     period = models.ForeignKey(
         "calenders.Period",
@@ -328,11 +320,16 @@ class EmployeeAppraisalDetail(models.Model):
         null=True,
     )
     emp_name = models.CharField(
-        _("Employee Name"), max_length=150, null=True, blank=True
+        _("Employee Name"), max_length=150, null=True, blank=True, editable=False
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
+
+    def clean(self):
+        if self.employee_id:
+            self.emp_code = self.employee_id.code
+            self.emp_name = self.employee_id.fullname
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
@@ -340,6 +337,7 @@ class EmployeeAppraisalDetail(models.Model):
 
     def __str__(self):
         return f"{self.emp_code} - {self.period} - {self.score}"
+    
 
 
 class EmployeePromotion(models.Model):
