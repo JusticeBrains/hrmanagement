@@ -235,14 +235,22 @@ class EmployeeAppraisal(models.Model):
         _("Department"), max_length=150, null=True, blank=True, editable=False
     )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
-    performance_score = models.DecimalField(
-        _("Performance Score"), max_digits=3, decimal_places=2, null=True, blank=True
-    )
+    performance_score = models.PositiveIntegerField(_("Performance Score"), null=True, blank=True)
     percentage_score = models.DecimalField(
         _("Percentage Score"), max_digits=3, decimal_places=2, null=True, blank=True
     )
-    period = models.CharField(_("Period"), max_length=50, blank=True, null=True)
-    recommendation = models.CharField(_("Recommendation"), max_length=150, blank=True, null=True)
+
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.CASCADE,
+        related_name="appraisal_period",
+        null=True,
+        blank=True,
+    )
+    recommendation = models.CharField(
+        _("Recommendation"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -291,19 +299,23 @@ class EmployeeAppraisalDetail(models.Model):
     emp_code = models.CharField(
         _("Employee Code"), max_length=150, null=True, blank=True
     )
-    period = models.CharField(_("Period"), max_length=150, null=True, blank=True)
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.CASCADE,
+        related_name="detail_period",
+        null=True,
+        blank=True,
+    )
+
     kpi_appraisal_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
     )
     kpi_appraisal_area_description = models.TextField(
         _("KPI / Appraisal Area Description"), null=True, blank=True
     )
-    score = models.IntegerField(
-        _("Score"),null=True, blank=True
-    )
-    emp_score = models.IntegerField(
-        _("Employee Score"), blank=True, null=True
-    )
+    score = models.IntegerField(_("Score"), null=True, blank=True)
+    emp_score = models.IntegerField(_("Employee Score"), blank=True, null=True)
     emp_comment = models.CharField(
         _("Employee Comment"), max_length=50, null=True, blank=True
     )
@@ -315,7 +327,9 @@ class EmployeeAppraisalDetail(models.Model):
         related_name="employee_appraisal_id",
         null=True,
     )
-    emp_name = models.CharField(_("Employee Name"), max_length=150, null=True, blank=True)
+    emp_name = models.CharField(
+        _("Employee Name"), max_length=150, null=True, blank=True
+    )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
