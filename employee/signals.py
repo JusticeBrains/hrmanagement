@@ -13,7 +13,7 @@ def update_employee_appraisal(sender, instance , **kwargs):
         instance.job_title = employee.job_titles
         instance.department = employee.second_category_level
 
-        
+
         # Temporarily disconnect the signal receiver
         post_save.disconnect(update_employee_appraisal, sender=EmployeeAppraisal)
 
@@ -25,6 +25,9 @@ def update_employee_appraisal(sender, instance , **kwargs):
 
 @receiver(post_save, sender=EmployeeAppraisalDetail)
 def update_performance_score(sender, instance, **kwargs):
+    employee= Employee.objects.get(id=instance.employee_id.id)
+    instance.emp_name = employee.fullname
+    instance.emp_code = employee.code
     emp_code = instance.emp_code
     active_period = Period.objects.get(active=True)
 
