@@ -319,7 +319,10 @@ class EmployeeAppraisalDetail(models.Model):
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
-
+    department = models.CharField(
+        _("Department"), max_length=150, null=True, blank=True,
+    )
+    
     def clean(self):
         if self.employee_id:
             self.emp_code = self.employee_id.code
