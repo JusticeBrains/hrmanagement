@@ -12,6 +12,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         if obj.middle_name:
             return f"{obj.last_name}, {obj.first_name} {obj.middle_name}"
         return f"{obj.last_name}, {obj.first_name}"
+    
 
 
 

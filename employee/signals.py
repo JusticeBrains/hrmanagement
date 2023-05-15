@@ -1,9 +1,8 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Sum
-from calenders.models import Period
 from employee.models import EmployeeAppraisal, Employee, EmployeeAppraisalDetail
-
+from django.utils import timezone
 
 @receiver(post_save, sender=EmployeeAppraisal)
 def update_employee_appraisal(sender, instance , **kwargs):
@@ -29,7 +28,7 @@ def update_performance_score(sender, instance, **kwargs):
     instance.emp_name = employee.fullname
     instance.emp_code = employee.code
     emp_code = instance.emp_code
-    active_period = Period.objects.get(active=True)
+    active_period = timezone.now().year
 
 
     # Retrieve the corresponding EmployeeAppraisal object
@@ -46,3 +45,8 @@ def update_performance_score(sender, instance, **kwargs):
 
         # Save the updated EmployeeAppraisal object
         appraisal.save()
+    post_save.disconnect(update_performance_score, sender=EmployeeAppraisalDetail)
+    
+    instance.save(update_fields=['emp_name', 'emp_code',])
+
+    post_save.connect(update_performance_score, sender=EmployeeAppraisalDetail)

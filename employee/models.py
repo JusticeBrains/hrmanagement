@@ -239,7 +239,7 @@ class EmployeeAppraisal(models.Model):
     percentage_score = models.DecimalField(
         _("Percentage Score"), max_digits=3, decimal_places=2, null=True, blank=True
     )
-
+    status = models.PositiveIntegerField(_("Status"), default=0)
     period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Period"),
@@ -247,7 +247,8 @@ class EmployeeAppraisal(models.Model):
         related_name="appraisal_period",
         null=True,
         blank=True,
-    )
+    )    
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
     )
@@ -291,14 +292,7 @@ class EmployeeAppraisalDetail(models.Model):
     emp_code = models.CharField(
         _("Employee Code"), max_length=150, null=True, blank=True, editable=False
     )
-    period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("Period"),
-        on_delete=models.CASCADE,
-        related_name="detail_period",
-        null=True,
-        blank=True,
-    )
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
 
     kpi_appraisal_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
