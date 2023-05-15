@@ -66,6 +66,7 @@ LOCAL_APPS = [
     'interviewapplication.apps.InterviewapplicationConfig',
     'objectivesapplication.apps.ObjectivesapplicationConfig',
     'insuranceapp.apps.InsuranceappConfig',
+    'calenders.apps.CalendersConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
