@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models as employee_model
-
+from drf_extra_fields.fields import IntegerRangeField
 
 class EmployeeSerializer(serializers.ModelSerializer):
     fullname = serializers.SerializerMethodField()
@@ -20,12 +20,6 @@ class EmployeeAppraisalSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.EmployeeAppraisal
         fields = "__all__"
-
-
-# class SelfAppraisalResponseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = employee_model.SelfAppraisalResponse
-#         fields = "__all__"
 
 
 class EmployeePromotionSerializer(serializers.ModelSerializer):
@@ -87,9 +81,10 @@ class PayCategoryListSerializer(serializers.ModelSerializer):
 
 
 class AppraisalGradingSerializer(serializers.ModelSerializer):
+    score_range = IntegerRangeField()
     class Meta:
         model = employee_model.AppraisalGrading
-        fields = "__all__"
+        fields = ['id','score_range', 'grade', 'recommendation']
 
 
 class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
