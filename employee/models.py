@@ -284,7 +284,6 @@ class EmployeeAppraisal(models.Model):
 
 
 class AppraisalGrading(models.Model):
-    # range = IntegerRangeField(verbose_name=_("Range"), min_value=0, max_value=100, blank=True, null=True)
     score_range = IntegerRangeField(blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=50, null=True, blank=True)
     recommendation = models.CharField(
@@ -294,6 +293,11 @@ class AppraisalGrading(models.Model):
     class Meta:
         verbose_name = "Appraisal Grading"
         verbose_name_plural = "Appraisal Gradings"
+
+    @staticmethod
+    def get_grading_for_score(score):
+        grading = AppraisalGrading.objects.filter(score_range__contains=score).first()
+        return grading
 
     def __str__(self) -> str:
         return f"{self.grade} - {self.recommendation}"
