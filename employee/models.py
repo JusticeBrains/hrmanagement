@@ -251,8 +251,8 @@ class EmployeeAppraisal(models.Model):
     )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
     performance_score = models.PositiveIntegerField(_("Performance Score"), null=True, blank=True)
-    percentage_score = models.DecimalField(
-        _("Percentage Score"), max_digits=3, decimal_places=2, null=True, blank=True
+    percentage_score = models.CharField(
+        _("Percentage Score"), null=True, blank=True
     )
     status = models.PositiveIntegerField(_("Status"), default=0)
     period = models.ForeignKey(
