@@ -16,8 +16,23 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
 from django.utils import timezone
+from django.contrib.postgres.fields import IntegerRangeField
 
 User = get_user_model()
+
+
+from django.db import models
+
+# class IntegerRangeField(models.IntegerField):
+#     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+#         self.min_value = min_value
+#         self.max_value = max_value
+#         super().__init__(verbose_name, name, **kwargs)
+
+#     def formfield(self, **kwargs):
+#         defaults = {'min_value': self.min_value, 'max_value': self.max_value}
+#         defaults.update(kwargs)
+#         return super().formfield(**defaults)
 
 
 class Employee(models.Model):
@@ -269,12 +284,8 @@ class EmployeeAppraisal(models.Model):
 
 
 class AppraisalGrading(models.Model):
-    mininum_score = models.PositiveIntegerField(
-        _("Minimum Score"), blank=True, null=True
-    )
-    maximum_score = models.PositiveIntegerField(
-        _("Maximum Score"), blank=True, null=True
-    )
+    # range = IntegerRangeField(verbose_name=_("Range"), min_value=0, max_value=100, blank=True, null=True)
+    score_range = IntegerRangeField(blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=50, null=True, blank=True)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True

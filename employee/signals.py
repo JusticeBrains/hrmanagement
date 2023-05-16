@@ -28,23 +28,27 @@ def update_performance_score(sender, instance, **kwargs):
     instance.emp_name = employee.fullname
     instance.emp_code = employee.code
     emp_code = instance.emp_code
+
     active_period = timezone.now().year
 
 
-    # Retrieve the corresponding EmployeeAppraisal object
-    appraisal = EmployeeAppraisal.objects.filter(employee_code=emp_code, period=active_period).first()
-    if appraisal:
-        # Retrieve the total score from EmployeeAppraisalDetail records
-        total_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(total_score=Sum('score'))['total_score']
-        
-        # Update the performance score of the EmployeeAppraisal object
-        if total_score is not None:
-            appraisal.performance_score = total_score
-        else:
-            appraisal.performance_score = None
+    try:
+        # Retrieve the corresponding EmployeeAppraisal object
+        appraisal = EmployeeAppraisal.objects.filter(employee_code=emp_code, period=active_period).first()
+        if appraisal:
+            # Retrieve the total score from EmployeeAppraisalDetail records
+            total_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(total_score=Sum('score'))['total_score']
+            
+            # Update the performance score of the EmployeeAppraisal object
+            if total_score is not None:
+                appraisal.performance_score = total_score
+            else:
+                appraisal.performance_score = None
 
-        # Save the updated EmployeeAppraisal object
-        appraisal.save()
+            # Save the updated EmployeeAppraisal object
+            appraisal.save()
+    except EmployeeAppraisal.DoesNotExist:
+         return ValueError("Employee Appraisal Doesn't Exist")
     post_save.disconnect(update_performance_score, sender=EmployeeAppraisalDetail)
     
     instance.save(update_fields=['emp_name', 'emp_code',])

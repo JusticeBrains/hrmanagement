@@ -149,3 +149,4 @@ class EmployeeAppraisalDetailViewSet(viewsets.ModelViewSet):
 class AppraisalGradingViewSet(viewsets.ModelViewSet):
     queryset = employee_model.AppraisalGrading.objects.all()
     serializer_class = serializers.AppraisalGradingSerializer
+    filterset_fields = ['id', 'grade', 'recommendation',]
