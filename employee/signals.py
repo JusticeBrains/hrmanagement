@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Sum
-from employee.models import EmployeeAppraisal, Employee, EmployeeAppraisalDetail
+from employee.models import AppraisalGrading, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
 from django.utils import timezone
 
 @receiver(post_save, sender=EmployeeAppraisal)
@@ -54,3 +54,18 @@ def update_performance_score(sender, instance, **kwargs):
     instance.save(update_fields=['emp_name', 'emp_code',])
 
     post_save.connect(update_performance_score, sender=EmployeeAppraisalDetail)
+
+
+@receiver(post_save, sender=EmployeeAppraisal)
+def update_grade(sender, instance, **kwargs):
+    post_save.disconnect(update_grade, sender=EmployeeAppraisal )
+    grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
+    if grading:
+        instance.grade = grading.grade
+        instance.recommendation = grading.recommendation
+    else:
+        instance.grade = None
+        instance.recommendation = None
+    instance.save()
+
+    post_save.connect(update_grade, sender=EmployeeAppraisal)
