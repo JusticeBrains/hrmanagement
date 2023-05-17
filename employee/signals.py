@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.db.models import Sum
 from employee.models import AppraisalGrading, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
 from django.utils import timezone
+from django.db import transaction
 
 @receiver(post_save, sender=EmployeeAppraisal)
 def update_employee_appraisal(sender, instance , **kwargs):
@@ -40,10 +41,7 @@ def update_performance_score(sender, instance, **kwargs):
             total_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(total_score=Sum('score'))['total_score']
             
             # Update the performance score of the EmployeeAppraisal object
-            if total_score is not None:
-                appraisal.performance_score = total_score
-            else:
-                appraisal.performance_score = None
+            appraisal.performance_score = total_score if total_score is not None else None
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
@@ -63,10 +61,11 @@ def update_grade(sender, instance, **kwargs):
     if grading:
         instance.grade = grading.grade
         instance.recommendation = grading.recommendation
+        instance.percentage_score = f"{round((instance.performance_score / 100) * 100, ndigits=2)}%"
     else:
         instance.grade = None
         instance.recommendation = None
-    instance.percentage_score = f"{round((instance.performance_score / 100) * 100, ndigits=2)}%"
+        instance.percentage_score = None
     instance.save()
 
     post_save.connect(update_grade, sender=EmployeeAppraisal)
