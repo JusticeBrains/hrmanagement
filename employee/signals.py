@@ -66,7 +66,7 @@ def update_grade(sender, instance, **kwargs):
     else:
         instance.grade = None
         instance.recommendation = None
-    instance.percentage_score = f"{(instance.performance_score / 100) * 100} %"
+    instance.percentage_score = f"{round((instance.performance_score / 100) * 100, ndigits=2)} %"
     instance.save()
 
     post_save.connect(update_grade, sender=EmployeeAppraisal)
