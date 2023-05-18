@@ -63,7 +63,6 @@ LOCAL_APPS = [
     'paygroup.apps.PaygroupConfig',
     'trainingapplication.apps.TrainingapplicationConfig',
     'leave.apps.LeaveConfig',
-    'interviewapplication.apps.InterviewapplicationConfig',
     'objectivesapplication.apps.ObjectivesapplicationConfig',
     'insuranceapp.apps.InsuranceappConfig',
     'calenders.apps.CalendersConfig',
