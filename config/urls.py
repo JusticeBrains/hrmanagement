@@ -85,7 +85,7 @@ urlpatterns = [
     path('trainingapplication/', include('trainingapplication.urls')),
     path('paygroup/', include("paygroup.urls")),
     path('company/', include('company.urls')),
-    # path('recruitment/', include('recruitment.urls')),
+    path('recruitment/', include('recruitment.urls')),
 
     path('auth/',include('dj_rest_auth.urls')),
     path('auth/registration/',include('dj_rest_auth.registration.urls')),
