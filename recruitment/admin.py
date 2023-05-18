@@ -30,14 +30,22 @@ class JobRequirementAdmin(admin.ModelAdmin):
     list_per_page = 50
 
 @admin.register(JobApplication)
-class JobApplication(admin.ModelAdmin):
-    list_display = [
-        'employee_requisition',
-        'fullname',
-        'status',
-        'short_list',
-        'total_interview_score',
-    ]
+class JobApplicationAdmin(admin.ModelAdmin):
+    if JobApplication.fullname:
+        list_display = [
+            'employee_requisition',
+            'fullname',
+            'status',
+            'short_list',
+            'total_interview_score',
+        ]
+    else:
+        list_display = [
+            'employee_requisition',
+            'status',
+            'short_list',
+            'total_interview_score',
+        ]
     list_filter = ['status','total_interview_score']
     search_fields = ['status',]
     list_per_page = 50
@@ -45,9 +53,16 @@ class JobApplication(admin.ModelAdmin):
 
 @admin.register(Interview)
 class InterviewAdmin(admin.ModelAdmin):
-    list_display = ['panelist_name', 'interview_date', 'interview_time','interview_score']
+    if Interview.job_application:
+        list_display = ['job_application','panelist_name', 'interview_date', 'interview_time','interview_score']
+    else:
+        list_display = ['panelist_name', 'interview_date', 'interview_time','interview_score']
+
 
 
 @admin.register(ApplicantQualification)
 class ApplicationQualificationAdmin(admin.ModelAdmin):
-    list_display = ['qualification_name',]
+    if ApplicantQualification.job_application:
+        list_display = ['job_application','qualification_name',]
+    else:
+        list_display = ['qualification_name',]

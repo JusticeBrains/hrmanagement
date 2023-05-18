@@ -64,9 +64,9 @@ class JobApplication(models.Model):
     cover_letter = models.TextField(_("Cover Letter"))
     status = models.CharField(_("Status"), max_length=50, default="Pending")
     year = models.CharField(_("Year"), max_length=50, default=timezone.now().year)
-    short_list = models.BooleanField(_("Shorted Listed Application"), default=1)
-    interviewed = models.BooleanField(_("Interviewed"), default=1)
-    recruited = models.BooleanField(_("Recruited"), default=1)
+    short_list = models.BooleanField(_("Shorted Listed Application"), default=False)
+    interviewed = models.BooleanField(_("Interviewed"), default=False)
+    recruited = models.BooleanField(_("Recruited"), default=False)
     total_interview_score = models.PositiveIntegerField(
         _("Total Interviewed Score"), blank=True, null=True
     )
