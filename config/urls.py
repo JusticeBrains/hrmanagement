@@ -79,7 +79,6 @@ urlpatterns = [
     path('leave/', include('leave.urls')),
     path('insuranceapp/', include('insuranceapp.urls')),
     path('employee/', include('employee.urls')),
-    path('interviewapplication/', include("interviewapplication.urls")),
     path('jobanalysis/', include('jobanalysis.urls')),
     path('objectivesapplication/', include('objectivesapplication.urls')),
     path('trainingapplication/', include('trainingapplication.urls')),
@@ -92,13 +91,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    # path('swagger/users/', user_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-users'),
-    # path('swagger/employee/', employee_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-employees'),
-    # path('swagger/leave/', leave_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-leave'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('api-auth/', include('djoser.urls')),
-    # path('api-auth/', include('djoser.urls.jwt')),
-    # path('user-auth/',include('djoser.urls.authtoken')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
