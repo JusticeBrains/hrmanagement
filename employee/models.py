@@ -40,11 +40,6 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=80)
     middle_name = models.CharField(max_length=80, blank=True, null=True)
     last_name = models.CharField(max_length=80)
-    job_title = models.CharField(max_length=150, blank=True, null=True)
-    initials = models.CharField(_("Initials"), max_length=40, blank=True, null=True)
-    search_name = models.CharField(
-        _("Search Name"), max_length=50, blank=True, null=True
-    )
     gender = models.CharField(_("Gender"), max_length=50, blank=True, null=True)
     phone_no2 = models.CharField(
         _("Phone Number 2"), max_length=50, blank=True, null=True
@@ -110,9 +105,6 @@ class Employee(models.Model):
     )
     employement_contract_code = models.CharField(
         _("Employement Contract Code"), max_length=250, blank=True, null=True
-    )
-    statistics_group_code = models.CharField(
-        _("Statistics Group Code"), max_length=250, null=True, blank=True
     )
     resource_no = models.CharField(
         _("Resource No"), max_length=250, blank=True, null=True
@@ -600,7 +592,7 @@ class Department(Base):
         verbose_name_plural = "Departments"
 
     def __str__(self):
-        return f"{self.code} - {self.first_category_code}"
+        return f"{self.code} -{self.name} - {self.first_category_code}"
 
 
 if connection.vendor == "postgresql":
