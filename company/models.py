@@ -269,24 +269,6 @@ class MinimumQualification(models.Model):
         return f"{self.minimum_qualification}"
 
 
-class QualificationMetricSQEF(models.Model):
-    job_title_code = models.CharField(_("Job Title Code"), max_length=50)
-    entry_no = models.PositiveIntegerField(_("Entry No."))
-    entry_type = models.CharField(_("Entry Type"), choices=text_options.QualificationMetricOption.choices,
-                                  max_length=150)
-    minimum_qualification = models.ForeignKey("company.MinimumQualification", verbose_name=_("Minimum Qualification"),
-                                              on_delete=models.CASCADE)
-    minimum_work_experience = models.PositiveIntegerField(_("Minimum Work Experience"))
-    skills_knowledge_requirement = models.CharField(_("Skills/Knowledge Requirement"), max_length=150)
-
-    class Meta:
-        verbose_name = "Qualification Metric SQEF"
-        verbose_name_plural = "Qualification Metric SQEF"
-
-    def __str__(self):
-        return f"{self.minimum_qualification}, {self.minimum_work_experience}"
-
-
 class JobOpening(models.Model):
     department_name = models.ForeignKey("Department", verbose_name=_("Department Name"), on_delete=models.CASCADE)
     position = models.CharField(_("Position"), max_length=50)
@@ -350,17 +332,6 @@ class ApplicationPool(Application):
 
     def __str__(self):
         pass
-
-
-class ShortListedApplication(Application):
-    add_to_shortlist = models.BooleanField(_("Add To ShortList"))
-
-    class Meta:
-        verbose_name = "ShortListed Application"
-        verbose_name_plural = "ShortListed Application"
-
-    def __str__(self):
-        return self.add_to_shortlist
 
 
 class ApplicationReferences(models.Model):

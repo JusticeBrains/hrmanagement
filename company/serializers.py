@@ -81,12 +81,6 @@ class MinimumQualificationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class QualificationMetricSQEFSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.QualificationMetricSQEF
-        fields = "__all__"
-
-
 class JonOpeningSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.JobOpening
@@ -96,12 +90,6 @@ class JonOpeningSerializer(serializers.ModelSerializer):
 class ApplicationPoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.ApplicationPool
-        fields = "__all__"
-
-
-class ShortListedApplicationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.ShortListedApplication
         fields = "__all__"
 
 
@@ -115,12 +103,6 @@ class ApplicationQESerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.ApplicationQE
         fields = "__all__"
-
-
-# class JobApplicationSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = comp_models.JobApplication
-#         fields = "__all__"
 
 
 class JobApplicationQualificationSerializer(serializers.ModelSerializer):

@@ -72,11 +72,6 @@ class MinimumQualificationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MinimumQualificationSerializer
 
 
-class QualificationMetricSQEFViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.QualificationMetricSQEF.objects.all()
-    serializer_class = serializers.QualificationMetricSQEFSerializer
-
-
 class JobOpeningViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobOpening.objects.all()
     serializer_class = serializers.JonOpeningSerializer
@@ -86,10 +81,6 @@ class ApplicationPoolViewSet(viewsets.ModelViewSet):
     queryset = comp_models.ApplicationPool.objects.all()
     serializer_class = serializers.ApplicationPoolSerializer
 
-
-class ShortListedApplicationViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.ShortListedApplication.objects.all()
-    serializer_class = serializers.ShortListedApplicationSerializer
 
 
 class ApplicationReferencesViewSet(viewsets.ModelViewSet):
@@ -101,10 +92,6 @@ class ApplicationQEViewSet(viewsets.ModelViewSet):
     queryset = comp_models.ApplicationQE.objects.all()
     serializer_class = serializers.ApplicationQESerializer
 
-
-# class JobApplicationViewSet(viewsets.ModelViewSet):
-#     queryset = comp_models.JobApplication.objects.all()
-#     serializer_class = serializers.JobApplicationSerializer
 
 
 class JobApplicationQualificationViewSet(viewsets.ModelViewSet):
