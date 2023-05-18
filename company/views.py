@@ -102,9 +102,9 @@ class ApplicationQEViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ApplicationQESerializer
 
 
-class JobApplicationViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.JobApplication.objects.all()
-    serializer_class = serializers.JobApplicationSerializer
+# class JobApplicationViewSet(viewsets.ModelViewSet):
+#     queryset = comp_models.JobApplication.objects.all()
+#     serializer_class = serializers.JobApplicationSerializer
 
 
 class JobApplicationQualificationViewSet(viewsets.ModelViewSet):

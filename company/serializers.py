@@ -117,10 +117,10 @@ class ApplicationQESerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class JobApplicationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.JobApplication
-        fields = "__all__"
+# class JobApplicationSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = comp_models.JobApplication
+#         fields = "__all__"
 
 
 class JobApplicationQualificationSerializer(serializers.ModelSerializer):

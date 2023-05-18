@@ -223,7 +223,7 @@ class JobTitles(BaseCom):
         verbose_name_plural = "Job Titles"
 
     def __str__(self):
-        return f"{self.code} - {self.payroll_structure} - {self.salary_grade}"
+        return f"{self.code} - {self.description}"
 
 
 if connection.vendor == 'postgresql':
