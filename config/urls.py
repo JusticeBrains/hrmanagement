@@ -34,6 +34,45 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
+user_schema_view = get_schema_view(
+    openapi.Info(
+        title="Users API",
+        default_version='v1',
+        description="API documentation for users",
+        terms_of_service="https://www.example.com/terms/",
+        contact=openapi.Contact(email="contact@example.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+employee_schema_view = get_schema_view(
+    openapi.Info(
+        title="Employees API",
+        default_version='v1',
+        description="API documentation for employees",
+        terms_of_service="https://www.example.com/terms/",
+        contact=openapi.Contact(email="contact@example.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+leave_schema_view = get_schema_view(
+    openapi.Info(
+        title="Employees API",
+        default_version='v1',
+        description="API documentation for employees",
+        terms_of_service="https://www.example.com/terms/",
+        contact=openapi.Contact(email="contact@example.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
@@ -53,8 +92,13 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # path('swagger/users/', user_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-users'),
+    # path('swagger/employee/', employee_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-employees'),
+    # path('swagger/leave/', leave_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui-leave'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
+    # path('api-auth/', include('djoser.urls')),
+    # path('api-auth/', include('djoser.urls.jwt')),
+    # path('user-auth/',include('djoser.urls.authtoken')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
