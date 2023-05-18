@@ -6,6 +6,7 @@ from django_property_filter import (
     PropertyAllValuesFilter,
 )
 from rest_framework import viewsets
+
 from . import models as employee_model
 from . import serializers
 
@@ -30,7 +31,6 @@ class EmployeeFilterSet(PropertyFilterSet):
             "first_name",
             "last_name",
             "middle_name",
-            "job_title",
             "gender",
             "company_email",
             "job_titles",
