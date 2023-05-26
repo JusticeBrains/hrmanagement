@@ -4,14 +4,12 @@ from .models import (
     EmployeeRequisition,
     ApplicantQualification,
     JobApplication,
-    JobRequirements,
     Interview,
 )
 
 from .serializers import (
     EmployeeRequisitionSerializer,
     JobApplicationSerializer,
-    JobRequirementSerializer,
     InterviewSerializer,
     ApplicantQualificationSerializer,
 )
@@ -28,12 +26,6 @@ class JobApplicationViewSet(viewsets.ModelViewSet):
     serializer_class = JobApplicationSerializer
     filterset_fields = ["id", "employee_requisition", "year"]
 
-
-
-class JobRequirementsViewSet(viewsets.ModelViewSet):
-    queryset = JobRequirements.objects.all()
-    serializer_class = JobRequirementSerializer
-    filterset_fields = ["id", "employee_requisition",]
 
 
 class InterviewscoreViewSet(viewsets.ModelViewSet):

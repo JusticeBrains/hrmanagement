@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import (
     EmployeeRequisition,
     JobApplication,
-    JobRequirements,
     ApplicantQualification,
     Interview,
 )
@@ -19,11 +18,6 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         model = JobApplication
         fields = "__all__"
 
-
-class JobRequirementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = JobRequirements
-        fields = "__all__"
 
 
 class ApplicantQualificationSerializer(serializers.ModelSerializer):

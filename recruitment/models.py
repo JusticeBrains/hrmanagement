@@ -14,6 +14,12 @@ class EmployeeRequisition(models.Model):
     qualifcations = models.TextField(_("Qualification"), null=True, blank=True)
     status = models.CharField(_("Status"), default=0,max_length=50)
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True, null=True, blank=True)
+    requirement_name = ArrayField(
+        base_field=models.CharField(_("Requirement"), max_length=150),
+        blank=True,
+        null=True,
+    )
+    description = models.TextField(_("Description"), null=True, blank=True)
     class Meta:
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"
@@ -24,30 +30,6 @@ class EmployeeRequisition(models.Model):
     def __repr__(self) -> str:
         return f"{self.department} - {self.position} - {self.no_of_vacancies}"
 
-
-class JobRequirements(models.Model):
-    employee_requisition = models.ForeignKey(
-        "recruitment.EmployeeRequisition",
-        verbose_name=_("Employee Requisition"),
-        on_delete=models.CASCADE,
-        related_name="requirement_requisistion", null=True, blank=True
-    )
-    requirement_name = ArrayField(
-        base_field=models.CharField(_("Requirement"), max_length=150),
-        blank=True,
-        null=True,
-    )
-    description = models.TextField(_("Description"))
-
-    class Meta:
-        verbose_name = "Job Requirement"
-        verbose_name_plural = "Job Requirements"
-
-    def __str__(self):
-        return f"{self.requirement_name[:50]} - {self.description[:50]}"
-
-    def __repr__(self):
-        return f"{self.requirement_name[:50]} - {self.description[:50]}"
 
 
 class JobApplication(models.Model):

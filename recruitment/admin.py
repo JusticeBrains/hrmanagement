@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import (
     EmployeeRequisition,
-    JobRequirements,
     JobApplication,
     ApplicantQualification,
     Interview,
@@ -18,16 +17,6 @@ class EmployeeRequisitionAdmin(admin.ModelAdmin):
     search_fields = ['department', 'position']
     list_per_page = 50
 
-@admin.register(JobRequirements)
-class JobRequirementAdmin(admin.ModelAdmin):
-    list_display = [
-        'employee_requisition',
-        'requirement_name',
-        'description'
-    ]
-    list_filter = ['requirement_name']
-    search_fields = ['requirement_name']
-    list_per_page = 50
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
