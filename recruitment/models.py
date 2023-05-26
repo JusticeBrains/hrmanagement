@@ -28,7 +28,7 @@ class JobRequirements(models.Model):
         "recruitment.EmployeeRequisition",
         verbose_name=_("Employee Requisition"),
         on_delete=models.CASCADE,
-        related_name="requirement_requisistion",
+        related_name="requirement_requisistion", null=True, blank=True
     )
     requirement_name = ArrayField(
         base_field=models.CharField(_("Requirement"), max_length=150),
@@ -60,8 +60,8 @@ class JobApplication(models.Model):
     applicant_othername = models.CharField(_("Applicant OtherName"), max_length=150, null=True, blank=True)
     email = models.EmailField(_("Email"))
     phone = models.CharField(_("Phone"), max_length=15)
-    resume = models.FileField(_("Resume"), upload_to="resume/")
-    cover_letter = models.TextField(_("Cover Letter"))
+    resume = models.TextField(_("Resume"), blank=True, null=True)
+    cover_letter = models.TextField(_("Cover Letter"), blank=True, null=True)
     status = models.CharField(_("Status"), max_length=50, default="Pending")
     year = models.CharField(_("Year"), max_length=50, default=timezone.now().year)
     short_list = models.BooleanField(_("Shorted Listed Application"), default=False)

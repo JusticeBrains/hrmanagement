@@ -1,7 +1,7 @@
 
 from rest_framework.routers import SimpleRouter
 from .views import (
-    AppicantViewSet,
+    AppicantQualifivationViewSet,
     JobApplicationViewSet,
     JobRequirementsViewSet,
     EmployeeRequisitionViewSet,
@@ -10,7 +10,7 @@ from .views import (
 
 router = SimpleRouter()
 
-router.register('applicantviewset', AppicantViewSet, basename='applicantviewset')
+router.register('applicantviewset', AppicantQualifivationViewSet, basename='applicantviewset')
 router.register('jobapplication', JobApplicationViewSet, basename='jobapplication')
 router.register('jobrequirements', JobRequirementsViewSet, basename='jobrequirements')
 router.register('employeerequisition', EmployeeRequisitionViewSet, basename='employeerequisition')
