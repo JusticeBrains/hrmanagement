@@ -58,10 +58,10 @@ class LeaveBase(models.Model):
     relieving_officer_name = models.CharField(
         _("Relieving Officer Name"), max_length=250, null=True, blank=True
     )
-    hod_remarks_date = models.CharField(_("HOD Remarks Date"), blank=True, null=True)
-    hr_status = models.PositiveIntegerField(_("HR Status"), blank=True, null=True)
+    hod_remarks_date = models.CharField(_("HOD Remarks Date"), blank=True, null=True, max_length=50)
+    hr_status = models.PositiveIntegerField(_("HR Status"), blank=True, null=True, max_length=50)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
-    hr_remarks_date = models.CharField(_("HR Remarks Date"), blank=True, null=True)
+    hr_remarks_date = models.CharField(_("HR Remarks Date"), blank=True, null=True, max_length=50)
     employee = models.ForeignKey(
         "employee.Employee",
         verbose_name=_("Employee"),
