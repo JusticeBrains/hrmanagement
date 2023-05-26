@@ -33,7 +33,7 @@ class JobApplicationViewSet(viewsets.ModelViewSet):
 class JobRequirementsViewSet(viewsets.ModelViewSet):
     queryset = JobRequirements.objects.all()
     serializer_class = JobRequirementSerializer
-    filterset_fields = ["id", "employee_requisition", "requirement_name"]
+    filterset_fields = ["id", "employee_requisition",]
 
 
 class InterviewscoreViewSet(viewsets.ModelViewSet):
