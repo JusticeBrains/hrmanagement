@@ -11,7 +11,9 @@ class EmployeeRequisition(models.Model):
     )
     position = models.ForeignKey("company.JobTitles", verbose_name=_("Position"), on_delete=models.DO_NOTHING)
     no_of_vacancies = models.PositiveIntegerField(_("No Of Vacancies"))
-
+    qualifcations = models.TextField(_("Qualification"), null=True, blank=True)
+    status = models.CharField(_("Status"), default=0,max_length=50)
+    created_at = models.DateTimeField(_("Created At"), auto_now_add=True, null=True, blank=True)
     class Meta:
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"
@@ -53,7 +55,7 @@ class JobApplication(models.Model):
         "recruitment.EmployeeRequisition",
         verbose_name=_("Employee Requisition"),
         on_delete=models.CASCADE,
-        related_name="application_requisistion",
+        related_name="application_requisistion",null=True, blank=True
     )
     applicant_firstname = models.CharField(_("Applicant FirstName"), max_length=150)
     applicant_lastname = models.CharField(_("Applicant LastName"), max_length=150)
