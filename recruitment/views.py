@@ -20,7 +20,7 @@ from .serializers import (
 class EmployeeRequisitionViewSet(viewsets.ModelViewSet):
     queryset = EmployeeRequisition.objects.all()
     serializer_class = EmployeeRequisitionSerializer
-    filterset_fields = ["id", "department", "postion", "no_of_vacancies"]
+    filterset_fields = ["id", "department", "position", "no_of_vacancies"]
 
 
 class JobApplicationViewSet(viewsets.ModelViewSet):
