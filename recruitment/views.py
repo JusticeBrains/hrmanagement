@@ -24,7 +24,7 @@ class EmployeeRequisitionViewSet(viewsets.ModelViewSet):
 class JobApplicationViewSet(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
-    filterset_fields = ["id", "employee_requisition", "year", 'applicant_firstname', 'applicant_lastname','applicant_othername','status', 'total_interview_score', 'recruited','interviewed']
+    filterset_fields = ["id", "employee_requisition", "year", 'applicant_firstname', 'applicant_lastname','applicant_othername','status', 'total_interview_score', 'recruited','interviewed', 'short_list']
 
 
 
