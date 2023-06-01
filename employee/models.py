@@ -23,17 +23,6 @@ User = get_user_model()
 
 from django.db import models
 
-# class IntegerRangeField(models.IntegerField):
-#     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
-#         self.min_value = min_value
-#         self.max_value = max_value
-#         super().__init__(verbose_name, name, **kwargs)
-
-#     def formfield(self, **kwargs):
-#         defaults = {'min_value': self.min_value, 'max_value': self.max_value}
-#         defaults.update(kwargs)
-#         return super().formfield(**defaults)
-
 
 class Employee(models.Model):
     code = models.CharField(max_length=20, unique=True)
@@ -192,6 +181,8 @@ class Employee(models.Model):
     total_number_of_leave_days = models.PositiveIntegerField(
         _("Total Number Of Leave Days"), null=True, blank=True
     )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Employee"

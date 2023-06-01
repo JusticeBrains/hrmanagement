@@ -21,6 +21,7 @@ class UserViewset(viewsets.ModelViewSet):
         "is_hr",
         "is_active",
         "is_super_hr",
+        "is_admin",
         "staff_category",
         "employee_level",
         "emp_code",

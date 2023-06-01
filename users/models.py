@@ -19,6 +19,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
     is_active = models.PositiveIntegerField(_("Is Active"), null=True, blank=True, default=1)
     is_staff = models.BooleanField(default=False)
+    is_admin = models.PositiveIntegerField(_("Is Admin"), blank=True, null=True, default=0)
     date_joined = models.DateTimeField(_("Date Joined"), default=timezone.now)
     is_verified = models.CharField(_("Is Verified"), max_length=50, blank=True, null=True, default=0)
     emp_code = models.CharField(_("Employee Code"), max_length=50, blank=True, null=True)
@@ -26,6 +27,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
     is_super_hr = models.PositiveIntegerField(_("Is Super HR"), default=0)
     staff_category = models.CharField(_("Staff Category"), max_length=50, blank=True, null=True)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email',]

@@ -21,6 +21,8 @@ class EmployeeRequisition(models.Model):
     )
     description = models.TextField(_("Description"), null=True, blank=True)
     published = models.PositiveIntegerField(_("Published"), default=0)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
     class Meta:
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"

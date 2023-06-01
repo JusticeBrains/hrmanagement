@@ -1,23 +1,22 @@
+import random
 from rest_framework import serializers
 
 from . import models as comp_models
 
 
 class CompanySerializer(serializers.ModelSerializer):
+    alias = serializers.SerializerMethodField()
     class Meta:
         model = comp_models.Company
         fields = "__all__"
+    
+    def get_alias(self, obj):
+        return f"{obj.name[:3]}{random.randint(300,9000)}"
 
 
 class CompanyTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.CompanyType
-        fields = "__all__"
-
-
-class CompanyFieldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.CompanyField
         fields = "__all__"
 
 
@@ -110,11 +109,6 @@ class JobApplicationQualificationSerializer(serializers.ModelSerializer):
         model = comp_models.JobApplicationQualification
         fields = "__all__"
 
-
-class HRNeedsSQEFSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.HRNeedsSQEF
-        fields = "__all__"
 
 
 class HRNeedsLineSerializer(serializers.ModelSerializer):

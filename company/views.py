@@ -1,34 +1,38 @@
 from . import models as comp_models
 from . import serializers
-
+from django_property_filter import PropertyFilterSet, PropertyAllValuesFilter
 from rest_framework import viewsets
+
+
+class CompanyFilterSet(PropertyFilterSet):
+    alias = PropertyAllValuesFilter(field_name="alias")
+    
+    class Meta:
+        model = comp_models.Company
+        fields = ['id', 'name', 'comp_type']
+
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Company.objects.all()
     serializer_class = serializers.CompanySerializer
-
+    filterset_class = CompanyFilterSet
 
 class CompanyTypeViewSet(viewsets.ModelViewSet):
     queryset = comp_models.CompanyType.objects.all()
     serializer_class = serializers.CompanyTypeSerializer
 
 
-class CompanyFieldViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.CompanyField.objects.all()
-    serializer_class = serializers.CompanyFieldSerializer
-
-
 class JobTitleViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobTitles.objects.all()
     serializer_class = serializers.JobTitlesSerializer
-    filterset_fields = ['code', 'payroll_structure', 'salary_grade', 'description']
+    filterset_fields = ['payroll_structure', 'salary_grade', 'description']
 
 
 class SalaryGradeViewSet(viewsets.ModelViewSet):
     queryset = comp_models.SalaryGrade.objects.all()
     serializer_class = serializers.SalaryGradeSerializer
-    filterset_fields = ['code', 'payroll_structure', 'job_titles', 'transport_rate']
+    filterset_fields = ['payroll_structure', 'job_titles', 'transport_rate']
 
 
 
@@ -98,10 +102,6 @@ class JobApplicationQualificationViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobApplicationQualification.objects.all()
     serializer_class = serializers.JobApplicationQualificationSerializer
 
-
-class HRNeedsSQEFViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.HRNeedsSQEF.objects.all()
-    serializer_class = serializers.HRNeedsSQEFSerializer
 
 
 class HRNeedsLineViewSet(viewsets.ModelViewSet):

@@ -5,7 +5,6 @@ from rest_framework.routers import SimpleRouter
 router = SimpleRouter()
 router.register('company', views.CompanyViewSet, basename='company')
 router.register('companytype', views.CompanyTypeViewSet, basename='companytype')
-router.register('companyfield', views.CompanyFieldViewSet, basename='companyfield')
 router.register('holiday', views.HolidayViewSet, basename='holiday')
 router.register('medicalcodes', views.MedicalCodesViewSet, basename='medicalcodes')
 router.register('medicalcentre', views.MedicalCentreViewSet, basename='medicalcentre')
@@ -20,7 +19,6 @@ router.register('applicationreference', views.ApplicationReferencesViewSet, base
 router.register('application', views.ApplicationQEViewSet, basename='applicationqe')
 router.register('jobappplicationqualification', views.JobApplicationQualificationViewSet,
                 basename='jobappplicationqualification')
-router.register('hrneedssqef', views.HRNeedsSQEFViewSet, basename='hrneedssqef')
 router.register('hrneedsline', views.HRNeedsLineViewSet, basename='hrneedsline')
 router.register('hrapprovalentry', views.HRApprovalEntryViewSet, basename='hrapprovalentry')
 router.register('hralerts', views.HRAlertsViewSet, basename='hralerts')

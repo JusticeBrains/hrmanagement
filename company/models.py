@@ -1,5 +1,6 @@
 from django.db import connection, models
 import uuid
+import random
 
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model  # get current active user
@@ -10,35 +11,34 @@ from options import text_options
 User = get_user_model()
 
 
+class CompanyAdmin(models.Model):
+    first_name = models.CharField(_("First Name"), max_length=150, null=True, blank=True)
+    last_name = models.CharField(_("Last Name"), max_length=150,blank=True, null=True)
+    password = models.CharField(_("Password"), max_length=150, null=True, blank=True)
+    company_id = models.OneToOneField("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING)
+
+    class Meta:
+        verbose_name = "Company Admin"
+        verbose_name_plural = "Company Admin"
+
 class Company(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    comp_name = models.CharField(_("Company Name"), max_length=150)
-    comp_type = models.OneToOneField("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE)
-    address = models.CharField(_("Address"), max_length=50)
-    address_2 = models.CharField(_("Address 2"), max_length=50)
-    phone_number = models.CharField(_("Phone No."), max_length=50)
-    contact_person = models.CharField(_("Contact Person"), max_length=50)
-    contact_phonenumber = models.CharField(_("Contact Person's No."), max_length=50)
-    contact_email = models.EmailField(_("Contact Person's Email"), max_length=254)
-    employment_plan = models.BooleanField(_("Employment Plan"))
-    emp_plan_submission_date = models.DateField(_("Employment Plan Submission Date"), auto_now=False,
-                                                auto_now_add=False)
-    organogram = models.BooleanField(_("Organogram"))
-    organogram_submission_date = models.DateField(_("Organigram"), auto_now=False, auto_now_add=False)
-    job_decription = models.BooleanField(_("Job Descriptions"))
-    job_desc_submission_date = models.DateField(_("Job Desc. Submission Date"), auto_now=False, auto_now_add=False)
-    comments = models.TextField(_("Comments"))
+    name = models.CharField(_("Company Name"), max_length=150)
+    comp_type = models.ForeignKey("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
 
     def __str__(self):
-        return f"{self.comp_name}, {self.comp_type}"
+        return f"{self.name}, {self.comp_type}"
+    
+    @property
+    def alias(self):
+        return f"{self.name[:3]}{random.randint(300,9000)}"
+    
 
 
 class CompanyType(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     type = models.CharField(_("Company Type"), max_length=50)
 
     class Meta:
@@ -47,18 +47,6 @@ class CompanyType(models.Model):
 
     def __str__(self):
         return f"{self.type}"
-
-
-class CompanyField(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    field_name = models.CharField(_("Field Name"), max_length=50)
-
-    class Meta:
-        verbose_name = "Company Field"
-        verbose_name_plural = "Company Fields"
-
-    def __str__(self):
-        return f"{self.field_name}, {self.code}"
 
 
 class Department(models.Model):
@@ -85,7 +73,6 @@ class Holidays(models.Model):
 
 
 class MedicalCodes(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     description = models.CharField(_("Description"), max_length=50)
     limit_type = models.CharField(_("Limit Type"), max_length=50)
     medical_limit = models.DecimalField(_("Medical Limit"), choices=text_options.MEDICALLIMITTYPE.choices, max_digits=5,
@@ -101,7 +88,6 @@ class MedicalCodes(models.Model):
 
 
 class MedicalCentres(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     name = models.CharField(_("Name"), max_length=50)
     address = models.CharField(_("Adress"), max_length=50)
     address2 = models.CharField(_("Address2"), max_length=50, blank=True, null=True)
@@ -118,7 +104,6 @@ class MedicalCentres(models.Model):
 
 
 class Property(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     description = models.CharField(_("Description"), max_length=50)
     asset_value = models.DecimalField(_("Asset Value"), max_digits=5, decimal_places=2)
     currency = models.CharField(_("Currency"), max_length=50)
@@ -157,7 +142,6 @@ class PropertyAssignment(models.Model):
 
 
 class DisciplinaryActions(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     description = models.CharField(_("Description"), max_length=100)
     minor_offense = models.CharField(_("Minor Offense"), max_length=50)
     major_offense = models.CharField(_("Major Offense"), max_length=50)
@@ -173,7 +157,6 @@ class DisciplinaryActions(models.Model):
 
 
 class PayrollStructure(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
     no = models.PositiveIntegerField(_("No."))
     year = models.PositiveIntegerField(_("Year"))
     name = models.CharField(_("Name"), max_length=150)
@@ -446,28 +429,6 @@ class HRNeeds(models.Model):
     class Meta:
         abstract = True
 
-
-class HRNeedsSQEF(HRNeeds):
-    entry_no = models.PositiveIntegerField(_("Entry No."))
-    entry_type = models.CharField(_("Entry Type"), max_length=50)
-    description = models.CharField(_("Description"), max_length=150)
-    remarks = models.CharField(_("Remarks"), max_length=100)
-    institution = models.CharField(_("Institution"), max_length=50)
-    programme_of_study = models.CharField(_("Programme Of Study"), max_length=50)
-    year_of_completion = models.PositiveIntegerField(_("Year Of Completion"))
-    place_of_work = models.CharField(_("Place Of Work"), max_length=50)
-    position = models.CharField(_("Position"), max_length=50)
-    duties = models.CharField(_("Duties"), max_length=150)
-    start_date = models.DateField(_("Start Date"), auto_now=True, auto_now_add=False)
-    end_date = models.DateField(_("End Date"), auto_now=True, auto_now_add=False)
-
-    class Meta:
-        verbose_name = "HR Needs SQEF"
-        verbose_name_plural = "HR Needs SQEF"
-
-    @property
-    def work_duration(self):
-        return self.end_date - self.start_date
 
 
 class HRNeedsLine(HRNeeds):

@@ -17,6 +17,7 @@ class HolidayCalender(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=80)
     holiday_date = models.DateField(_("Holiday Date"), auto_now=False, auto_now_add=False)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Holiday Calender"
@@ -81,6 +82,8 @@ class LeaveBase(models.Model):
         _("Employee Code"), max_length=50, null=True, blank=True
     )
     leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
 
     class Meta:
         abstract = True
@@ -323,6 +326,7 @@ class LeaveType(models.Model):
     staff_category = models.ForeignKey(
         "employee.StaffCategory", on_delete=models.CASCADE, null=True, blank=True
     )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     def calculate_max_days(self, employee):
         if self.name == "Medical":
