@@ -101,7 +101,7 @@ class Employee(models.Model):
     salesperson_purch_code = models.CharField(
         _("Salespers Purch Code"), max_length=250, null=True, blank=True
     )
-    birth_date = models.CharField(_("Birth Date"), max_length=50, blank=True, null=True)
+    birth_date = models.DateField(_("Birth Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     ssno = models.CharField(
         _("Social Security No"), max_length=50, blank=True, null=True
     )
