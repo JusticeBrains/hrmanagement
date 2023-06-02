@@ -82,7 +82,7 @@ class LeaveBase(models.Model):
         _("Employee Code"), max_length=50, null=True, blank=True
     )
     leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
-    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, null=True, blank=True)
 
 
     class Meta:

@@ -16,7 +16,9 @@ class Command(BaseCommand):
     help = "load data to database"
 
     def handle(self, *args: Any, **options: Any):
+        
         companies = Company.objects.all()
+
         auth = HttpNtlmAuth(username=env.str("username"),password=env.str("password"))
 
         load_department()
