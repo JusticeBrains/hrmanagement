@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any):
         companies = Company.objects.all()
-        auth = HttpNtlmAuth(username="frontenduser",password="fuser123@@")
+        auth = HttpNtlmAuth(username=env.str("username"),password=env.str("password"))
 
         load_department()
 
