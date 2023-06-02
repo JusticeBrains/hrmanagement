@@ -52,6 +52,9 @@ class EmployeeFilterSet(PropertyFilterSet):
             "payment_mode",
             "payment_method",
             "days_left",
+            "company_id",
+            "mobile_no",
+            "company_email",
         ]
 
 

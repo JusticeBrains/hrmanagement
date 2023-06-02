@@ -541,6 +541,8 @@ class Base(models.Model):
     # id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, unique=True, primary_key=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
+
 
     class Meta:
         abstract = True
