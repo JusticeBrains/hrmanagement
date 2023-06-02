@@ -21,68 +21,47 @@ class Command(BaseCommand):
 
         load_department()
 
-        nlajun_sen = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20JUN%20AND%20SEN')/EmployeeCard")
-        nla_exc_man = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20EXEC%20MANAGEMENT')/EmployeeCard")
-        nla_man = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20MANAGEMENT')/EmployeeCard")
-        rch_hod = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('RCH%20HOD')/EmployeeCard")
-        emery = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Emery%20Invest')/EmployeeCard")
-        baf = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Bryan%20Acheampong%20Foundation')/EmployeeCard")
-        faab = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('FAAB%20Systems%20Gh%20Ltd.')/EmployeeCard")
-        reiss_co = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Reiss%20%26%20Co.%20Ghana%20Limited')/EmployeeCard")
-        intercity_jun = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('INTERCITY%20STC%20COACHES%20-%20JUNIOR')/EmployeeCard")
-        intercity_sen = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('INTERCITY%20STC%20COACHES%20-%20SENIOR')/EmployeeCard")
-        intercity_driver = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('INTERCITY%20STC%20COACHES%20-DRIVER')/EmployeeCard")
-        mb = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('M%20AND%20B%20LIMITED')/EmployeeCard")
-        jay_lodge = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Jays%20Lodge')/EmployeeCard")
-        itu = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Intu-IT%20Ghana%20Limited')/EmployeeCard")
-        itu_allowance = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Intu%20IT%20Pro%20Allowance')/EmployeeCard")
-        rch_kumasi = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Rock%20City%20Hotel%20Kumasi')/EmployeeCard")
-        rch_prof_allowance = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Rock%20City%20Profesional%20Allowanc')/EmployeeCard")
-        rch = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Rock%20City%20Hotel')/EmployeeCard")
-        rml = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('Republic%20Media%20Limited')/EmployeeCard")
-        cronus = str("http://paymastergh.com:7048/Payroll/ODataV4/Company('CRONUS%20International%20Ltd.')/EmployeeCard")
-
         for company in companies:
             if company.name == "Emery Invest":
-                get_user_data(url=emery, auth=auth, company=company.name)
+                get_user_data(url=env.str("emery"), auth=auth, company=company.name)
             elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
-                get_user_data(url=baf, auth=auth, company=company.name)
+                get_user_data(url=env.str("baf"), auth=auth, company=company.name)
             elif company.name == "FAAB Systems Gh. Ltd":
-                get_user_data(url=faab, auth=auth, company=company.name)
+                get_user_data(url=env.str("faab"), auth=auth, company=company.name)
             elif company.name == "Rock City Hotel Heads of Department":
-                get_user_data(url=rch_hod, auth=auth, company=company.name)
+                get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name)
             elif company.name == "REISS & CO. GHANA LIMITED":
-                get_user_data(url=reiss_co, auth=auth, company=company.name)
+                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name)
             elif company.name == "INTERCITY STC COACHES LTD":
-                get_user_data(url=intercity_jun, auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name)
             elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
-                get_user_data(url=intercity_sen, auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name)
             elif company.name == "INTERCITY STC COACHES LTD - DRIVERS":
-                get_user_data(url=intercity_driver, auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_driver"), auth=auth, company=company.name)
             elif company.name == "M&B LIMITED":
-                get_user_data(url=mb, auth=auth, company=company.name)
+                get_user_data(url=env.str("mb"), auth=auth, company=company.name)
             elif company.name == "Jays Lodge":
-                get_user_data(url=jay_lodge, auth=auth, company=company.name)
+                get_user_data(url=env.str("jay_lodge"), auth=auth, company=company.name)
             elif company.name == "INTU-IT GHANA LIMITED":
-                get_user_data(url=itu, auth=auth, company=company.name)
+                get_user_data(url=env.str("itu"), auth=auth, company=company.name)
             elif company.name == "Intu IT Professional Allowance":
-                get_user_data(url=itu_allowance, auth=auth, company=company.name)
+                get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name)
             elif company.name == "Rock City Hotel Kumasi":
-                get_user_data(url=rch_kumasi, auth=auth, company=company.name)
+                get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name)
             elif company.name == "Rock City Professional Allowance":
-                get_user_data(url=rch_prof_allowance, auth=auth, company=company.name)  
+                get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name)  
             elif company.name == "Rock City Hotel":
-                get_user_data(url=rch, auth=auth, company=company.name)
+                get_user_data(url=env.str("rch"), auth=auth, company=company.name)
             elif company.name == "Republic Media Limited":
-                get_user_data(url=rml, auth=auth, company=company.name)
+                get_user_data(url=env.str("rml"), auth=auth, company=company.name)
             elif company.name == "CRONUS International Ltd.":
-                get_user_data(url=cronus, auth=auth, company=company.name)
+                get_user_data(url=env.str("cronus"), auth=auth, company=company.name)
             elif company.name == "NLA MANAGEMENT":
-                get_user_data(url=nla_man, auth=auth, company=company.name)
+                get_user_data(url=env.str("nla_man"), auth=auth, company=company.name)
             elif company.name == "NLA EXECUTIVE MANAGEMENT":
-                get_user_data(url=nla_exc_man, auth=auth, company=company.name)
+                get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name)
             elif company.name == "NLA JUNIOR AND SENIOR":
-                get_user_data(url=nlajun_sen, auth=auth, company=company.name)
+                get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name)
 
 
 
