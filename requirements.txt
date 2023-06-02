@@ -1,4 +1,4 @@
-asgiref==3.6.0
+asgiref==3.7.2
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==3.0.1
@@ -8,9 +8,11 @@ cryptography==39.0.1
 defusedxml==0.7.1
 diff-match-patch==20200713
 dj-database-url==1.2.0
+dj-email-url==1.0.6
 dj-rest-auth==3.0.0
 Django==4.2.1
 django-allauth==0.52.0
+django-cache-url==3.4.4
 django-filter==22.1
 django-import-export==3.0.2
 django-property-filter==1.1.2
@@ -20,6 +22,7 @@ djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
 drf-extra-fields==3.4.1
 drf-yasg==1.21.5
+environs==9.5.0
 et-xmlfile==1.1.0
 gunicorn==20.1.0
 idna==3.4
@@ -28,6 +31,7 @@ itypes==1.2.0
 Jinja2==3.1.2
 MarkupPy==1.14
 MarkupSafe==2.1.2
+marshmallow==3.19.0
 oauthlib==3.2.2
 odfpy==1.4.1
 openpyxl==3.1.1
@@ -38,6 +42,7 @@ pycparser==2.21
 PyJWT==2.6.0
 pyspnego==0.9.0
 python-decouple==3.7
+python-dotenv==1.0.0
 python3-openid==3.2.0
 pytz==2022.7.1
 PyYAML==6.0
@@ -50,6 +55,7 @@ social-auth-app-django==4.0.0
 social-auth-core==4.4.1
 sqlparse==0.4.3
 tablib==3.3.0
+typing_extensions==4.6.3
 uritemplate==4.1.1
 urllib3==1.26.14
 whitenoise==6.3.0
