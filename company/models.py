@@ -22,8 +22,9 @@ class CompanyAdmin(models.Model):
         verbose_name_plural = "Company Admin"
 
 class Company(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Company Name"), max_length=150)
-    comp_type = models.ForeignKey("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE)
+    comp_type = models.ForeignKey("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Company'
@@ -39,6 +40,7 @@ class Company(models.Model):
 
 
 class CompanyType(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     type = models.CharField(_("Company Type"), max_length=50)
 
     class Meta:

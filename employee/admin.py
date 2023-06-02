@@ -4,7 +4,8 @@ from employee import models as emodels
 
 @admin.register(emodels.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    search_fields = ['code']
+    search_fields = ['code', 'company']
+    list_display = ['fullname','code', 'company']
 
 
 @admin.register(emodels.EmployeeAppraisalDetail)
