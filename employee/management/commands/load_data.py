@@ -36,7 +36,8 @@ class Command(BaseCommand):
     def handle(self, *args: Any, **options: Any):
         companies = Company.objects.all()
         auth = HttpNtlmAuth(username="frontenduser",password="fuser123@@")
-
+        load_department()
+        
         nlajun_sen = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20JUN%20AND%20SEN')/EmployeeCard")
         nla_exc_man = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20EXEC%20MANAGEMENT')/EmployeeCard")
         nla_man = str("http://paymastergh.com:8049/NLA/ODataV4/Company('NLA%20MANAGEMENT')/EmployeeCard")
