@@ -23,49 +23,49 @@ class Command(BaseCommand):
 
         for company in companies:
             if company.name == "Emery Invest":
-                get_user_data(url=env.str("emery"), auth=auth, company=company.name)
+                get_user_data(url=env.str("emery"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
-                get_user_data(url=env.str("baf"), auth=auth, company=company.name)
+                get_user_data(url=env.str("baf"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "FAAB Systems Gh. Ltd":
-                get_user_data(url=env.str("faab"), auth=auth, company=company.name)
+                get_user_data(url=env.str("faab"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Rock City Hotel Heads of Department":
-                get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name)
+                get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "REISS & CO. GHANA LIMITED":
-                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name)
+                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "INTERCITY STC COACHES LTD":
-                get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
-                get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "INTERCITY STC COACHES LTD - DRIVERS":
-                get_user_data(url=env.str("intercity_driver"), auth=auth, company=company.name)
+                get_user_data(url=env.str("intercity_driver"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "M&B LIMITED":
-                get_user_data(url=env.str("mb"), auth=auth, company=company.name)
+                get_user_data(url=env.str("mb"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Jays Lodge":
-                get_user_data(url=env.str("jay_lodge"), auth=auth, company=company.name)
+                get_user_data(url=env.str("jay_lodge"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "INTU-IT GHANA LIMITED":
-                get_user_data(url=env.str("itu"), auth=auth, company=company.name)
+                get_user_data(url=env.str("itu"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Intu IT Professional Allowance":
-                get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name)
+                get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Rock City Hotel Kumasi":
-                get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name)
+                get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Rock City Professional Allowance":
-                get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name)  
+                get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name, company_id=company.id)  
             elif company.name == "Rock City Hotel":
-                get_user_data(url=env.str("rch"), auth=auth, company=company.name)
+                get_user_data(url=env.str("rch"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "Republic Media Limited":
-                get_user_data(url=env.str("rml"), auth=auth, company=company.name)
+                get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "CRONUS International Ltd.":
-                get_user_data(url=env.str("cronus"), auth=auth, company=company.name)
+                get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "NLA MANAGEMENT":
-                get_user_data(url=env.str("nla_man"), auth=auth, company=company.name)
+                get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "NLA EXECUTIVE MANAGEMENT":
-                get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name)
+                get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "NLA JUNIOR AND SENIOR":
-                get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name)
+                get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
 
 
 
-def get_user_data(url, auth, company):
+def get_user_data(url, auth, company, company_id):
         res = requests.get(url=url, auth=auth)
         data = res.json()
         staff_category=StaffCategory.objects.get(code="JUNSEN20")
@@ -140,7 +140,8 @@ def get_user_data(url, auth, company):
                         grounds_for_term=employee["Grounds_for_Term_Code"],
                         staff_category_code=staff_category,
                         total_number_of_leave_days=staff_category.max_number_of_days,
-                        company=company
+                        company=company, 
+                        company_id=company_id
                 )
                     if not Employee.objects.filter(code=employee['No']).exists():
                         print(f"--creating-- {employee['No']}")
@@ -207,7 +208,9 @@ def get_user_data(url, auth, company):
                         staff_category_code=staff_category,
                         total_number_of_leave_days=staff_category.max_number_of_days,
                         days_left = staff_category.max_number_of_days,
-                        company = company
+                        company = company,
+                        company_id=company_id
+
                 )
                     print(f"Ending -- Employee {employee['No']}")
                 except Employee.DoesNotExist:
@@ -276,7 +279,9 @@ def get_user_data(url, auth, company):
                     staff_category_code=staff_category,
                     total_number_of_leave_days=staff_category.max_number_of_days,
                     days_left = staff_category.max_number_of_days,
-                    company = company
+                    company = company, 
+                        company_id=company_id
+
                 )
                     print(f"Ending -- Employee {employee['No']}")
 

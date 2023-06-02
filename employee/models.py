@@ -183,6 +183,7 @@ class Employee(models.Model):
         _("Total Number Of Leave Days"), null=True, blank=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
 
 
     class Meta:

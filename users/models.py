@@ -27,7 +27,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
     is_super_hr = models.PositiveIntegerField(_("Is Super HR"), default=0)
     staff_category = models.CharField(_("Staff Category"), max_length=50, blank=True, null=True)
-    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, null=True, blank=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email',]
