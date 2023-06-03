@@ -6,6 +6,7 @@ from .models import Company, CompanyType, Job, JobTitles, SalaryGrade
 @admin.register(Company)
 class CompanyModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'alias',)
+    search_fields = ["name"]
 
 @admin.register(CompanyType)
 class CompanyTypeAdmin(admin.ModelAdmin):
