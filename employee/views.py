@@ -150,7 +150,7 @@ class AppraisalGradingViewSet(viewsets.ModelViewSet):
     filterset_fields = ['id', 'grade', 'recommendation',]
 
 
-# class PayGroupViewSet(viewsets.ModelViewSet):
-#     queryset = employee_model.PayGroup.objects.all()
-#     serializer_class = serializers.PayGroupSerializer
-#     filterset_fields = ["id", "no", "company", "total_number_of_leave_days"]
+class PayGroupViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.PayGroup.objects.all()
+    serializer_class = serializers.PayGroupSerializer
+    filterset_fields = ["id", "no", "company", "total_number_of_leave_days"]

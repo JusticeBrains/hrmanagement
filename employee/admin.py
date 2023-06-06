@@ -13,10 +13,10 @@ class EmployeeAppraisalDetailAdmin(admin.ModelAdmin):
     list_display = ['emp_code', 'period', 'emp_name', 'score']
 
 
-# @admin.register(emodels.PayGroup)
-# class PaygroupAdmin(admin.ModelAdmin):
-#     search_fields = ['no','description', 'company']
-#     list_display = ["no","company"]
+@admin.register(emodels.PayGroup)
+class PaygroupAdmin(admin.ModelAdmin):
+    search_fields = ['no','description', 'company']
+    list_display = ["no","company"]
 
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
