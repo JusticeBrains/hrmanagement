@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Employee
-from leave.models import LeaveRequest
+from leave.models import LeaveRequest, LeaveType
 
 @receiver(post_save, sender=LeaveRequest)
 def update_employee_days_left(sender, instance, created, **kwargs):
@@ -45,3 +45,10 @@ def update_employee_days_left(sender, instance, created, **kwargs):
         Employee.objects.filter(id=instance.employee.id).update(
             days_left=instance.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
         )
+
+
+@receiver(post_save, sender=LeaveType)
+def update_paygroup_code(sender, instance, created, **kwargs):
+    if created:
+        instance.pay_group_code = instance.paygroup.no
+        instance.save()
