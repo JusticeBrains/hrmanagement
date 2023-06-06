@@ -692,7 +692,7 @@ class PayGroup(models.Model):
     gross_up = models.BooleanField(_("Gross Up"),  null=True, blank=True)
     total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), blank=True, null=True)
     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
-
+    comp_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
     class Meta:
         verbose_name = "Pay Group"
         verbose_name_plural = "Pay Groups"
