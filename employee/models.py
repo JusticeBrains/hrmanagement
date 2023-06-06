@@ -21,7 +21,7 @@ from django.db import models
 
 
 class Employee(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    # id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=80)
     middle_name = models.CharField(max_length=80, blank=True, null=True)
