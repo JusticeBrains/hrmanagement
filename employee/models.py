@@ -1,9 +1,5 @@
 import uuid
 from options.text_options import (
-    GENDER,
-    EMPLOYEESTATUS,
-    MARITALSTATUS,
-    APPRAISALGRADES,
     ReviewType,
     EmployeeType,
     MEDICALLIMITTYPE,
@@ -160,13 +156,6 @@ class Employee(models.Model):
         _("Employee Level"), max_length=50, blank=True, null=True
     )
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
-    staff_category_code = models.ForeignKey(
-        "employee.StaffCategory",
-        verbose_name=_("Staff Category"),
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
     days_left = models.PositiveIntegerField(
         _("Days Left"), null=True, blank=True, default=0
     )
@@ -183,8 +172,7 @@ class Employee(models.Model):
         _("Total Number Of Leave Days"), null=True, blank=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
-
+    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
 
     class Meta:
         verbose_name = "Employee"
@@ -337,67 +325,67 @@ class EmployeeAppraisalDetail(models.Model):
     
 
 
-class EmployeePromotion(models.Model):
-    no = models.CharField(_("No."), max_length=50)
-    department_code = models.ForeignKey(
-        "company.SecondCategoryLevel",
-        verbose_name=_("Department Name"),
-        on_delete=models.CASCADE,
-    )
-    department_name = models.CharField(_("Department Name"), max_length=150)
-    emp_code = models.CharField(_("Employee Code"), max_length=50)
-    emp_name = models.ForeignKey(
-        "Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE
-    )
-    paygroup = models.ForeignKey(
-        "paygroup.PayGroup", verbose_name=_("Pay Group"), on_delete=models.CASCADE
-    )
-    current_job_title_code = models.ForeignKey(
-        "company.JobTitles", verbose_name=_("Current Job"), on_delete=models.CASCADE
-    )
-    current_job_title = models.CharField(
-        _("Current Job Title"), max_length=50, blank=True, null=True
-    )
-    new_job_title_code = models.ForeignKey(
-        "company.JobTitles",
-        verbose_name=_("New Job Title Code"),
-        on_delete=models.CASCADE,
-        related_name="new_job_title_code",
-    )
-    new_job_title = models.CharField(_("New Job Title"), max_length=50)
-    current_salary_grade = models.ForeignKey(
-        "company.SalaryGrade",
-        verbose_name=_("Current Salary Grade"),
-        on_delete=models.CASCADE,
-        related_name="current_salary_grade",
-    )
-    new_salary_grade = models.ForeignKey(
-        "company.SalaryGrade",
-        verbose_name=_("New Salary Grade"),
-        on_delete=models.CASCADE,
-        related_name="new_salary_grade",
-    )
-    current_notch = models.PositiveIntegerField(_("Current Notch"))
-    new_notch = models.PositiveIntegerField(_("New Notch"))
-    current_basic_salary = models.DecimalField(
-        _("Current Basic Salary"), max_digits=5, decimal_places=2
-    )
-    new_basic_salary = models.DecimalField(
-        _("New Basic Salary"), max_digits=5, decimal_places=2
-    )
-    comment = models.CharField(_("Comment"), max_length=250)
-    transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    posted = models.BooleanField(_("Posted"))
-    effective_date = models.DateField(
-        _("Effective Date"), auto_now=False, auto_now_add=False
-    )
+# class EmployeePromotion(models.Model):
+#     no = models.CharField(_("No."), max_length=50)
+#     department_code = models.ForeignKey(
+#         "company.SecondCategoryLevel",
+#         verbose_name=_("Department Name"),
+#         on_delete=models.CASCADE,
+#     )
+#     department_name = models.CharField(_("Department Name"), max_length=150)
+#     emp_code = models.CharField(_("Employee Code"), max_length=50)
+#     emp_name = models.ForeignKey(
+#         "Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE
+#     )
+#     paygroup = models.ForeignKey(
+#         "paygroup.PayGroup", verbose_name=_("Pay Group"), on_delete=models.CASCADE
+#     )
+#     current_job_title_code = models.ForeignKey(
+#         "company.JobTitles", verbose_name=_("Current Job"), on_delete=models.CASCADE
+#     )
+#     current_job_title = models.CharField(
+#         _("Current Job Title"), max_length=50, blank=True, null=True
+#     )
+#     new_job_title_code = models.ForeignKey(
+#         "company.JobTitles",
+#         verbose_name=_("New Job Title Code"),
+#         on_delete=models.CASCADE,
+#         related_name="new_job_title_code",
+#     )
+#     new_job_title = models.CharField(_("New Job Title"), max_length=50)
+#     current_salary_grade = models.ForeignKey(
+#         "company.SalaryGrade",
+#         verbose_name=_("Current Salary Grade"),
+#         on_delete=models.CASCADE,
+#         related_name="current_salary_grade",
+#     )
+#     new_salary_grade = models.ForeignKey(
+#         "company.SalaryGrade",
+#         verbose_name=_("New Salary Grade"),
+#         on_delete=models.CASCADE,
+#         related_name="new_salary_grade",
+#     )
+#     current_notch = models.PositiveIntegerField(_("Current Notch"))
+#     new_notch = models.PositiveIntegerField(_("New Notch"))
+#     current_basic_salary = models.DecimalField(
+#         _("Current Basic Salary"), max_digits=5, decimal_places=2
+#     )
+#     new_basic_salary = models.DecimalField(
+#         _("New Basic Salary"), max_digits=5, decimal_places=2
+#     )
+#     comment = models.CharField(_("Comment"), max_length=250)
+#     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
+#     posted = models.BooleanField(_("Posted"))
+#     effective_date = models.DateField(
+#         _("Effective Date"), auto_now=False, auto_now_add=False
+#     )
 
-    class Meta:
-        verbose_name = "Employee Promotion"
-        verbose_name_plural = "Employee Promotions"
+#     class Meta:
+#         verbose_name = "Employee Promotion"
+#         verbose_name_plural = "Employee Promotions"
 
-    def __str__(self) -> str:
-        return f"{self.emp_name}, {self.current_job_title}, {self.new_job_title}"
+#     def __str__(self) -> str:
+#         return f"{self.emp_name}, {self.current_job_title}, {self.new_job_title}"
 
 
 class EmployeeMedicals(models.Model):
@@ -542,7 +530,6 @@ class Base(models.Model):
     code = models.CharField(_("Code"), max_length=50, unique=True, primary_key=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
     company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
-
 
     class Meta:
         abstract = True
@@ -689,40 +676,37 @@ class Notch(models.Model):
         verbose_name_plural = "Notches"
 
 
-class PayCategoryList(models.Model):
-    no = models.CharField(_("No"), max_length=50, blank=True, null=True)
-    description = models.CharField(
-        _("Description"), max_length=50, blank=True, null=True
-    )
-    taxable_income_code = models.CharField(
-        _("Taxable Income Code"), max_length=50, blank=True, null=True
-    )
-    taxable_income_description = models.CharField(
-        _("Taxable Income Description"), max_length=50, blank=True, null=True
-    )
-    tax_code = models.CharField(_("Tax Code"), max_length=50, blank=True, null=True)
-    tax_description = models.CharField(
-        _("Tax Description"), max_length=50, blank=True, null=True
-    )
-    gross_income_code = models.CharField(
-        _("Gross Income Code"), max_length=50, blank=True, null=True
-    )
-    gross_income_description = models.CharField(
-        _("Gross Income Description"), max_length=50, blank=True, null=True
-    )
-    bonus_tax_code = models.CharField(
-        _("Bonus Tax Code"), max_length=50, blank=True, null=True
-    )
-    bonus_tax_description = models.CharField(
-        _("Bonus Tax Description"), max_length=50, blank=True, null=True
-    )
-    currency_code = models.CharField(
-        _("Currency Code"), max_length=50, blank=True, null=True
-    )
 
-    def __str__(self):
-        return f"{self.no} - {self.description} - {self.taxable_income_code}"
+class PayGroup(models.Model):
+    no = models.CharField(_("No."), max_length=50, null=True, blank=True)
+    description = models.CharField(_("Description"), max_length=100,null=True, blank=True)
+    taxable_income_code = models.CharField(_("Taxable Income Code"), max_length=50, null=True, blank=True)
+    taxable_income_description = models.CharField(_("Taxable Income Description"), max_length=100,null=True, blank=True)
+    tax_code = models.CharField(verbose_name=_("Tax Code"), null=True, blank=True)
+    tax_description = models.CharField(_("Tax Description"), max_length=150,  null=True, blank=True)
+    gross_income_code = models.CharField(_("CalculationHeader"), max_length=50,  null=True, blank=True)
+    gross_income_description = models.CharField(_("Gross Income Description"), max_length=150,  null=True, blank=True)
+    currency_code = models.CharField(verbose_name=_("Currency Code"), null=True, blank=True)
+    bonus_tax_code = models.CharField(verbose_name=_("Bonus Tax Code"),  null=True, blank=True)
+    bonus_tax_description = models.CharField(_("Bonus Tax Description"), max_length=150,  null=True, blank=True)
+    gross_up = models.BooleanField(_("Gross Up"),  null=True, blank=True)
+    total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), blank=True, null=True)
+    company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
 
     class Meta:
-        verbose_name = "Pay Category List"
-        verbose_name_plural = "Pay Category Lists"
+        verbose_name = "Pay Group"
+        verbose_name_plural = "Pay Groups"
+    
+    def __str__(self):
+        return f"{self.no} - {self.description} - {self.taxable_income_code}"
+    
+    def save(self, *args, **kwargs):
+        # Get the employees with the same paygroup and company
+        employees = Employee.objects.filter(pay_group_code=self.no, company=self.company)
+        # employees.bulk_update(total_number_of_leave_days=self.total_number_of_leave_days)
+        # Update the total_number_of_leave_days for each employee
+        for employee in employees:
+            employee.total_number_of_leave_days = self.total_number_of_leave_days
+            employee.save()
+
+        super().save(*args, **kwargs)
