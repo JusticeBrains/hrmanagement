@@ -37,6 +37,7 @@ class LeaveRequestFilter(PropertyFilterSet):
             'emp_code',
             'status',
             'extension_status',
+            'company',
         ]
 
 
@@ -70,6 +71,7 @@ class LeavePlanFilter(PropertyFilterSet):
             'no_of_days_left',
             'emp_code',
             'status',
+            'company',
         ]
 
 
