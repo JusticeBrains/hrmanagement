@@ -5,7 +5,7 @@ from leave.models import LeaveRequest
 
 @receiver(post_save, sender=LeaveRequest)
 def update_employee_days_left(sender, instance, created, **kwargs):
-    if instance.hr_status == 2 and instance.hr_extension_status != 2 and instance.is_extend != 1:
+    if instance.hr_status == 1 and instance.hr_extension_status != 1 and instance.is_extend != 1:
             if instance.leave_type.name == "Maternity":
                 instance.no_of_days_requested = instance.leave_type.max_number_of_days
                 instance.no_of_days_left = instance.employee.days_left
@@ -28,7 +28,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 days_left=instance.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
             )
         
-    if instance.hr_extension_status == 2 and instance.is_extend == 1 and instance.hr_status == 2:
+    if instance.hr_extension_status == 1 and instance.is_extend == 1 and instance.hr_status == 1:
         max_days = instance.leave_type.max_number_of_days
 
         employee = instance.employee
