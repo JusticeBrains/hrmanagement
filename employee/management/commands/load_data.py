@@ -1,7 +1,7 @@
 from typing import Any, Optional
 from django.core.management.base import BaseCommand
 from company.models import SalaryGrade, JobTitles, Company
-from employee.models import Department, Branch, Notch, Unit, Employee, StaffCategory
+from employee.models import Department, Branch, Notch, PayGroup, Unit, Employee, StaffCategory
 import json
 
 import requests
@@ -23,59 +23,59 @@ class Command(BaseCommand):
 
         load_department()
 
-        # for comp  in companies:
-        #     if comp.name == "Rock City Hotel":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
-        #         load_paygroup(url=env.str("rchpay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="BRYAN ACHEAMPONG FOUNDATION":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("baf_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="Emery Invest":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("emery_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="CRONUS International Ltd.":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("cronus_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="FAAB Systems Gh. Ltd":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("faab_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="Rock City Hotel Heads of Department":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("rock_hod_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="INTERCITY STC COACHES LTD - JUNIOR STAFF":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("intercity_jun_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="INTERCITY STC COACHES LTD - DRIVERS":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("intercity_driver_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="INTERCITY STC COACHES LTD - SENIOR STAFF":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("intercity_sen_pay_group"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="Intu IT Professional Allowance":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("intuprof_allow_pay"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="NLA JUNIOR AND SENIOR":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="NLA EXECUTIVE MANAGEMENT":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-        #     if comp.name =="NLA MANAGEMENT":
-        #         self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-        #         load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
-        #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+        for comp  in companies:
+            if comp.name == "Rock City Hotel":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_paygroup(url=env.str("rchpay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="BRYAN ACHEAMPONG FOUNDATION":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("baf_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="Emery Invest":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("emery_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="CRONUS International Ltd.":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("cronus_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="FAAB Systems Gh. Ltd":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("faab_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="Rock City Hotel Heads of Department":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("rock_hod_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="INTERCITY STC COACHES LTD - JUNIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("intercity_jun_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="INTERCITY STC COACHES LTD - DRIVERS":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("intercity_driver_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="INTERCITY STC COACHES LTD - SENIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("intercity_sen_pay_group"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="Intu IT Professional Allowance":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("intuprof_allow_pay"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="NLA JUNIOR AND SENIOR":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="NLA EXECUTIVE MANAGEMENT":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name =="NLA MANAGEMENT":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
 
 
@@ -338,63 +338,63 @@ def get_user_data(url, auth, company, company_id):
 
 
 
-# def load_paygroup(url, auth, company):
-#     res = requests.get(url=url, auth=auth)
-#     data = res.json()
-#     for paygroup in data["value"]:
-#         try:
-#             if PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
-#                 paygroup_id = PayGroup.objects.get(no=paygroup['No'])
-#                 print("Updating Existing Paygroup")
-#                 PayGroup.objects.filter(no=paygroup_id).update(
-#                     no=paygroup["No"],
-#                     description=paygroup["Description"],
-#                     taxable_income_code=paygroup["Taxable_Income_Code"],
-#                     taxable_income_description=paygroup["Taxable_Income_Description"],
-#                     tax_code=paygroup["Tax_Code"],
-#                     tax_description=paygroup["Tax_Description"],
-#                     gross_income_code=paygroup["Gross_Income_Code"],
-#                     gross_income_description=paygroup["Gross_Income_Description"],
-#                     currency_code=paygroup["Currency_Code"],
-#                     bonus_tax_code=paygroup["Bonus_Tax_Code"],
-#                     bonus_tax_description=paygroup["Bonus_Tax_Description"],
-#                     gross_up=paygroup["Gross_Up"],
-#                     company=company
-#                     )
-#             elif not PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
-#                 print("Creating Paygroup")
-#                 PayGroup.objects.create(
-#                     no=paygroup["No"],
-#                     description=paygroup["Description"],
-#                     taxable_income_code=paygroup["Taxable_Income_Code"],
-#                     taxable_income_description=paygroup["Taxable_Income_Description"],
-#                     tax_code=paygroup["Tax_Code"],
-#                     tax_description=paygroup["Tax_Description"],
-#                     gross_income_code=paygroup["Gross_Income_Code"],
-#                     gross_income_description=paygroup["Gross_Income_Description"],
-#                     currency_code=paygroup["Currency_Code"],
-#                     bonus_tax_code=paygroup["Bonus_Tax_Code"],
-#                     bonus_tax_description=paygroup["Bonus_Tax_Description"],
-#                     gross_up=paygroup["Gross_Up"],
-#                     company=company
-#                     )
-#         except PayGroup.DoesNotExist:
-#             print("Creating Paygroup If Paygroup doesnot exist")
-#             PayGroup.objects.create(
-#                 no=paygroup["No"],
-#                 description=paygroup["Description"],
-#                 taxable_income_code=paygroup["Taxable_Income_Code"],
-#                 taxable_income_description=paygroup["Taxable_Income_Description"],
-#                 tax_code=paygroup["Tax_Code"],
-#                 tax_description=paygroup["Tax_Description"],
-#                 gross_income_code=paygroup["Gross_Income_Code"],
-#                 gross_income_description=paygroup["Gross_Income_Description"],
-#                 currency_code=paygroup["Currency_Code"],
-#                 bonus_tax_code=paygroup["Bonus_Tax_Code"],
-#                 bonus_tax_description=paygroup["Bonus_Tax_Description"],
-#                 gross_up=paygroup["Gross_Up"],
-#                 company=company
-#                 )
+def load_paygroup(url, auth, company):
+    res = requests.get(url=url, auth=auth)
+    data = res.json()
+    for paygroup in data["value"]:
+        try:
+            if PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
+                paygroup_id = PayGroup.objects.get(no=paygroup['No'])
+                print("Updating Existing Paygroup")
+                PayGroup.objects.filter(no=paygroup_id).update(
+                    no=paygroup["No"],
+                    description=paygroup["Description"],
+                    taxable_income_code=paygroup["Taxable_Income_Code"],
+                    taxable_income_description=paygroup["Taxable_Income_Description"],
+                    tax_code=paygroup["Tax_Code"],
+                    tax_description=paygroup["Tax_Description"],
+                    gross_income_code=paygroup["Gross_Income_Code"],
+                    gross_income_description=paygroup["Gross_Income_Description"],
+                    currency_code=paygroup["Currency_Code"],
+                    bonus_tax_code=paygroup["Bonus_Tax_Code"],
+                    bonus_tax_description=paygroup["Bonus_Tax_Description"],
+                    gross_up=paygroup["Gross_Up"],
+                    company=company
+                    )
+            elif not PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
+                print("Creating Paygroup")
+                PayGroup.objects.create(
+                    no=paygroup["No"],
+                    description=paygroup["Description"],
+                    taxable_income_code=paygroup["Taxable_Income_Code"],
+                    taxable_income_description=paygroup["Taxable_Income_Description"],
+                    tax_code=paygroup["Tax_Code"],
+                    tax_description=paygroup["Tax_Description"],
+                    gross_income_code=paygroup["Gross_Income_Code"],
+                    gross_income_description=paygroup["Gross_Income_Description"],
+                    currency_code=paygroup["Currency_Code"],
+                    bonus_tax_code=paygroup["Bonus_Tax_Code"],
+                    bonus_tax_description=paygroup["Bonus_Tax_Description"],
+                    gross_up=paygroup["Gross_Up"],
+                    company=company
+                    )
+        except PayGroup.DoesNotExist:
+            print("Creating Paygroup If Paygroup doesnot exist")
+            PayGroup.objects.create(
+                no=paygroup["No"],
+                description=paygroup["Description"],
+                taxable_income_code=paygroup["Taxable_Income_Code"],
+                taxable_income_description=paygroup["Taxable_Income_Description"],
+                tax_code=paygroup["Tax_Code"],
+                tax_description=paygroup["Tax_Description"],
+                gross_income_code=paygroup["Gross_Income_Code"],
+                gross_income_description=paygroup["Gross_Income_Description"],
+                currency_code=paygroup["Currency_Code"],
+                bonus_tax_code=paygroup["Bonus_Tax_Code"],
+                bonus_tax_description=paygroup["Bonus_Tax_Description"],
+                gross_up=paygroup["Gross_Up"],
+                company=company
+                )
 
 
 def load_department():
