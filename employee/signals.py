@@ -1,9 +1,24 @@
 from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
+from django.dispatch import receiver, Signal
 from django.db.models import Sum
-from employee.models import AppraisalGrading, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
+from employee.models import AppraisalGrading, EmployeeAppraisal, Employee, EmployeeAppraisalDetail, PayGroup
 from django.utils import timezone
-from django.db import transaction
+from django.core.mail import send_mail
+from datetime import datetime, timedelta
+
+birth_date_remainder = Signal()
+
+@receiver(birth_date_remainder)
+def send_birthday_reminder(sender, instance, **kwargs):
+    employee = Employee.objects.all()
+    three_days_before_birthday = employee.birth_date.replace(year=datetime.now().year) - timedelta(days=3)
+
+    if three_days_before_birthday.month == datetime.now().month and \
+            three_days_before_birthday.day == datetime.now().day:
+        subject = "Birthday Reminder"
+        message = f"Dear {employee.name}, your birthday is coming up in 3 days!"
+        send_mail(subject, message, 'hr@pay360.com', [employee.company_email])
+
 
 @receiver(post_save, sender=EmployeeAppraisal)
 def update_employee_appraisal(sender, instance , **kwargs):
@@ -69,3 +84,20 @@ def update_grade(sender, instance, **kwargs):
     instance.save()
 
     post_save.connect(update_grade, sender=EmployeeAppraisal)
+
+
+@receiver(post_save, sender=PayGroup)
+def update_employee_leave_days(sender, instance,created, **kwargs):
+    post_save.disconnect(update_employee_leave_days, sender=PayGroup)
+     
+    if created:
+        employees = Employee.objects.filter(pay_group_code=instance.no, company=instance.company)
+        employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
+
+        # for employee in employees:
+        #     # employees.update(total_number_of_leave_days=instance.total_number_of_leave_days)
+        #     employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
+        #     # employee.total_number_of_leave_days = instance.total_number_of_leave_days
+        #     employee.save()
+
+        post_save.connect(update_employee_leave_days, sender=PayGroup)

@@ -74,9 +74,9 @@ class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
 #     serializer_class = serializers.SelfAppraisalResponseSerializer
 
 
-class EmployeePromotionViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeePromotion.objects.all()
-    serializer_class = serializers.EmployeePromotionSerializer
+# class EmployeePromotionViewSet(viewsets.ModelViewSet):
+#     queryset = employee_model.EmployeePromotion.objects.all()
+#     serializer_class = serializers.EmployeePromotionSerializer
 
 
 class EmployeeMedicalViewSet(viewsets.ModelViewSet):
@@ -138,11 +138,6 @@ class NotchViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.NotchesSerializer
 
 
-class PayCategoryListViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.PayCategoryList.objects.all()
-    serializer_class = serializers.PayCategoryListSerializer
-
-
 class EmployeeAppraisalDetailViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeAppraisalDetail.objects.all()
     serializer_class = serializers.EmployeeAppraisalDetailSerializer
@@ -153,3 +148,9 @@ class AppraisalGradingViewSet(viewsets.ModelViewSet):
     queryset = employee_model.AppraisalGrading.objects.all()
     serializer_class = serializers.AppraisalGradingSerializer
     filterset_fields = ['id', 'grade', 'recommendation',]
+
+
+class PayGroupViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.PayGroup.objects.all()
+    serializer_class = serializers.PayGroupSerializer
+    filterset_fields = ["id", "no", "company", "total_number_of_leave_days"]

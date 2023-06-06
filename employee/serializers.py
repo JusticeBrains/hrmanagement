@@ -22,10 +22,10 @@ class EmployeeAppraisalSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class EmployeePromotionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.EmployeePromotion
-        fields = "__all__"
+# class EmployeePromotionSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = employee_model.EmployeePromotion
+#         fields = "__all__"
 
 
 class EmployeeMedicalSerializer(serializers.ModelSerializer):
@@ -74,11 +74,6 @@ class NotchesSerializer(serializers.ModelSerializer):
         model = employee_model.Notch
         fields = "__all__"
 
-class PayCategoryListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.PayCategoryList
-        fields = "__all__"
-
 
 class AppraisalGradingSerializer(serializers.ModelSerializer):
     score_range = IntegerRangeField()
@@ -91,3 +86,10 @@ class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.EmployeeAppraisalDetail
         fields = "__all__"
+
+
+class PayGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.PayGroup
+        fields = "__all__"
+
