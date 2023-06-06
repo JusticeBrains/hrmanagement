@@ -64,18 +64,25 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
                 load_paygroup(url=env.str("intuprof_allow_pay"), auth=auth, company=comp.name)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-            if comp.name =="NLA JUNIOR AND SENIOR":
+            if comp.name =="NLA":
                 self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-                load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-            if comp.name =="NLA EXECUTIVE MANAGEMENT":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+                # load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name)
+                # self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+                
                 load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-            if comp.name =="NLA MANAGEMENT":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-                load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+                
+                # load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
+                # self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            # if comp.name =="NLA EXECUTIVE MANAGEMENT":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+            #     load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # if comp.name =="NLA MANAGEMENT":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
+            #     load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
 
 
@@ -114,12 +121,19 @@ class Command(BaseCommand):
                 get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
             elif company.name == "CRONUS International Ltd.":
                 get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
-            elif company.name == "NLA MANAGEMENT":
+            elif company.name == "NLA":
+                print("----Starting Management")
                 get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
-            elif company.name == "NLA EXECUTIVE MANAGEMENT":
+                print("----Ending Management---")
+                print("----Starting Exec Management--")
                 get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
-            elif company.name == "NLA JUNIOR AND SENIOR":
+                print("----Starting Jun Senior")
                 get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
+
+            # elif company.name == "NLA EXECUTIVE MANAGEMENT":
+            #     get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
+            # elif company.name == "NLA JUNIOR AND SENIOR":
+            #     get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
 
 
 
