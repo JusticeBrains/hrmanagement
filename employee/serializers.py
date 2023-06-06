@@ -88,8 +88,8 @@ class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PayGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.PayGroup
-        fields = "__all__"
+# class PayGroupSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = employee_model.PayGroup
+#         fields = "__all__"
 
