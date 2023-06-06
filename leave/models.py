@@ -325,7 +325,8 @@ class LeaveType(models.Model):
     )
     paygroup = models.ForeignKey("employee.PayGroup", verbose_name=_("PayGroup"), on_delete=models.DO_NOTHING, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
-
+    pay_group_code = models.CharField(_("Pay Group Code"), max_length=50, null=True, blank=True)
+    
     def calculate_max_days(self, employee):
         if self.name == "Medical":
             max_days = employee.days_left
