@@ -10,23 +10,15 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 instance.no_of_days_requested = instance.leave_type.max_number_of_days
                 instance.no_of_days_left = instance.employee.days_left
 
-            if instance.leave_type.name == "Medical":
-                instance.no_of_days_requested = instance.no_of_days_requested
+            else:
+                # instance.no_of_days_requested = instance.no_of_days_requested
+                max_days = instance.leave_type.max_number_of_days
                 employee = instance.employee
                 emp_days_left = employee.days_left
                 if emp_days_left is not None:
-                    if instance.no_of_days_requested <= emp_days_left:
+                    if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested > max_days:
                         instance.no_of_days_left = emp_days_left - instance.no_of_days_requested
 
-
-            elif instance.leave_type.name == "Annual":
-                instance.no_of_days_requested = instance.no_of_days_requested
-
-                employee = instance.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if instance.no_of_days_requested <= emp_days_left:
-                        instance.no_of_days_left = emp_days_left - instance.no_of_days_requested
 
             no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
             no_of_days_exhausted += instance.no_of_days_requested
@@ -37,19 +29,14 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             )
         
     if instance.hr_extension_status == 2 and instance.is_extend == 1 and instance.hr_status == 2:
-        if instance.leave_type.name == "Medical":
-            employee = instance.employee
-            emp_days_left = employee.days_left
-            if emp_days_left is not None:
-                if instance.no_of_extension_days <= emp_days_left:
-                    instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
+        max_days = instance.leave_type.max_number_of_days
 
-        elif instance.leave_type.name == "Annual":
-            employee = instance.employee
-            emp_days_left = employee.days_left
-            if emp_days_left is not None:
-                if instance.no_of_extension_days <= emp_days_left:
-                    instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
+        employee = instance.employee
+        emp_days_left = employee.days_left
+        if emp_days_left is not None:
+            if instance.no_of_extension_days <= emp_days_left and instance.no_of_days_requested > max_days:
+                instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
+
 
         no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
         no_of_days_exhausted += instance.no_of_extension_days

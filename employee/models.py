@@ -157,13 +157,13 @@ class Employee(models.Model):
     )
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
     days_left = models.PositiveIntegerField(
-        _("Days Left"), null=True, blank=True, default=0
+        _("Days Left"), null=True, blank=True
     )
     no_of_days_exhausted = models.PositiveIntegerField(
         _("No. Of Days Exhausted"), blank=True, null=True
     )
     plan_days_left = models.PositiveIntegerField(
-        _("Plan Days Left"), null=True, blank=True, default=0
+        _("Plan Days Left"), null=True, blank=True
     )
     plan_no_of_days_exhausted = models.PositiveIntegerField(
         _("Plan No. Of Days Exhausted"), blank=True, null=True

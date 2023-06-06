@@ -323,10 +323,8 @@ class LeaveType(models.Model):
     max_number_of_days = models.PositiveIntegerField(
         _("Max Number Of Days"), blank=True, null=True
     )
-    staff_category = models.ForeignKey(
-        "employee.StaffCategory", on_delete=models.CASCADE, null=True, blank=True
-    )
-    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    paygroup = models.ForeignKey("employee.PayGroup", verbose_name=_("PayGroup"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
 
     def calculate_max_days(self, employee):
         if self.name == "Medical":
