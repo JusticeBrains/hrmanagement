@@ -33,7 +33,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
         employee = instance.employee
         emp_days_left = employee.days_left
         if emp_days_left is not None:
-            if instance.no_of_extension_days <= emp_days_left and instance.no_of_days_requested <= max_days:
+            if instance.no_of_extension_days <= emp_days_left:
                 instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
 
         no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
