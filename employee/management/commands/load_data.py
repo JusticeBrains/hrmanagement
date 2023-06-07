@@ -171,10 +171,10 @@ class Command(BaseCommand):
                 get_user_data(url=env.str("emery"), auth=auth, company=company.name, company_id=company.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("baf"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("baf"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
             # elif company.name == "FAAB Systems Gh. Ltd":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
