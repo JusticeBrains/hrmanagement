@@ -221,15 +221,15 @@ class Command(BaseCommand):
             #     get_user_data(url=env.str("itu"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            if company.name == "Intu IT Professional Allowance":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-
-            # elif company.name == "Rock City Hotel Kumasi":
+            # if company.name == "Intu IT Professional Allowance":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
+            #     get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            elif company.name == "Rock City Hotel Kumasi":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
             # elif company.name == "Rock City Professional Allowance":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
