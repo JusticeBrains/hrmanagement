@@ -241,26 +241,26 @@ class Command(BaseCommand):
             #     get_user_data(url=env.str("rch"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            if company.name == "Republic Media Limited":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # if company.name == "Republic Media Limited":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
             # if company.name == "CRONUS International Ltd.":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
             #     get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # if company.name == "NLA":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     self.stdout.write(self.style.SUCCESS(f"----Starting Management"))
-            #     get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS(f"----Ending Management---"))
-            #     self.stdout.write(self.style.SUCCESS(f"----Starting Exec Management--"))
-            #     get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS(f"----Starting Jun Senior"))
-            #     get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if company.name == "NLA":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                self.stdout.write(self.style.SUCCESS(f"----Starting Management"))
+                get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS(f"----Ending Management---"))
+                self.stdout.write(self.style.SUCCESS(f"----Starting Exec Management--"))
+                get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS(f"----Starting Jun Senior"))
+                get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
         self.stdout.write(self.style.SUCCESS(f"--------Ended Loading Employees-------"))
 
