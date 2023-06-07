@@ -171,101 +171,96 @@ class Command(BaseCommand):
                 get_user_data(url=env.str("emery"), auth=auth, company=company.name, company_id=company.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("baf"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "BRYAN ACHEAMPONG FOUNDATION":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("baf"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "FAAB Systems Gh. Ltd":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("faab"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "FAAB Systems Gh. Ltd":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("faab"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Rock City Hotel Heads of Department":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "REISS & CO. GHANA LIMITED":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "REISS & CO. GHANA LIMITED":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "INTERCITY STC COACHES LTD - DRIVERS":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("intercity_driver"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "INTERCITY STC COACHES LTD - DRIVERS":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("intercity_driver"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "M&B LIMITED":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("mb"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "M&B LIMITED":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("mb"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Jays Lodge":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("jay_lodge"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Jays Lodge":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("jay_lodge"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "INTU-IT GHANA LIMITED":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("itu"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "INTU-IT GHANA LIMITED":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("itu"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Intu IT Professional Allowance":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Intu IT Professional Allowance":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Rock City Hotel Kumasi":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Rock City Hotel Kumasi":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Rock City Professional Allowance":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name, company_id=company.id)  
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Rock City Professional Allowance":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name, company_id=company.id)  
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Rock City Hotel":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rch"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Rock City Hotel":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rch"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Republic Media Limited":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "Republic Media Limited":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "CRONUS International Ltd.":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # elif company.name == "CRONUS International Ltd.":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "NLA":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                print("----Starting Management")
-                get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
-                print("----Ending Management---")
-                print("----Starting Exec Management--")
-                get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
-                print("----Starting Jun Senior")
-                get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-
-            # elif company.name == "NLA EXECUTIVE MANAGEMENT":
+            # elif company.name == "NLA":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+            #     self.stdout.write(self.style.SUCCESS(f"----Starting Management"))
+            #     get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS(f"----Ending Management---"))
+            #     self.stdout.write(self.style.SUCCESS(f"----Starting Exec Management--"))
             #     get_user_data(url=env.str("nla_exc_man"), auth=auth, company=company.name, company_id=company.id)
-            # elif company.name == "NLA JUNIOR AND SENIOR":
+            #     self.stdout.write(self.style.SUCCESS(f"----Starting Jun Senior"))
             #     get_user_data(url=env.str("nlajun_sen"), auth=auth, company=company.name, company_id=company.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
         self.stdout.write(self.style.SUCCESS(f"--------Ended Loading Employees-------"))
 
