@@ -18,8 +18,6 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 if emp_days_left is not None:
                     if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested <= max_days:
                         instance.no_of_days_left = emp_days_left - instance.no_of_days_requested
-                        
-
 
             no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
             no_of_days_exhausted += instance.no_of_days_requested
@@ -38,7 +36,6 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             if instance.no_of_extension_days <= emp_days_left and instance.no_of_days_requested <= max_days:
                 instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
 
-
         no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
         no_of_days_exhausted += instance.no_of_extension_days
 
@@ -56,3 +53,8 @@ def update_paygroup_code(sender, instance, created, **kwargs):
     if created:
         instance.pay_group_code = instance.paygroup.no
         instance.save()
+
+
+def send_leave_return_reminder(sender, instance, **kwargs):
+    leave_requests = LeaveRequest.objects.all()
+    

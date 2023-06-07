@@ -240,6 +240,8 @@ class EmployeeAppraisal(models.Model):
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
     )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -254,6 +256,7 @@ class EmployeeAppraisal(models.Model):
             self.job_title = self.emp_id.job_titles
             self.department = self.emp_id.second_category_level
             self.employee_code = self.emp_id.code
+            self.company = self.emp_id.company
 
 
 class AppraisalGrading(models.Model):
@@ -310,11 +313,13 @@ class EmployeeAppraisalDetail(models.Model):
     department = models.CharField(
         _("Department"), max_length=150, null=True, blank=True,
     )
-    
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
     def clean(self):
         if self.employee_id:
             self.emp_code = self.employee_id.code
             self.emp_name = self.employee_id.fullname
+            self.company = self.employee_id.company
 
     class Meta:
         verbose_name = "Employee Appraisal Detail"
@@ -526,12 +531,14 @@ class EmployeePayReview(models.Model):
 
 
 class Base(models.Model):
-    # id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    code = models.CharField(_("Code"), max_length=50, unique=True, primary_key=True)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    code = models.CharField(_("Code"), max_length=50, null=True, blank=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
+    company_id = models.CharField(_("CompanyID"), max_length=150, blank=True, null=True)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
+        unique_together = ('code', 'company')
         abstract = True
 
 
@@ -546,22 +553,22 @@ class StaffCategory(Base):
         return f"{self.code} - {self.name} - {self.max_number_of_days}"
 
 
-# Set the data type of the primary key to VARCHAR in PostgreSQL
-if connection.vendor == "postgresql":
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            SELECT EXISTS(
-                SELECT * FROM information_schema.columns
-                WHERE table_name = 'employee_staffcategory' AND column_name = 'code'
-            )
-        """
-        )
-        column_exists = cursor.fetchone()[0]
-        if column_exists:
-            cursor.execute(
-                "ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)"
-            )
+# # Set the data type of the primary key to VARCHAR in PostgreSQL
+# if connection.vendor == "postgresql":
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             """
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'employee_staffcategory' AND column_name = 'code'
+#             )
+#         """
+#         )
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute(
+#                 "ALTER TABLE employee_staffcategory ALTER COLUMN code TYPE VARCHAR(50)"
+#             )
 
 
 class Department(Base):
@@ -577,21 +584,21 @@ class Department(Base):
         return f"{self.code} -{self.name} - {self.first_category_code}"
 
 
-if connection.vendor == "postgresql":
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            SELECT EXISTS(
-                SELECT * FROM information_schema.columns
-                WHERE table_name = 'employee_department' AND column_name = 'code'
-            )
-        """
-        )
-        column_exists = cursor.fetchone()[0]
-        if column_exists:
-            cursor.execute(
-                "ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)"
-            )
+# if connection.vendor == "postgresql":
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             """
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'employee_department' AND column_name = 'code'
+#             )
+#         """
+#         )
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute(
+#                 "ALTER TABLE employee_department ALTER COLUMN code TYPE VARCHAR(50)"
+#             )
 
 
 class Unit(Base):
@@ -607,21 +614,21 @@ class Unit(Base):
         return f"{self.code} - {self.second_category_code}"
 
 
-if connection.vendor == "postgresql":
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            SELECT EXISTS(
-                SELECT * FROM information_schema.columns
-                WHERE table_name = 'employee_unit' AND column_name = 'code'
-            )
-        """
-        )
-        column_exists = cursor.fetchone()[0]
-        if column_exists:
-            cursor.execute(
-                "ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)"
-            )
+# if connection.vendor == "postgresql":
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             """
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'employee_unit' AND column_name = 'code'
+#             )
+#         """
+#         )
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute(
+#                 "ALTER TABLE employee_unit ALTER COLUMN code TYPE VARCHAR(50)"
+#             )
 
 
 class Branch(Base):
@@ -638,21 +645,21 @@ class Branch(Base):
 
 
 # # Set the data type of the primary key to VARCHAR in PostgreSQL
-if connection.vendor == "postgresql":
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            SELECT EXISTS(
-                SELECT * FROM information_schema.columns
-                WHERE table_name = 'employee_branch' AND column_name = 'code'
-            )
-        """
-        )
-        column_exists = cursor.fetchone()[0]
-        if column_exists:
-            cursor.execute(
-                "ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)"
-            )
+# if connection.vendor == "postgresql":
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             """
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'employee_branch' AND column_name = 'code'
+#             )
+#         """
+#         )
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute(
+#                 "ALTER TABLE employee_branch ALTER COLUMN code TYPE VARCHAR(50)"
+#             )
 
 
 class Notch(models.Model):

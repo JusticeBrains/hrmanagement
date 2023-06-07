@@ -7,7 +7,7 @@ from datetime import datetime
 
 class EmployeeRequisition(models.Model):
     department = models.ForeignKey(
-        "employee.Department", verbose_name=_("Department"), on_delete=models.DO_NOTHING
+        "employee.Department", verbose_name=_("Department"), on_delete=models.CASCADE
     )
     position = models.ForeignKey("company.JobTitles", verbose_name=_("Position"), on_delete=models.DO_NOTHING)
     no_of_vacancies = models.PositiveIntegerField(_("No Of Vacancies"))
@@ -26,6 +26,9 @@ class EmployeeRequisition(models.Model):
     class Meta:
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"
+
+    def save(self):
+        self.company = self.department.company
 
     def __str__(self) -> str:
         return f"{self.department} - {self.position} - {self.no_of_vacancies}"
@@ -57,6 +60,7 @@ class JobApplication(models.Model):
     total_interview_score = models.PositiveIntegerField(
         _("Total Interviewed Score"), blank=True, null=True
     )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Job Application"
@@ -67,7 +71,7 @@ class JobApplication(models.Model):
         if self.applicant_othername:
             return f"{self.applicant_lastname}, {self.applicant_firstname} {self.applicant_othername}"
         return f"{self.applicant_lastname}, {self.applicant_firstname}"
-
+    
     def __str__(self):
         return f"{self.fullname} - {self.status}"
 
@@ -86,11 +90,13 @@ class ApplicantQualification(models.Model):
         _("Qualification"), max_length=150, blank=True, null=True
     )
     attachment = models.TextField(_("Attachment"))
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Applicant Qualification"
         verbose_name_plural = "Applicant Qualifications"
 
+    
     def __str__(self):
         return f"{self.job_application} - {self.qualification_name}"
 
@@ -119,6 +125,7 @@ class Interview(models.Model):
     interview_comments = models.TextField(
         _("Interview Comments"), blank=True, null=True
     )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Interview"

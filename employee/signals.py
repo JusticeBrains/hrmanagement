@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from django.db.models import Sum
-from employee.models import AppraisalGrading, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
+from employee.models import AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
+from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
@@ -85,6 +86,19 @@ def update_grade(sender, instance, **kwargs):
 
     post_save.connect(update_grade, sender=EmployeeAppraisal)
 
+
+
+@receiver(post_save, sender=Department)
+def populate_company_field_department(sender, instance, **kwargs):
+    """
+    Populate company field with company name from the job application
+    """
+    post_save.disconnect(populate_company_field_department, sender=Department)
+    if instance.company_id:
+        comp = Company.objects.get(id=instance.company_id)
+        instance.company = comp.name
+        instance.save()
+    post_save.connect(populate_company_field_department, sender=Department)
 
 # @receiver(post_save, sender=PayGroup)
 # def update_employee_leave_days(sender, instance,created, **kwargs):

@@ -21,7 +21,78 @@ class Command(BaseCommand):
 
         auth = HttpNtlmAuth(username=env.str("username"),password=env.str("password"))
 
-        load_department()
+        self.stdout.write(self.style.SUCCESS(f"--------Loading Departments-------"))
+        for comp in companies:
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("intercity_sen_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("intercity_jun_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+        
+            if comp.name == "Rock City Hotel":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("rch_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+  
+            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("baf_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+  
+            if comp.name == "Emery Invest":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("emery_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+  
+            if comp.name == "CRONUS International Ltd.":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("cronus_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if comp.name == "FAAB Systems Gh. Ltd":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.name}"))           
+                load_department(url=env.str("faab_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+
+            if comp.name == "Rock City Hotel Heads of Department":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("rch_hod_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+
+            if comp.name == "Republic Media Limited":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("repub_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("intercity_driver_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if comp.name == "Intu IT Professional Allowance":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("intuprof_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+ 
+            if comp.name == "INTU-IT GHANA LIMITED":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("inut_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+ 
+            if comp.name == "Rock City Professional Allowance":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id}"))           
+                load_department(url=env.str("rch_prof_allowance_dep"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+        self.stdout.write(self.style.SUCCESS(f"-------- Done Loading Departments-------"))
+
+
 
         for comp  in companies:
             if comp.name == "Rock City Hotel":
@@ -65,15 +136,19 @@ class Command(BaseCommand):
                 load_paygroup(url=env.str("intuprof_allow_pay"), auth=auth, company=comp.name, comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
             if comp.name =="NLA":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-                # load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name)
-                # self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-                
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))        
                 load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name,comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-                
-                # load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
-                # self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name == "Republic Media Limited":
+                load_paygroup(url=env.str("repub_paygroup"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if comp.name == "Rock City Professional Allowance":
+                load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+        
 
             # if comp.name =="NLA EXECUTIVE MANAGEMENT":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
@@ -358,7 +433,7 @@ def load_paygroup(url, auth, company, comp_id):
     for paygroup in data["value"]:
         try:
             if PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
-                paygroup_id = PayGroup.objects.get(no=paygroup['No'])
+                paygroup_id = PayGroup.objects.get(no=paygroup['No'],company=company)
                 print("Updating Existing Paygroup")
                 PayGroup.objects.filter(no=paygroup_id).update(
                     no=paygroup["No"],
@@ -414,107 +489,27 @@ def load_paygroup(url, auth, company, comp_id):
                 )
 
 
-def load_department():
-        with open("employee/dep.json", 'r') as file:
-            dep = json.load(file)
-        
-        with open("employee/branch.json", 'r') as file:
-            branch = json.load(file)
-        
-
-        with open("employee/unit.json", 'r') as file:
-            unit = json.load(file)
-
-        with open("employee/jobtitles.json", 'r') as file:
-            jobtitles = json.load(file)
-
-        with open("employee/salarylevel.json", 'r') as file:
-
-            salarylevel = json.load(file)
-
-        with open("employee/notches.json", 'r') as file:
-            notches = json.load(file)
-
-        with open("employee/paycat.json", 'r') as file:
-            paycat = json.load(file)
-
-        print(f"--Loading Departments --")
-        for val in dep["value"]:
-            print(f"--Startng--{val['Code']} ")
-            if not Department.objects.filter(code=val['Code']):
-                Department.objects.create(
-                    code=val["Code"],
-                    name=val["Name"],
-                    first_category_code=val["First_Category_Code"]
-                )
-            print(f"--End-- {val['Name']}")
-        print(f"Done -- Departmen -- {Department.objects.all().count()}")
-
-
-        print(f"--Loading Branch --")
-        for val in branch["value"]:
-            print(f"--Startng--{val['Code']} ")
-            if not Branch.objects.filter(code=val['Code']):
-                Branch.objects.create(
-                    code=val["Code"],
-                    name=val["Name"],
-                    third_category_code=val["Third_Category_Code"]
-                )
-            print(f"--End-- {val['Name']}")
-        print(f"Done -- Branch -- {Branch.objects.all().count()}")
-
-
-        print(f"--Loading Units --")
-        for val in unit["value"]:
-            print(f"--Startng--{val['Code']} ")
-            if not Unit.objects.filter(code=val['Code']):
-                Unit.objects.create(
-                    code=val["Code"],
-                    name=val["Name"],
-                    second_category_code=val["Second_Category_Code"]
-                )
-            print(f"--End-- {val['Name']}")
-        print(f"Done -- Unit -- {Unit.objects.all().count()}")
-
-
-        print(f"--Loading JobTitles --")
-        for val in jobtitles["value"]:
-            print(f"--Startng--{val['Code']} ")
-            if not JobTitles.objects.filter(code=val['Code']):
-                JobTitles.objects.create(
-                    code=val["Code"],
-                    # payroll_structure=val["Payroll_Structure"],
-                    # salary_grade=val["Salary_Grade"],
-                    description=val['Description']
-                )
-            print(f"--End-- {val['Description']}")
-        print(f"Done -- Unit -- {JobTitles.objects.all().count()}")
-
-
-        print(f"--Loading SalaryGrade --")
-        for val in salarylevel["value"]:
-            print(f"--Startng--{val['Code']} ")
-            if not SalaryGrade.objects.filter(code=val['Code']):
-                SalaryGrade.objects.create(
-                    code=val["Code"],
-                    payroll_structure=val["Payroll_Structure_Code"],
-                    job_titles=val["Job_Titles"],
-                    transport_rate=val['Transport_Rate']
-                )
-            print(f"--End-- {val['Code']}")
-        print(f"Done -- Unit -- {SalaryGrade.objects.all().count()}")
-
-
-        print(f"--Loading SalaryGrade --")
-        for val in notches["value"]:
-            print(f"--Startng--{val['Payroll_Structure_Code']} ")
-            if not Notch.objects.filter(no=val['No'],payroll_structure_code=val["Payroll_Structure_Code"],salary_grade=val['Salary_Grade']):
-                Notch.objects.create(
-                    no=val['No'],
-                    payroll_structure_code=val["Payroll_Structure_Code"],
-                    amount=val["Amount"],
-                    salary_grade=val['Salary_Grade']
-                )
-            print(f"--End-- {val['Payroll_Structure_Code']}")
-        print(f"Done -- Notch -- {Notch.objects.all().count()}")
-
+def load_department(url, auth, company, comp_id):
+    res = requests.get(url=url, auth=auth)
+    data = res.json()
+    for dep in data["value"]:
+        if Department.objects.filter(code=dep["Code"], company=company).exists():
+            dep_id = Department.objects.get(code=dep['Code'],company=company)
+            print("Updating Existing Paygroup")
+            Department.objects.filter(code=dep_id).update(
+                code = dep["Code"],
+                name = dep['Name'],
+                first_category_code=dep["First_Category_Code"],
+                company=company,
+                company_id=comp_id
+            )
+        elif not Department.objects.filter(code=dep["Code"], company=company).exists():
+            print("------Creating------")
+            Department.objects.create(
+                code=dep["Code"],
+                name=dep['Name'],
+                first_category_code=dep["First_Category_Code"],
+                company=company,
+                company_id=comp_id
+            )
+      
