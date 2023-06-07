@@ -246,12 +246,12 @@ class Command(BaseCommand):
             #     get_user_data(url=env.str("rml"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "CRONUS International Ltd.":
+            if company.name == "CRONUS International Ltd.":
                 self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
                 get_user_data(url=env.str("cronus"), auth=auth, company=company.name, company_id=company.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "NLA":
+            # if company.name == "NLA":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
             #     self.stdout.write(self.style.SUCCESS(f"----Starting Management"))
             #     get_user_data(url=env.str("nla_man"), auth=auth, company=company.name, company_id=company.id)
