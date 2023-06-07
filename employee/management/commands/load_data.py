@@ -186,20 +186,20 @@ class Command(BaseCommand):
                 get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "REISS & CO. GHANA LIMITED":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            elif company.name == "REISS & CO. GHANA LIMITED":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            elif company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("intercity_jun"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name, company_id=company.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            elif company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("intercity_sen"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
             # elif company.name == "INTERCITY STC COACHES LTD - DRIVERS":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
