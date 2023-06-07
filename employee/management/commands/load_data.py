@@ -181,15 +181,15 @@ class Command(BaseCommand):
             #     get_user_data(url=env.str("faab"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            if company.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-                get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-
-            # if company.name == "REISS & CO. GHANA LIMITED":
+            # if company.name == "Rock City Hotel Heads of Department":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
-            #     get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
+            #     get_user_data(url=env.str("rch_hod"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+
+            if company.name == "REISS & CO. GHANA LIMITED":
+                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
+                get_user_data(url=env.str("reiss_co"), auth=auth, company=company.name, company_id=company.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
             # if company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
