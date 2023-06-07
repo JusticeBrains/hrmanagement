@@ -274,7 +274,7 @@ def get_user_data(url, auth, company, company_id):
                 print(f"{employee['No'] }- {employee['Status']}")
                 try:
                     
-                    if Employee.objects.filter(code=employee['No']).exists():
+                    if Employee.objects.filter(code=employee['No'],company=company).exists():
                         employee_obj = Employee.objects.get(code=employee['No'])
                         print(f"--updating-- {employee_obj}")
                         Employee.objects.filter(id=employee_obj.id).update(
@@ -340,7 +340,7 @@ def get_user_data(url, auth, company, company_id):
                         company=company, 
                         company_id=company_id
                 )
-                    if not Employee.objects.filter(code=employee['No']).exists():
+                    if not Employee.objects.filter(code=employee['No'], company=company).exists():
                         print(f"--creating-- {employee['No']}")
                         Employee.objects.create(
                         code=employee['No'],
@@ -546,6 +546,7 @@ def load_department(url, auth, company, comp_id):
     res = requests.get(url=url, auth=auth)
     data = res.json()
     for dep in data["value"]:
+        
         if Department.objects.filter(code=dep["Code"], company=company).exists():
             dep_id = Department.objects.get(code=dep['Code'],company=company)
             print("Updating Existing Departments")
