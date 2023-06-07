@@ -137,73 +137,13 @@ class LeaveRequest(LeaveBase):
 
 
     def clean(self):
-        employee = self.employee  # get the currently selected employee
-        max_days = self.leave_type.calculate_max_days(employee)
 
-        if self.leave_type.name == "Maternity":
-            self.no_of_days_requested = self.leave_type.max_number_of_days
-            self.no_of_days_left = self.employee.days_left
+        self.emp_code = self.employee.code
+        self.employee_branch = self.employee.third_category_level
+        self.job_title = self.employee.job_titles
+        self.dep = self.employee.first_category_level
+        self.employee_unit = self.employee.second_category_level
 
-        if self.leave_type.name == "Medical":
-            self.no_of_days_requested = self.no_of_days_requested
-            emp_days_left = employee.days_left
-            if emp_days_left is not None:
-                if self.no_of_days_requested <= emp_days_left:
-                    self.no_of_days_left = emp_days_left - self.no_of_days_requested
-                elif self.no_of_days_requested > emp_days_left:
-                    raise ValidationError(
-                        f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                    )
-
-        elif self.leave_type.name == "Annual":
-            emp_days_left = employee.days_left
-            if emp_days_left is not None:
-                if self.no_of_days_requested <= emp_days_left:
-                    self.no_of_days_left = emp_days_left - self.no_of_days_requested
-                elif self.no_of_days_requested > emp_days_left:
-                    raise ValidationError(
-                        f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                    )
-
-        no_of_days_exhausted = self.employee.no_of_days_exhausted or 0
-        no_of_days_exhausted += self.no_of_days_requested
-
-
-        self.emp_code = employee.code
-        self.employee_branch = employee.third_category_level
-        self.job_title = employee.job_title
-        self.dep = employee.first_category_level
-        self.employee_unit = employee.second_category_level
-
-        if self.is_extend == 1:
-            if self.leave_type.name == "Medical":
-                employee = self.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
-                    elif self.no_of_extension_days > emp_days_left:
-                        raise ValidationError(
-                            f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                        )
-
-            elif self.leave_type.name == "Annual":
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if self.no_of_extension_days <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
-                    elif self.no_of_extension_days > emp_days_left:
-                        raise ValidationError(
-                            f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                        )
-
-        if employee.no_of_days_exhausted == max_days:
-            raise ValueError(
-                f"Number of Days Exhausted {employee.no_of_days_exhausted} == Maxdays {max_days} "
-            )
-        else:
-            self._meta.get_field("no_of_days_requested").editable = True
-        
 
 
     class Meta:
@@ -231,88 +171,46 @@ class LeavePlan(LeaveBase):
         return start_date
 
     def clean(self):
-        employee = self.employee  # get the currently selected employee
-        max_days = self.leave_type.calculate_max_days(employee)
+        self.emp_code = self.employee.code
+        self.employee_branch = self.employee.third_category_level
+        self.job_title = self.employee.job_titles
+        self.dep = self.employee.first_category_level
+        self.employee_unit = self.employee.second_category_level
 
-        if self.leave_type.name == "Maternity":
-            self.no_of_days_requested = self.leave_type.max_number_of_days
-            self.no_of_days_left = self.employee.plan_days_left
+ 
+    # def save(self, *args, **kwargs):
+    #     if self.hr_status == 2:
+    #         if self.leave_type.name == "Maternity":
+    #             self.no_of_days_requested = self.leave_type.max_number_of_days
+    #             self.no_of_days_left = self.employee.plan_days_left
 
-        elif self.leave_type.name == "Medical":
-            self.no_of_days_requested = self.no_of_days_requested
-            employee = self.employee
-            emp_days_left = employee.plan_days_left
-            if emp_days_left is not None:
-                if self.no_of_days_requested <= emp_days_left:
-                    self.no_of_days_left = emp_days_left - self.no_of_days_requested
-                elif self.no_of_days_requested > emp_days_left:
-                    raise ValidationError(
-                        f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                    )
-
-        elif self.leave_type.name == "Annual":
-            self.no_of_days_requested = self.no_of_days_requested
-
-            employee = self.employee
-            emp_days_left = employee.plan_days_left
-            if emp_days_left is not None:
-                if self.no_of_days_requested <= emp_days_left:
-                    self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-                elif self.no_of_days_requested > emp_days_left:
-                    raise ValidationError(
-                        f"Number of planned Days Exceed Maximum Days Left of {emp_days_left} "
-                    )
-
-        no_of_days_exhausted = self.employee.plan_no_of_days_exhausted or 0
-        no_of_days_exhausted += self.no_of_days_requested
-
-        self.emp_code = employee.code
-        self.employee_branch = employee.third_category_level
-        self.job_title = employee.job_title
-        self.dep = employee.first_category_level
-        self.employee_unit = employee.second_category_level
-
-        if employee.no_of_days_exhausted == max_days:
-            raise ValueError(
-                f"Number of Days Exhausted {employee.no_of_days_exhausted} == Maxdays {max_days} "
-            )
-        else:
-            self._meta.get_field("no_of_days_requested").editable = True
-
-    def save(self, *args, **kwargs):
-        if self.hr_status == 2:
-            if self.leave_type.name == "Maternity":
-                self.no_of_days_requested = self.leave_type.max_number_of_days
-                self.no_of_days_left = self.employee.plan_days_left
-
-            if self.leave_type.name == "Medical":
-                self.no_of_days_requested = self.no_of_days_requested
-                employee = self.employee
-                emp_days_left = employee.plan_days_left
-                if emp_days_left is not None:
-                    if self.no_of_days_requested <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+    #         if self.leave_type.name == "Medical":
+    #             self.no_of_days_requested = self.no_of_days_requested
+    #             employee = self.employee
+    #             emp_days_left = employee.plan_days_left
+    #             if emp_days_left is not None:
+    #                 if self.no_of_days_requested <= emp_days_left:
+    #                     self.no_of_days_left = emp_days_left - self.no_of_days_requested
 
 
 
-            elif self.leave_type.name == "Annual":
-                self.no_of_days_requested = self.no_of_days_requested
+    #         elif self.leave_type.name == "Annual":
+    #             self.no_of_days_requested = self.no_of_days_requested
 
-                employee = self.employee
-                emp_days_left = employee.plan_days_left
-                if emp_days_left is not None:
-                    if self.no_of_days_requested <= emp_days_left:
-                        self.no_of_days_left = emp_days_left - self.no_of_days_requested
+    #             employee = self.employee
+    #             emp_days_left = employee.plan_days_left
+    #             if emp_days_left is not None:
+    #                 if self.no_of_days_requested <= emp_days_left:
+    #                     self.no_of_days_left = emp_days_left - self.no_of_days_requested
 
-            no_of_days_exhausted = self.employee.plan_no_of_days_exhausted or 0
-            no_of_days_exhausted += self.no_of_days_requested
+    #         no_of_days_exhausted = self.employee.plan_no_of_days_exhausted or 0
+    #         no_of_days_exhausted += self.no_of_days_requested
 
-            # update employee with new values of days_left and no_of_days_exhausted
-            Employee.objects.filter(id=self.employee.id).update(
-                days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-            )
-        super(LeavePlan, self).save(*args, **kwargs)
+    #         # update employee with new values of days_left and no_of_days_exhausted
+    #         Employee.objects.filter(id=self.employee.id).update(
+    #             days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
+    #         )
+    #     super(LeavePlan, self).save(*args, **kwargs)
 
 
 class LeaveType(models.Model):
@@ -326,19 +224,19 @@ class LeaveType(models.Model):
     paygroup = models.ForeignKey("employee.PayGroup", verbose_name=_("PayGroup"), on_delete=models.DO_NOTHING, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
     pay_group_code = models.CharField(_("Pay Group Code"), max_length=50, null=True, blank=True)
-    
-    def calculate_max_days(self, employee):
-        if self.name == "Medical":
-            max_days = employee.days_left
-        elif self.name == "Annual":
-            max_days = employee.days_left
-        else:
-            max_days = self.max_number_of_days
 
-        if self.staff_category == employee.staff_category_code:
-            return max_days
-        else:
-            return 0
+    # def calculate_max_days(self, employee):
+    #     if self.name == "Medical":
+    #         max_days = employee.days_left
+    #     elif self.name == "Annual":
+    #         max_days = employee.days_left
+    #     else:
+    #         max_days = self.max_number_of_days
+
+    #     if self.staff_category == employee.staff_category_code:
+    #         return max_days
+    #     else:
+    #         return 0
 
     def __str__(self):
         return f"{self.name}"

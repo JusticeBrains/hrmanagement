@@ -16,8 +16,9 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 employee = instance.employee
                 emp_days_left = employee.days_left
                 if emp_days_left is not None:
-                    if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested > max_days:
+                    if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested <= max_days:
                         instance.no_of_days_left = emp_days_left - instance.no_of_days_requested
+                        
 
 
             no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
@@ -34,7 +35,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
         employee = instance.employee
         emp_days_left = employee.days_left
         if emp_days_left is not None:
-            if instance.no_of_extension_days <= emp_days_left and instance.no_of_days_requested > max_days:
+            if instance.no_of_extension_days <= emp_days_left and instance.no_of_days_requested <= max_days:
                 instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
 
 
@@ -45,6 +46,9 @@ def update_employee_days_left(sender, instance, created, **kwargs):
         Employee.objects.filter(id=instance.employee.id).update(
             days_left=instance.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
         )
+    post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
+    instance.save()
+    post_save.connect(update_employee_days_left, sender=LeaveRequest)
 
 
 @receiver(post_save, sender=LeaveType)
