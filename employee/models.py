@@ -175,6 +175,7 @@ class Employee(models.Model):
     company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
 
     class Meta:
+        unique_together = ("code","company")
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
 
