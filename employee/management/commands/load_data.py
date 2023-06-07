@@ -226,17 +226,17 @@ class Command(BaseCommand):
             #     get_user_data(url=env.str("itu_allowance"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            elif company.name == "Rock City Hotel Kumasi":
+            if company.name == "Rock City Hotel Kumasi":
                 self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
                 get_user_data(url=env.str("rch_kumasi"), auth=auth, company=company.name, company_id=company.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "Rock City Professional Allowance":
+            # if company.name == "Rock City Professional Allowance":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
             #     get_user_data(url=env.str("rch_prof_allowance"), auth=auth, company=company.name, company_id=company.id)  
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
-            # elif company.name == "Rock City Hotel":
+            # if company.name == "Rock City Hotel":
             #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {company.id} -- {company.name}"))        
             #     get_user_data(url=env.str("rch"), auth=auth, company=company.name, company_id=company.id)
             #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
