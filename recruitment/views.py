@@ -18,23 +18,50 @@ from .serializers import (
 class EmployeeRequisitionViewSet(viewsets.ModelViewSet):
     queryset = EmployeeRequisition.objects.all()
     serializer_class = EmployeeRequisitionSerializer
-    filterset_fields = ["id", "department", "position", "no_of_vacancies", "status",'published']
+    filterset_fields = [
+        "id",
+        "department",
+        "position",
+        "no_of_vacancies",
+        "status",
+        "published",
+        "company",
+    ]
 
 
 class JobApplicationViewSet(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
-    filterset_fields = ["id", "employee_requisition", "year", 'applicant_firstname', 'applicant_lastname','applicant_othername','status', 'total_interview_score', 'recruited','interviewed', 'short_list']
-
+    filterset_fields = [
+        "id",
+        "employee_requisition",
+        "year",
+        "applicant_firstname",
+        "applicant_lastname",
+        "applicant_othername",
+        "status",
+        "total_interview_score",
+        "recruited",
+        "interviewed",
+        "short_list",
+        "company",
+    ]
 
 
 class InterviewscoreViewSet(viewsets.ModelViewSet):
     queryset = Interview.objects.all()
     serializer_class = InterviewSerializer
-    filterset_fields = ["id",'job_application', 'panelist_name', 'interview_location','interview_score']
+    filterset_fields = [
+        "id",
+        "job_application",
+        "panelist_name",
+        "interview_location",
+        "interview_score",
+        "company",
+    ]
 
 
 class AppicantQualifivationViewSet(viewsets.ModelViewSet):
     queryset = ApplicantQualification.objects.all()
     serializer_class = ApplicantQualificationSerializer
-    filterset_fields = ["id" ,"job_application", 'qualification_name']
+    filterset_fields = ["id", "job_application", "qualification_name", "company"]
