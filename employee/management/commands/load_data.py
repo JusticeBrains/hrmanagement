@@ -275,7 +275,7 @@ def get_user_data(url, auth, company, company_id):
                 try:
                     
                     if Employee.objects.filter(code=employee['No'],company=company).exists():
-                        employee_obj = Employee.objects.get(code=employee['No'])
+                        employee_obj = Employee.objects.get(code=employee['No'], company=company)
                         print(f"--updating-- {employee_obj}")
                         Employee.objects.filter(id=employee_obj.id).update(
                         code=employee['No'],
