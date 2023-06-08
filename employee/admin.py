@@ -4,7 +4,7 @@ from employee import models as emodels
 
 @admin.register(emodels.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    search_fields = ['code', 'company', 'pay_group_code']
+    search_fields = ['code', 'company', 'pay_group_code',]
     list_display = ['fullname','code', 'company', 'pay_group_code']
 
 
@@ -17,6 +17,11 @@ class EmployeeAppraisalDetailAdmin(admin.ModelAdmin):
 class PaygroupAdmin(admin.ModelAdmin):
     search_fields = ['no','description', 'company']
     list_display = ["no","company"]
+
+@admin.register(emodels.EmployeeDeduction)
+class EmployeeDeductionAdmin(admin.ModelAdmin):
+    list_display = ["employee_name", "no_of_days",]
+    search_fields = ["employee_name", "no_of_days"]
 
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
