@@ -93,3 +93,9 @@ class PayGroupSerializer(serializers.ModelSerializer):
         model = employee_model.PayGroup
         fields = "__all__"
 
+
+class EmployeeDeductionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.EmployeeDeduction
+        fields = "__all__"
+
