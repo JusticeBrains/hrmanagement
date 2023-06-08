@@ -149,18 +149,14 @@ class Command(BaseCommand):
                 load_paygroup(url=env.str("nlajun_sen_paygroup"), auth=auth, company=comp.name, comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+           
+            if comp.name == "INTU-IT GHANA LIMITED":
+                load_paygroup(url=env.str("intu_ghana"), auth=auth, company=comp.name, comp_id=comp.id)
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
         
         self.stdout.write(self.style.SUCCESS(f"--------Ended Loading PayGroups-------"))
         
-
-            # if comp.name =="NLA EXECUTIVE MANAGEMENT":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-            #     load_paygroup(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-            # if comp.name =="NLA MANAGEMENT":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-            #     load_paygroup(url=env.str("nla_man_paygroup"), auth=auth, company=comp.name)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
 
 
         self.stdout.write(self.style.SUCCESS(f"--------Loading Employees-------"))
