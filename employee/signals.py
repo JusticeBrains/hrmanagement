@@ -110,16 +110,16 @@ def leave_days_deduction(sender, instance, **kwargs):
     if instance.no_of_days:
         employee = instance.employee
         emp_days_left = employee.days_left
-        if emp_days_left is not None:
+        if emp_days_left is not None or 0:
             if emp_days_left >= instance.no_of_days:
                 emp_days_left = emp_days_left - instance.no_of_days
                 instance.employee_name = instance.employee.fullname
-    no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
-    no_of_days_exhausted += instance.no_of_days
+            no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
+            no_of_days_exhausted += instance.no_of_days
 
-    Employee.objects.filter(id=employee.id).update(
-        days_left=emp_days_left, no_of_days_exhausted=no_of_days_exhausted
-    )
+            Employee.objects.filter(id=employee.id).update(
+                days_left=emp_days_left, no_of_days_exhausted=no_of_days_exhausted
+            )
     instance.save()
                 
     post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
