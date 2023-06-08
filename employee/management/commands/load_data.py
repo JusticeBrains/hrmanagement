@@ -219,7 +219,7 @@ class Command(BaseCommand):
         #         load_jobtitles(url=env.str("intu_ghana_jobtitles"), auth=auth, company=comp.name, comp_id=comp.id)
         #         self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
         
-        with open("employee/jobtitles.json", 'r') as file:
+        with open("employee/intu_jobtiles.json", 'r') as file:
             jobtitles = json.load(file)
 
         for val in jobtitles["value"]:
@@ -233,7 +233,7 @@ class Command(BaseCommand):
                 )
             print(f"--End-- {val['Description']}")
         print(f"Done -- Unit -- {JobTitles.objects.all().count()}")
-        
+
         self.stdout.write(self.style.SUCCESS(f"--------Ended Loading JobTitles-------"))
 
 

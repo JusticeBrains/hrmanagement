@@ -1,0 +1,292 @@
+{
+    "@odata.context": "http://paymastergh.com:7048/Payroll/ODataV4/$metadata#Company('Intu-IT%20Ghana%20Limited')/Jobs",
+    "value": [
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBFQVF3Qk5BQUFBQW5zQUFBQUNld0FBQUFBQTc7NzMxNzQ1MDA7Jw==\"",
+        "Code": "ACM",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "ACCOUNT MANAGER"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBFQVJ3QkJBQUFBQW5zQUFBQUNld0FBQUFBQTg7NDczNTYxNjEwOyc=\"",
+        "Code": "AGA",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Assistant Group Accountant"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBRQVVnQldBQUFBQW5zQUFBQUNld0FBQUFBQTc7NzMxNzQ4MTA7Jw==\"",
+        "Code": "DRV",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "DRIVER"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBVQVVnQk1BQUFBQW5zQUFBQUNld0FBQUFBQTg7NTAxNjc0NjYwOyc=\"",
+        "Code": "ERL",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Executive,Research & Legal Assistant"
+      },
+      {
+        "@odata.etag": "W/\"JzUyO1pjTUFBQUo3LzBZQVNRQk9BRWtBVXdCSUFFa0FUZ0JIQUFBQUFuc0FBQUFDZXdBQUFBQUE4OzQ5MzQxMzYzMDsn\"",
+        "Code": "FINISHING",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Finishing Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBjQVRRQUFBQUo3QUFBQUFuc0FBQUFBQUE9PTc7OTYyODIyMzA7Jw==\"",
+        "Code": "GM",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Group General Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzBnQVF3QlRBQUFBQW5zQUFBQUNld0FBQUFBQTc7NzMxNzMzNTA7Jw==\"",
+        "Code": "HCS",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "HEAD OF CLIENT SERVICE"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBeEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI0MDsn\"",
+        "Code": "JT0001",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Head of Legal & AGM"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBeUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI1MDsn\"",
+        "Code": "JT0002",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Legal and Compliance Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBekFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI2MDsn\"",
+        "Code": "JT0003",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Personnal Assistant"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBMEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI3MDsn\"",
+        "Code": "JT0004",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Executive Assistant"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBMUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI4MDsn\"",
+        "Code": "JT0005",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "HR Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBMkFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjI5MDsn\"",
+        "Code": "JT0006",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Personal Assistant"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBM0FBQUFBbnNBQUFBQ2V3QUFBQUFBODs0NjI0OTkyNzA7Jw==\"",
+        "Code": "JT0007",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Business Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBNEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjMxMDsn\"",
+        "Code": "JT0008",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "CEO's Driver"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTUFBNUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjMyMDsn\"",
+        "Code": "JT0009",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Graphic Designer"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBd0FBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjMzMDsn\"",
+        "Code": "JT0010",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Web Developer"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBeEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM0MDsn\"",
+        "Code": "JT0011",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Cleaner"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBeUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM1MDsn\"",
+        "Code": "JT0012",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Group Finance Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBekFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM2MDsn\"",
+        "Code": "JT0013",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Accounts Officer"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBMEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM3MDsn\"",
+        "Code": "JT0014",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Driver"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBMUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM4MDsn\"",
+        "Code": "JT0015",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Asst. Finance & Investment Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBMkFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjM5MDsn\"",
+        "Code": "JT0016",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Head, IT"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBM0FBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQwMDsn\"",
+        "Code": "JT0017",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Architect"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBNEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQxMDsn\"",
+        "Code": "JT0018",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Hotel Supervisor"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTVFBNUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQyMDsn\"",
+        "Code": "JT0019",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Personal Asst., Real Estate"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBd0FBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQzMDsn\"",
+        "Code": "JT0020",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Marketing & Public Relations Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBeEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ0MDsn\"",
+        "Code": "JT0021",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Social Media Executive"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBeUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ1MDsn\"",
+        "Code": "JT0022",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Photographer"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBekFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ2MDsn\"",
+        "Code": "JT0023",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "PROJECT ASSISTANT"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBMEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ3MDsn\"",
+        "Code": "JT0024",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Warehouse Material Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBMUFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ4MDsn\"",
+        "Code": "JT0025",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Land Surveyor"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBMkFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjQ5MDsn\"",
+        "Code": "JT0026",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Project Manager "
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBM0FBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjUwMDsn\"",
+        "Code": "JT0027",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Finishing Assistant"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzBvQVZBQXdBREFBTWdBNEFBQUFBbnNBQUFBQ2V3QUFBQUFBNzs5NjI4MjcwMDsn\"",
+        "Code": "JT0028",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Assistant Business Manager"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzA4QVVnQkVBQUFBQW5zQUFBQUNld0FBQUFBQTc7NzMxNzUxMjA7Jw==\"",
+        "Code": "ORD",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "ORDERLY"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzFBQVRRQUFBQUo3QUFBQUFuc0FBQUFBQUE9PTc7NzMxNzQxNDA7Jw==\"",
+        "Code": "PM",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "PRODUCT MANAGER"
+      },
+      {
+        "@odata.etag": "W/\"JzU2O1pjTUFBQUo3LzFBQVVnQlBBRW9BTGdBZ0FFRUFVd0JUQUM0QUFBQUNld0FBQUFKN0FBQUFBQUE9ODs0NjQ3MTU5NDA7Jw==\"",
+        "Code": "PROJ. ASS.",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "PROJECT ASSISTANT"
+      },
+      {
+        "@odata.etag": "W/\"JzM2O1pjTUFBQUo3LzFNQVFRQUFBQUo3QUFBQUFuc0FBQUFBQUE9PTg7NDgxNjA3NDAwOyc=\"",
+        "Code": "SA",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "Special Aid"
+      },
+      {
+        "@odata.etag": "W/\"JzQ0O1pjTUFBQUo3LzFNQVFRQkVBRTBBU1FCT0FBQUFBbnNBQUFBQ2V3QUFBQUFBODs0OTA4NDAwMzA7Jw==\"",
+        "Code": "SADMIN",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "SYSTEMS ADMINISTRATOR "
+      },
+      {
+        "@odata.etag": "W/\"JzQ4O1pjTUFBQUo3LzFRQVVBQlNBRk1BSUFCU0FFVUFBQUFDZXdBQUFBSjdBQUFBQUFBPTc7NzMxNzYxNTA7Jw==\"",
+        "Code": "TPRS RE",
+        "Payroll_Structure": "",
+        "Salary_Grade": "",
+        "Description": "TPRS REFUND ACCOUNT ASSISTANT"
+      }
+    ]
+  }
