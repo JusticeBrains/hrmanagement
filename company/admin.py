@@ -18,5 +18,7 @@ class JobAdmin(admin.ModelAdmin):
     list_display = ('comp_code', 'job_code','job_title',)
 
 
-admin.site.register(JobTitles)
+@admin.register(JobTitles)
+class JobTitlesAdmin(admin.ModelAdmin):
+    list_display = ('code','description', 'company')
 admin.site.register(SalaryGrade)
