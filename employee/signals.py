@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from django.db.models import Sum
-from employee.models import AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail
+from employee.models import AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail, EmployeeDeduction
 from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -99,6 +99,31 @@ def populate_company_field_department(sender, instance, **kwargs):
         instance.company = comp.name
         instance.save()
     post_save.connect(populate_company_field_department, sender=Department)
+
+
+@receiver(post_save, sender=EmployeeDeduction)
+def leave_days_deduction(sender, instance, **kwargs):
+    """
+    Deduct leave days from employee
+    """
+    post_save.disconnect(leave_days_deduction, sender=EmployeeDeduction)
+    if instance.no_of_days:
+        employee = instance.employee
+        emp_days_left = employee.days_left
+        if emp_days_left is not None:
+            if emp_days_left >= instance.no_of_days:
+                emp_days_left = emp_days_left - instance.no_of_days
+                instance.employee_name = instance.employee.fullname
+    no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
+    no_of_days_exhausted += instance.no_of_days
+
+    Employee.objects.filter(id=employee.id).update(
+        days_left=emp_days_left, no_of_days_exhausted=no_of_days_exhausted
+    )
+    instance.save()
+                
+    post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
+
 
 # @receiver(post_save, sender=PayGroup)
 # def update_employee_leave_days(sender, instance,created, **kwargs):
