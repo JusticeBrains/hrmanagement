@@ -19,5 +19,6 @@ router.register('notch', employee_views.NotchViewSet, basename='branch')
 router.register('appraisalgrading', employee_views.AppraisalGradingViewSet, basename='appraisalgrading')
 router.register('employeeappraisaldetail', employee_views.EmployeeAppraisalDetailViewSet, basename='employeeappraisaldetail')
 router.register('paygroup', employee_views.PayGroupViewSet, basename="paygroup")
+router.register('employeededuction', employee_views.EmployeeDeductionViewSet, basename="employeededuction")
 
 urlpatterns = router.urls
