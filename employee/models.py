@@ -193,6 +193,20 @@ class Employee(models.Model):
         return f"{self.last_name}, {self.first_name}"
 
 
+class EmployeeDeduction(models.Model):
+    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE)
+    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    no_of_days = models.PositiveIntegerField(_("No Of Days To Be Deducted"), blank=True, null=True)
+    deduction_reason = models.CharField(_("Deduction Reason"), max_length=150, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Employee Deduction"
+        verbose_name_plural = "Employee Deductions"
+    
+    def __str__(self):
+        return f"{self.employee.fullname} - {self.deduction_reason} - {self.no_of_days}"
+
+
 class EmployeeAppraisal(models.Model):
     emp_id = models.ForeignKey(
         Employee,
