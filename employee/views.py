@@ -154,3 +154,9 @@ class PayGroupViewSet(viewsets.ModelViewSet):
     queryset = employee_model.PayGroup.objects.all()
     serializer_class = serializers.PayGroupSerializer
     filterset_fields = ["id", "no", "company", "total_number_of_leave_days", "comp_id"]
+
+
+class EmployeeDeductionViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.EmployeeDeduction.objects.all()
+    serializer_class = serializers.EmployeeDeductionSerializer
+    filterset_fields = ["id","employee", "employee_name"]
