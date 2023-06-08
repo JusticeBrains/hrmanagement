@@ -40,6 +40,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 THIRD_PARTY_APPS = [
@@ -221,10 +222,13 @@ DJOSER = {
     },
 }
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'justiceduodu77@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'Enya1245*'  # Your Gmail password or app password
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'justiceduodu77@gmail.com' 
 
 
 SWAGGER_SETTINGS = {
