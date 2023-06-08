@@ -2,7 +2,6 @@ from typing import Any, Optional
 from django.core.management.base import BaseCommand
 from company.models import SalaryGrade, JobTitles, Company
 from employee.models import Department, Branch, Notch, PayGroup, Unit, Employee, StaffCategory
-import json
 
 import requests
 from requests_ntlm import HttpNtlmAuth
