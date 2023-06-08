@@ -202,6 +202,8 @@ if connection.vendor == 'postgresql':
 class JobTitles(BaseCom):
     salary_grade = models.CharField(verbose_name=_("Salary Grade"), blank=True, null=True, max_length=50)
     description = models.CharField(_("Description"), max_length=80)
+    company=models.CharField(_("Company"), max_length=150, null=True, blank=True)
+    company_id=models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
 
     class Meta:
         verbose_name = "Job Titles"
