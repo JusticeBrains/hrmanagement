@@ -157,7 +157,7 @@ class Command(BaseCommand):
         
         self.stdout.write(self.style.SUCCESS(f"--------Ended Loading PayGroups-------"))
 
-        self.stdout.write(self.style.SUCCESS(f"--------Ended Loading JobTitles-------"))
+        self.stdout.write(self.style.SUCCESS(f"--------Starting Loading JobTitles-------"))
 
         for company in companies:
             # if comp.name == "Rock City Hotel":
@@ -219,6 +219,8 @@ class Command(BaseCommand):
                 load_jobtitles(url=env.str("intu_ghana_jobtitles"), auth=auth, company=comp.name, comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
         
+        self.stdout.write(self.style.SUCCESS(f"--------Ended Loading JobTitles-------"))
+
 
         self.stdout.write(self.style.SUCCESS(f"--------Loading Employees-------"))
 
