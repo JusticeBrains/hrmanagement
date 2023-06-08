@@ -195,10 +195,10 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
                 load_jobtitles(url=env.str("intuprof_jobs"), auth=auth, company=comp.name, comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
-            if comp.name =="NLA":
-                self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))        
-                load_jobtitles(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name,comp_id=comp.id)
-                self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            # if comp.name =="NLA":
+            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))        
+            #     load_jobtitles(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name,comp_id=comp.id)
+            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
             if comp.name == "Republic Media Limited":
                 load_jobtitles(url=env.str("repub_jobs"), auth=auth, company=comp.name, comp_id=comp.id)
                 self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
