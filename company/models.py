@@ -16,7 +16,6 @@ class CompanyAdmin(models.Model):
     last_name = models.CharField(_("Last Name"), max_length=150,blank=True, null=True)
     password = models.CharField(_("Password"), max_length=150, null=True, blank=True)
     company_id = models.OneToOneField("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING)
-    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
     class Meta:
         verbose_name = "Company Admin"
         verbose_name_plural = "Company Admin"
@@ -25,6 +24,7 @@ class Company(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Company Name"), max_length=150)
     comp_type = models.ForeignKey("CompanyType", verbose_name=_("Company Type"), on_delete=models.CASCADE, null=True, blank=True)
+    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Company'
