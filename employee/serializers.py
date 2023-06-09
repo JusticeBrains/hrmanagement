@@ -80,7 +80,7 @@ class AppraisalGradingSerializer(serializers.ModelSerializer):
     company = serializers.ReadOnlyField()
     class Meta:
         model = employee_model.AppraisalGrading
-        fields = ['id','score_range', 'grade', 'recommendation', "company"]
+        fields = ['id','score_range', 'grade', 'recommendation', "company", "company_id"]
 
 
 class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
