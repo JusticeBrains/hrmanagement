@@ -127,6 +127,18 @@ def leave_days_deduction(sender, instance, **kwargs):
     post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
 
+
+def populate_appraisal_employee_grading(sender, instance, **kwargs):
+    """
+    Populate employee grading from appraisal grading
+    """
+    post_save.disconnect(populate_appraisal_employee_grading, sender=AppraisalGrading)
+    if instance.company_id:
+        instance.company = instance.company_id.name
+    instance.save()
+    post_save.connect(populate_appraisal_employee_grading, sender=AppraisalGrading)
+
+
 # @receiver(post_save, sender=PayGroup)
 # def update_employee_leave_days(sender, instance,created, **kwargs):
 #     post_save.disconnect(update_employee_leave_days, sender=PayGroup)

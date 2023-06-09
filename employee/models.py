@@ -281,6 +281,8 @@ class AppraisalGrading(models.Model):
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
     )
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Appraisal Grading"
@@ -293,6 +295,9 @@ class AppraisalGrading(models.Model):
 
     def __str__(self) -> str:
         return f"{self.grade} - {self.recommendation}"
+    
+    def clean(self):
+        self.company = self.company_id.name
 
 
 class EmployeeAppraisalDetail(models.Model):
