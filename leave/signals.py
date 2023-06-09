@@ -118,3 +118,16 @@ def update_paygroup_code(sender, instance, created, **kwargs):
 #         while instance.resumption_date in holidays or instance.resumption_date.weekday() >= 5:
 #             instance.resumption_date += timedelta(days=1)
 #         instance.save()
+
+@receiver(post_save, sender=LeaveRequest)
+@receiver(post_save, sender=LeavePlan)
+def compute_leave_resumption_date(sender, instance, created, **kwargs):
+    if created:
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        resumption_date = instance.end_date + timedelta(days=1)
+        
+        while resumption_date.weekday() >= 5 or resumption_date.date() in holidays:
+            resumption_date += timedelta(days=1)
+        
+        instance.resumption_date = resumption_date
+        instance.save()
