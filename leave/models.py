@@ -84,6 +84,7 @@ class LeaveBase(models.Model):
     leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, null=True, blank=True)
     resumption_date = models.DateField(_("Resumption Date"), null=True, blank=True)
+    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -250,6 +251,7 @@ class LeaveType(models.Model):
     paygroup = models.ForeignKey("employee.PayGroup", verbose_name=_("PayGroup"), on_delete=models.DO_NOTHING, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
     pay_group_code = models.CharField(_("Pay Group Code"), max_length=50, null=True, blank=True)
+    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
 
     # def calculate_max_days(self, employee):
     #     if self.name == "Medical":
@@ -272,20 +274,20 @@ class LeaveType(models.Model):
         verbose_name_plural = "Leave Types"
 
 
-if connection.vendor == "postgresql":
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            SELECT EXISTS(
-                SELECT * FROM information_schema.columns
-                WHERE table_name = 'leave_leavetype' AND column_name = 'staff_category'
-            )
-        """
-        )
-        column_exists = cursor.fetchone()[0]
-        if column_exists:
-            cursor.execute(
-                "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
-            )
+# if connection.vendor == "postgresql":
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             """
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'leave_leavetype' AND column_name = 'staff_category'
+#             )
+#         """
+#         )
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute(
+#                 "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
+#             )
 
 
