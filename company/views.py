@@ -26,7 +26,7 @@ class CompanyTypeViewSet(viewsets.ModelViewSet):
 class JobTitleViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobTitles.objects.all()
     serializer_class = serializers.JobTitlesSerializer
-    filterset_fields = ['id','code','payroll_structure', 'salary_grade', 'description']
+    filterset_fields = ['id','code','payroll_structure', 'salary_grade', 'description', 'company']
 
 
 class SalaryGradeViewSet(viewsets.ModelViewSet):
