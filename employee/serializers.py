@@ -17,6 +17,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class EmployeeAppraisalSerializer(serializers.ModelSerializer):
+    company = serializers.ReadOnlyField()
     class Meta:
         model = employee_model.EmployeeAppraisal
         fields = "__all__"

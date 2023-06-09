@@ -28,6 +28,7 @@ def update_employee_appraisal(sender, instance , **kwargs):
         instance.employee_code = employee.code
         instance.job_title = employee.job_titles
         instance.department = employee.second_category_level
+        instance.company = employee.company
 
 
         # Temporarily disconnect the signal receiver

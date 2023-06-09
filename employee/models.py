@@ -727,7 +727,7 @@ class PayGroup(models.Model):
         verbose_name_plural = "Pay Groups"
     
     def __str__(self):
-        return f"{self.no} - {self.description} - {self.taxable_income_code}"
+        return f"{self.no} - {self.description} - {self.taxable_income_code} - {self.company}"
     
     def save(self, *args, **kwargs):
         # Get the employees with the same paygroup and company

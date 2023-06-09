@@ -83,7 +83,7 @@ class LeaveBase(models.Model):
     )
     leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, null=True, blank=True)
-
+    resumption_date = models.DateField(_("Resumption Date"), null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -134,6 +134,7 @@ class LeaveRequest(LeaveBase):
                 days_added += 1
 
         return new_start_date
+    
 
 
     def clean(self):

@@ -19,6 +19,7 @@ class DateOnlyField(serializers.ReadOnlyField):
 class LeaveRequestSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
+    resumption_date = serializers.ReadOnlyField()
     extension_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
     no_of_extension_days = serializers.IntegerField(required=False)
@@ -69,6 +70,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
 class LeavePlanSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
     end_date = serializers.ReadOnlyField()
+    resumption_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
 
 
