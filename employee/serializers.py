@@ -77,9 +77,10 @@ class NotchesSerializer(serializers.ModelSerializer):
 
 class AppraisalGradingSerializer(serializers.ModelSerializer):
     score_range = IntegerRangeField()
+    company = serializers.ReadOnlyField()
     class Meta:
         model = employee_model.AppraisalGrading
-        fields = ['id','score_range', 'grade', 'recommendation']
+        fields = ['id','score_range', 'grade', 'recommendation', "company"]
 
 
 class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
@@ -95,6 +96,7 @@ class PayGroupSerializer(serializers.ModelSerializer):
 
 
 class EmployeeDeductionSerializer(serializers.ModelSerializer):
+    employee_name = serializers.ReadOnlyField()
     class Meta:
         model = employee_model.EmployeeDeduction
         fields = "__all__"
