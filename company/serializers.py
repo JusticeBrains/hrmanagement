@@ -80,12 +80,6 @@ class MinimumQualificationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class JonOpeningSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.JobOpening
-        fields = "__all__"
-
-
 class ApplicationPoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.ApplicationPool
@@ -101,12 +95,6 @@ class ApplicationReferencesSeriailizer(serializers.ModelSerializer):
 class ApplicationQESerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.ApplicationQE
-        fields = "__all__"
-
-
-class JobApplicationQualificationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.JobApplicationQualification
         fields = "__all__"
 
 

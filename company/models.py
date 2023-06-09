@@ -257,31 +257,7 @@ class MinimumQualification(models.Model):
         return f"{self.minimum_qualification}"
 
 
-class JobOpening(models.Model):
-    department_name = models.ForeignKey("Department", verbose_name=_("Department Name"), on_delete=models.CASCADE)
-    position = models.CharField(_("Position"), max_length=50)
-    job_title_code = models.ForeignKey("company.JobTitles", verbose_name=_("Job Title Code"), on_delete=models.CASCADE)
-    job_title = models.CharField(_("Job Title"), max_length=50)
-    min_qualification = models.ForeignKey("company.MinimumQualification", verbose_name=_("Minimum Qualification"),
-                                          on_delete=models.CASCADE)
-    min_age = models.PositiveIntegerField(_("Minimum Age"))
-    max_age = models.PositiveIntegerField(_("Maximum Age"))
-    min_expected_score = models.DecimalField(_("Minimum Expected Score"), max_digits=5, decimal_places=2)
-    no_of_vacancies = models.PositiveIntegerField(_("No. Of Vacancies"))
-    publication_type = models.CharField(_("Publication Type"), choices=text_options.PublicationType.choices,
-                                        max_length=50)
-    requisition_date = models.DateField(_("Requisition Date"), auto_now=False, auto_now_add=False)
-    transaction_date = models.DateField(_("Transaction Date"), auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(User, verbose_name=_("User ID"), on_delete=models.CASCADE)
-    description = models.CharField(_("Job Description"), max_length=250)
-    justification = models.CharField(_("Justification"), max_length=250)
 
-    class Meta:
-        verbose_name = "Job Opening"
-        verbose_name_plural = "Job Openings"
-
-    def __str__(self):
-        return f"{self.position}, {self.description}"
 
 
 class Application(models.Model):
@@ -363,67 +339,6 @@ class ApplicationQE(models.Model):
     def __str__(self):
         pass
 
-
-class JobApplication(Application):
-    publication_no = models.ForeignKey("company.JobOpening", verbose_name=_("Publication No."),
-                                       on_delete=models.CASCADE)
-    post_code = models.CharField(_("Post Code"), max_length=50)
-    city = models.CharField(_("City"), max_length=50)
-    disqualified = models.BooleanField(_("Disqualified"))
-    country_code = models.CharField(_("Country Code"), max_length=50)
-    region_code = models.CharField(_("Region Code"), max_length=50)
-    nationality_code = models.CharField(_("Nationality Code"), max_length=50)
-    medical_status = models.CharField(_("Medical Status"), choices=text_options.MedicalType.choices, max_length=50)
-    application_status = models.CharField(_("Application Status"), choices=text_options.ApplicationStatus.choices,
-                                          max_length=50)
-    overall_status = models.CharField(_("Overall Status"), choices=text_options.OverallStatus.choices, max_length=50)
-    modified_date = models.DateField(_("Modified Date"), auto_now=True, auto_now_add=False)
-    weighted_score = models.DecimalField(_("Weighted Score"), max_digits=5, decimal_places=2)
-    applicant_score = models.DecimalField(_("Applicant Score(%)"), max_digits=5, decimal_places=2)
-    remove = models.BooleanField(_("Remove"))
-    pre_emp_medicals = models.BooleanField(_("Pre-employment Medicals"))
-    medical_comments = models.CharField(_("Medical Comments"), max_length=150)
-    criminal_background_check = models.BooleanField(_("Criminal Background Check"))
-    criminal_background_comments = models.CharField(_("Criminal Background Check"), max_length=150)
-    interview_date = models.DateField(_("Interview Date"), auto_now=True, auto_now_add=False)
-    emp_status = models.CharField(_("Employment Status"), choices=text_options.EmploymentStatus.choices
-                                  , max_length=50)
-    acceptance_date = models.DateField(_("Acceptance Date"), auto_now=True, auto_now_add=False)
-    assumption_date = models.DateField(_("Assumption Date"), auto_now=True, auto_now_add=False)
-    probation_date = models.DateField(_("Probation Date"), auto_now=True, auto_now_add=False)
-    confirmation_date = models.DateField(_("Confirmation Date"), auto_now=True
-                                         , auto_now_add=False)
-    copied = models.BooleanField(_("Copied"))
-
-    class Meta:
-        verbose_name = "Job Application"
-        verbose_name_plural = "Job Applications"
-
-    def __str_(self):
-        return f"{self.publication_no}, {self.emp_status}"
-
-
-class JobApplicationQualification(models.Model):
-    publication_no = models.ForeignKey("company.JobOpening", verbose_name=_("Publication No."),
-                                       on_delete=models.CASCADE)
-    line_no = models.PositiveIntegerField(_("Line No."))
-    qualification_code = models.ForeignKey("company.MinimumQualification", verbose_name=_("Qualification Code"),
-                                           on_delete=models.CASCADE)
-    from_date = models.DateField(_("From Date"), auto_now=False, auto_now_add=False)
-    to_date = models.DateField(_("To Date"), auto_now=False, auto_now_add=False)
-    type = models.CharField(_("Type"), choices=text_options.QualificationType.choices, max_length=50)
-    description = models.CharField(_("Description"), max_length=50)
-    institution_company = models.CharField(_("Institution/Company"), max_length=50)
-    cost = models.DecimalField(_("Cost"), max_digits=5, decimal_places=2)
-    course_grade = models.CharField(_("Course Grade"), max_length=50)
-    expiration_date = models.DateField(_("Expiration Date"), auto_now=True, auto_now_add=False)
-
-    class Meta:
-        verbose_name = "Job Application Qualification"
-        verbose_name_plural = "Job Application Qualifications"
-
-    def __str__(self):
-        return f"{self.publication_no}, {self.qualification_code}"
 
 
 class HRNeeds(models.Model):

@@ -13,13 +13,9 @@ router.register('propertyassignment', views.PropertyAssignmentViewSet, basename=
 router.register('disciplinaryactions', views.DiscplinaryActionsViewSet, basename='disciplinaryactions')
 router.register('job', views.JobViewSet, basename='job')
 router.register('minimumqualification', views.MinimumQualificationViewSet, basename='minimumqualification')
-router.register('jobopening', views.JobOpeningViewSet, basename='jobopening')
 router.register('applicationpool', views.ApplicationPoolViewSet, basename='applicationpool')
 router.register('applicationreference', views.ApplicationReferencesViewSet, basename='applicarionreference')
 router.register('application', views.ApplicationQEViewSet, basename='applicationqe')
-router.register('jobappplicationqualification', views.JobApplicationQualificationViewSet,
-                basename='jobappplicationqualification')
-router.register('hrneedsline', views.HRNeedsLineViewSet, basename='hrneedsline')
 router.register('hrapprovalentry', views.HRApprovalEntryViewSet, basename='hrapprovalentry')
 router.register('hralerts', views.HRAlertsViewSet, basename='hralerts')
 router.register('workmencompensation', views.WorkmenCompensationViewSet, basename='workmencompensation')
