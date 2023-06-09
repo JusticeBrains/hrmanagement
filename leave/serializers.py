@@ -41,6 +41,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             days_added += 1
         print(type(start_date))
         return start_date
+    
 
 
     @property
@@ -59,6 +60,16 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
         print(type(start_date))
         return start_date
     
+    @property
+    def get_resumption_date(self, obj):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        calculated_resumption_date = obj.end_date + timedelta(days=1)
+        resumption_date = calculated_resumption_date
+        while resumption_date in holidays or resumption_date.weekday() >= 5:
+            resumption_date += timedelta(days=1)
+      
+        return resumption_date
+
 
     class Meta:
         model = LeaveRequest
@@ -89,6 +100,17 @@ class LeavePlanSerializer(serializers.ModelSerializer):
         print(type(start_date))
         return start_date
     
+    @property
+    def get_resumption_date(self, obj):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        calculated_resumption_date = obj.end_date + timedelta(days=1)
+        resumption_date = calculated_resumption_date
+        while resumption_date in holidays or resumption_date.weekday() >= 5:
+            resumption_date += timedelta(days=1)
+      
+        return resumption_date
+    
+
     # def get_plan_days_left(self, obj):
     #     employee = obj.employee
     #     max_days = obj.leave_type.calculate_max_days(employee)

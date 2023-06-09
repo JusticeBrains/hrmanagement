@@ -109,12 +109,12 @@ def update_paygroup_code(sender, instance, created, **kwargs):
         instance.save()
 
 
-@receiver(post_save, sender=LeavePlan)
-@receiver(post_save, sender=LeaveRequest)
-def compute_leave_resumption_date(sender, instance, created, **kwargs):
-    if created:
-        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
-        instance.resumption_date = instance.end_date + timedelta(days=1)
-        while instance.resumption_date in holidays or instance.resumption_date.weekday() >= 5:
-            instance.resumption_date += timedelta(days=1)
-        instance.save()
+# @receiver(post_save, sender=LeavePlan)
+# @receiver(post_save, sender=LeaveRequest)
+# def compute_leave_resumption_date(sender, instance, created, **kwargs):
+#     if created:
+#         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+#         instance.resumption_date = instance.end_date + timedelta(days=1)
+#         while instance.resumption_date in holidays or instance.resumption_date.weekday() >= 5:
+#             instance.resumption_date += timedelta(days=1)
+#         instance.save()

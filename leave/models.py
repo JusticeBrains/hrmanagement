@@ -135,6 +135,18 @@ class LeaveRequest(LeaveBase):
 
         return new_start_date
     
+    @property
+    def resumption_date(self):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        calculated_resumption_date = self.end_date + timedelta(days=1)
+        resumption_date = calculated_resumption_date
+        while resumption_date in holidays or resumption_date.weekday() >= 5:
+            resumption_date += timedelta(days=1)
+        return resumption_date
+
+    @resumption_date.setter
+    def resumption_date(self, value):
+        self._resumption_date = value
 
 
     def clean(self):
@@ -170,6 +182,19 @@ class LeavePlan(LeaveBase):
                 continue
             days_added += 1
         return start_date
+
+    @property
+    def resumption_date(self):
+        holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
+        calculated_resumption_date = self.end_date + timedelta(days=1)
+        resumption_date = calculated_resumption_date
+        while resumption_date in holidays or resumption_date.weekday() >= 5:
+            resumption_date += timedelta(days=1)
+        return resumption_date
+
+    @resumption_date.setter
+    def resumption_date(self, value):
+        self._resumption_date = value
 
     def clean(self):
         self.emp_code = self.employee.code
