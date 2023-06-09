@@ -55,7 +55,7 @@ class EmployeeFilterSet(PropertyFilterSet):
             "company_id",
             "mobile_no",
             "company_email",
-            'unique_code',
+            # 'unique_code',
         ]
 
 

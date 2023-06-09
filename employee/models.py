@@ -173,7 +173,7 @@ class Employee(models.Model):
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
     company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
-    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
+    # unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
 
     class Meta:
         unique_together = ("code","company")
