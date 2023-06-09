@@ -55,9 +55,11 @@ def update_performance_score(sender, instance, **kwargs):
         if appraisal:
             # Retrieve the total score from EmployeeAppraisalDetail records
             total_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(total_score=Sum('score'))['total_score']
+            kpi_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(kpi_score=Sum('total_kpi_scores'))['kpi_score']
             
-            # Update the performance score of the EmployeeAppraisal object
+            # Update the performance score and total kpi score of the EmployeeAppraisal object
             appraisal.performance_score = total_score if total_score is not None else None
+            appraisal.weighted_score = kpi_score if kpi_score is not None else None
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
@@ -77,7 +79,7 @@ def update_grade(sender, instance, **kwargs):
     if grading:
         instance.grade = grading.grade
         instance.recommendation = grading.recommendation
-        instance.percentage_score = f"{round((instance.performance_score / 100) * 100, ndigits=2)}%"
+        instance.percentage_score = f"{round((instance.performance_score / instance.total_kpi_scores) * 100, ndigits=2)}%"
     else:
         instance.grade = None
         instance.recommendation = None

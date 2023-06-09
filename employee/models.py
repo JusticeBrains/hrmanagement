@@ -256,6 +256,7 @@ class EmployeeAppraisal(models.Model):
         _("Recommendation"), max_length=150, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    weighted_score = models.PositiveIntegerField(_("Weighted Score"), blank=True, null=True)
 
 
     class Meta:
@@ -329,7 +330,8 @@ class EmployeeAppraisalDetail(models.Model):
         _("Department"), max_length=150, null=True, blank=True,
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-
+    total_kpi_scores = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
+    
     def clean(self):
         if self.employee_id:
             self.emp_code = self.employee_id.code
