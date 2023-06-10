@@ -179,6 +179,8 @@ class Employee(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
+    medical_claim_amount_left = models.PositiveIntegerField(_("Medical Claim Amount Left"), blank=True, null=True)
+    used_medical_claim_amount = models.PositiveIntegerField(_("Used Medical Claim Amoun"), null=True, blank=True)
     total_medical_claim_amount = models.PositiveIntegerField(_("Total Medical Claim"), null=True, blank=True)
 
     class Meta:
