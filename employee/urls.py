@@ -20,5 +20,7 @@ router.register('appraisalgrading', employee_views.AppraisalGradingViewSet, base
 router.register('employeeappraisaldetail', employee_views.EmployeeAppraisalDetailViewSet, basename='employeeappraisaldetail')
 router.register('paygroup', employee_views.PayGroupViewSet, basename="paygroup")
 router.register('employeededuction', employee_views.EmployeeDeductionViewSet, basename="employeededuction")
+router.register('kpi', employee_views.KPIViewSet, basename="kpi")
+router.register('employeekra', employee_views.EmployeeKRAViewSet, basename="employeekra")
 
 urlpatterns = router.urls

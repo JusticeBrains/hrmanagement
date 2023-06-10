@@ -13,6 +13,7 @@ from django.contrib.auth import get_user_model
 import uuid
 from django.utils import timezone
 from django.contrib.postgres.fields import IntegerRangeField
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -98,7 +99,9 @@ class Employee(models.Model):
     salesperson_purch_code = models.CharField(
         _("Salespers Purch Code"), max_length=250, null=True, blank=True
     )
-    birth_date = models.DateField(_("Birth Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    birth_date = models.DateField(
+        _("Birth Date"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
     ssno = models.CharField(
         _("Social Security No"), max_length=50, blank=True, null=True
     )
@@ -156,9 +159,7 @@ class Employee(models.Model):
         _("Employee Level"), max_length=50, blank=True, null=True
     )
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
-    days_left = models.PositiveIntegerField(
-        _("Days Left"), null=True, blank=True
-    )
+    days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True)
     no_of_days_exhausted = models.PositiveIntegerField(
         _("No. Of Days Exhausted"), blank=True, null=True
     )
@@ -172,11 +173,16 @@ class Employee(models.Model):
         _("Total Number Of Leave Days"), null=True, blank=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
-    # unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
+    company_id = models.CharField(
+        _("Company ID"), max_length=150, null=True, blank=True
+    )
+    unique_code = models.CharField(
+        _("Unique Code"), max_length=50, null=True, blank=True
+    )
+    total_medical_claim_amount = models.PositiveIntegerField(_("Total Medical Claim"), null=True, blank=True)
 
     class Meta:
-        unique_together = ("code","company")
+        unique_together = ("code", "company")
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
 
@@ -195,15 +201,23 @@ class Employee(models.Model):
 
 
 class EmployeeDeduction(models.Model):
-    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE)
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
-    no_of_days = models.PositiveIntegerField(_("No Of Days To Be Deducted"), blank=True, null=True)
-    deduction_reason = models.CharField(_("Deduction Reason"), max_length=150, blank=True, null=True)
+    employee = models.ForeignKey(
+        "employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    no_of_days = models.PositiveIntegerField(
+        _("No Of Days To Be Deducted"), blank=True, null=True
+    )
+    deduction_reason = models.CharField(
+        _("Deduction Reason"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Employee Deduction"
         verbose_name_plural = "Employee Deductions"
-    
+
     def __str__(self):
         return f"{self.employee.fullname} - {self.deduction_reason} - {self.no_of_days}"
 
@@ -239,7 +253,9 @@ class EmployeeAppraisal(models.Model):
         _("Department"), max_length=150, null=True, blank=True, editable=False
     )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
-    performance_score = models.PositiveIntegerField(_("Performance Score"), null=True, blank=True)
+    performance_score = models.PositiveIntegerField(
+        _("Performance Score"), null=True, blank=True
+    )
     percentage_score = models.CharField(
         _("Percentage Score"), null=True, blank=True, max_length=50
     )
@@ -251,14 +267,15 @@ class EmployeeAppraisal(models.Model):
         related_name="appraisal_period",
         null=True,
         blank=True,
-    )    
+    )
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    weighted_score = models.PositiveIntegerField(_("Weighted Score"), blank=True, null=True)
-
+    weighted_score = models.PositiveIntegerField(
+        _("Weighted Score"), blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -282,7 +299,13 @@ class AppraisalGrading(models.Model):
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
     )
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, null=True, blank=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
@@ -296,7 +319,7 @@ class AppraisalGrading(models.Model):
 
     def __str__(self) -> str:
         return f"{self.grade} - {self.recommendation}"
-    
+
     def clean(self):
         self.company = self.company_id.name
 
@@ -333,11 +356,16 @@ class EmployeeAppraisalDetail(models.Model):
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
     department = models.CharField(
-        _("Department"), max_length=150, null=True, blank=True,
+        _("Department"),
+        max_length=150,
+        null=True,
+        blank=True,
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    total_kpi_scores = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
-    
+    total_kpi_scores = models.PositiveIntegerField(
+        _("Total Score"), blank=True, null=True
+    )
+
     def clean(self):
         if self.employee_id:
             self.emp_code = self.employee_id.code
@@ -350,7 +378,144 @@ class EmployeeAppraisalDetail(models.Model):
 
     def __str__(self):
         return f"{self.emp_code} - {self.period} - {self.score}"
-    
+
+
+class KPI(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
+
+    kpi_appraisal_area = models.CharField(
+        _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
+    )
+    kpi_appraisal_area_description = models.TextField(
+        _("KPI / Appraisal Area Description"), null=True, blank=True
+    )
+    score = models.IntegerField(_("Score"), null=True, blank=True)
+    emp_score = models.IntegerField(_("Employee Score"), blank=True, null=True)
+    emp_comment = models.CharField(
+        _("Employee Comment"), max_length=50, null=True, blank=True
+    )
+    narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
+    employee_id = models.ForeignKey(
+        Employee,
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        related_name="employee_kpi",
+        null=True,
+    )
+    emp_code = models.CharField(
+        _("Employee Code"), max_length=150, null=True, blank=True, editable=False
+    )
+    emp_name = models.CharField(
+        _("Employee Name"), max_length=150, null=True, blank=True, editable=False
+    )
+    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
+    status = models.PositiveIntegerField(_("Status"), default=0)
+    due_date = models.DateField(_("Due Date"), blank=True, null=True)
+    department = models.CharField(
+        _("Department"),
+        max_length=150,
+        null=True,
+        blank=True,
+    )
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    kpi_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
+    employee_kra = models.ForeignKey(
+        "employee.EmployeeKRA",
+        verbose_name=_("Employee KRA"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    percentage_score = models.DecimalField(_("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    def clean(self):
+        if self.employee_id:
+            self.emp_code = self.employee_id.code
+            self.emp_name = self.employee_id.fullname
+            self.company = self.employee_id.company
+
+        if self.score > self.kpi_score:
+            raise ValidationError(
+                f"Score {self.score} cannot be greater than kpi score{self.kpi_score}"
+            )
+
+    class Meta:
+        verbose_name = "KPI"
+        verbose_name_plural = "KPI's"
+
+    def __str__(self):
+        return f"{self.emp_code} - {self.period} - {self.score}"
+
+
+class EmployeeKRA(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False,default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+    total_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
+    kpis = models.ManyToManyField("employee.KPI", verbose_name=_("KPI"))
+    employee_id = models.ForeignKey(
+        Employee,
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        related_name="employee_kra",
+        null=True,
+    )
+    emp_code = models.CharField(
+        _("Employee Code"), max_length=150, null=True, blank=True, editable=False
+    )
+    emp_name = models.CharField(
+        _("Employee Name"), max_length=150, null=True, blank=True, editable=False
+    )
+    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Employee KRA"
+        verbose_name_plural = "Employee KRAs"
+
+    def clean(self) -> None:
+        kpi_scores_sum = self.kpis.aggregate(sum_scores=models.Sum("kpi_scores"))[
+            "sum_scores"
+        ]
+
+        if kpi_scores_sum != self.total_score:
+            raise ValidationError(
+                f"Sum Of Total KPI Scores not equal to KRA Total Score"
+            )
+
+    def create_kpis(
+        self,
+        # kpi_appraisal_area,
+        # kpi_appraisal_area_description,
+        kpi_score,
+        # score,
+        # emp_comment,
+        employee_id,
+        # emp_code,
+        # emp_name,
+        # appraiser,
+        # status,
+        # due_date,
+        # department,
+        # company
+    ):
+        kpi_item = KPI.objects.create(
+            employee_kra=self,
+            # kpi_appraisal_area=kpi_appraisal_area,
+            # kpi_appraisal_area_description=kpi_appraisal_area_description,
+            # score=score,
+            # emp_comment=emp_comment,
+            employee_id=employee_id,
+            # emp_code=emp_code,
+            # emp_name=emp_name,
+            # appraiser=appraiser,
+            # status=status,
+            # due_date=due_date,
+            # department=department,
+            # company=company,
+            kpi_score=kpi_score,
+        )
+        return kpi_item
 
 
 # class EmployeePromotion(models.Model):
@@ -453,7 +618,6 @@ class EmployeeMedicals(models.Model):
     transaction_date = models.DateField(
         _("Transaction Date"), auto_now=False, auto_now_add=False
     )
-    posted = models.BooleanField(_("Posted"))
 
     class Meta:
         verbose_name = "Employee Medicals"
@@ -561,7 +725,7 @@ class Base(models.Model):
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
-        unique_together = ('code', 'company')
+        unique_together = ("code", "company")
         abstract = True
 
 
@@ -706,33 +870,56 @@ class Notch(models.Model):
         verbose_name_plural = "Notches"
 
 
-
 class PayGroup(models.Model):
     no = models.CharField(_("No."), max_length=50, null=True, blank=True)
-    description = models.CharField(_("Description"), max_length=100,null=True, blank=True)
-    taxable_income_code = models.CharField(_("Taxable Income Code"), max_length=50, null=True, blank=True)
-    taxable_income_description = models.CharField(_("Taxable Income Description"), max_length=100,null=True, blank=True)
+    description = models.CharField(
+        _("Description"), max_length=100, null=True, blank=True
+    )
+    taxable_income_code = models.CharField(
+        _("Taxable Income Code"), max_length=50, null=True, blank=True
+    )
+    taxable_income_description = models.CharField(
+        _("Taxable Income Description"), max_length=100, null=True, blank=True
+    )
     tax_code = models.CharField(verbose_name=_("Tax Code"), null=True, blank=True)
-    tax_description = models.CharField(_("Tax Description"), max_length=150,  null=True, blank=True)
-    gross_income_code = models.CharField(_("CalculationHeader"), max_length=50,  null=True, blank=True)
-    gross_income_description = models.CharField(_("Gross Income Description"), max_length=150,  null=True, blank=True)
-    currency_code = models.CharField(verbose_name=_("Currency Code"), null=True, blank=True)
-    bonus_tax_code = models.CharField(verbose_name=_("Bonus Tax Code"),  null=True, blank=True)
-    bonus_tax_description = models.CharField(_("Bonus Tax Description"), max_length=150,  null=True, blank=True)
-    gross_up = models.BooleanField(_("Gross Up"),  null=True, blank=True)
-    total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), blank=True, null=True)
+    tax_description = models.CharField(
+        _("Tax Description"), max_length=150, null=True, blank=True
+    )
+    gross_income_code = models.CharField(
+        _("CalculationHeader"), max_length=50, null=True, blank=True
+    )
+    gross_income_description = models.CharField(
+        _("Gross Income Description"), max_length=150, null=True, blank=True
+    )
+    currency_code = models.CharField(
+        verbose_name=_("Currency Code"), null=True, blank=True
+    )
+    bonus_tax_code = models.CharField(
+        verbose_name=_("Bonus Tax Code"), null=True, blank=True
+    )
+    bonus_tax_description = models.CharField(
+        _("Bonus Tax Description"), max_length=150, null=True, blank=True
+    )
+    gross_up = models.BooleanField(_("Gross Up"), null=True, blank=True)
+    total_number_of_leave_days = models.PositiveIntegerField(
+        _("Total Number Of Leave Days"), blank=True, null=True
+    )
+    total_medical_claim_amount = models.PositiveIntegerField(_("Medical Claim Amount"))
     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
     comp_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
+
     class Meta:
         verbose_name = "Pay Group"
         verbose_name_plural = "Pay Groups"
-    
+
     def __str__(self):
         return f"{self.no} - {self.description} - {self.taxable_income_code} - {self.company}"
-    
+
     def save(self, *args, **kwargs):
         # Get the employees with the same paygroup and company
-        employees = Employee.objects.filter(pay_group_code=self.no, company=self.company)
+        employees = Employee.objects.filter(
+            pay_group_code=self.no, company=self.company
+        )
         # employees.bulk_update(total_number_of_leave_days=self.total_number_of_leave_days)
         # Update the total_number_of_leave_days for each employee
         for employee in employees:
