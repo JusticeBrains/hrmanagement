@@ -26,29 +26,32 @@ class CompanyTypeViewSet(viewsets.ModelViewSet):
 class JobTitleViewSet(viewsets.ModelViewSet):
     queryset = comp_models.JobTitles.objects.all()
     serializer_class = serializers.JobTitlesSerializer
-    filterset_fields = ['id','code','payroll_structure', 'salary_grade', 'description', 'company']
+    filterset_fields = '__all__'
 
 
 class SalaryGradeViewSet(viewsets.ModelViewSet):
     queryset = comp_models.SalaryGrade.objects.all()
     serializer_class = serializers.SalaryGradeSerializer
-    filterset_fields = ['id','code','payroll_structure', 'job_titles', 'transport_rate']
+    filterset_fields = "__all__"
 
 
 
 class HolidayViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Holidays.objects.all()
     serializer_class = serializers.HolidaySerializer
+    filterset_fields = "__all__"
 
 
 class MedicalCodesViewSet(viewsets.ModelViewSet):
     queryset = comp_models.MedicalCodes.objects.all()
     serializer_class = serializers.MedicalCodesSerializer
+    filterset_fields = "__all__"
 
 
 class MedicalCentreViewSet(viewsets.ModelViewSet):
     queryset = comp_models.MedicalCentres.objects.all()
     serializer_class = serializers.MedicalCentresSerializer
+    filterset_fields = "__all__"
 
 
 class PropertyViewSet(viewsets.ModelViewSet):
@@ -69,6 +72,7 @@ class DiscplinaryActionsViewSet(viewsets.ModelViewSet):
 class JobViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Job.objects.all()
     serializer_class = serializers.JobSerializer
+    filterset_fields = "__all__"
 
 
 class MinimumQualificationViewSet(viewsets.ModelViewSet):
