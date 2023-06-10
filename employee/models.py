@@ -490,31 +490,14 @@ class EmployeeKRA(models.Model):
         # kpi_appraisal_area,
         # kpi_appraisal_area_description,
         kpi_score,
-        # score,
-        # emp_comment,
         employee_id,
-        # emp_code,
-        # emp_name,
-        # appraiser,
-        # status,
-        # due_date,
-        # department,
-        # company
+
     ):
         kpi_item = KPI.objects.create(
             employee_kra=self,
             # kpi_appraisal_area=kpi_appraisal_area,
             # kpi_appraisal_area_description=kpi_appraisal_area_description,
-            # score=score,
-            # emp_comment=emp_comment,
             employee_id=employee_id,
-            # emp_code=emp_code,
-            # emp_name=emp_name,
-            # appraiser=appraiser,
-            # status=status,
-            # due_date=due_date,
-            # department=department,
-            # company=company,
             kpi_score=kpi_score,
         )
         return kpi_item
@@ -906,7 +889,7 @@ class PayGroup(models.Model):
     total_number_of_leave_days = models.PositiveIntegerField(
         _("Total Number Of Leave Days"), blank=True, null=True
     )
-    total_medical_claim_amount = models.PositiveIntegerField(_("Medical Claim Amount"))
+    total_medical_claim_amount = models.PositiveIntegerField(_("Medical Claim Amount"), null=True, blank=True)
     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
     comp_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
 
