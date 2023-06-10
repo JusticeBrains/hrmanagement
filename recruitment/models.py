@@ -28,8 +28,8 @@ class EmployeeRequisition(models.Model):
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"
 
-    def save(self):
-        self.company = self.department.company
+    # def save(self):
+    #     self.company = self.department.company
 
     def __str__(self) -> str:
         return f"{self.department} - {self.position} - {self.no_of_vacancies}"
