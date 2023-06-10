@@ -55,7 +55,7 @@ class EmployeeFilterSet(PropertyFilterSet):
             "company_id",
             "mobile_no",
             "company_email",
-            # 'unique_code',
+            'unique_code',
         ]
 
 
@@ -112,18 +112,18 @@ class EmployeePayReviewViewSet(viewsets.ModelViewSet):
 class StaffCategoryViewSet(viewsets.ModelViewSet):
     queryset = employee_model.StaffCategory.objects.all()
     serializer_class = serializers.StaffCategorySerializer
-    filterset_fields = ['code', 'name', 'max_number_of_days',]
+    filterset_fields = ['id','code', 'name', 'max_number_of_days',]
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Department.objects.all()
     serializer_class = serializers.DepartmentSerializer
-    filterset_fields = ['code', 'name', 'first_category_code' , 'company_id']
+    filterset_fields = ['id','code', 'name', 'first_category_code' , 'company_id']
 
 
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Unit.objects.all()
     serializer_class = serializers.UnitSerializer
-    filterset_fields = ['code', 'name', 'second_category_code',]
+    filterset_fields = ['id','code', 'name', 'second_category_code',]
 
 
 
@@ -161,3 +161,15 @@ class EmployeeDeductionViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeDeduction.objects.all()
     serializer_class = serializers.EmployeeDeductionSerializer
     filterset_fields = ["id","employee", "employee_name"]
+
+
+class KPIViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.KPI.objects.all()
+    serializer_class = serializers.KPISerializer
+    filterset_fields = "__all__"
+
+
+class EmployeeKRAViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.EmployeeKRA.objects.all()
+    serializer_class = serializers.EmployeeKRASerializer
+    filterset_fields = "__all__"
