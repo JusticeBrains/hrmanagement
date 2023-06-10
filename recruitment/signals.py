@@ -49,5 +49,6 @@ def populate_company_field_requistion(sender, instance, **kwargs):
     post_save.disconnect(populate_company_field_requistion, sender=EmployeeRequisition)
     if instance.department:
         instance.company = instance.department.company
+        instance.company_id = instance.department.company_id
         instance.save()
     post_save.connect(populate_company_field_requistion, sender=EmployeeRequisition)
