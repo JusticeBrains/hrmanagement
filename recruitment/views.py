@@ -26,6 +26,7 @@ class EmployeeRequisitionViewSet(viewsets.ModelViewSet):
         "status",
         "published",
         "company",
+        'company_id',
         "unique_code",
     ]
 
