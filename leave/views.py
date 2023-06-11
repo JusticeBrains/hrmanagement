@@ -39,6 +39,7 @@ class LeaveRequestFilter(PropertyFilterSet):
             'extension_status',
             'company',
             "unique_code",
+            "unpaid_leave",
         ]
 
 
