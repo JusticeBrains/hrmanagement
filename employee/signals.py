@@ -7,10 +7,10 @@ from employee.models import (
     Department,
     EmployeeAppraisal,
     Employee,
-    EmployeeAppraisalDetail,
     EmployeeDeduction,
     EmployeeKRA,
 )
+from django.core.exceptions import ValidationError
 from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -55,10 +55,10 @@ def update_employee_appraisal(sender, instance, **kwargs):
     post_save.connect(update_employee_appraisal, sender=EmployeeAppraisal)
 
 
-@receiver(post_save, sender=EmployeeAppraisalDetail)
+@receiver(post_save, sender=KPI)
 def update_performance_score(sender, instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
-    instance.emp_name = employee.fullname
+    instance.employee_id = employee.f
     instance.emp_code = employee.code
     emp_code = instance.emp_code
 
@@ -67,28 +67,39 @@ def update_performance_score(sender, instance, **kwargs):
     try:
         # Retrieve the corresponding EmployeeAppraisal object
         appraisal = EmployeeAppraisal.objects.filter(
-            employee_code=emp_code, period=active_period
+            emp_id=employee, period=active_period
         ).first()
         if appraisal:
-            # Retrieve the total score from EmployeeAppraisalDetail records
-            total_score = EmployeeAppraisalDetail.objects.filter(
-                emp_code=emp_code, period=active_period
+            # Retrieve the total score from records
+            total_score = KPI.objects.filter(
+                employee_id=employee, period=active_period
             ).aggregate(total_score=Sum("score"))["total_score"]
-            kpi_score = EmployeeAppraisalDetail.objects.filter(
+            total_kpi_scores = KPI.objects.filter(
                 emp_code=emp_code, period=active_period
-            ).aggregate(kpi_score=Sum("total_kpi_scores"))["kpi_score"]
+            ).aggregate(total_kpi_scores=Sum("kpi_score"))["total_kpi_scores"]
 
-            # Update the performance score and total kpi score of the EmployeeAppraisal object
-            appraisal.performance_score = (
-                total_score if total_score is not None else None
-            )
-            appraisal.weighted_score = kpi_score if kpi_score is not None else None
+            kra_total_scores = EmployeeKRA.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
+
+            if total_kpi_scores == kra_total_scores:
+                # Update the performance score and total kpi score of the EmployeeAppraisal object
+                appraisal.performance_score = (
+                    total_score if total_score is not None else None
+                )
+                appraisal.weighted_score = (
+                    total_kpi_scores if total_kpi_scores is not None else None
+                )
+            elif total_kpi_scores != kra_total_scores:
+                raise ValidationError(
+                    f"Sum of Total KPI Scores {total_kpi_scores} Not Equal To Sum of KRA Total Scores {kra_total_scores}"
+                )
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
         return ValueError("Employee Appraisal Doesn't Exist")
-    post_save.disconnect(update_performance_score, sender=EmployeeAppraisalDetail)
+    post_save.disconnect(update_performance_score, sender=KPI)
 
     instance.save(
         update_fields=[
@@ -97,7 +108,7 @@ def update_performance_score(sender, instance, **kwargs):
         ]
     )
 
-    post_save.connect(update_performance_score, sender=EmployeeAppraisalDetail)
+    post_save.connect(update_performance_score, sender=KPI)
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
@@ -182,7 +193,8 @@ def update_kpi_fields(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeKRA)
-def update_kra_fields(sender, instance, created, **kwargs):
+def update_kra_fields(instance, created, **kwargs):
+    post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
     employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.emp_code = employee.code
@@ -190,9 +202,16 @@ def update_kra_fields(sender, instance, created, **kwargs):
         instance.department = instance.department_id.name
         instance.company = employee.company
         instance.company_id = employee.company_id
+        instance.save(
+            update_fields=[
+                "emp_code",
+                "emp_name",
+                "department",
+                "company",
+                "company_id",
+            ]
+        )
 
-    post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
-    instance.save()
     post_save.connect(update_kra_fields, sender=EmployeeKRA)
 
 
