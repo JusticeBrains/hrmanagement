@@ -262,14 +262,6 @@ class EmployeeAppraisal(models.Model):
         _("Percentage Score"), null=True, blank=True, max_length=50
     )
     status = models.PositiveIntegerField(_("Status"), default=0)
-    period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("Period"),
-        on_delete=models.CASCADE,
-        related_name="appraisal_period",
-        null=True,
-        blank=True,
-    )
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
@@ -478,7 +470,7 @@ class EmployeeKRA(models.Model):
     )
     department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.CASCADE, blank=True, null=True)
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
-
+    target = models.CharField(_("Target"), max_length=150, blank=True, null=True)
     class Meta:
         verbose_name = "Employee KRA"
         verbose_name_plural = "Employee KRA's"
