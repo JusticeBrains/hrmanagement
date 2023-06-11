@@ -547,6 +547,17 @@ class EmployeeMedicalClaim(models.Model):
         "company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING
     )
     claim_amount = models.PositiveIntegerField(_("Claim Amount"), blank=True, null=True)
+    claim_reason = models.TextField(_("Claim Reason"), blank=True, null=True)
+    supporting_doc1 = models.TextField(_("Supporting Document 1"), blank=True, null=True)
+    supporting_doc2 = models.TextField(_("Supporting Document 2"), blank=True, null=True)
+    status = models.PositiveIntegerField(_("Status"), blank=True, null=True)
+    validation_status = models.PositiveIntegerField(_("Validation Status"), blank=True, null=True)
+    validated_by = models.CharField(_("Validated By"), max_length=150, blank=True, null=True)
+    validation_date = models.DateField(_("Validation Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    processed_status = models.PositiveIntegerField(_("Processed Status"), blank=True, null=True)
+    processed_by = models.CharField(_("Processed By"), max_length=150, blank=True, null=True)
+    processed_date = models.PositiveIntegerField(_("Processed Date"), blank=True, null=True)
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
     created_at = models.DateTimeField(
         _("Created At"), auto_now=False, auto_now_add=True
     )
