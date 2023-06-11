@@ -11,9 +11,9 @@ router.register(
 )
 # router.register('employeepromotion', employee_views.EmployeePromotionViewSet, basename='employeepromotion')
 router.register(
-    "employeemedical",
+    "employeemedicalclaim",
     employee_views.EmployeeMedicalClaimViewSet,
-    basename="employeemedical",
+    basename="employeemedicalclaim",
 )
 router.register(
     "employeedisciplinaryactions",
