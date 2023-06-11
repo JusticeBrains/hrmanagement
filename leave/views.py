@@ -38,6 +38,7 @@ class LeaveRequestFilter(PropertyFilterSet):
             'status',
             'extension_status',
             'company',
+            "unique_code",
         ]
 
 
@@ -72,6 +73,7 @@ class LeavePlanFilter(PropertyFilterSet):
             'emp_code',
             'status',
             'company',
+            "unique_code",
         ]
 
 
