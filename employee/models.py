@@ -385,19 +385,17 @@ class EmployeeAppraisalDetail(models.Model):
 class KPI(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-
-    kpi_appraisal_area = models.CharField(
+    kpi_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
     )
-    kpi_appraisal_area_description = models.TextField(
-        _("KPI / Appraisal Area Description"), null=True, blank=True
-    )
-    score = models.IntegerField(_("Score"), null=True, blank=True)
-    emp_score = models.IntegerField(_("Employee Score"), blank=True, null=True)
+    supervisor_score = models.DecimalField(_("Supervisor Score in Pecentage %"), max_digits=5, decimal_places=2, blank=True, null=True)
+    emp_score = models.IntegerField(_("Employee Score in Pecentage %"), blank=True, null=True)
     emp_comment = models.CharField(
         _("Employee Comment"), max_length=50, null=True, blank=True
     )
-    narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
+    supervisor_comment = models.CharField(
+        _("Supervisor Comment"), max_length=50, null=True, blank=True
+    )
     employee_id = models.ForeignKey(
         Employee,
         verbose_name=_("Employee"),
@@ -405,23 +403,8 @@ class KPI(models.Model):
         related_name="employee_kpi",
         null=True,
     )
-    emp_code = models.CharField(
-        _("Employee Code"), max_length=150, null=True, blank=True, editable=False
-    )
-    emp_name = models.CharField(
-        _("Employee Name"), max_length=150, null=True, blank=True, editable=False
-    )
-    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
-    status = models.PositiveIntegerField(_("Status"), default=0)
-    due_date = models.DateField(_("Due Date"), blank=True, null=True)
-    department = models.CharField(
-        _("Department"),
-        max_length=150,
-        null=True,
-        blank=True,
-    )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    kpi_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
+    kpi_score = models.DecimalField(_("KPI Score"), max_digits=5, decimal_places=2, blank=True, null=True)
     employee_kra = models.ForeignKey(
         "employee.EmployeeKRA",
         verbose_name=_("Employee KRA"),
@@ -429,24 +412,24 @@ class KPI(models.Model):
         null=True,
         blank=True,
     )
-    percentage_score = models.DecimalField(_("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    score = models.DecimalField(_("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True)
     def clean(self):
         if self.employee_id:
-            self.emp_code = self.employee_id.code
-            self.emp_name = self.employee_id.fullname
             self.company = self.employee_id.company
 
-        if self.score > self.kpi_score:
-            raise ValidationError(
-                f"Score {self.score} cannot be greater than kpi score{self.kpi_score}"
-            )
+        # if self.score > self.kpi_score:
+        #     raise ValidationError(
+        #         f"Score {self.score} cannot be greater than kpi score{self.kpi_score}"
+        #     )
+        # if self.score is not None:
+        #     self.percentage_score = round((self.score / 100)*self.kpi_score, ndigits=2)
 
     class Meta:
         verbose_name = "KPI"
         verbose_name_plural = "KPI's"
 
     def __str__(self):
-        return f"{self.emp_code} - {self.period} - {self.score}"
+        return f"{self.period} - {self.employee_id.fullname}"
 
 
 class EmployeeKRA(models.Model):
@@ -454,7 +437,7 @@ class EmployeeKRA(models.Model):
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
     total_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-    kpis = models.ManyToManyField("employee.KPI", verbose_name=_("KPI"))
+    # kpis = models.ManyToManyField("employee.KPI", verbose_name=_("KPI"))
     employee_id = models.ForeignKey(
         Employee,
         verbose_name=_("Employee"),
@@ -470,37 +453,50 @@ class EmployeeKRA(models.Model):
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
+    status = models.PositiveIntegerField(_("Status"), default=0)
+    due_date = models.DateField(_("Due Date"), blank=True, null=True)
+    department = models.CharField(
+        _("Department"),
+        max_length=150,
+        null=True,
+        blank=True,
+    )
+    narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee KRA"
-        verbose_name_plural = "Employee KRAs"
+        verbose_name_plural = "Employee KRA's"
+    
+    def __str__(self):
+        return f"{self.name} - {self.period}"
 
-    def clean(self) -> None:
-        kpi_scores_sum = self.kpis.aggregate(sum_scores=models.Sum("kpi_scores"))[
-            "sum_scores"
-        ]
+    # def clean(self) -> None:
+    #     kpi_scores_sum = self.kpis.aggregate(sum_scores=models.Sum("kpi_scores"))[
+    #         "sum_scores"
+    #     ]
 
-        if kpi_scores_sum != self.total_score:
-            raise ValidationError(
-                f"Sum Of Total KPI Scores not equal to KRA Total Score"
-            )
+    #     if kpi_scores_sum != self.total_score:
+    #         raise ValidationError(
+    #             f"Sum Of Total KPI Scores not equal to KRA Total Score"
+    #         )
 
-    def create_kpis(
-        self,
-        # kpi_appraisal_area,
-        # kpi_appraisal_area_description,
-        kpi_score,
-        employee_id,
+    # def create_kpis(
+    #     self,
+    #     # kpi_appraisal_area,
+    #     # kpi_appraisal_area_description,
+    #     kpi_score,
+    #     employee_id,
 
-    ):
-        kpi_item = KPI.objects.create(
-            employee_kra=self,
-            # kpi_appraisal_area=kpi_appraisal_area,
-            # kpi_appraisal_area_description=kpi_appraisal_area_description,
-            employee_id=employee_id,
-            kpi_score=kpi_score,
-        )
-        return kpi_item
+    # ):
+    #     kpi_item = KPI.objects.create(
+    #         employee_kra=self,
+    #         # kpi_appraisal_area=kpi_appraisal_area,
+    #         # kpi_appraisal_area_description=kpi_appraisal_area_description,
+    #         employee_id=employee_id,
+    #         kpi_score=kpi_score,
+    #     )
+    #     return kpi_item
 
 
 # class EmployeePromotion(models.Model):

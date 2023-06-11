@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from django.db.models import Sum
-from employee.models import AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail, EmployeeDeduction
+from employee.models import KPI, AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail, EmployeeDeduction, EmployeeKRA
 from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -140,6 +140,35 @@ def populate_appraisal_employee_grading(sender, instance, **kwargs):
     post_save.connect(populate_appraisal_employee_grading, sender=AppraisalGrading)
 
 
+@receiver(post_save, sender=KPI)
+def update_kpi_fields(sender, instance, created, **kwargs):
+    employee= Employee.objects.get(id=instance.employee_id.id)
+    if created:
+        instance.company = employee.company
+
+        if instance.score is not None:
+            instance.score = round((instance.supervisor_score / 100) * instance.kpi_score, ndigits=2)
+    post_save.disconnect(update_kpi_fields, sender=KPI)
+    instance.save()
+    post_save.connect(update_kpi_fields, sender=KPI)
+
+
+@receiver(post_save, sender=EmployeeKRA)
+def update_kra_fields(sender, instance, created, **kwargs):
+    employee= Employee.objects.get(id=instance.employee_id.id)
+    if created:
+        instance.emp_code = employee.code
+        instance.emp_name = employee.fullname
+        instance.department = employee.second_category_level
+        instance.company = employee.company
+
+
+        post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
+        instance.save()
+        post_save.connect(update_kra_fields, sender=EmployeeKRA)
+
+
+
 # @receiver(post_save, sender=PayGroup)
 # def update_employee_leave_days(sender, instance,created, **kwargs):
 #     post_save.disconnect(update_employee_leave_days, sender=PayGroup)
@@ -155,3 +184,4 @@ def populate_appraisal_employee_grading(sender, instance, **kwargs):
 #         #     employee.save()
 
 #         post_save.connect(update_employee_leave_days, sender=PayGroup)
+

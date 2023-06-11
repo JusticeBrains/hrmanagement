@@ -24,8 +24,15 @@ class EmployeeDeductionAdmin(admin.ModelAdmin):
     search_fields = ["employee_name", "no_of_days"]
 @admin.register(emodels.EmployeeKRA)
 class EmployeeKRAAdmin(admin.ModelAdmin):
-    list_display = ['name', 'total_score', 'company','kpis']
     list_display = ['name', 'total_score', 'company',]
+    search_fields = ['name', 'total_score', 'company',]
+
+
+@admin.register(emodels.KPI)
+class KPIAdmin(admin.ModelAdmin):
+    list_display = ['employee_id', 'employee_kra', 'company',]
+    search_fields = ['employee_id', 'employee_kra', 'company',] 
+
 
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
@@ -34,4 +41,3 @@ admin.site.register(emodels.Department)
 admin.site.register(emodels.Notch)
 admin.site.register(emodels.AppraisalGrading)
 admin.site.register(emodels.EmployeeAppraisal)
-admin.site.register(emodels.KPI)

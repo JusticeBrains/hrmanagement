@@ -138,10 +138,11 @@ class KPIValidator:
 
 
 class KPISerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = employee_model.KPI
-        fields = ["score", "employee_id", "kpi_score"]
-        validators = [KPIValidator()]
+        fields = "__all__"
+        # validators = [KPIValidator()]
 
 
 class EmployeeKRAValidator:
@@ -157,44 +158,44 @@ class EmployeeKRAValidator:
 
 
 class EmployeeKRASerializer(serializers.ModelSerializer):
-    kpis = KPISerializer(many=True, write_only=True)
+    # kpis = KPISerializer(many=True, write_only=True)
 
     class Meta:
         model = employee_model.EmployeeKRA
         fields = "__all__"
-        validators = [EmployeeKRAValidator()]
+        # validators = [EmployeeKRAValidator()]
 
-    def create(self, validated_data):
-        kpis_data = validated_data.pop("kpis")
-        kpi = employee_model.EmployeeKRA.objects.create(**validated_data)
-        for kpi_data in kpis_data:
-            # employee_kra=self.id
-            # kpi_appraisal_area = kpi_data["kpi_appraisal_area"]
-            # kpi_appraisal_area_description = kpi_data["kpi_appraisal_area_description"]
-            # score = kpi_data["score"]
-            # emp_comment = kpi_data["emp_comment"]
-            employee_id = kpi_data["employee_id"]
-            # emp_code = kpi_data["emp_code"]
-            # emp_name = kpi_data["emp_name"]
-            # appraiser = kpi_data["appraiser"]
-            # status = kpi_data["status"]
-            # due_date = kpi_data["due_date"]
-            # department = kpi_data["department"]
-            # company = kpi_data["company"]
-            kpi_score = kpi_data["kpi_score"]
-            kpi.create_kpis(
-                # kpi_appraisal_area,
-                # kpi_appraisal_area_description,
-                kpi_score,
-                # score,
-                # emp_comment,
-                employee_id,
-                # emp_code,
-                # emp_name,
-                # appraiser,
-                # status,
-                # due_date,
-                # department,
-                # company,
-            )
-        return kpi
+    # def create(self, validated_data):
+    #     kpis_data = validated_data.pop("kpis")
+    #     kpi = employee_model.EmployeeKRA.objects.create(**validated_data)
+    #     for kpi_data in kpis_data:
+    #         # employee_kra=self.id
+    #         # kpi_appraisal_area = kpi_data["kpi_appraisal_area"]
+    #         # kpi_appraisal_area_description = kpi_data["kpi_appraisal_area_description"]
+    #         # score = kpi_data["score"]
+    #         # emp_comment = kpi_data["emp_comment"]
+    #         employee_id = kpi_data["employee_id"]
+    #         # emp_code = kpi_data["emp_code"]
+    #         # emp_name = kpi_data["emp_name"]
+    #         # appraiser = kpi_data["appraiser"]
+    #         # status = kpi_data["status"]
+    #         # due_date = kpi_data["due_date"]
+    #         # department = kpi_data["department"]
+    #         # company = kpi_data["company"]
+    #         kpi_score = kpi_data["kpi_score"]
+    #         kpi.create_kpis(
+    #             # kpi_appraisal_area,
+    #             # kpi_appraisal_area_description,
+    #             kpi_score,
+    #             # score,
+    #             # emp_comment,
+    #             employee_id,
+    #             # emp_code,
+    #             # emp_name,
+    #             # appraiser,
+    #             # status,
+    #             # due_date,
+    #             # department,
+    #             # company,
+    #         )
+    #     return kpi
