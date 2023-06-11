@@ -142,6 +142,7 @@ class LeaveRequest(LeaveBase):
     extension_reason = models.CharField(
         _("Extension Reason"), max_length=250, null=True, blank=True
     )
+    unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), blank=True, null=True)
 
     @property
     def end_date(self):
