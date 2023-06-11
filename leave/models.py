@@ -298,6 +298,7 @@ class LeaveType(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
+    unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), blank=True, null=True)
 
     # def calculate_max_days(self, employee):
     #     if self.name == "Medical":
