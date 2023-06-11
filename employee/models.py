@@ -1,8 +1,6 @@
 import uuid
 from options.text_options import (
     ReviewType,
-    EmployeeType,
-    MEDICALLIMITTYPE,
     OffenseType,
     RecommendedAction,
 )

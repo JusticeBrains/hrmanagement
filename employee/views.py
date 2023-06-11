@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from django_property_filter import (
     PropertyFilterSet,
     PropertyNumberFilter,
