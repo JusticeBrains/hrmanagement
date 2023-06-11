@@ -60,7 +60,7 @@ class Employee(models.Model):
         _("First Category Level"), max_length=250, blank=True, null=True
     )
     second_category_level = models.CharField(
-        _("Second Category Level"), max_length=250, blank=True, null=True
+        _("Department"), max_length=250, blank=True, null=True
     )
     third_category_level = models.CharField(
         _("Third Category Level"), max_length=250, blank=True, null=True
@@ -412,6 +412,7 @@ class KPI(models.Model):
         null=True,
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
     kpi_score = models.DecimalField(
         _("KPI Score"), max_digits=5, decimal_places=2, blank=True, null=True
     )
@@ -450,7 +451,6 @@ class EmployeeKRA(models.Model):
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
     total_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-    # kpis = models.ManyToManyField("employee.KPI", verbose_name=_("KPI"))
     employee_id = models.ForeignKey(
         Employee,
         verbose_name=_("Employee"),
@@ -466,6 +466,7 @@ class EmployeeKRA(models.Model):
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
@@ -475,6 +476,7 @@ class EmployeeKRA(models.Model):
         null=True,
         blank=True,
     )
+    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.CASCADE, blank=True, null=True)
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
 
     class Meta:

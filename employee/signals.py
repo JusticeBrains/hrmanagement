@@ -170,6 +170,7 @@ def update_kpi_fields(sender, instance, created, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.company = employee.company
+        instance.company_id = employee.company_id
 
         if instance.score is not None:
             instance.score = round(
@@ -186,12 +187,13 @@ def update_kra_fields(sender, instance, created, **kwargs):
     if created:
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
-        instance.department = employee.second_category_level
+        instance.department = instance.department_id.name
         instance.company = employee.company
+        instance.company_id = employee.company_id
 
-        post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
-        instance.save()
-        post_save.connect(update_kra_fields, sender=EmployeeKRA)
+    post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
+    instance.save()
+    post_save.connect(update_kra_fields, sender=EmployeeKRA)
 
 
 # @receiver(post_save, sender=PayGroup)
