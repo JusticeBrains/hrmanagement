@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 
@@ -13,7 +12,7 @@ class UserViewset(viewsets.ModelViewSet):
     filterset_fields = [
         "id",
         "username",
-        "assigned_Area",
+        "assigned_area",
         "email",
         "first_name",
         "last_name",
@@ -22,9 +21,11 @@ class UserViewset(viewsets.ModelViewSet):
         "is_active",
         "is_super_hr",
         "is_admin",
-        'company',
+        "company",
         "staff_category",
         "employee_level",
         "emp_code",
-        "is_verified"
+        "is_verified",
+        "unique_code",
+        "is_accountant",
     ]
