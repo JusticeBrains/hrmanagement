@@ -58,7 +58,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Unique Code"), max_length=50, null=True, blank=True
     )
     is_accountant = models.PositiveIntegerField(
-        _("Is Accountant"), blank=True, null=True
+        _("Is Accountant"), blank=True, null=True, default=0
     )
 
     USERNAME_FIELD = "username"

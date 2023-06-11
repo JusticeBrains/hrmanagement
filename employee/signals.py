@@ -9,6 +9,7 @@ from employee.models import (
     Employee,
     EmployeeDeduction,
     EmployeeKRA,
+    EmployeeMedicalClaim,
 )
 from django.core.exceptions import ValidationError
 from company.models import Company
@@ -36,7 +37,7 @@ def send_birthday_reminder(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
-def update_employee_appraisal(sender, instance, **kwargs):
+def update_employee_appraisal(instance, **kwargs):
     employee = Employee.objects.get(id=instance.emp_id.id)
     instance.emp_name = employee.fullname
     instance.employee_code = employee.code
@@ -56,7 +57,7 @@ def update_employee_appraisal(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=KPI)
-def update_performance_score(sender, instance, **kwargs):
+def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
     instance.employee_id = employee.f
     instance.emp_code = employee.code
@@ -112,7 +113,7 @@ def update_performance_score(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
-def update_grade(sender, instance, **kwargs):
+def update_grade(instance, **kwargs):
     post_save.disconnect(update_grade, sender=EmployeeAppraisal)
     grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
     if grading:
@@ -129,7 +130,7 @@ def update_grade(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Department)
-def populate_company_field_department(sender, instance, **kwargs):
+def populate_company_field_department(instance, **kwargs):
     """
     Populate company field with company name from the job application
     """
@@ -142,7 +143,7 @@ def populate_company_field_department(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeDeduction)
-def leave_days_deduction(sender, instance, **kwargs):
+def leave_days_deduction(instance, **kwargs):
     """
     Deduct leave days from employee
     """
@@ -165,7 +166,7 @@ def leave_days_deduction(sender, instance, **kwargs):
     post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
 
-def populate_appraisal_employee_grading(sender, instance, **kwargs):
+def populate_appraisal_employee_grading(instance, **kwargs):
     """
     Populate employee grading from appraisal grading
     """
@@ -177,7 +178,7 @@ def populate_appraisal_employee_grading(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=KPI)
-def update_kpi_fields(sender, instance, created, **kwargs):
+def update_kpi_fields(instance, created, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.company = employee.company
@@ -213,6 +214,18 @@ def update_kra_fields(instance, created, **kwargs):
         )
 
     post_save.connect(update_kra_fields, sender=EmployeeKRA)
+
+
+@receiver(post_save, sender=EmployeeMedicalClaim)
+def update_medical_claim(instance, created, **kwargs):
+    post_save.disconnect(update_medical_claim, sender=EmployeeMedicalClaim)
+    if created:
+        employee = Employee.objects.get(id=instance.employee_id.id)
+        instance.emp_name = employee.fullname
+        instance.department = instance.department_id.name
+        instance.company = instance.company_id.name
+        instance.save()
+    post_save.connect(update_medical_claim, sender=EmployeeMedicalClaim)
 
 
 # @receiver(post_save, sender=PayGroup)

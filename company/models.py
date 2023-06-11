@@ -295,7 +295,6 @@ class Job(models.Model):
         return f"{self.job_code}"
 
 
-
 class HRNeeds(models.Model):
     header_no = models.CharField(_("Header No."), max_length=50)
     line_no = models.PositiveIntegerField(_("Line No."))
