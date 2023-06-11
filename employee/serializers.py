@@ -30,9 +30,9 @@ class EmployeeAppraisalSerializer(serializers.ModelSerializer):
 #         fields = "__all__"
 
 
-class EmployeeMedicalSerializer(serializers.ModelSerializer):
+class EmployeeMedicalClaimSerializer(serializers.ModelSerializer):
     class Meta:
-        model = employee_model.EmployeeMedicals
+        model = employee_model.EmployeeMedicalClaim
         fields = "__all__"
 
 
@@ -103,12 +103,6 @@ class AppraisalGradingSerializer(serializers.ModelSerializer):
             "company",
             "company_id",
         ]
-
-
-class EmployeeAppraisalDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.EmployeeAppraisalDetail
-        fields = "__all__"
 
 
 class PayGroupSerializer(serializers.ModelSerializer):

@@ -318,62 +318,6 @@ class AppraisalGrading(models.Model):
         self.company = self.company_id.name
 
 
-class EmployeeAppraisalDetail(models.Model):
-    emp_code = models.CharField(
-        _("Employee Code"), max_length=150, null=True, blank=True, editable=False
-    )
-    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-
-    kpi_appraisal_area = models.CharField(
-        _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
-    )
-    kpi_appraisal_area_description = models.TextField(
-        _("KPI / Appraisal Area Description"), null=True, blank=True
-    )
-    score = models.IntegerField(_("Score"), null=True, blank=True)
-    emp_score = models.IntegerField(_("Employee Score"), blank=True, null=True)
-    emp_comment = models.CharField(
-        _("Employee Comment"), max_length=50, null=True, blank=True
-    )
-    narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
-    employee_id = models.ForeignKey(
-        Employee,
-        verbose_name=_("Employee"),
-        on_delete=models.CASCADE,
-        related_name="employee_appraisal_id",
-        null=True,
-    )
-    emp_name = models.CharField(
-        _("Employee Name"), max_length=150, null=True, blank=True, editable=False
-    )
-    appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
-    status = models.PositiveIntegerField(_("Status"), default=0)
-    due_date = models.DateField(_("Due Date"), blank=True, null=True)
-    department = models.CharField(
-        _("Department"),
-        max_length=150,
-        null=True,
-        blank=True,
-    )
-    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    total_kpi_scores = models.PositiveIntegerField(
-        _("Total Score"), blank=True, null=True
-    )
-
-    def clean(self):
-        if self.employee_id:
-            self.emp_code = self.employee_id.code
-            self.emp_name = self.employee_id.fullname
-            self.company = self.employee_id.company
-
-    class Meta:
-        verbose_name = "Employee Appraisal Detail"
-        verbose_name_plural = "Employee Appraisal Details"
-
-    def __str__(self):
-        return f"{self.emp_code} - {self.period} - {self.score}"
-
-
 class KPI(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
@@ -404,7 +348,9 @@ class KPI(models.Model):
         null=True,
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
+    company_id = models.CharField(
+        _("Company ID"), max_length=150, null=True, blank=True
+    )
     kpi_score = models.DecimalField(
         _("KPI Score"), max_digits=5, decimal_places=2, blank=True, null=True
     )
@@ -458,7 +404,9 @@ class EmployeeKRA(models.Model):
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
+    company_id = models.CharField(
+        _("Company ID"), max_length=150, null=True, blank=True
+    )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
     due_date = models.DateField(_("Due Date"), blank=True, null=True)
@@ -468,9 +416,16 @@ class EmployeeKRA(models.Model):
         null=True,
         blank=True,
     )
-    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.CASCADE, blank=True, null=True)
+    department_id = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
     target = models.CharField(_("Target"), max_length=150, blank=True, null=True)
+
     class Meta:
         verbose_name = "Employee KRA"
         verbose_name_plural = "Employee KRA's"
@@ -569,50 +524,41 @@ class EmployeeKRA(models.Model):
 #         return f"{self.emp_name}, {self.current_job_title}, {self.new_job_title}"
 
 
-class EmployeeMedicals(models.Model):
-    medical_type = models.ForeignKey(
-        "company.MedicalCodes",
-        verbose_name=_("Medical Type"),
-        on_delete=models.CASCADE,
+class EmployeeMedicalClaim(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    employee_id = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee ID"),
+        on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
     )
-    emp_type = models.CharField(
-        _("Employee Type"), choices=EmployeeType.choices, max_length=50
+    emp_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
     )
-    emp_name = models.ForeignKey(
-        "employee.Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE
+    department = models.CharField(
+        _("Department"), max_length=150, blank=True, null=True
     )
-    department = models.ForeignKey(
-        "company.Department", verbose_name=_("Department"), on_delete=models.CASCADE
+    department_id = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department ID"),
+        on_delete=models.DO_NOTHING,
     )
-    division_code = models.CharField(_("Division Code"), max_length=50)
-    facility_code = models.CharField(_("Facility Code"), max_length=50)
-    facility_name = models.CharField(_("Facility Name"), max_length=50)
-    policy_code = models.CharField(_("Policy Code"), max_length=50)
-    policy_description = models.CharField(_("Policy Description"), max_length=50)
-    limit_type = models.CharField(
-        _("Limit Type"), choices=MEDICALLIMITTYPE.choices, max_length=50
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey(
+        "company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING
     )
-    medical_limit = models.DecimalField(
-        _("Medical Limit"), max_digits=5, decimal_places=2
-    )
-    amount = models.DecimalField(_("Amount"), max_digits=5, decimal_places=2)
-    claim_date = models.DateField(_("Claim Date"), auto_now=False, auto_now_add=False)
-    comments = models.CharField(_("Comments"), max_length=150)
-    dependant = models.BooleanField(_("Dependant"))
-    dependant_name = models.CharField(_("Department Name"), max_length=50)
-    dependant_code = models.CharField(_("Dependant Code"), max_length=50)
-    transaction_date = models.DateField(
-        _("Transaction Date"), auto_now=False, auto_now_add=False
+    claim_amount = models.PositiveIntegerField(_("Claim Amount"), blank=True, null=True)
+    created_at = models.DateTimeField(
+        _("Created At"), auto_now=False, auto_now_add=True
     )
 
     class Meta:
-        verbose_name = "Employee Medicals"
-        verbose_name_plural = "Employee Medicals"
+        verbose_name = "Employee Medical Claim"
+        verbose_name_plural = "Employee Medical Claims"
 
-    def __str__(self) -> str:
-        return f"{self.medical_type}, {self.emp_name}"
+    def __str__(self):
+        return f"{self.emp_name} - {self.claim_amount} - {self.created_at}"
 
 
 class EmployeeDisciplinaryActions(models.Model):

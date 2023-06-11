@@ -55,7 +55,7 @@ class EmployeeFilterSet(PropertyFilterSet):
             "company_id",
             "mobile_no",
             "company_email",
-            'unique_code',
+            "unique_code",
         ]
 
 
@@ -64,10 +64,22 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EmployeeSerializer
     filterset_class = EmployeeFilterSet
 
+
 class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeAppraisal.objects.all()
     serializer_class = serializers.EmployeeAppraisalSerializer
-    filterset_fields = ["id","emp_name", 'employee_code', "job_title", "appraiser", "department", "grade", "performance_score", "percentage_score", "period"]
+    filterset_fields = [
+        "id",
+        "emp_name",
+        "employee_code",
+        "job_title",
+        "appraiser",
+        "department",
+        "grade",
+        "performance_score",
+        "percentage_score",
+        "period",
+    ]
 
 
 # class SelfAppraisalResponseViewSet(viewsets.ModelViewSet):
@@ -80,9 +92,9 @@ class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
 #     serializer_class = serializers.EmployeePromotionSerializer
 
 
-class EmployeeMedicalViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeeMedicals.objects.all()
-    serializer_class = serializers.EmployeeMedicalSerializer
+class EmployeeMedicalClaimViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.EmployeeMedicalClaim.objects.all()
+    serializer_class = serializers.EmployeeMedicalClaimSerializer
     filterset_fields = "__all__"
 
 
@@ -112,26 +124,39 @@ class EmployeePayReviewViewSet(viewsets.ModelViewSet):
 class StaffCategoryViewSet(viewsets.ModelViewSet):
     queryset = employee_model.StaffCategory.objects.all()
     serializer_class = serializers.StaffCategorySerializer
-    filterset_fields = ['id','code', 'name', 'max_number_of_days',]
+    filterset_fields = [
+        "id",
+        "code",
+        "name",
+        "max_number_of_days",
+    ]
+
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Department.objects.all()
     serializer_class = serializers.DepartmentSerializer
-    filterset_fields = ['id','code', 'name', 'first_category_code' , 'company_id']
+    filterset_fields = ["id", "code", "name", "first_category_code", "company_id"]
 
 
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Unit.objects.all()
     serializer_class = serializers.UnitSerializer
-    filterset_fields = ['id','code', 'name', 'second_category_code',]
-
+    filterset_fields = [
+        "id",
+        "code",
+        "name",
+        "second_category_code",
+    ]
 
 
 class BranchViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Branch.objects.all()
     serializer_class = serializers.BranchSerializer
-    filterset_fields = ['code', 'name', 'third_category_code',]
-
+    filterset_fields = [
+        "code",
+        "name",
+        "third_category_code",
+    ]
 
 
 class NotchViewSet(viewsets.ModelViewSet):
@@ -139,16 +164,14 @@ class NotchViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.NotchesSerializer
 
 
-class EmployeeAppraisalDetailViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeeAppraisalDetail.objects.all()
-    serializer_class = serializers.EmployeeAppraisalDetailSerializer
-    filterset_fields = ["id","emp_code", "period", "score",'kpi_appraisal_area', 'employee_id', 'department']
-
-
 class AppraisalGradingViewSet(viewsets.ModelViewSet):
     queryset = employee_model.AppraisalGrading.objects.all()
     serializer_class = serializers.AppraisalGradingSerializer
-    filterset_fields = ['id', 'grade', 'recommendation',]
+    filterset_fields = [
+        "id",
+        "grade",
+        "recommendation",
+    ]
 
 
 class PayGroupViewSet(viewsets.ModelViewSet):
@@ -160,7 +183,7 @@ class PayGroupViewSet(viewsets.ModelViewSet):
 class EmployeeDeductionViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeDeduction.objects.all()
     serializer_class = serializers.EmployeeDeductionSerializer
-    filterset_fields = ["id","employee", "employee_name"]
+    filterset_fields = ["id", "employee", "employee_name"]
 
 
 class KPIViewSet(viewsets.ModelViewSet):
