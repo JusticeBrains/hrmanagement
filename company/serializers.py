@@ -74,31 +74,6 @@ class JobSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MinimumQualificationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.MinimumQualification
-        fields = "__all__"
-
-
-class ApplicationPoolSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.ApplicationPool
-        fields = "__all__"
-
-
-class ApplicationReferencesSeriailizer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.ApplicationReferences
-        fields = "__all__"
-
-
-class ApplicationQESerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.ApplicationQE
-        fields = "__all__"
-
-
-
 class HRNeedsLineSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.HRNeedsLine

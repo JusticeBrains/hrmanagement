@@ -6,19 +6,13 @@ from options.text_options import (
     OffenseType,
     RecommendedAction,
 )
-from django.db import connection
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-import uuid
 from django.utils import timezone
 from django.contrib.postgres.fields import IntegerRangeField
-from django.core.exceptions import ValidationError
 
 User = get_user_model()
-
-
-from django.db import models
 
 
 class Employee(models.Model):
@@ -179,9 +173,15 @@ class Employee(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
-    medical_claim_amount_left = models.PositiveIntegerField(_("Medical Claim Amount Left"), blank=True, null=True)
-    used_medical_claim_amount = models.PositiveIntegerField(_("Used Medical Claim Amoun"), null=True, blank=True)
-    total_medical_claim_amount = models.PositiveIntegerField(_("Total Medical Claim"), null=True, blank=True)
+    medical_claim_amount_left = models.PositiveIntegerField(
+        _("Medical Claim Amount Left"), blank=True, null=True
+    )
+    used_medical_claim_amount = models.PositiveIntegerField(
+        _("Used Medical Claim Amoun"), null=True, blank=True
+    )
+    total_medical_claim_amount = models.PositiveIntegerField(
+        _("Total Medical Claim"), null=True, blank=True
+    )
 
     class Meta:
         unique_together = ("code", "company")
@@ -388,8 +388,16 @@ class KPI(models.Model):
     kpi_area = models.CharField(
         _("KPI/Appraisal Areas"), max_length=250, blank=True, null=True
     )
-    supervisor_score = models.DecimalField(_("Supervisor Score in Pecentage %"), max_digits=5, decimal_places=2, blank=True, null=True)
-    emp_score = models.IntegerField(_("Employee Score in Pecentage %"), blank=True, null=True)
+    supervisor_score = models.DecimalField(
+        _("Supervisor Score in Pecentage %"),
+        max_digits=5,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    emp_score = models.IntegerField(
+        _("Employee Score in Pecentage %"), blank=True, null=True
+    )
     emp_comment = models.CharField(
         _("Employee Comment"), max_length=50, null=True, blank=True
     )
@@ -404,7 +412,9 @@ class KPI(models.Model):
         null=True,
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    kpi_score = models.DecimalField(_("KPI Score"), max_digits=5, decimal_places=2, blank=True, null=True)
+    kpi_score = models.DecimalField(
+        _("KPI Score"), max_digits=5, decimal_places=2, blank=True, null=True
+    )
     employee_kra = models.ForeignKey(
         "employee.EmployeeKRA",
         verbose_name=_("Employee KRA"),
@@ -412,7 +422,10 @@ class KPI(models.Model):
         null=True,
         blank=True,
     )
-    score = models.DecimalField(_("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    score = models.DecimalField(
+        _("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True
+    )
+
     def clean(self):
         if self.employee_id:
             self.company = self.employee_id.company
@@ -433,7 +446,7 @@ class KPI(models.Model):
 
 
 class EmployeeKRA(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False,default=uuid.uuid4)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
     total_score = models.PositiveIntegerField(_("Total Score"), blank=True, null=True)
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
@@ -467,7 +480,7 @@ class EmployeeKRA(models.Model):
     class Meta:
         verbose_name = "Employee KRA"
         verbose_name_plural = "Employee KRA's"
-    
+
     def __str__(self):
         return f"{self.name} - {self.period}"
 
@@ -885,7 +898,9 @@ class PayGroup(models.Model):
     total_number_of_leave_days = models.PositiveIntegerField(
         _("Total Number Of Leave Days"), blank=True, null=True
     )
-    total_medical_claim_amount = models.PositiveIntegerField(_("Medical Claim Amount"), null=True, blank=True)
+    total_medical_claim_amount = models.PositiveIntegerField(
+        _("Medical Claim Amount"), null=True, blank=True
+    )
     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
     comp_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
 

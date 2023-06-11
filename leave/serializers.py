@@ -1,20 +1,13 @@
-from datetime import date, datetime, timedelta, time
-from django.forms import ValidationError
+from datetime import datetime, timedelta
 from rest_framework import serializers
-from django_property_filter import PropertyDateFilter
-from django.utils import timezone
 
-from .models import (
-    HolidayCalender,
-    LeaveType,
-    LeaveRequest,
-    LeavePlan
-)
+from .models import HolidayCalender, LeaveType, LeaveRequest, LeavePlan
+
 
 class DateOnlyField(serializers.ReadOnlyField):
     def to_representation(self, value):
-        return value.strftime('%Y-%m-%d')
-    
+        return value.strftime("%Y-%m-%d")
+
 
 class LeaveRequestSerializer(serializers.ModelSerializer):
     start_date = serializers.CharField(required=False)
@@ -23,9 +16,6 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
     extension_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
     no_of_extension_days = serializers.IntegerField(required=False)
-
-
-
 
     @property
     def get_end_date(self, obj):
@@ -41,8 +31,6 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             days_added += 1
         print(type(start_date))
         return start_date
-    
-
 
     @property
     def get_extension_date(self, obj):
@@ -59,7 +47,7 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             days_added += 1
         print(type(start_date))
         return start_date
-    
+
     @property
     def get_resumption_date(self, obj):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
@@ -67,15 +55,12 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
         resumption_date = calculated_resumption_date
         while resumption_date in holidays or resumption_date.weekday() >= 5:
             resumption_date += timedelta(days=1)
-      
-        return resumption_date
 
+        return resumption_date
 
     class Meta:
         model = LeaveRequest
         fields = "__all__"
-
-
 
 
 class LeavePlanSerializer(serializers.ModelSerializer):
@@ -83,7 +68,6 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     end_date = serializers.ReadOnlyField()
     resumption_date = serializers.ReadOnlyField()
     no_of_days_requested = serializers.IntegerField(required=False)
-
 
     @property
     def get_end_date(self, obj):
@@ -99,7 +83,7 @@ class LeavePlanSerializer(serializers.ModelSerializer):
             days_added += 1
         print(type(start_date))
         return start_date
-    
+
     @property
     def get_resumption_date(self, obj):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
@@ -107,9 +91,8 @@ class LeavePlanSerializer(serializers.ModelSerializer):
         resumption_date = calculated_resumption_date
         while resumption_date in holidays or resumption_date.weekday() >= 5:
             resumption_date += timedelta(days=1)
-      
+
         return resumption_date
-    
 
     # def get_plan_days_left(self, obj):
     #     employee = obj.employee
@@ -124,11 +107,11 @@ class LeavePlanSerializer(serializers.ModelSerializer):
     #     if data['employee'].plan_days_left is not None:
     #         if data['no_of_days_requested'] > data['employee'].plan_days_left:
     #             raise ValidationError("Number of planned days exceed maximum days left")
-            
-    #     return data   
+
+    #     return data
     # start_date = serializers.DateField()
     # end_date = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = LeavePlan
         fields = "__all__"
@@ -152,8 +135,8 @@ class LeaveTypeSerializer(serializers.ModelSerializer):
         model = LeaveType
         fields = "__all__"
 
+
 class HolidayCalenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = HolidayCalender
         fields = "__all__"
-

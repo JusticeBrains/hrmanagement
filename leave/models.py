@@ -1,14 +1,10 @@
-from django.db import connection, models
-from django.forms import ValidationError
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 import uuid
-from datetime import datetime, timedelta, date
-from employee.models import Employee
+from datetime import datetime, timedelta
 from django.utils import timezone
 
-from options import text_options
-from django.utils import timezone
 
 User = get_user_model()
 
@@ -16,13 +12,15 @@ User = get_user_model()
 class HolidayCalender(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=80)
-    holiday_date = models.DateField(_("Holiday Date"), auto_now=False, auto_now_add=False)
+    holiday_date = models.DateField(
+        _("Holiday Date"), auto_now=False, auto_now_add=False
+    )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Holiday Calender"
         verbose_name_plural = "Holiday Calenders"
-    
+
     def __str__(self):
         return f"{self.name} - {self.holiday_date}"
 
@@ -59,10 +57,14 @@ class LeaveBase(models.Model):
     relieving_officer_name = models.CharField(
         _("Relieving Officer Name"), max_length=250, null=True, blank=True
     )
-    hod_remarks_date = models.CharField(_("HOD Remarks Date"), blank=True, null=True, max_length=50)
+    hod_remarks_date = models.CharField(
+        _("HOD Remarks Date"), blank=True, null=True, max_length=50
+    )
     hr_status = models.PositiveIntegerField(_("HR Status"), blank=True, null=True)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
-    hr_remarks_date = models.CharField(_("HR Remarks Date"), blank=True, null=True, max_length=50)
+    hr_remarks_date = models.CharField(
+        _("HR Remarks Date"), blank=True, null=True, max_length=50
+    )
     employee = models.ForeignKey(
         "employee.Employee",
         verbose_name=_("Employee"),
@@ -81,29 +83,65 @@ class LeaveBase(models.Model):
     emp_code = models.CharField(
         _("Employee Code"), max_length=50, null=True, blank=True
     )
-    leave_reason = models.CharField(_("Leave Reason"), max_length=250, blank=True, null=True)
-    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, null=True, blank=True)
+    leave_reason = models.CharField(
+        _("Leave Reason"), max_length=250, blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     resumption_date = models.DateField(_("Resumption Date"), null=True, blank=True)
-    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
+    unique_code = models.CharField(
+        _("Unique Code"), max_length=50, null=True, blank=True
+    )
 
     class Meta:
         abstract = True
 
 
 class LeaveRequest(LeaveBase):
-    is_extend = models.PositiveIntegerField(_("Requestion for Extension"), blank=True, null=True,default=0)
-    no_of_extension_days = models.PositiveIntegerField(_("No Of Extension Days"), blank=True, null=True)
-    hr_extension_status = models.PositiveIntegerField(_("HR Extension Status"), blank=True, null=True, default=0)
-    hod_extension_status = models.PositiveIntegerField(_("HOD Extension Status"), blank=True, null=True, default=0)
-    date_of_extension = models.CharField(_("Date of Extension"), null=True, blank=True, max_length=250)
-    hod_extension_date = models.CharField(_("HOD Extension Date"), null=True, blank=True, max_length=250)
-    hr_extension_date = models.CharField(_("HR Extension Date"), null=True, blank=True, max_length=250)
-    hod_extension_remarks = models.CharField(_("HOD Extension Remarks"), max_length=250, blank=True, null=True)
-    hr_extension_remarks = models.CharField(_("HR Extension Remarks"), max_length=250, blank=True, null=True)
-    total_number_of_leave_days = models.PositiveIntegerField(_("Total Number Of Leave Days"), null=True, blank=True)
-    hod_extension_status = models.PositiveIntegerField(_("HOO Extension Status"), null=True, blank=True)
-    extension_status = models.PositiveIntegerField(_("Extension Status"),default=0, null=True, blank=True)
-    extension_reason = models.CharField(_("Extension Reason"), max_length=250, null=True, blank=True)
+    is_extend = models.PositiveIntegerField(
+        _("Requestion for Extension"), blank=True, null=True, default=0
+    )
+    no_of_extension_days = models.PositiveIntegerField(
+        _("No Of Extension Days"), blank=True, null=True
+    )
+    hr_extension_status = models.PositiveIntegerField(
+        _("HR Extension Status"), blank=True, null=True, default=0
+    )
+    hod_extension_status = models.PositiveIntegerField(
+        _("HOD Extension Status"), blank=True, null=True, default=0
+    )
+    date_of_extension = models.CharField(
+        _("Date of Extension"), null=True, blank=True, max_length=250
+    )
+    hod_extension_date = models.CharField(
+        _("HOD Extension Date"), null=True, blank=True, max_length=250
+    )
+    hr_extension_date = models.CharField(
+        _("HR Extension Date"), null=True, blank=True, max_length=250
+    )
+    hod_extension_remarks = models.CharField(
+        _("HOD Extension Remarks"), max_length=250, blank=True, null=True
+    )
+    hr_extension_remarks = models.CharField(
+        _("HR Extension Remarks"), max_length=250, blank=True, null=True
+    )
+    total_number_of_leave_days = models.PositiveIntegerField(
+        _("Total Number Of Leave Days"), null=True, blank=True
+    )
+    hod_extension_status = models.PositiveIntegerField(
+        _("HOO Extension Status"), null=True, blank=True
+    )
+    extension_status = models.PositiveIntegerField(
+        _("Extension Status"), default=0, null=True, blank=True
+    )
+    extension_reason = models.CharField(
+        _("Extension Reason"), max_length=250, null=True, blank=True
+    )
 
     @property
     def end_date(self):
@@ -118,7 +156,7 @@ class LeaveRequest(LeaveBase):
                 continue
             days_added += 1
         return start_date
-    
+
     @property
     def extension_date(self):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
@@ -135,7 +173,7 @@ class LeaveRequest(LeaveBase):
                 days_added += 1
 
         return new_start_date
-    
+
     @property
     def resumption_date(self):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
@@ -149,16 +187,12 @@ class LeaveRequest(LeaveBase):
     def resumption_date(self, value):
         self._resumption_date = value
 
-
     def clean(self):
-
         self.emp_code = self.employee.code
         self.employee_branch = self.employee.third_category_level
         self.job_title = self.employee.job_titles
         self.dep = self.employee.first_category_level
         self.employee_unit = self.employee.second_category_level
-
-
 
     class Meta:
         verbose_name = "Leave Request"
@@ -169,7 +203,6 @@ class LeaveRequest(LeaveBase):
 
 
 class LeavePlan(LeaveBase):
-
     @property
     def end_date(self):
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
@@ -204,7 +237,6 @@ class LeavePlan(LeaveBase):
         self.dep = self.employee.first_category_level
         self.employee_unit = self.employee.second_category_level
 
- 
     # def save(self, *args, **kwargs):
     #     if self.hr_status == 2:
     #         if self.leave_type.name == "Maternity":
@@ -218,8 +250,6 @@ class LeavePlan(LeaveBase):
     #             if emp_days_left is not None:
     #                 if self.no_of_days_requested <= emp_days_left:
     #                     self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-
 
     #         elif self.leave_type.name == "Annual":
     #             self.no_of_days_requested = self.no_of_days_requested
@@ -248,10 +278,26 @@ class LeaveType(models.Model):
     max_number_of_days = models.PositiveIntegerField(
         _("Max Number Of Days"), blank=True, null=True
     )
-    paygroup = models.ForeignKey("employee.PayGroup", verbose_name=_("PayGroup"), on_delete=models.DO_NOTHING, blank=True, null=True)
-    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
-    pay_group_code = models.CharField(_("Pay Group Code"), max_length=50, null=True, blank=True)
-    unique_code = models.CharField(_("Unique Code"), max_length=50, null=True, blank=True)
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("PayGroup"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    pay_group_code = models.CharField(
+        _("Pay Group Code"), max_length=50, null=True, blank=True
+    )
+    unique_code = models.CharField(
+        _("Unique Code"), max_length=50, null=True, blank=True
+    )
 
     # def calculate_max_days(self, employee):
     #     if self.name == "Medical":
@@ -289,5 +335,3 @@ class LeaveType(models.Model):
 #             cursor.execute(
 #                 "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
 #             )
-
-

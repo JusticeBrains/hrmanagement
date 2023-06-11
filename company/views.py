@@ -75,31 +75,6 @@ class JobViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
-class MinimumQualificationViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.MinimumQualification.objects.all()
-    serializer_class = serializers.MinimumQualificationSerializer
-
-
-
-
-
-class ApplicationPoolViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.ApplicationPool.objects.all()
-    serializer_class = serializers.ApplicationPoolSerializer
-
-
-
-class ApplicationReferencesViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.ApplicationReferences.objects.all()
-    serializer_class = serializers.ApplicationReferencesSeriailizer
-
-
-class ApplicationQEViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.ApplicationQE.objects.all()
-    serializer_class = serializers.ApplicationQESerializer
-
-
-
 class HRNeedsLineViewSet(viewsets.ModelViewSet):
     queryset = comp_models.HRNeedsLine.objects.all()
     serializer_class = serializers.HRNeedsLineSerializer

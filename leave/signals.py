@@ -1,9 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
-from django.conf import settings
-from django.core.mail import send_mail
-from datetime import datetime, timedelta
-from .models import Employee, HolidayCalender
+from datetime import timedelta
+from .models import HolidayCalender
+from employee.models import Employee
 from leave.models import LeaveRequest, LeaveType, LeavePlan
 
 
@@ -18,7 +17,7 @@ send_leave_reminder = Signal()
 #             subject = "Leave Ending Soon"
 #             message = f"Dear {leave.employee}, you will be resuming work on {leave.end_date}"
 #             send_mail(subject, message, 'hr@pay360.com', [leave.employee.company_email])
-    
+
 # # Receiver function to emit the signal after LeaveRequest is saved
 # @receiver(post_save, sender=LeaveRequest)
 # def emit_leave_reminder_signal(sender, instance, created, **kwargs):
@@ -28,29 +27,43 @@ send_leave_reminder = Signal()
 
 @receiver(post_save, sender=LeaveRequest)
 def update_employee_days_left(sender, instance, created, **kwargs):
-    if instance.hr_status == 1 and instance.hr_extension_status != 1 and instance.is_extend != 1:
-            if instance.leave_type.name == "Maternity":
-                instance.no_of_days_requested = instance.leave_type.max_number_of_days
-                instance.no_of_days_left = instance.employee.days_left
+    if (
+        instance.hr_status == 1
+        and instance.hr_extension_status != 1
+        and instance.is_extend != 1
+    ):
+        if instance.leave_type.name == "Maternity":
+            instance.no_of_days_requested = instance.leave_type.max_number_of_days
+            instance.no_of_days_left = instance.employee.days_left
 
-            else:
-                # instance.no_of_days_requested = instance.no_of_days_requested
-                max_days = instance.leave_type.max_number_of_days
-                employee = instance.employee
-                emp_days_left = employee.days_left
-                if emp_days_left is not None:
-                    if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested <= max_days:
-                        instance.no_of_days_left = emp_days_left - instance.no_of_days_requested
+        else:
+            # instance.no_of_days_requested = instance.no_of_days_requested
+            max_days = instance.leave_type.max_number_of_days
+            employee = instance.employee
+            emp_days_left = employee.days_left
+            if emp_days_left is not None:
+                if (
+                    instance.no_of_days_requested <= emp_days_left
+                    and instance.no_of_days_requested <= max_days
+                ):
+                    instance.no_of_days_left = (
+                        emp_days_left - instance.no_of_days_requested
+                    )
 
-            no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
-            no_of_days_exhausted += instance.no_of_days_requested
+        no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
+        no_of_days_exhausted += instance.no_of_days_requested
 
-            # update employee with new values of days_left and no_of_days_exhausted
-            Employee.objects.filter(id=instance.employee.id).update(
-                days_left=instance.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-            )
-        
-    if instance.hr_extension_status == 1 and instance.is_extend == 1 and instance.hr_status == 1:
+        # update employee with new values of days_left and no_of_days_exhausted
+        Employee.objects.filter(id=instance.employee.id).update(
+            days_left=instance.no_of_days_left,
+            no_of_days_exhausted=no_of_days_exhausted,
+        )
+
+    if (
+        instance.hr_extension_status == 1
+        and instance.is_extend == 1
+        and instance.hr_status == 1
+    ):
         max_days = instance.leave_type.max_number_of_days
 
         employee = instance.employee
@@ -64,42 +77,47 @@ def update_employee_days_left(sender, instance, created, **kwargs):
 
         # update employee with new values of days_left and no_of_days_exhausted
         Employee.objects.filter(id=instance.employee.id).update(
-            days_left=instance.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
+            days_left=instance.no_of_days_left,
+            no_of_days_exhausted=no_of_days_exhausted,
         )
     post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
     instance.save()
     post_save.connect(update_employee_days_left, sender=LeaveRequest)
 
 
-
 @receiver(post_save, sender=LeavePlan)
 def update_employee_days_left_leave_plan(sender, instance, created, **kwargs):
-    if instance.hr_status == 1 :
-            if instance.leave_type.name == "Maternity":
-                instance.no_of_days_requested = instance.leave_type.max_number_of_days
-                instance.plan_days_left = instance.employee.plan_days_left
+    if instance.hr_status == 1:
+        if instance.leave_type.name == "Maternity":
+            instance.no_of_days_requested = instance.leave_type.max_number_of_days
+            instance.plan_days_left = instance.employee.plan_days_left
 
-            else:
-                # instance.no_of_days_requested = instance.no_of_days_requested
-                max_days = instance.leave_type.max_number_of_days
-                employee = instance.employee
-                emp_days_left = employee.plan_days_left
-                if emp_days_left is not None:
-                    if instance.no_of_days_requested <= emp_days_left and instance.no_of_days_requested <= max_days:
-                        instance.plan_days_left = emp_days_left - instance.no_of_days_requested
+        else:
+            # instance.no_of_days_requested = instance.no_of_days_requested
+            max_days = instance.leave_type.max_number_of_days
+            employee = instance.employee
+            emp_days_left = employee.plan_days_left
+            if emp_days_left is not None:
+                if (
+                    instance.no_of_days_requested <= emp_days_left
+                    and instance.no_of_days_requested <= max_days
+                ):
+                    instance.plan_days_left = (
+                        emp_days_left - instance.no_of_days_requested
+                    )
 
-            no_of_days_exhausted = instance.employee.plan_no_of_days_exhausted or 0
-            no_of_days_exhausted += instance.no_of_days_requested
+        no_of_days_exhausted = instance.employee.plan_no_of_days_exhausted or 0
+        no_of_days_exhausted += instance.no_of_days_requested
 
-            # update employee with new values of days_left and no_of_days_exhausted
-            Employee.objects.filter(id=instance.employee.id).update(
-                days_left=instance.no_of_days_left, plan_no_of_days_exhausted=no_of_days_exhausted
-            )
-    
+        # update employee with new values of days_left and no_of_days_exhausted
+        Employee.objects.filter(id=instance.employee.id).update(
+            days_left=instance.no_of_days_left,
+            plan_no_of_days_exhausted=no_of_days_exhausted,
+        )
+
     post_save.disconnect(update_employee_days_left_leave_plan, sender=LeavePlan)
     instance.save()
     post_save.connect(update_employee_days_left_leave_plan, sender=LeavePlan)
-
 
 
 @receiver(post_save, sender=LeaveType)
@@ -119,15 +137,16 @@ def update_paygroup_code(sender, instance, created, **kwargs):
 #             instance.resumption_date += timedelta(days=1)
 #         instance.save()
 
+
 @receiver(post_save, sender=LeaveRequest)
 @receiver(post_save, sender=LeavePlan)
 def compute_leave_resumption_date(sender, instance, created, **kwargs):
     if created:
         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
         resumption_date = instance.end_date + timedelta(days=1)
-        
+
         while resumption_date.weekday() >= 5 or resumption_date.date() in holidays:
             resumption_date += timedelta(days=1)
-        
+
         instance.resumption_date = resumption_date
         instance.save()

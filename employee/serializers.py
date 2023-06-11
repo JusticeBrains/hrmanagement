@@ -125,9 +125,6 @@ class EmployeeDeductionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-from rest_framework import serializers, exceptions
-
-
 class KPIValidator:
     def __call__(self, attrs):
         score = attrs["score"]
@@ -138,7 +135,6 @@ class KPIValidator:
 
 
 class KPISerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = employee_model.KPI
         fields = "__all__"

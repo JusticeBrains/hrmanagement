@@ -1,7 +1,16 @@
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from django.db.models import Sum
-from employee.models import KPI, AppraisalGrading, Department, EmployeeAppraisal, Employee, EmployeeAppraisalDetail, EmployeeDeduction, EmployeeKRA
+from employee.models import (
+    KPI,
+    AppraisalGrading,
+    Department,
+    EmployeeAppraisal,
+    Employee,
+    EmployeeAppraisalDetail,
+    EmployeeDeduction,
+    EmployeeKRA,
+)
 from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -9,73 +18,91 @@ from datetime import datetime, timedelta
 
 birth_date_remainder = Signal()
 
+
 @receiver(birth_date_remainder)
 def send_birthday_reminder(sender, instance, **kwargs):
     employee = Employee.objects.all()
-    three_days_before_birthday = employee.birth_date.replace(year=datetime.now().year) - timedelta(days=3)
+    three_days_before_birthday = employee.birth_date.replace(
+        year=datetime.now().year
+    ) - timedelta(days=3)
 
-    if three_days_before_birthday.month == datetime.now().month and \
-            three_days_before_birthday.day == datetime.now().day:
+    if (
+        three_days_before_birthday.month == datetime.now().month
+        and three_days_before_birthday.day == datetime.now().day
+    ):
         subject = "Birthday Reminder"
         message = f"Dear {employee.name}, your birthday is coming up in 3 days!"
-        send_mail(subject, message, 'hr@pay360.com', [employee.company_email])
+        send_mail(subject, message, "hr@pay360.com", [employee.company_email])
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
-def update_employee_appraisal(sender, instance , **kwargs):
-        employee= Employee.objects.get(id=instance.emp_id.id)
-        instance.emp_name = employee.fullname
-        instance.employee_code = employee.code
-        instance.job_title = employee.job_titles
-        instance.department = employee.second_category_level
-        instance.company = employee.company
+def update_employee_appraisal(sender, instance, **kwargs):
+    employee = Employee.objects.get(id=instance.emp_id.id)
+    instance.emp_name = employee.fullname
+    instance.employee_code = employee.code
+    instance.job_title = employee.job_titles
+    instance.department = employee.second_category_level
+    instance.company = employee.company
 
+    # Temporarily disconnect the signal receiver
+    post_save.disconnect(update_employee_appraisal, sender=EmployeeAppraisal)
 
-        # Temporarily disconnect the signal receiver
-        post_save.disconnect(update_employee_appraisal, sender=EmployeeAppraisal)
+    instance.save(
+        update_fields=["emp_name", "employee_code", "job_title", "department"]
+    )
 
-        instance.save(update_fields=['emp_name', 'employee_code', 'job_title', 'department'])
-
-        # Reconnect the signal receiver
-        post_save.connect(update_employee_appraisal, sender=EmployeeAppraisal)
+    # Reconnect the signal receiver
+    post_save.connect(update_employee_appraisal, sender=EmployeeAppraisal)
 
 
 @receiver(post_save, sender=EmployeeAppraisalDetail)
 def update_performance_score(sender, instance, **kwargs):
-    employee= Employee.objects.get(id=instance.employee_id.id)
+    employee = Employee.objects.get(id=instance.employee_id.id)
     instance.emp_name = employee.fullname
     instance.emp_code = employee.code
     emp_code = instance.emp_code
 
     active_period = timezone.now().year
 
-
     try:
         # Retrieve the corresponding EmployeeAppraisal object
-        appraisal = EmployeeAppraisal.objects.filter(employee_code=emp_code, period=active_period).first()
+        appraisal = EmployeeAppraisal.objects.filter(
+            employee_code=emp_code, period=active_period
+        ).first()
         if appraisal:
             # Retrieve the total score from EmployeeAppraisalDetail records
-            total_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(total_score=Sum('score'))['total_score']
-            kpi_score = EmployeeAppraisalDetail.objects.filter(emp_code=emp_code, period=active_period).aggregate(kpi_score=Sum('total_kpi_scores'))['kpi_score']
-            
+            total_score = EmployeeAppraisalDetail.objects.filter(
+                emp_code=emp_code, period=active_period
+            ).aggregate(total_score=Sum("score"))["total_score"]
+            kpi_score = EmployeeAppraisalDetail.objects.filter(
+                emp_code=emp_code, period=active_period
+            ).aggregate(kpi_score=Sum("total_kpi_scores"))["kpi_score"]
+
             # Update the performance score and total kpi score of the EmployeeAppraisal object
-            appraisal.performance_score = total_score if total_score is not None else None
+            appraisal.performance_score = (
+                total_score if total_score is not None else None
+            )
             appraisal.weighted_score = kpi_score if kpi_score is not None else None
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
-         return ValueError("Employee Appraisal Doesn't Exist")
+        return ValueError("Employee Appraisal Doesn't Exist")
     post_save.disconnect(update_performance_score, sender=EmployeeAppraisalDetail)
-    
-    instance.save(update_fields=['emp_name', 'emp_code',])
+
+    instance.save(
+        update_fields=[
+            "emp_name",
+            "emp_code",
+        ]
+    )
 
     post_save.connect(update_performance_score, sender=EmployeeAppraisalDetail)
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
 def update_grade(sender, instance, **kwargs):
-    post_save.disconnect(update_grade, sender=EmployeeAppraisal )
+    post_save.disconnect(update_grade, sender=EmployeeAppraisal)
     grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
     if grading:
         instance.grade = grading.grade
@@ -88,7 +115,6 @@ def update_grade(sender, instance, **kwargs):
     instance.save()
 
     post_save.connect(update_grade, sender=EmployeeAppraisal)
-
 
 
 @receiver(post_save, sender=Department)
@@ -113,7 +139,7 @@ def leave_days_deduction(sender, instance, **kwargs):
     if instance.no_of_days:
         employee = instance.employee
         emp_days_left = employee.days_left
-        if emp_days_left is not None or 0:
+        if emp_days_left is not None:
             if emp_days_left >= instance.no_of_days:
                 emp_days_left = emp_days_left - instance.no_of_days
                 instance.employee_name = instance.employee.fullname
@@ -124,9 +150,8 @@ def leave_days_deduction(sender, instance, **kwargs):
                 days_left=emp_days_left, no_of_days_exhausted=no_of_days_exhausted
             )
     instance.save()
-                
-    post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
+    post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
 
 def populate_appraisal_employee_grading(sender, instance, **kwargs):
@@ -142,12 +167,14 @@ def populate_appraisal_employee_grading(sender, instance, **kwargs):
 
 @receiver(post_save, sender=KPI)
 def update_kpi_fields(sender, instance, created, **kwargs):
-    employee= Employee.objects.get(id=instance.employee_id.id)
+    employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.company = employee.company
 
         if instance.score is not None:
-            instance.score = round((instance.supervisor_score / 100) * instance.kpi_score, ndigits=2)
+            instance.score = round(
+                (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
+            )
     post_save.disconnect(update_kpi_fields, sender=KPI)
     instance.save()
     post_save.connect(update_kpi_fields, sender=KPI)
@@ -155,24 +182,22 @@ def update_kpi_fields(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=EmployeeKRA)
 def update_kra_fields(sender, instance, created, **kwargs):
-    employee= Employee.objects.get(id=instance.employee_id.id)
+    employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
         instance.department = employee.second_category_level
         instance.company = employee.company
 
-
         post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
         instance.save()
         post_save.connect(update_kra_fields, sender=EmployeeKRA)
 
 
-
 # @receiver(post_save, sender=PayGroup)
 # def update_employee_leave_days(sender, instance,created, **kwargs):
 #     post_save.disconnect(update_employee_leave_days, sender=PayGroup)
-     
+
 #     if created:
 #         employees = Employee.objects.filter(pay_group_code=instance.no, company=instance.company)
 #         employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
@@ -184,4 +209,3 @@ def update_kra_fields(sender, instance, created, **kwargs):
 #         #     employee.save()
 
 #         post_save.connect(update_employee_leave_days, sender=PayGroup)
-
