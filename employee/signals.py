@@ -190,15 +190,14 @@ def update_kra_fields(sender, instance, created, **kwargs):
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
         instance.department = instance.department_id.name
-        instance.company = employee.company
-        instance.company_id = employee.company_id
+        instance.company = instance.company_id.name
+       
         instance.save(
             update_fields=[
                 "emp_code",
                 "emp_name",
                 "department",
                 "company",
-                "company_id",
             ]
         )
 
