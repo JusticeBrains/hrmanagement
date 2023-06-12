@@ -373,7 +373,6 @@ class KPI(models.Model):
         #     )
         # if self.score is not None:
         #     self.percentage_score = round((self.score / 100)*self.kpi_score, ndigits=2)
-
     class Meta:
         verbose_name = "KPI"
         verbose_name_plural = "KPI's"

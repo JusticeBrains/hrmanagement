@@ -38,7 +38,7 @@ def send_birthday_reminder(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
-def update_employee_appraisal(instance, **kwargs):
+def update_employee_appraisal(sender, instance, **kwargs):
     employee = Employee.objects.get(id=instance.emp_id.id)
     instance.emp_name = employee.fullname
     instance.employee_code = employee.code
@@ -57,64 +57,8 @@ def update_employee_appraisal(instance, **kwargs):
     post_save.connect(update_employee_appraisal, sender=EmployeeAppraisal)
 
 
-@receiver(post_save, sender=KPI)
-def update_performance_score(instance, **kwargs):
-    employee = Employee.objects.get(id=instance.employee_id.id)
-    instance.employee_id = employee.f
-    instance.emp_code = employee.code
-    emp_code = instance.emp_code
-
-    active_period = timezone.now().year
-
-    try:
-        # Retrieve the corresponding EmployeeAppraisal object
-        appraisal = EmployeeAppraisal.objects.filter(
-            emp_id=employee, period=active_period
-        ).first()
-        if appraisal:
-            # Retrieve the total score from records
-            total_score = KPI.objects.filter(
-                employee_id=employee, period=active_period
-            ).aggregate(total_score=Sum("score"))["total_score"]
-            total_kpi_scores = KPI.objects.filter(
-                emp_code=emp_code, period=active_period
-            ).aggregate(total_kpi_scores=Sum("kpi_score"))["total_kpi_scores"]
-
-            kra_total_scores = EmployeeKRA.objects.filter(
-                employee_id=employee, period=active_period
-            ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
-
-            if total_kpi_scores == kra_total_scores:
-                # Update the performance score and total kpi score of the EmployeeAppraisal object
-                appraisal.performance_score = (
-                    total_score if total_score is not None else None
-                )
-                appraisal.weighted_score = (
-                    total_kpi_scores if total_kpi_scores is not None else None
-                )
-            elif total_kpi_scores != kra_total_scores:
-                raise ValidationError(
-                    f"Sum of Total KPI Scores {total_kpi_scores} Not Equal To Sum of KRA Total Scores {kra_total_scores}"
-                )
-
-            # Save the updated EmployeeAppraisal object
-            appraisal.save()
-    except EmployeeAppraisal.DoesNotExist:
-        return ValueError("Employee Appraisal Doesn't Exist")
-    post_save.disconnect(update_performance_score, sender=KPI)
-
-    instance.save(
-        update_fields=[
-            "emp_name",
-            "emp_code",
-        ]
-    )
-
-    post_save.connect(update_performance_score, sender=KPI)
-
-
 @receiver(post_save, sender=EmployeeAppraisal)
-def update_grade(instance, **kwargs):
+def update_grade(sender, instance, **kwargs):
     post_save.disconnect(update_grade, sender=EmployeeAppraisal)
     grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
     if grading:
@@ -131,7 +75,7 @@ def update_grade(instance, **kwargs):
 
 
 @receiver(post_save, sender=Department)
-def populate_company_field_department(instance, **kwargs):
+def populate_company_field_department(sender, instance, **kwargs):
     """
     Populate company field with company name from the job application
     """
@@ -144,7 +88,7 @@ def populate_company_field_department(instance, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeDeduction)
-def leave_days_deduction(instance, **kwargs):
+def leave_days_deduction(sender, instance, **kwargs):
     """
     Deduct leave days from employee
     """
@@ -179,23 +123,73 @@ def populate_appraisal_employee_grading(instance, **kwargs):
 
 
 @receiver(post_save, sender=KPI)
-def update_kpi_fields(instance, created, **kwargs):
+def update_kpi_fields(sender, instance, created, **kwargs):
+    post_save.disconnect(update_kpi_fields, sender=KPI)
     employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
         instance.company = employee.company
         instance.company_id = employee.company_id
 
-        if instance.score is not None:
-            instance.score = round(
-                (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
-            )
-    post_save.disconnect(update_kpi_fields, sender=KPI)
-    instance.save()
+
+        instance.score = round(
+            (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
+        )
+        instance.save()
     post_save.connect(update_kpi_fields, sender=KPI)
 
 
+
+@receiver(post_save, sender=KPI)
+def update_performance_score(instance, **kwargs):
+    employee = Employee.objects.get(id=instance.employee_id.id)
+
+
+    active_period = timezone.now().year
+
+    try:
+        # Retrieve the corresponding EmployeeAppraisal object
+        appraisal = EmployeeAppraisal.objects.filter(
+            emp_id=employee, period=active_period
+        ).first()
+        if appraisal:
+            # Retrieve the total score from records
+            total_score = KPI.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(total_score=Sum("score"))["total_score"]
+            total_kpi_scores = KPI.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(total_kpi_scores=Sum("kpi_score"))["total_kpi_scores"]
+
+            kra_total_scores = EmployeeKRA.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
+
+            if total_kpi_scores == kra_total_scores:
+                # Update the performance score and total kpi score of the EmployeeAppraisal object
+                appraisal.performance_score = (
+                    total_score if total_score is not None else None
+                )
+                appraisal.weighted_score = (
+                    total_kpi_scores if total_kpi_scores is not None else None
+                )
+            elif total_kpi_scores != kra_total_scores:
+                raise ValidationError(
+                    f"Sum of Total KPI Scores {total_kpi_scores} Not Equal To Sum of KRA Total Scores {kra_total_scores}"
+                )
+
+            # Save the updated EmployeeAppraisal object
+            appraisal.save()
+    except EmployeeAppraisal.DoesNotExist:
+        return ValueError("Employee Appraisal Doesn't Exist")
+    post_save.disconnect(update_performance_score, sender=KPI)
+
+    instance.save()
+
+    post_save.connect(update_performance_score, sender=KPI)
+
+
 @receiver(post_save, sender=EmployeeKRA)
-def update_kra_fields(instance, created, **kwargs):
+def update_kra_fields(sender, instance, created, **kwargs):
     post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
     employee = Employee.objects.get(id=instance.employee_id.id)
     if created:
@@ -218,7 +212,7 @@ def update_kra_fields(instance, created, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeMedicalClaim)
-def update_medical_claim(instance, created, **kwargs):
+def update_medical_claim(sender , instance, created, **kwargs):
     post_save.disconnect(update_medical_claim, sender=EmployeeMedicalClaim)
     if created:
         employee = Employee.objects.get(id=instance.employee_id.id)
