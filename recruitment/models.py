@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
-from datetime import datetime
-
 
 class EmployeeRequisition(models.Model):
     department = models.ForeignKey(
@@ -63,6 +61,7 @@ class JobApplication(models.Model):
         _("Total Interviewed Score"), blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.CharField(_("Company ID"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Job Application"
