@@ -869,6 +869,7 @@ class PayGroup(models.Model):
         # Update the total_number_of_leave_days for each employee
         for employee in employees:
             employee.total_number_of_leave_days = self.total_number_of_leave_days
+            employee.total_medical_claim_amount = self.total_medical_claim_amount
             employee.save()
 
         super().save(*args, **kwargs)

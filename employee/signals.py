@@ -10,6 +10,7 @@ from employee.models import (
     EmployeeDeduction,
     EmployeeKRA,
     EmployeeMedicalClaim,
+    PayGroup,
 )
 from django.core.exceptions import ValidationError
 from company.models import Company
@@ -224,22 +225,35 @@ def update_medical_claim(instance, created, **kwargs):
         instance.emp_name = employee.fullname
         instance.department = instance.department_id.name
         instance.company = instance.company_id.name
+
+        claim_amount = instance.claim_amount
+        medical_claim_amount_left = employee.medical_claim_amount_left
+        if medical_claim_amount_left is not None:
+            if claim_amount <= medical_claim_amount_left:
+                medical_claim_left = medical_claim_amount_left - claim_amount
+                used_medical_claim_amount = employee.used_medical_claim_amount or 0
+                used_medical_claim_amount += claim_amount
+                Employee.objects.filter(id=employee.id).update(
+                    medical_claim_amount_left=medical_claim_left,
+                    used_medical_claim_amount=used_medical_claim_amount,
+                )
         instance.save()
     post_save.connect(update_medical_claim, sender=EmployeeMedicalClaim)
 
 
-# @receiver(post_save, sender=PayGroup)
-# def update_employee_leave_days(sender, instance,created, **kwargs):
-#     post_save.disconnect(update_employee_leave_days, sender=PayGroup)
+@receiver(post_save, sender=PayGroup)
+def update_employee_leave_days(sender, instance,created, **kwargs):
+    post_save.disconnect(update_employee_leave_days, sender=PayGroup)
 
-#     if created:
-#         employees = Employee.objects.filter(pay_group_code=instance.no, company=instance.company)
-#         employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
+    if created:
+        employees = Employee.objects.filter(pay_group_code=instance.no, company=instance.company)
+        employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
 
-#         # for employee in employees:
-#         #     # employees.update(total_number_of_leave_days=instance.total_number_of_leave_days)
-#         #     employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
-#         #     # employee.total_number_of_leave_days = instance.total_number_of_leave_days
-#         #     employee.save()
+        # for employee in employees:
+        #     # employees.update(total_number_of_leave_days=instance.total_number_of_leave_days)
+        #     employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
+        #     # employee.total_number_of_leave_days = instance.total_number_of_leave_days
+        #     employee.save()
 
-#         post_save.connect(update_employee_leave_days, sender=PayGroup)
+        post_save.connect(update_employee_leave_days, sender=PayGroup)
+
