@@ -64,7 +64,7 @@ def update_grade(sender, instance, **kwargs):
     if grading:
         instance.grade = grading.grade
         instance.recommendation = grading.recommendation
-        instance.percentage_score = f"{round((instance.performance_score / instance.total_kpi_scores) * 100, ndigits=2)}%"
+        # instance.percentage_score = f"{round((instance.performance_score / instance.total_kpi_scores) * 100, ndigits=2)}%"
     else:
         instance.grade = None
         instance.recommendation = None
