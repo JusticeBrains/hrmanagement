@@ -167,8 +167,7 @@ def update_performance_score(instance, **kwargs):
             # Update the performance score and total kpi score of the EmployeeAppraisal object
             appraisal.performance_score = appraisal.percentage_score or 0
             appraisal.performance_score += total_score
-            appraisal.weighted_score = appraisal.weighted_score or 0
-            appraisal.weighted_score += total_kpi_scores
+            appraisal.weighted_score += total_kpi_scores if total_kpi_scores is not None else None
             
         
 
