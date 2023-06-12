@@ -165,9 +165,8 @@ def update_performance_score(instance, **kwargs):
             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
             # Update the performance score and total kpi score of the EmployeeAppraisal object
-            appraisal.performance_score = (
-                total_score if total_score is not None else None
-            )
+            appraisal.performance_score = appraisal.percentage_score or 0
+            appraisal.performance_score += total_score
             appraisal.weighted_score = kra_total_scores if kra_total_scores is not None else None
             
         
