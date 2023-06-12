@@ -252,6 +252,7 @@ class EmployeeAppraisal(models.Model):
     department = models.CharField(
         _("Department"), max_length=150, null=True, blank=True, editable=False
     )
+    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.CASCADE, blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
     performance_score = models.PositiveIntegerField(
         _("Performance Score"), null=True, blank=True
@@ -265,6 +266,7 @@ class EmployeeAppraisal(models.Model):
         _("Recommendation"), max_length=150, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE)
     weighted_score = models.PositiveIntegerField(
         _("Weighted Score"), blank=True, null=True
     )
@@ -362,6 +364,9 @@ class KPI(models.Model):
     score = models.DecimalField(
         _("Percentage Score"), max_digits=5, decimal_places=2, null=True, blank=True
     )
+    supervisor_status = models.PositiveIntegerField(_("Supervisor Status"), default=0)
+    employee_status = models.PositiveIntegerField(_("Supervisor Status"), default=0)
+
 
     def clean(self):
         if self.employee_id:
