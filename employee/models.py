@@ -270,6 +270,7 @@ class EmployeeAppraisal(models.Model):
     weighted_score = models.PositiveIntegerField(
         _("Weighted Score"), blank=True, null=True
     )
+    hr_status =models.PositiveIntegerField(_("HR Status"), default=0)
 
     class Meta:
         verbose_name = "Employee Appraisal"
