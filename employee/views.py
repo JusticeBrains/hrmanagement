@@ -77,6 +77,11 @@ class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
         "performance_score",
         "percentage_score",
         "period",
+        "hr_status",
+        "emp_id",
+        "department_id",
+        "company_id",
+        "status"
     ]
 
 
