@@ -134,7 +134,7 @@ def update_kpi_fields(sender, instance, created, **kwargs):
         instance.score = round(
             (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
         )
-        instance.save()
+    instance.save()
     post_save.connect(update_kpi_fields, sender=KPI)
 
 
@@ -167,10 +167,10 @@ def update_performance_score(instance, **kwargs):
             # Update the performance score and total kpi score of the EmployeeAppraisal object
             appraisal.performance_score = appraisal.performance_score or 0
             appraisal.performance_score += total_score
-            appraisal.weighted_score += total_kpi_scores if total_kpi_scores is not None else None
+            appraisal.weighted_score = appraisal.weighted_score or 0
+            appraisal.weighted_score += total_kpi_scores 
             
         
-
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
