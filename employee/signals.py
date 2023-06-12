@@ -164,18 +164,13 @@ def update_performance_score(instance, **kwargs):
                 employee_id=employee, period=active_period
             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
-            if total_kpi_scores == kra_total_scores:
-                # Update the performance score and total kpi score of the EmployeeAppraisal object
-                appraisal.performance_score = (
-                    total_score if total_score is not None else None
-                )
-                appraisal.weighted_score = (
-                    total_kpi_scores if total_kpi_scores is not None else None
-                )
-            elif total_kpi_scores != kra_total_scores:
-                raise ValidationError(
-                    f"Sum of Total KPI Scores {total_kpi_scores} Not Equal To Sum of KRA Total Scores {kra_total_scores}"
-                )
+            # Update the performance score and total kpi score of the EmployeeAppraisal object
+            appraisal.performance_score = (
+                total_score if total_score is not None else None
+            )
+            appraisal.weighted_score = kra_total_scores if kra_total_scores is not None else None
+            
+        
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
