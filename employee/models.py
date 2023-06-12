@@ -266,7 +266,7 @@ class EmployeeAppraisal(models.Model):
         _("Recommendation"), max_length=150, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, blank=True, null=True)
     weighted_score = models.PositiveIntegerField(
         _("Weighted Score"), blank=True, null=True
     )
