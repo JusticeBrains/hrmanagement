@@ -7,3 +7,5 @@ class EmployeeConfig(AppConfig):
 
     def ready(self):
         import employee.signals
+        from employee import updater
+        updater.start()
