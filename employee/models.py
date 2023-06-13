@@ -428,7 +428,8 @@ class EmployeeKRA(models.Model):
     )
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
     target = models.CharField(_("Target"), max_length=150, blank=True, null=True)
-
+    emp_total_score = models.DecimalField(_("Employee Total Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    supervisor_total_score = models.DecimalField(_("Supervisor Total Score"), max_digits=5, decimal_places=2, null=True, blank=True)
     class Meta:
         verbose_name = "Employee KRA"
         verbose_name_plural = "Employee KRA's"

@@ -76,6 +76,7 @@ class LeavePlanFilter(PropertyFilterSet):
             'status',
             'company',
             "unique_code",
+            "employee"
         ]
 
 
