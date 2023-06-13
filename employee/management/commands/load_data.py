@@ -191,7 +191,32 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "NLA MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_department(
+                    url=env.str("nla_exc_man_dep"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA JUNIOR SENIOR":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_department(
+                    url=env.str("nla_jun_sen_dep"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
         self.stdout.write(
             self.style.SUCCESS("-------- Done Loading Departments-------")
         )
@@ -540,10 +565,37 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-            # if comp.name =="NLA":
-            #     self.stdout.write(self.style.SUCCESS(f"Starting load data to database {comp.id} -- {comp.name}"))
-            #     load_jobtitles(url=env.str("nla_exc_man_paygroup"), auth=auth, company=comp.name,comp_id=comp.id)
-            #     self.stdout.write(self.style.SUCCESS("Successfully load data to database"))
+            if comp.name == "NLA MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_jobtitles(
+                    url=env.str("nla_man_jobs"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA JUNIOR SENIOR":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_jobtitles(
+                    url=env.str("nla_jun_sen_jobs"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
             if comp.name == "Republic Media Limited":
                 load_jobtitles(
                     url=env.str("repub_jobs"),
@@ -585,7 +637,32 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            # if comp.name == "NLA JUNIOR SENIOR":
+            #     self.stdout.write(
+            #         self.style.SUCCESS("Successfully load data to database")
+            #     )
+            #     load_jobtitles(
+            #         url=env.str("nla_jun_sen"),
+            #         auth=auth,
+            #         company=comp.name,
+            #         comp_id=comp.id,
+            #     )
+            #     self.stdout.write(
+            #         self.style.SUCCESS("Successfully load data to database")
+            #     )
+            # if comp.name == "NLA MANAGEMENT":
+            #     self.stdout.write(
+            #         self.style.SUCCESS("Successfully load data to database")
+            #     )
+            #     load_jobtitles(
+            #         url=env.str("nla_man"),
+            #         auth=auth,
+            #         company=comp.name,
+            #         comp_id=comp.id,
+            #     )
+            #     self.stdout.write(
+            #         self.style.SUCCESS("Successfully load data to database")
+            #     )
         self.stdout.write(self.style.SUCCESS("--------Ended Loading JobTitles-------"))
 
         self.stdout.write(self.style.SUCCESS("--------Loading Employees-------"))
@@ -825,8 +902,8 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
-            if company.name == "NLA":
+            
+            if company.name == "NLA MANAGEMENT":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {company.id} -- {company.name}"
@@ -849,7 +926,9 @@ class Command(BaseCommand):
                     company_id=company.id,
                     comp_code=company.unique_code,
                 )
-                self.stdout.write(self.style.SUCCESS("----Starting Jun Senior"))
+            
+            if company.name == "NLA JUNIOR SENIOR":
+                self.stdout.write(self.style.SUCCESS("----Starting Jun Senior-----"))
                 get_user_data(
                     url=env.str("nlajun_sen"),
                     auth=auth,
@@ -1186,28 +1265,29 @@ def load_jobtitles(url, auth, company, comp_id):
     data = res.json()
 
     for val in data["value"]:
-        try:
-            print(f"--Startng--{val['Code']} ")
-            if JobTitles.objects.filter(code=val["Code"], company=company).exists():
-                job_id = JobTitles.objects.get(code=val["Code"], company=company)
-                print("Updating")
-                JobTitles.objects.filter(code=job_id).update(
-                    code=val["Code"],
-                    description=val["Description"],
-                    company=company,
-                    company_id=comp_id,
-                )
+        if val["Code"] != "CODE":
+            try:
+                print(f"--Startng--{val['Code']} ")
+                if JobTitles.objects.filter(code=val["Code"], company=company).exists():
+                    job_id = JobTitles.objects.get(code=val["Code"], company=company)
+                    print("Updating")
+                    JobTitles.objects.filter(code=job_id).update(
+                        code=val["Code"],
+                        description=val["Description"],
+                        company=company,
+                        company_id=comp_id,
+                    )
 
-            elif not JobTitles.objects.filter(
-                code=val["Code"], company=company
-            ).exists():
-                JobTitles.objects.create(
-                    code=val["Code"],
-                    description=val["Description"],
-                    company=company,
-                    company_id=comp_id,
-                )
-            print(f"--End-- {val['Description']}")
-        except JobTitles.DoesNotExist:
-            pass
+                elif not JobTitles.objects.filter(
+                    code=val["Code"], company=company
+                ).exists():
+                    JobTitles.objects.create(
+                        code=val["Code"],
+                        description=val["Description"],
+                        company=company,
+                        company_id=comp_id,
+                    )
+                print(f"--End-- {val['Description']}")
+            except JobTitles.DoesNotExist:
+                pass
     print(f"Done -- Unit -- {JobTitles.objects.all().count()}")
