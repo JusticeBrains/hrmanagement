@@ -40,6 +40,7 @@ class LeaveRequestFilter(PropertyFilterSet):
             'company',
             "unique_code",
             "unpaid_leave",
+            "dep"
         ]
 
 
