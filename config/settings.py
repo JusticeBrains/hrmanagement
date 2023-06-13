@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "django_filters",
+    "django_apscheduler",
 ]
 
 LOCAL_APPS = [
@@ -216,3 +217,6 @@ DEFAULT_FROM_EMAIL = "justiceduodu77@gmail.com"
 SWAGGER_SETTINGS = {
     "DEFAULT_INFO": "config.urls.api_info",
 }
+
+
+APSCHEDULER_RUN_NOW_TIMEOUT = 360
