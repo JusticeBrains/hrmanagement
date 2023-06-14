@@ -895,6 +895,8 @@ class PropertyAssignment(models.Model):
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     status = models.PositiveIntegerField(_("Status"), blank=True, null=True, default=0)
     status_date = models.DateField(_("Status Date"), auto_now=False, auto_now_add=False)
+    period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
+    assigned_by = models.CharField(_("Assigned By"), max_length=150, blank=True, null=True)
     class Meta:
         verbose_name = "Property Assignment"
         verbose_name_plural = "Property Assignments"
