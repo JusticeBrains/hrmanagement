@@ -27,6 +27,7 @@ class HolidayCalender(models.Model):
 
 
 class LeaveBase(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     leave_type = models.ForeignKey(
         "leave.LeaveType",
         verbose_name=_("Leave Type"),
@@ -330,6 +331,7 @@ class LeaveType(models.Model):
 
 
 class LeaveLimits(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     leave_type = models.ForeignKey(
         "leave.LeaveType",
         verbose_name=_("Leave Type"),
@@ -347,29 +349,20 @@ class LeaveLimits(models.Model):
     max_number_of_days = models.PositiveIntegerField(
         _("Max Number of Days"), blank=True, null=True
     )
-    company = models.ForeignKey(
-        "company.Company",
-        verbose_name=_("Company"),
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
-    company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
+    period = models.CharField(_("Period"), max_length=80, blank=True, null=True)
 
     class Meta:
-        unique_together = ("leave_type", "paygroup", "company")
+        unique_together = ("leave_type", "paygroup")
         verbose_name = "Leave Limits"
         verbose_name_plural = "Leave Limits"
 
     def __str__(self):
         return f"{self.leave_type}, {self.paygroup}"
-    
-    def save(self) -> None:
-        self.company_name = self.company.name
-        return super().save()
+
 
 
 class EmployeeLeaveLimits(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     leave_type = models.CharField(
         _("Leave Type"), max_length=150, blank=True, null=True
     )
@@ -381,11 +374,12 @@ class EmployeeLeaveLimits(models.Model):
         null=True,
     )
     max_number_of_days = models.PositiveIntegerField(
-        _("Max Number of Days"), blank=True, null=True
+        _("Max Number of Days"), blank=True, null=True, default=0
     )
     number_of_days_left = models.PositiveIntegerField(
-        _("Number of Days Left"), blank=True, null=True
+        _("Number of Days Left"), blank=True, null=True, default=0
     )
+    number_of_days_exhausted = models.PositiveIntegerField(_("Number of Days Exhausted"), default=0)
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
@@ -400,7 +394,7 @@ class EmployeeLeaveLimits(models.Model):
         blank=True,
         null=True,
     )
-
+    period = models.CharField(_("Period"), max_length=80, blank=True, null=True)
     class Meta:
         unique_together = (
             "leave_type",

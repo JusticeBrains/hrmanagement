@@ -820,7 +820,7 @@ class Notch(models.Model):
 
 
 class PayGroup(models.Model):
-    # id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     no = models.CharField(_("No."), max_length=50, null=True, blank=True)
     description = models.CharField(
         _("Description"), max_length=100, null=True, blank=True
