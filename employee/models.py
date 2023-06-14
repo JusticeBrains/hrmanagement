@@ -891,7 +891,7 @@ class PropertyAssignment(models.Model):
     department_name = models.CharField(_("Department Name"), max_length=150, null=True)
     department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.DO_NOTHING)
     company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, null=True, blank=True)
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     status = models.PositiveIntegerField(_("Status"), blank=True, null=True)
 
