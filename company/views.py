@@ -59,10 +59,6 @@ class PropertyViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PropertySerializer
 
 
-class PropertyAssignmentViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.PropertyAssignment.objects.all()
-    serializer_class = serializers.PropertyAssignmentSerializer
-
 
 class DiscplinaryActionsViewSet(viewsets.ModelViewSet):
     queryset = comp_models.DisciplinaryActions.objects.all()

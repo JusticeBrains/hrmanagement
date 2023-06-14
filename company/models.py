@@ -136,44 +136,6 @@ class Property(models.Model):
         return self.description
 
 
-class PropertyAssignment(models.Model):
-    no = models.CharField(_("No."), max_length=50)
-    emp_code = models.ForeignKey(
-        "employee.Employee", verbose_name=_("Employee Code"), on_delete=models.CASCADE
-    )
-    emp_name = models.CharField(_("Employee Name"), max_length=200)
-    asset_code = models.ForeignKey(
-        "company.Property", verbose_name=_("Asset Code"), on_delete=models.CASCADE
-    )
-    asset_description = models.TextField(_("Asset Description"))
-    assignment_date = models.DateField(
-        _("Assignment Date"), auto_now=True, auto_now_add=False
-    )
-    expected_return_date = models.DateField(
-        _("Expected Return Date"), auto_now=False, auto_now_add=False
-    )
-    comment = models.CharField(_("Comment"), max_length=250)
-    transaction_date = models.DateField(
-        _("Transaction Date"), auto_now=True, auto_now_add=False
-    )
-    user_id = models.ForeignKey(
-        User, verbose_name=_("User ID"), on_delete=models.CASCADE
-    )
-
-    posted = models.BooleanField(_("Posted"))
-    retrieved = models.BooleanField(_("Retrieved"))
-    retrieval_date = models.DateField(
-        _("Retrieval Date"), auto_now=True, auto_now_add=False
-    )
-
-    class Meta:
-        verbose_name = "Property Assignment"
-        verbose_name_plural = "Property Assignments"
-
-    def __str__(self):
-        return f"{self.asset_code}, {self.posted}"
-
-
 class DisciplinaryActions(models.Model):
     description = models.CharField(_("Description"), max_length=100)
     minor_offense = models.CharField(_("Minor Offense"), max_length=50)

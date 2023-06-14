@@ -56,12 +56,6 @@ class PropertySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PropertyAssignmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.PropertyAssignment
-        fields = "__all__"
-
-
 class DisciplinaryActionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = comp_models.DisciplinaryActions
