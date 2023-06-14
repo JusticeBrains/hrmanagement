@@ -820,6 +820,7 @@ class Notch(models.Model):
 
 
 class PayGroup(models.Model):
+    # id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     no = models.CharField(_("No."), max_length=50, null=True, blank=True)
     description = models.CharField(
         _("Description"), max_length=100, null=True, blank=True
@@ -897,6 +898,7 @@ class PropertyAssignment(models.Model):
     status_date = models.DateField(_("Status Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
     assigned_by = models.CharField(_("Assigned By"), max_length=150, blank=True, null=True)
+    date_modified = models.DateField(_("Date Modified"), auto_now=False, auto_now_add=False, blank=True, null=True)
     class Meta:
         verbose_name = "Property Assignment"
         verbose_name_plural = "Property Assignments"
