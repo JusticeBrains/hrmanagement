@@ -206,12 +206,12 @@ DJOSER = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "justiceduodu77@gmail.com"  # Your Gmail email address
-EMAIL_HOST_PASSWORD = "Enya1245*"  # Your Gmail password or app password
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_PORT = env.str("EMAIL_PASS")
+EMAIL_HOST_USER = env.str("EMAIL_USER")  # Your Gmail email address
+EMAIL_HOST_PASSWORD = env.str("EMAIL_PASS")  # Your Gmail password or app password
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "justiceduodu77@gmail.com"
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 
 
 SWAGGER_SETTINGS = {

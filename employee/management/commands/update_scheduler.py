@@ -9,6 +9,8 @@ from apscheduler.triggers.cron import CronTrigger
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +20,17 @@ from django.core.management import call_command
 
 def update_employee_record():
     call_command("load_data")
+    # Send email report
+    try:
+        subject = 'Report'
+        message = 'The task has been completed successfully.'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = ['justiceduodu77@gmail.com']
 
+        send_mail(subject, message, from_email, recipient_list)
+        print("---------------Sent -----------------------")
+    except:
+        print("-----------------Couldn't send------------------------")
 
 @util.close_old_connections
 def delete_old_job_executions(max_age=604_800):
