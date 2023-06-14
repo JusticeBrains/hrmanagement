@@ -394,7 +394,7 @@ class EmployeeLeaveLimits(models.Model):
         blank=True,
         null=True,
     )
-    period = models.CharField(_("Period"), max_length=80, blank=True, null=True)
+    period = models.CharField(_("Period"), max_length=80, blank=True, null=True, default=timezone.now().year)
     class Meta:
         unique_together = (
             "leave_type",
