@@ -199,3 +199,8 @@ class EmployeeKRAViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeKRA.objects.all()
     serializer_class = serializers.EmployeeKRASerializer
     filterset_fields = "__all__"
+
+class PropertyAssignmentViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.PropertyAssignment.objects.all()
+    serializer_class = serializers.PropertyAssignmentSerializer
+    filterset_fields = "__all__"

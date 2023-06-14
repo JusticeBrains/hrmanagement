@@ -879,3 +879,24 @@ class PayGroup(models.Model):
             employee.save()
 
         super().save(*args, **kwargs)
+
+
+class PropertyAssignment(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    item_id = models.CharField(_("Item ID"), max_length=150, null=True, blank=True)
+    name = models.CharField(_("Name"), max_length=150, null=True, blank=True)
+    value = models.CharField(_("Value"), max_length=150, null=True, blank=True)
+    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    employee_id = models.ForeignKey("employee.Employee", verbose_name=_("Employee ID"), on_delete=models.DO_NOTHING)
+    department_name = models.CharField(_("Department Name"), max_length=150, null=True)
+    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.DO_NOTHING)
+    company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
+    date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
+
+
+    class Meta:
+        verbose_name = "Property Assignment"
+        verbose_name_plural = "Property Assignments"
+    
+    def __repr__(self) -> str:
+        return f"{self.employee_name} - {self.name} - {self.value}"

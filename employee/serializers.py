@@ -195,3 +195,9 @@ class EmployeeKRASerializer(serializers.ModelSerializer):
     #             # company,
     #         )
     #     return kpi
+
+
+class PropertyAssignmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.PropertyAssignment
+        fields = "__all__"

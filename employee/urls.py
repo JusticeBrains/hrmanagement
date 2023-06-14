@@ -48,5 +48,10 @@ router.register("kpi", employee_views.KPIViewSet, basename="kpi")
 router.register(
     "employeekra", employee_views.EmployeeKRAViewSet, basename="employeekra"
 )
+router.register(
+    "propertyassignment",
+    employee_views.PropertyAssignmentViewSet,
+    basename="propertyassignment",
+)
 
 urlpatterns = router.urls
