@@ -24,7 +24,7 @@ def update_employee_record():
     try:
         subject = 'Report'
         message = 'The task has been completed successfully.'
-        from_email = settings.DEFAULT_FROM_EMAIL
+        from_email = settings.EMAIL_HOST_USER
         recipient_list = ['justiceduodu77@gmail.com']
 
         send_mail(subject, message, from_email, recipient_list)
