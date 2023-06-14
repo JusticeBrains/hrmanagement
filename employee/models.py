@@ -892,7 +892,7 @@ class PropertyAssignment(models.Model):
     department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.DO_NOTHING)
     company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-
+    status = models.PositiveIntegerField(_("Status"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Property Assignment"
