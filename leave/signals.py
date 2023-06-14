@@ -129,9 +129,9 @@ send_leave_reminder = Signal()
     #         no_of_days_exhausted=no_of_days_exhausted,
     #     )
 
-    post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
-    instance.save()
-    post_save.connect(update_employee_days_left, sender=LeaveRequest)
+    # post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
+    # instance.save()
+    # post_save.connect(update_employee_days_left, sender=LeaveRequest)
 
 
 @receiver(post_save, sender=LeavePlan)
