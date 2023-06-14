@@ -28,22 +28,46 @@ send_leave_reminder = Signal()
 #         send_leave_reminder.send(sender=LeaveRequest, instance=instance)
 
 
-@receiver(post_save, sender=LeaveRequest)
-def update_employee_days_left(sender, instance, created, **kwargs):
-    employee_limits = EmployeeLeaveLimits.objects.values_list('leave_type','employee', 'period', "leave_type")
-    if (
-        instance.hr_status == 1
-        and instance.hr_extension_status != 1
-        and instance.is_extend != 1
-        and instance.unpaid_leave == 0
-    ):
-        if instance.leave_type == employee_limits.leave_type and instance.employee == employee_limits.employee:
-            if instance.no_of_days_requested > employee_limits.number_of_days_left:
-                raise ValidationError(f"Number of Requested{instance.no_of_days_requested} is greated than your max_days for this leave type of {employee_limits. max_number_of_days}")
-            if instance.no_of_days_requested <= employee_limits.number_of_days_left:
-                employee_limits.number_of_days_exhausted += instance.no_of_days_requested
-                employee_limits.number_of_days_left -= employee_limits.number_of_days_exhausted
-                employee_limits.save()
+# @receiver(post_save, sender=LeaveRequest)
+# def update_employee_days_left(sender, instance, created, **kwargs):
+#     employee_limits = EmployeeLeaveLimits.objects.values_list('leave_type', 'employee', 'period')
+    
+#     if (
+#         instance.hr_status == 1
+#         and instance.hr_extension_status != 1
+#         and instance.is_extend != 1
+#         and instance.unpaid_leave == 0
+#     ):
+#         for limit in employee_limits:
+#             leave_type = limit[0]
+#             employee = limit[1]
+#             if instance.leave_type == leave_type and instance.employee == employee:
+#                 if instance.no_of_days_requested > limit[2]:  # Assuming number_of_days_left is the 3rd element in the tuple
+#                     raise ValidationError(f"Number of Requested {instance.no_of_days_requested} is greater than your max_days for this leave type of {limit[2]}")
+#                 if instance.no_of_days_requested <= limit[2]:
+#                     # Perform necessary updates to the EmployeeLeaveLimits instance
+#                     pass
+
+
+# @receiver(post_save, sender=LeaveRequest)
+# def update_employee_days_left(sender, instance, created, **kwargs):
+#     employee_limits = EmployeeLeaveLimits.objects.values_list('leave_type','employee', 'period','number_of_days_left')
+#     if (
+#         instance.hr_status == 1
+#         and instance.hr_extension_status != 1
+#         and instance.is_extend != 1
+#         and instance.unpaid_leave == 0
+#     ):
+#         for limit in employee_limits:
+#             leave_type = limit[0]
+#             employee = limit[1]
+#             if instance.leave_type == leave_type and instance.employee == employee:
+#                 if instance.no_of_days_requested > limit[3]:  # Assuming number_of_days_left is the 3rd element in the tuple
+#                     raise ValidationError(f"Number of Requested {instance.no_of_days_requested} is greater than your max_days for this leave type of {limit[2]}")
+#                 if instance.no_of_days_requested <= limit[3]:
+#                     employee_limits.number_of_days_exhausted += instance.no_of_days_requested
+#                     employee_limits.number_of_days_left -= employee_limits.number_of_days_exhausted
+#                     employee_limits.save()
 
             # update employee with new values of days_left and no_of_days_exhausted
             # Employee.objects.filter(id=instance.employee.id).update(
