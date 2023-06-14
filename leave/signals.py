@@ -30,14 +30,15 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     if (
         instance.hr_status == 1
         and instance.hr_extension_status != 1
-        and instance.is_extend != 1 and instance.unpaid_leave == 0
+        and instance.is_extend != 1
+        and instance.unpaid_leave == 0
     ):
         if instance.leave_type.name == "Maternity":
             instance.no_of_days_requested = instance.leave_type.max_number_of_days
             instance.no_of_days_left = instance.employee.days_left
             no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
             no_of_days_exhausted += instance.no_of_days_requested
-           
+
             # update employee with new values of days_left and no_of_days_exhausted
             Employee.objects.filter(id=instance.employee.id).update(
                 days_left=instance.no_of_days_left,
@@ -88,7 +89,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             days_left=instance.no_of_days_left,
             no_of_days_exhausted=no_of_days_exhausted,
         )
-    
+
     if instance.hr_status == 1 and instance.unpaid_leave == 1:
         no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
         no_of_days_exhausted += instance.no_of_days_requested
@@ -177,17 +178,22 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
     if created:
         print("------------------Starting----------------1----------")
         for emp in employee:
-            print(f"----------Starting--------------{emp.pay_group_code} - {emp.company}")
-            print(f"----------Starting--------------{instance.paygroup.no} - {instance.paygroup.company}")
-            if emp.pay_group_code == instance.paygroup.no and emp.company == instance.paygroup.company:
+            if (
+                emp.pay_group_code == instance.paygroup.no
+                and emp.company == instance.paygroup.company
+            ):
                 print(f"{emp.company_id}")
-                if not Employee.objects.filter(leave_type=instance.leave_type,employee=emp, paygroup=instance.paygroup).exists():
+                if not Employee.objects.filter(
+                    leave_type=instance.leave_type,
+                    employee=emp,
+                    paygroup=instance.paygroup,
+                ).exists():
                     EmployeeLeaveLimits.objects.create(
                         leave_type=instance.leave_type,
                         employee=emp,
                         max_number_of_days=instance.max_number_of_days,
                         paygroup=instance.paygroup,
-                        company=instance.company
+                        company=instance.company,
                     )
                 else:
                     print("Already Exists")
