@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from rest_framework import serializers
 
-from .models import HolidayCalender, LeaveType, LeaveRequest, LeavePlan
+from .models import EmployeeLeaveLimits, HolidayCalender, LeaveLimits, LeaveType, LeaveRequest, LeavePlan
 
 
 class DateOnlyField(serializers.ReadOnlyField):
@@ -139,4 +139,14 @@ class LeaveTypeSerializer(serializers.ModelSerializer):
 class HolidayCalenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = HolidayCalender
+        fields = "__all__"
+
+class LeaveLimitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveLimits
+        fields = "__all__"
+
+class EmployeeLeaveLimitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeLeaveLimits
         fields = "__all__"

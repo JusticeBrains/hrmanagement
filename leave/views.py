@@ -3,7 +3,9 @@ from rest_framework import viewsets
 from . import models as leavemodel
 
 from .serializers import (
+    EmployeeLeaveLimitsSerializer,
     HolidayCalenderSerializer,
+    LeaveLimitsSerializer,
     LeaveRequestSerializer,
     LeaveTypeSerializer,
     LeavePlanSerializer
@@ -100,4 +102,15 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
 class HolidayCalenderViewset(viewsets.ModelViewSet):
     queryset = leavemodel.HolidayCalender.objects.all()
     serializer_class = HolidayCalenderSerializer
+    filterset_fields = "__all__"
+
+
+class LeaveLimitsViewSet(viewsets.ModelViewSet):
+    queryset = leavemodel.LeaveLimits.objects.all()
+    serializer_class = LeaveLimitsSerializer
+    filterset_fields = "__all__"
+
+class EmployeeLeaveLimitsViewSet(viewsets.ModelViewSet):
+    queryset = leavemodel.EmployeeLeaveLimits.objects.all()
+    serializer_class = EmployeeLeaveLimitsSerializer
     filterset_fields = "__all__"

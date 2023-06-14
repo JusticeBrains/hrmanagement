@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -142,7 +143,9 @@ class LeaveRequest(LeaveBase):
     extension_reason = models.CharField(
         _("Extension Reason"), max_length=250, null=True, blank=True
     )
-    unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), blank=True, null=True, default=0)
+    unpaid_leave = models.PositiveIntegerField(
+        _("Unpaid Leave"), blank=True, null=True, default=0
+    )
 
     @property
     def end_date(self):
@@ -276,25 +279,12 @@ class LeaveType(models.Model):
         _("Code"), primary_key=True, editable=False, default=uuid.uuid4
     )
     name = models.CharField(_("Name"), max_length=50, blank=True, null=True)
-    max_number_of_days = models.PositiveIntegerField(
-        _("Max Number Of Days"), blank=True, null=True
-    )
-    paygroup = models.ForeignKey(
-        "employee.PayGroup",
-        verbose_name=_("PayGroup"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-    )
-    pay_group_code = models.CharField(
-        _("Pay Group Code"), max_length=50, null=True, blank=True
     )
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
@@ -315,7 +305,7 @@ class LeaveType(models.Model):
     #         return 0
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} - {self.company}"
 
     class Meta:
         verbose_name = "Leave Type"
@@ -337,3 +327,87 @@ class LeaveType(models.Model):
 #             cursor.execute(
 #                 "ALTER TABLE leave_leavetype ALTER COLUMN staff_category TYPE VARCHAR(50)"
 #             )
+
+
+class LeaveLimits(models.Model):
+    leave_type = models.ForeignKey(
+        "leave.LeaveType",
+        verbose_name=_("Leave Type"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("Paygroup"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    max_number_of_days = models.PositiveIntegerField(
+        _("Max Number of Days"), blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
+
+    class Meta:
+        unique_together = ("leave_type", "paygroup", "company")
+        verbose_name = "Leave Limits"
+        verbose_name_plural = "Leave Limits"
+
+    def __str__(self):
+        return f"{self.leave_type}, {self.paygroup}"
+    
+    def save(self) -> None:
+        self.company_name = self.company.name
+        return super().save()
+
+
+class EmployeeLeaveLimits(models.Model):
+    leave_type = models.CharField(
+        _("Leave Type"), max_length=150, blank=True, null=True
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    max_number_of_days = models.PositiveIntegerField(
+        _("Max Number of Days"), blank=True, null=True
+    )
+    number_of_days_left = models.PositiveIntegerField(
+        _("Number of Days Left"), blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("Paygroup"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        unique_together = (
+            "leave_type",
+            "employee",
+        )
+        verbose_name = "Employee Leave Limits"
+        verbose_name_plural = "Employee Leave Limits"
+
+    def __str__(self):
+        return f"{self.leave_type} - {self.employee} - {self.company}"

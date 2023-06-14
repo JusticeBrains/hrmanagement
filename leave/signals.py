@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from datetime import timedelta
-from .models import HolidayCalender
+from .models import EmployeeLeaveLimits, HolidayCalender, LeaveLimits
 from employee.models import Employee
 from leave.models import LeaveRequest, LeaveType, LeavePlan
 
@@ -138,11 +138,11 @@ def update_employee_days_left_leave_plan(sender, instance, created, **kwargs):
     post_save.connect(update_employee_days_left_leave_plan, sender=LeavePlan)
 
 
-@receiver(post_save, sender=LeaveType)
-def update_paygroup_code(sender, instance, created, **kwargs):
-    if created:
-        instance.pay_group_code = instance.paygroup.no
-        instance.save()
+# @receiver(post_save, sender=LeaveType)
+# def update_paygroup_code(sender, instance, created, **kwargs):
+#     if created:
+#         instance.pay_group_code = instance.paygroup.no
+#         instance.save()
 
 
 # @receiver(post_save, sender=LeavePlan)
@@ -168,3 +168,27 @@ def compute_leave_resumption_date(sender, instance, created, **kwargs):
 
         instance.resumption_date = resumption_date
         instance.save()
+
+
+@receiver(post_save, sender=LeaveLimits)
+def create_employee_leave_limits(sender, instance, created, **kwargs):
+    post_save.disconnect(create_employee_leave_limits, sender=LeaveLimits)
+    employee = Employee.objects.all()
+    if created:
+        print("------------------Starting----------------1----------")
+        for emp in employee:
+            print(f"----------Starting--------------{emp.pay_group_code} - {emp.company}")
+            print(f"----------Starting--------------{instance.paygroup.no} - {instance.paygroup.company}")
+            if emp.pay_group_code == instance.paygroup.no and emp.company == instance.paygroup.company:
+                print(f"{emp.company_id}")
+                if not Employee.objects.filter(leave_type=instance.leave_type,employee=emp, paygroup=instance.paygroup).exists():
+                    EmployeeLeaveLimits.objects.create(
+                        leave_type=instance.leave_type,
+                        employee=emp,
+                        max_number_of_days=instance.max_number_of_days,
+                        paygroup=instance.paygroup,
+                        company=instance.company
+                    )
+                else:
+                    print("Already Exists")
+    post_save.connect(create_employee_leave_limits, sender=LeaveLimits)
