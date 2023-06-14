@@ -894,7 +894,7 @@ class PropertyAssignment(models.Model):
     company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, null=True, blank=True)
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     status = models.PositiveIntegerField(_("Status"), blank=True, null=True, default=0)
-    status_date = models.DateField(_("Status Date"), auto_now=False, auto_now_add=False)
+    status_date = models.DateField(_("Status Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
     assigned_by = models.CharField(_("Assigned By"), max_length=150, blank=True, null=True)
     class Meta:
