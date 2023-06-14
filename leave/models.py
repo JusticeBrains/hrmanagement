@@ -347,11 +347,12 @@ class LeaveLimits(models.Model):
         blank=True,
         null=True,
     )
+    paygroup_name = models.CharField(_("PayGroup Name"), max_length=150, blank=True, null=True)
     company_id = models.CharField(_("Company ID"), max_length=150, blank=True)
     max_number_of_days = models.PositiveIntegerField(
         _("Max Number of Days"), blank=True, null=True
     )
-    period = models.CharField(_("Period"), max_length=80, blank=True, null=True)
+    period = models.CharField(_("Period"), max_length=80, blank=True, null=True, default=timezone.now().year)
 
     class Meta:
         unique_together = ("leave_type", "paygroup")

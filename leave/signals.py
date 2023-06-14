@@ -188,6 +188,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
     if created:
         instance.leave_name = instance.leave_type.name
         instance.company_id = instance.paygroup.comp_id
+        instance.paygroup_name = instance.paygroup.no
         print("------------------Starting----------------1----------")
         for emp in employee:
             if (
@@ -209,5 +210,5 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                     )
                 else:
                     print("Already Exists")
-
+    instance.save()
     post_save.connect(create_employee_leave_limits, sender=LeaveLimits)
