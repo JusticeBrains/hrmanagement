@@ -252,7 +252,13 @@ class EmployeeAppraisal(models.Model):
     department = models.CharField(
         _("Department"), max_length=150, null=True, blank=True, editable=False
     )
-    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.CASCADE, blank=True, null=True)
+    department_id = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
     performance_score = models.PositiveIntegerField(
         _("Performance Score"), null=True, blank=True
@@ -266,11 +272,17 @@ class EmployeeAppraisal(models.Model):
         _("Recommendation"), max_length=150, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE, blank=True, null=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     weighted_score = models.PositiveIntegerField(
         _("Weighted Score"), blank=True, null=True
     )
-    hr_status =models.PositiveIntegerField(_("HR Status"), default=0)
+    hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -368,7 +380,6 @@ class KPI(models.Model):
     supervisor_status = models.PositiveIntegerField(_("Supervisor Status"), default=0)
     employee_status = models.PositiveIntegerField(_("Supervisor Status"), default=0)
 
-
     def clean(self):
         if self.employee_id:
             self.company = self.employee_id.company
@@ -379,6 +390,7 @@ class KPI(models.Model):
         #     )
         # if self.score is not None:
         #     self.percentage_score = round((self.score / 100)*self.kpi_score, ndigits=2)
+
     class Meta:
         verbose_name = "KPI"
         verbose_name_plural = "KPI's"
@@ -428,8 +440,17 @@ class EmployeeKRA(models.Model):
     )
     narration = models.CharField(_("Narration"), max_length=250, blank=True, null=True)
     target = models.CharField(_("Target"), max_length=150, blank=True, null=True)
-    emp_total_score = models.DecimalField(_("Employee Total Score"), max_digits=5, decimal_places=2, null=True, blank=True)
-    supervisor_total_score = models.DecimalField(_("Supervisor Total Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    emp_total_score = models.DecimalField(
+        _("Employee Total Score"), max_digits=5, decimal_places=2, null=True, blank=True
+    )
+    supervisor_total_score = models.DecimalField(
+        _("Supervisor Total Score"),
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
     class Meta:
         verbose_name = "Employee KRA"
         verbose_name_plural = "Employee KRA's"
@@ -554,15 +575,31 @@ class EmployeeMedicalClaim(models.Model):
     )
     claim_amount = models.PositiveIntegerField(_("Claim Amount"), blank=True, null=True)
     claim_reason = models.TextField(_("Claim Reason"), blank=True, null=True)
-    supporting_doc1 = models.TextField(_("Supporting Document 1"), blank=True, null=True)
-    supporting_doc2 = models.TextField(_("Supporting Document 2"), blank=True, null=True)
+    supporting_doc1 = models.TextField(
+        _("Supporting Document 1"), blank=True, null=True
+    )
+    supporting_doc2 = models.TextField(
+        _("Supporting Document 2"), blank=True, null=True
+    )
     status = models.PositiveIntegerField(_("Status"), blank=True, null=True, default=0)
-    validation_status = models.PositiveIntegerField(_("Validation Status"), blank=True, null=True, default=0)
-    validated_by = models.CharField(_("Validated By"), max_length=150, blank=True, null=True)
-    validation_date = models.DateField(_("Validation Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
-    processed_status = models.PositiveIntegerField(_("Processed Status"), blank=True, null=True, default=0)
-    processed_by = models.CharField(_("Processed By"), max_length=150, blank=True, null=True)
-    processed_date = models.PositiveIntegerField(_("Processed Date"), blank=True, null=True)
+    validation_status = models.PositiveIntegerField(
+        _("Validation Status"), blank=True, null=True, default=0
+    )
+    validated_by = models.CharField(
+        _("Validated By"), max_length=150, blank=True, null=True
+    )
+    validation_date = models.DateField(
+        _("Validation Date"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
+    processed_status = models.PositiveIntegerField(
+        _("Processed Status"), blank=True, null=True, default=0
+    )
+    processed_by = models.CharField(
+        _("Processed By"), max_length=150, blank=True, null=True
+    )
+    processed_date = models.PositiveIntegerField(
+        _("Processed Date"), blank=True, null=True
+    )
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
     created_at = models.DateTimeField(
         _("Created At"), auto_now=False, auto_now_add=True
@@ -887,21 +924,92 @@ class PropertyAssignment(models.Model):
     item_id = models.CharField(_("Item ID"), max_length=150, null=True, blank=True)
     name = models.CharField(_("Name"), max_length=150, null=True, blank=True)
     value = models.CharField(_("Value"), max_length=150, null=True, blank=True)
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
-    employee_id = models.ForeignKey("employee.Employee", verbose_name=_("Employee ID"), on_delete=models.DO_NOTHING)
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    employee_id = models.ForeignKey(
+        "employee.Employee", verbose_name=_("Employee ID"), on_delete=models.DO_NOTHING
+    )
     department_name = models.CharField(_("Department Name"), max_length=150, null=True)
-    department_id = models.ForeignKey("employee.Department", verbose_name=_("Department ID"), on_delete=models.DO_NOTHING)
-    company_name = models.CharField(_("Company Name"), max_length=150, null=True, blank=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, null=True, blank=True)
+    department_id = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department ID"),
+        on_delete=models.DO_NOTHING,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, null=True, blank=True
+    )
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     status = models.PositiveIntegerField(_("Status"), blank=True, null=True, default=0)
-    status_date = models.DateField(_("Status Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    status_date = models.DateField(
+        _("Status Date"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
-    assigned_by = models.CharField(_("Assigned By"), max_length=150, blank=True, null=True)
-    date_modified = models.DateField(_("Date Modified"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    assigned_by = models.CharField(
+        _("Assigned By"), max_length=150, blank=True, null=True
+    )
+    date_modified = models.DateField(
+        _("Date Modified"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
+
     class Meta:
         verbose_name = "Property Assignment"
         verbose_name_plural = "Property Assignments"
-    
+
     def __repr__(self) -> str:
         return f"{self.employee_name} - {self.name} - {self.value}"
+
+
+class PropertyRequest(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    description = models.TextField(_("Description"), blank=True, null=True)
+    quantity = models.DecimalField(
+        _("Quantity"), max_digits=5, decimal_places=2, blank=True, null=True
+    )
+    value = models.DecimalField(
+        _("Value"), max_digits=5, decimal_places=2, blank=True, null=True
+    )
+    date_request = models.DateField(
+        _("Date Requested"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
+    department_id = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    department_name = models.CharField(
+        _("Department Name"), max_length=150, blank=True, null=True
+    )
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID "),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    status = models.PositiveIntegerField(_("Status"), default=0)
+    expected_date = models.DateField(
+        _("Expected Date"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
+    date_given = models.DateField(
+        _("Date Given"), auto_now=False, auto_now_add=False, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Property Request"
+        verbose_name_plural = "Property Requests"
+
+    def __str__(self) -> str:
+        return f"{self.description[:50]} - {self.quantity} - {self.value}"

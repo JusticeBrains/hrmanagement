@@ -204,3 +204,9 @@ class PropertyAssignmentViewSet(viewsets.ModelViewSet):
     queryset = employee_model.PropertyAssignment.objects.all()
     serializer_class = serializers.PropertyAssignmentSerializer
     filterset_fields = "__all__"
+
+
+class PropertyRequestViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.PropertyRequest.objects.all()
+    serializer_class = serializers.PropertyRequestSerializer
+    filterset_fields = "__all__"

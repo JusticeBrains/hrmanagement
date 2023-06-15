@@ -132,9 +132,12 @@ class KPISerializer(serializers.ModelSerializer):
     company = serializers.CharField(read_only=True)
     score = serializers.DecimalField(max_digits=5, decimal_places=2, read_only=True)
     kpi_score = serializers.DecimalField(max_digits=5, decimal_places=2, required=False)
-    supervisor_score = serializers.DecimalField(max_digits=5, decimal_places=2, required=False)
+    supervisor_score = serializers.DecimalField(
+        max_digits=5, decimal_places=2, required=False
+    )
     emp_score = serializers.DecimalField(max_digits=5, decimal_places=2, required=False)
     period = serializers.ReadOnlyField()
+
     class Meta:
         model = employee_model.KPI
         fields = "__all__"
@@ -200,4 +203,10 @@ class EmployeeKRASerializer(serializers.ModelSerializer):
 class PropertyAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.PropertyAssignment
+        fields = "__all__"
+
+
+class PropertyRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.PropertyRequest
         fields = "__all__"

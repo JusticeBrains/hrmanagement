@@ -34,24 +34,29 @@ router.register("unit", employee_views.UnitViewSet, basename="unit")
 router.register("branch", employee_views.BranchViewSet, basename="branch")
 router.register("notch", employee_views.NotchViewSet, basename="branch")
 router.register(
-    "appraisalgrading",
+    "appraisal-grading",
     employee_views.AppraisalGradingViewSet,
-    basename="appraisalgrading",
+    basename="appraisal-dgrading",
 )
 router.register("paygroup", employee_views.PayGroupViewSet, basename="paygroup")
 router.register(
-    "employeededuction",
+    "employee-deduction",
     employee_views.EmployeeDeductionViewSet,
-    basename="employeededuction",
+    basename="employee-deduction",
 )
 router.register("kpi", employee_views.KPIViewSet, basename="kpi")
 router.register(
-    "employeekra", employee_views.EmployeeKRAViewSet, basename="employeekra"
+    "employee-kra", employee_views.EmployeeKRAViewSet, basename="employee-kra"
 )
 router.register(
-    "propertyassignment",
+    "property-assignment",
     employee_views.PropertyAssignmentViewSet,
-    basename="propertyassignment",
+    basename="propertya-ssignment",
+)
+router.register(
+    "property-request",
+    employee_views.PropertyRequestViewSet,
+    basename="property-request",
 )
 
 urlpatterns = router.urls
