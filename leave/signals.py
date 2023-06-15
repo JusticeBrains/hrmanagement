@@ -198,7 +198,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                 ).exists():
                     EmployeeLeaveLimits.objects.update(
                         max_number_of_days=instance.max_number_of_days,
-                        leave_type_id=instance.leave_type.id
+                        leave_type_id=instance.leave_type.code,
                     )
     instance.save()
     post_save.connect(create_employee_leave_limits, sender=LeaveLimits)
