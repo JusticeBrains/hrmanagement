@@ -168,7 +168,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
     employee = Employee.objects.all()
     if created:
         instance.leave_name = instance.leave_type.name
-        instance.leave_type_id = instance.leave_type.id
+        instance.leave_type_id = instance.leave_type.code
         instance.company_id = instance.paygroup.comp_id
         instance.paygroup_name = instance.paygroup.no
         print("------------------Starting----------------1----------")
