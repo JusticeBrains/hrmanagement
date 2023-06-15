@@ -108,7 +108,7 @@ class LeaveBase(models.Model):
 
 class LeaveRequest(LeaveBase):
     is_extend = models.PositiveIntegerField(
-        _("Requestion for Extension"), blank=True, null=True, default=0
+        _("Request for Extension"), blank=True, null=True, default=0
     )
     no_of_extension_days = models.PositiveIntegerField(
         _("No Of Extension Days"), blank=True, null=True

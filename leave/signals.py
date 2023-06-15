@@ -38,9 +38,6 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     ).first()
     if (
         instance.hr_status == 1
-        and instance.hr_extension_status != 1
-        and instance.is_extend != 1
-        and instance.unpaid_leave == 0
     ):
         if instance.no_of_days_requested > employee_limits.number_of_days_left:
             raise ValidationError(
@@ -52,14 +49,20 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 employee_limits.number_of_days_exhausted
             )
             employee_limits.save()
+    
+    if instance.hr_extension_status == 1 and instance.is_extend == 1 and instance.hr_status == 1:
+        if instance.no_of_extension_days > employee_limits.number_of_days_left:
+                    raise ValidationError(
+                        f"Number of Requested{instance.no_of_extension_days} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
+                    )
+        if instance.no_of_extension_days <= employee_limits.number_of_days_left:
+            employee_limits.number_of_days_exhausted += instance.no_of_extension_days
+            employee_limits.number_of_days_left -= (
+                employee_limits.no_of_extension_days
+            )
+            employee_limits.save()
 
-            # update employee with new values of days_left and no_of_days_exhausted
-            # Employee.objects.filter(id=instance.employee.id).update(
-            #     days_left=instance.no_of_days_left,
-            #     no_of_days_exhausted=no_of_days_exhausted,
-            # )
-
-    # if (
+   # if (
     #     instance.hr_extension_status == 1
     #     and instance.is_extend == 1
     #     and instance.hr_status == 1
@@ -80,15 +83,12 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     #         days_left=instance.no_of_days_left,
     #         no_of_days_exhausted=no_of_days_exhausted,
     #     )
+            # update employee with new values of days_left and no_of_days_exhausted
+            # Employee.objects.filter(id=instance.employee.id).update(
+            #     days_left=instance.no_of_days_left,
+            #     no_of_days_exhausted=no_of_days_exhausted,
+            # )
 
-    # if instance.hr_status == 1 and instance.unpaid_leave == 1:
-    #     no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
-    #     no_of_days_exhausted += instance.no_of_days_requested
-
-    #     Employee.objects.filter(id=instance.employee.id).update(
-    #         days_left=instance.no_of_days_left,
-    #         no_of_days_exhausted=no_of_days_exhausted,
-    #     )
 
     post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
     instance.save()
