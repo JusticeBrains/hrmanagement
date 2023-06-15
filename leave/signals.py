@@ -35,7 +35,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     period = instance.period
     employee_limits = EmployeeLeaveLimits.objects.filter(
         employee=employee, leave_type=leave_type, period=period
-    )
+    ).first()
     if (
         instance.hr_status == 1
         and instance.hr_extension_status != 1
@@ -213,7 +213,14 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                         paygroup=instance.paygroup,
                         company=Company.objects.get(id=instance.paygroup.comp_id),
                     )
-                else:
-                    print("Already Exists")
+                elif EmployeeLeaveLimits.objects.filter(
+                    leave_type=instance.leave_type,
+                    employee=emp,
+                    paygroup=instance.paygroup,
+                ).exists():
+                    EmployeeLeaveLimits.objects.update(
+                        max_number_of_days=instance.max_number_of_days,
+                        leave_type_id=instance.leave_type.id
+                    )
     instance.save()
     post_save.connect(create_employee_leave_limits, sender=LeaveLimits)
