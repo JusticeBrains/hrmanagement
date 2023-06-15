@@ -59,29 +59,6 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             #     no_of_days_exhausted=no_of_days_exhausted,
             # )
 
-    #     else:
-    #         # instance.no_of_days_requested = instance.no_of_days_requested
-    #         max_days = instance.leave_type.max_number_of_days
-    #         employee = instance.employee
-    #         emp_days_left = employee.days_left
-    #         if emp_days_left is not None:
-    #             if (
-    #                 instance.no_of_days_requested <= emp_days_left
-    #                 and instance.no_of_days_requested <= max_days
-    #             ):
-    #                 instance.no_of_days_left = (
-    #                     emp_days_left - instance.no_of_days_requested
-    #                 )
-
-    #         no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
-    #         no_of_days_exhausted += instance.no_of_days_requested
-
-    #         # update employee with new values of days_left and no_of_days_exhausted
-    #         Employee.objects.filter(id=instance.employee.id).update(
-    #             days_left=instance.no_of_days_left,
-    #             no_of_days_exhausted=no_of_days_exhausted,
-    #         )
-
     # if (
     #     instance.hr_extension_status == 1
     #     and instance.is_extend == 1

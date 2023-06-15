@@ -146,8 +146,8 @@ class LeaveRequest(LeaveBase):
     extension_reason = models.CharField(
         _("Extension Reason"), max_length=250, null=True, blank=True
     )
-    unpaid_leave = models.PositiveIntegerField(
-        _("Unpaid Leave"), blank=True, null=True, default=0
+    unpaid_leave_days = models.PositiveIntegerField(
+        _("Unpaid Leave Days"), blank=True, null=True, default=0
     )
 
     @property
