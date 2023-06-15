@@ -99,6 +99,7 @@ class LeaveBase(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
+    period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
 
     class Meta:
         abstract = True

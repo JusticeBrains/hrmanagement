@@ -28,26 +28,30 @@ send_leave_reminder = Signal()
 #         send_leave_reminder.send(sender=LeaveRequest, instance=instance)
 
 
-
 @receiver(post_save, sender=LeaveRequest)
 def update_employee_days_left(sender, instance, created, **kwargs):
-    employee_limits = EmployeeLeaveLimits.objects.all()
-    employees = Employee.objects.all()
+    employee = instance.employee
+    leave_type = instance.leave_type
+    period = instance.period
+    employee_limits = EmployeeLeaveLimits.objects.filter(
+        employee=employee, leave_type=leave_type, period=period
+    )
     if (
         instance.hr_status == 1
         and instance.hr_extension_status != 1
         and instance.is_extend != 1
         and instance.unpaid_leave == 0
     ):
-        # for emp in employees:
-    
-        if instance.leave_type == employee_limits.leave_type and instance.employee == employee_limits.employee:
-            if instance.no_of_days_requested > employee_limits.number_of_days_left:
-                raise ValidationError(f"Number of Requested{instance.no_of_days_requested} is greated than your max_days for this leave type of {employee_limits. max_number_of_days}")
-            if instance.no_of_days_requested <= employee_limits.number_of_days_left:
-                employee_limits.number_of_days_exhausted += instance.no_of_days_requested
-                employee_limits.number_of_days_left -= employee_limits.number_of_days_exhausted
-                employee_limits.save()
+        if instance.no_of_days_requested > employee_limits.number_of_days_left:
+            raise ValidationError(
+                f"Number of Requested{instance.no_of_days_requested} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
+            )
+        if instance.no_of_days_requested <= employee_limits.number_of_days_left:
+            employee_limits.number_of_days_exhausted += instance.no_of_days_requested
+            employee_limits.number_of_days_left -= (
+                employee_limits.number_of_days_exhausted
+            )
+            employee_limits.save()
 
             # update employee with new values of days_left and no_of_days_exhausted
             # Employee.objects.filter(id=instance.employee.id).update(
