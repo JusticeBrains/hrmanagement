@@ -601,7 +601,7 @@ class EmployeeMedicalClaim(models.Model):
         _("Processed Date"), blank=True, null=True
     )
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-    created_at = models.DateTimeField(
+    created_at = models.DateField(
         _("Created At"), auto_now=False, auto_now_add=True
     )
 
