@@ -186,6 +186,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                     EmployeeLeaveLimits.objects.create(
                         leave_type=instance.leave_type,
                         employee=emp,
+                        leave_type_id=instance.leave_type.code,
                         max_number_of_days=instance.max_number_of_days,
                         paygroup=instance.paygroup,
                         company=Company.objects.get(id=instance.paygroup.comp_id),
