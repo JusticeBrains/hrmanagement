@@ -100,7 +100,8 @@ class LeaveBase(models.Model):
         _("Unique Code"), max_length=50, null=True, blank=True
     )
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
-
+    is_maternity = models.PositiveIntegerField(_("Is Maternity"), default=0)
+    unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), default=0)
     class Meta:
         abstract = True
 
@@ -370,6 +371,7 @@ class EmployeeLeaveLimits(models.Model):
     leave_type = models.CharField(
         _("Leave Type"), max_length=150, blank=True, null=True
     )
+    leave_type_id = models.CharField(_("Leave Type ID"), max_length=150, blank=True, null=True)
     employee = models.ForeignKey(
         "employee.Employee",
         verbose_name=_("Employee"),
