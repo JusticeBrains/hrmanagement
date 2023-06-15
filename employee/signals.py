@@ -248,7 +248,7 @@ def update_employee_leave_days(sender, instance,created, **kwargs):
 
 @receiver(post_save, sender=PropertyAssignment)
 def update_property_assignment(sender, instance, created, **kwargs):
-    post_save.disconnect(update_employee_leave_days, sender=PropertyAssignment)
+    post_save.disconnect(update_property_assignment, sender=PropertyAssignment)
 
     if created:
         instance.employee_name = instance.employee_id.fullname
@@ -256,7 +256,7 @@ def update_property_assignment(sender, instance, created, **kwargs):
         instance.company_name = instance.company_id.name
 
     instance.save()
-    post_save.connect(update_employee_leave_days, sender=PropertyAssignment)
+    post_save.connect(update_property_assignment, sender=PropertyAssignment)
 
 
 @receiver(post_save, sender=PropertyRequest)
