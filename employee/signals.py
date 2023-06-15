@@ -11,6 +11,8 @@ from employee.models import (
     EmployeeKRA,
     EmployeeMedicalClaim,
     PayGroup,
+    PropertyAssignment,
+    PropertyRequest,
 )
 from django.core.exceptions import ValidationError
 from company.models import Company
@@ -244,3 +246,26 @@ def update_employee_leave_days(sender, instance,created, **kwargs):
 
         post_save.connect(update_employee_leave_days, sender=PayGroup)
 
+@receiver(post_save, sender=PropertyAssignment)
+def update_property_assignment(sender, instance, created, **kwargs):
+    post_save.disconnect(update_employee_leave_days, sender=PropertyAssignment)
+
+    if created:
+        instance.employee_name = instance.employee_id.fullname
+        instance.department_name = instance.department_id.name
+        instance.company_name = instance.company_id.name
+
+    instance.save()
+    post_save.connect(update_employee_leave_days, sender=PropertyAssignment)
+
+
+@receiver(post_save, sender=PropertyRequest)
+def update_property_request(sender, instance, created, **kwargs):
+    post_save.disconnect(update_property_request, sender=PropertyRequest)
+    
+    if created:
+        instance.department_name = instance.department_id.name
+        instance.company_name = instance.company_id.name
+    
+    instance.save()
+    post_save.connect(update_property_request, sender=PropertyRequest)
