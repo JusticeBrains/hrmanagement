@@ -959,7 +959,7 @@ class PropertyAssignment(models.Model):
         _("Date Modified"), auto_now=False, auto_now_add=False, blank=True, null=True
     )
     date_returned = models.DateField(_("Date Return"), auto_now=False, auto_now_add=False, null=True, blank=True)
-
+    reason_returned = models.CharField(_("Reason Returned"), max_length=150, blank=True, null=True)
     class Meta:
         verbose_name = "Property Assignment"
         verbose_name_plural = "Property Assignments"
