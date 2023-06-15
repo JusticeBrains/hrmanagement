@@ -386,6 +386,7 @@ class EmployeeLeaveLimits(models.Model):
         _("Number of Days Left"), blank=True, null=True, default=0
     )
     number_of_days_exhausted = models.PositiveIntegerField(_("Number of Days Exhausted"), default=0)
+    unpaid_leave_days = models.PositiveIntegerField(_("Unpaid Leave Days"), default=0)
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
