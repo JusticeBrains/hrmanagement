@@ -287,6 +287,7 @@ class LeaveType(models.Model):
         _("Unique Code"), max_length=50, null=True, blank=True
     )
     unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), blank=True, null=True)
+    rollover = models.PositiveIntegerField(_("Rollover"), default=0)
 
     # def calculate_max_days(self, employee):
     #     if self.name == "Medical":
@@ -396,6 +397,7 @@ class EmployeeLeaveLimits(models.Model):
         null=True,
     )
     period = models.CharField(_("Period"), max_length=80, blank=True, null=True, default=timezone.now().year)
+    rollover_days = models.PositiveIntegerField(_("Rollover Days"), null=True, blank=True)
     class Meta:
         unique_together = (
             "leave_type",

@@ -158,7 +158,8 @@ class EmployeeKRAValidator:
 
 class EmployeeKRASerializer(serializers.ModelSerializer):
     # kpis = KPISerializer(many=True, write_only=True)
-
+    computed_supervisor_score = serializers.ReadOnlyField()
+    computed_employee_score = serializers.ReadOnlyField()
     class Meta:
         model = employee_model.EmployeeKRA
         fields = "__all__"

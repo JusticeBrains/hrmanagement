@@ -8,6 +8,7 @@ from employee.models import Employee
 from leave.models import LeaveRequest, LeaveType, LeavePlan
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.utils import timezone
 
 
 send_leave_reminder = Signal()
@@ -37,8 +38,15 @@ def send_email(sender, instance, created, **kwargs):
         for employee in employees:
             if employee.company_id == employee_company and employee.is_hr == 1:
                 subject = "Leave Request Submitted"
-                message = f"Hello, {instance.employee} has submitted a leave request"
-                send_mail(subject, message, 'justiceduodu14@gmail.com', [instance.employee.company_email, employee.company_email])
+                message = (
+                    f"Hello, {instance.employee.fullname} has submitted a leave request"
+                )
+                send_mail(
+                    subject,
+                    message,
+                    "justiceduodu14@gmail.com",
+                    [instance.employee.company_email, employee.company_email],
+                )
 
 
 @receiver(post_save, sender=LeaveRequest)
@@ -47,11 +55,9 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     leave_type = instance.leave_type
     period = instance.period
     employee_limits = EmployeeLeaveLimits.objects.filter(
-        employee=employee, leave_type=leave_type, period=period
+        employee=employee, leave_type=leave_type
     ).first()
-    if (
-        instance.hr_status == 1
-    ):
+    if instance.hr_status == 1 and instance.period == timezone.now().year:
         if instance.no_of_days_requested > employee_limits.number_of_days_left:
             raise ValidationError(
                 f"Number of Requested{instance.no_of_days_requested} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
@@ -62,20 +68,23 @@ def update_employee_days_left(sender, instance, created, **kwargs):
                 employee_limits.number_of_days_exhausted
             )
             employee_limits.save()
-    
-    if instance.hr_extension_status == 1 and instance.is_extend == 1 and instance.hr_status == 1:
+
+    if (
+        instance.hr_extension_status == 1
+        and instance.is_extend == 1
+        and instance.hr_status == 1 
+        and instance.period == timezone.now().year
+    ):
         if instance.no_of_extension_days > employee_limits.number_of_days_left:
-                    raise ValidationError(
-                        f"Number of Requested{instance.no_of_extension_days} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
-                    )
+            raise ValidationError(
+                f"Number of Requested{instance.no_of_extension_days} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
+            )
         if instance.no_of_extension_days <= employee_limits.number_of_days_left:
             employee_limits.number_of_days_exhausted += instance.no_of_extension_days
-            employee_limits.number_of_days_left -= (
-                employee_limits.no_of_extension_days
-            )
+            employee_limits.number_of_days_left -= employee_limits.no_of_extension_days
             employee_limits.save()
 
-   # if (
+    # if (
     #     instance.hr_extension_status == 1
     #     and instance.is_extend == 1
     #     and instance.hr_status == 1
@@ -96,12 +105,11 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     #         days_left=instance.no_of_days_left,
     #         no_of_days_exhausted=no_of_days_exhausted,
     #     )
-            # update employee with new values of days_left and no_of_days_exhausted
-            # Employee.objects.filter(id=instance.employee.id).update(
-            #     days_left=instance.no_of_days_left,
-            #     no_of_days_exhausted=no_of_days_exhausted,
-            # )
-
+    # update employee with new values of days_left and no_of_days_exhausted
+    # Employee.objects.filter(id=instance.employee.id).update(
+    #     days_left=instance.no_of_days_left,
+    #     no_of_days_exhausted=no_of_days_exhausted,
+    # )
 
     post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
     instance.save()
@@ -184,7 +192,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
         instance.leave_type_id = instance.leave_type.code
         instance.company_id = instance.paygroup.comp_id
         instance.paygroup_name = instance.paygroup.no
-        print("------------------Starting----------------1----------")
+        print("------------------Starting--------------------------")
         for emp in employee:
             if (
                 emp.pay_group_code == instance.paygroup.no
