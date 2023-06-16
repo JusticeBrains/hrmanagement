@@ -7,6 +7,7 @@ from .models import EmployeeLeaveLimits, HolidayCalender, LeaveLimits
 from employee.models import Employee
 from leave.models import LeaveRequest, LeaveType, LeavePlan
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 
 
 send_leave_reminder = Signal()
@@ -26,6 +27,18 @@ send_leave_reminder = Signal()
 # def emit_leave_reminder_signal(sender, instance, created, **kwargs):
 #     if created:
 #         send_leave_reminder.send(sender=LeaveRequest, instance=instance)
+
+
+@receiver(post_save, sender=LeaveRequest)
+def send_email(sender, instance, created, **kwargs):
+    if created:
+        employees = Employee.objects.all()
+        employee_company = instance.employee.company_id
+        for employee in employees:
+            if employee.company_id == employee_company and employee.is_hr == 1:
+                subject = "Leave Request Submitted"
+                message = f"Hello, {instance.employee} has submitted a leave request"
+                send_mail(subject, message, 'justiceduodu14@gmail.com', [instance.employee.company_email, employee.company_email])
 
 
 @receiver(post_save, sender=LeaveRequest)

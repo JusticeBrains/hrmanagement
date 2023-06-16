@@ -132,7 +132,6 @@ def update_kpi_fields(sender, instance, created, **kwargs):
         instance.company = employee.company
         instance.company_id = employee.company_id
 
-
         instance.score = round(
             (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
         )
@@ -140,11 +139,9 @@ def update_kpi_fields(sender, instance, created, **kwargs):
     post_save.connect(update_kpi_fields, sender=KPI)
 
 
-
 @receiver(post_save, sender=KPI)
 def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
-
 
     active_period = timezone.now().year
 
@@ -170,9 +167,8 @@ def update_performance_score(instance, **kwargs):
             appraisal.performance_score = appraisal.performance_score or 0
             appraisal.performance_score += total_score
             appraisal.weighted_score = appraisal.weighted_score or 0
-            appraisal.weighted_score += total_kpi_scores 
-            
-        
+            appraisal.weighted_score += total_kpi_scores
+
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
@@ -193,7 +189,7 @@ def update_kra_fields(sender, instance, created, **kwargs):
         instance.emp_name = employee.fullname
         instance.department = instance.department_id.name
         instance.company = instance.company_id.name
-       
+
         instance.save(
             update_fields=[
                 "emp_code",
@@ -207,7 +203,7 @@ def update_kra_fields(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=EmployeeMedicalClaim)
-def update_medical_claim(sender , instance, created, **kwargs):
+def update_medical_claim(sender, instance, created, **kwargs):
     post_save.disconnect(update_medical_claim, sender=EmployeeMedicalClaim)
     if created:
         employee = Employee.objects.get(id=instance.employee_id.id)
@@ -231,12 +227,16 @@ def update_medical_claim(sender , instance, created, **kwargs):
 
 
 @receiver(post_save, sender=PayGroup)
-def update_employee_leave_days(sender, instance,created, **kwargs):
+def update_employee_leave_days(sender, instance, created, **kwargs):
     post_save.disconnect(update_employee_leave_days, sender=PayGroup)
 
     if created:
-        employees = Employee.objects.filter(pay_group_code=instance.no, company=instance.company)
-        employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
+        employees = Employee.objects.filter(
+            pay_group_code=instance.no, company=instance.company
+        )
+        employees.update_or_create(
+            total_number_of_leave_days=instance.total_number_of_leave_days
+        )
 
         # for employee in employees:
         #     # employees.update(total_number_of_leave_days=instance.total_number_of_leave_days)
@@ -245,6 +245,7 @@ def update_employee_leave_days(sender, instance,created, **kwargs):
         #     employee.save()
 
         post_save.connect(update_employee_leave_days, sender=PayGroup)
+
 
 @receiver(post_save, sender=PropertyAssignment)
 def update_property_assignment(sender, instance, created, **kwargs):
@@ -262,10 +263,10 @@ def update_property_assignment(sender, instance, created, **kwargs):
 @receiver(post_save, sender=PropertyRequest)
 def update_property_request(sender, instance, created, **kwargs):
     post_save.disconnect(update_property_request, sender=PropertyRequest)
-    
+
     if created:
         instance.department_name = instance.department_id.name
         instance.company_name = instance.company_id.name
-    
+
     instance.save()
     post_save.connect(update_property_request, sender=PropertyRequest)

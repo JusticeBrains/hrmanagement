@@ -27,7 +27,7 @@ router.register(
     basename="employeepayreview",
 )
 router.register(
-    "staff-category", employee_views.StaffCategoryViewSet, basename="staff-category"
+    "staffcategory", employee_views.StaffCategoryViewSet, basename="staff-category"
 )
 router.register("department", employee_views.DepartmentViewSet, basename="department")
 router.register("unit", employee_views.UnitViewSet, basename="unit")
@@ -40,7 +40,7 @@ router.register(
 )
 router.register("paygroup", employee_views.PayGroupViewSet, basename="paygroup")
 router.register(
-    "employee-deduction",
+    "employeededuction",
     employee_views.EmployeeDeductionViewSet,
     basename="employee-deduction",
 )

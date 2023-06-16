@@ -3,6 +3,7 @@ from typing import Any, Optional
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+import requests
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -22,10 +23,11 @@ def update_employee_record():
     call_command("load_data")
     # Send email report
     try:
+        print("---------------Sending -----------------------")
         subject = 'Report'
         message = 'The task has been completed successfully.'
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = ['justiceduodu77@gmail.com']
+        from_email = "justiceduodu14@gmail.com"
+        recipient_list = ['justicemclean@proton.me',]
 
         send_mail(subject, message, from_email, recipient_list)
         print("---------------Sent -----------------------")

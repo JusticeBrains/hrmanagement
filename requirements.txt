@@ -13,6 +13,7 @@ dj-email-url==1.0.6
 dj-rest-auth==3.0.0
 Django==4.2.1
 django-allauth==0.52.0
+django-anymail==10.0
 django-apscheduler==0.6.2
 django-cache-url==3.4.4
 django-filter==22.1
@@ -58,6 +59,7 @@ social-auth-core==4.4.1
 sqlparse==0.4.3
 tablib==3.3.0
 typing_extensions==4.6.3
+tzlocal==5.0.1
 uritemplate==4.1.1
 urllib3==1.26.14
 whitenoise==6.3.0

@@ -8,10 +8,11 @@ from employee.models import (
 )
 
 
+from django.core.mail import send_mail
 
 import requests
 from requests_ntlm import HttpNtlmAuth
-
+from django.conf import settings
 from environs import Env
 
 env = Env()
@@ -941,7 +942,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+        update_employee_record()
         self.stdout.write(self.style.SUCCESS("--------Ended Loading Employees-------"))
 
 
@@ -1293,3 +1294,21 @@ def load_jobtitles(url, auth, company, comp_id):
             except JobTitles.DoesNotExist:
                 pass
     print(f"Done -- Unit -- {JobTitles.objects.all().count()}")
+
+
+def update_employee_record():
+    
+    # Send email report
+    try:
+        print("---------------Sending -----------------------")
+        # send_mail(subject, message, from_email, recipient_list)
+        # print("---------------Sent -----------------------")
+        subject = 'Report'
+        message = 'The task has been completed successfully.'
+        from_email = "justiceduodu14@gmail.com"
+        recipient_list = ['justicemclean@proton.me',]
+
+        send_mail(subject, message, from_email, recipient_list)
+        print("---------------Sent -----------------------")
+    except:
+        print("-----------------Couldn't send------------------------")

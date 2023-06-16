@@ -180,6 +180,10 @@ class Employee(models.Model):
     total_medical_claim_amount = models.PositiveIntegerField(
         _("Total Medical Claim"), null=True, blank=True
     )
+    is_super = models.PositiveIntegerField(_("Is Super"), default=0)
+    is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
+    is_super_hr = models.PositiveIntegerField(_("Is Super HR"), default=0)
+
 
     class Meta:
         unique_together = ("code", "company")
