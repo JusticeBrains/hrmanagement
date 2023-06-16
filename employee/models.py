@@ -184,7 +184,6 @@ class Employee(models.Model):
     is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
     is_super_hr = models.PositiveIntegerField(_("Is Super HR"), default=0)
 
-
     class Meta:
         unique_together = ("code", "company")
         verbose_name = "Employee"
@@ -423,8 +422,12 @@ class EmployeeKRA(models.Model):
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(
-        _("Company ID"), max_length=150, null=True, blank=True
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     appraiser = models.CharField(_("Appraiser"), max_length=150, null=True, blank=True)
     status = models.PositiveIntegerField(_("Status"), default=0)
@@ -453,6 +456,12 @@ class EmployeeKRA(models.Model):
         decimal_places=2,
         null=True,
         blank=True,
+    )
+    computed_supervisor_score = models.DecimalField(
+        _("Computed Supervisor Score"), max_digits=5, decimal_places=2, default=0
+    )
+    computed_employee_score = models.DecimalField(
+        _("Computed Employee Score"), max_digits=5, decimal_places=2, default=0
     )
 
     class Meta:
@@ -605,9 +614,7 @@ class EmployeeMedicalClaim(models.Model):
         _("Processed Date"), blank=True, null=True
     )
     period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
-    created_at = models.DateField(
-        _("Created At"), auto_now=False, auto_now_add=True
-    )
+    created_at = models.DateField(_("Created At"), auto_now=False, auto_now_add=True)
 
     class Meta:
         verbose_name = "Employee Medical Claim"
@@ -962,8 +969,13 @@ class PropertyAssignment(models.Model):
     date_modified = models.DateField(
         _("Date Modified"), auto_now=False, auto_now_add=False, blank=True, null=True
     )
-    date_returned = models.DateField(_("Date Return"), auto_now=False, auto_now_add=False, null=True, blank=True)
-    reason_returned = models.CharField(_("Reason Returned"), max_length=150, blank=True, null=True)
+    date_returned = models.DateField(
+        _("Date Return"), auto_now=False, auto_now_add=False, null=True, blank=True
+    )
+    reason_returned = models.CharField(
+        _("Reason Returned"), max_length=150, blank=True, null=True
+    )
+
     class Meta:
         verbose_name = "Property Assignment"
         verbose_name_plural = "Property Assignments"

@@ -79,9 +79,6 @@ class LeaveBase(models.Model):
     )
     dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
     supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
-    no_of_days_left = models.PositiveIntegerField(
-        _("Number of Days Left"), null=True, blank=True
-    )
     emp_code = models.CharField(
         _("Employee Code"), max_length=50, null=True, blank=True
     )
@@ -134,11 +131,8 @@ class LeaveRequest(LeaveBase):
     hr_extension_remarks = models.CharField(
         _("HR Extension Remarks"), max_length=250, blank=True, null=True
     )
-    total_number_of_leave_days = models.PositiveIntegerField(
-        _("Total Number Of Leave Days"), null=True, blank=True
-    )
     hod_extension_status = models.PositiveIntegerField(
-        _("HOO Extension Status"), null=True, blank=True
+        _("HOD Extension Status"), null=True, blank=True
     )
     extension_status = models.PositiveIntegerField(
         _("Extension Status"), default=0, null=True, blank=True

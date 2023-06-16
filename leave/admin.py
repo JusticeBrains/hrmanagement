@@ -17,7 +17,6 @@ class LeaveRequestAdmin(admin.ModelAdmin):
         "end_date",
         'resumption_date',
         "no_of_days_requested",
-        'no_of_days_left',
         "date_applied",
         'is_extend',
         'no_of_extension_days',
@@ -34,6 +33,6 @@ class LeavePlanAdmin(admin.ModelAdmin):
         "end_date",
         'resumption_date',
         "no_of_days_requested",
-        'no_of_days_left',
         "date_applied",
     ]
+

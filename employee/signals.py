@@ -124,22 +124,32 @@ def populate_appraisal_employee_grading(instance, **kwargs):
     post_save.connect(populate_appraisal_employee_grading, sender=AppraisalGrading)
 
 
-@receiver(post_save, sender=KPI)
-def update_kpi_fields(sender, instance, created, **kwargs):
-    post_save.disconnect(update_kpi_fields, sender=KPI)
-    employee = Employee.objects.get(id=instance.employee_id.id)
+@receiver(post_save, sender=EmployeeKRA)
+def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
+    post_save.disconnect(update_supervisor_total_score_fields, sender=EmployeeKRA)
     if created:
-        instance.company = employee.company
-        instance.company_id = employee.company_id
 
-        instance.score = round(
-            (instance.supervisor_score / 100) * instance.kpi_score, ndigits=2
+        instance.computed_supervisor_score = round(
+            (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
         )
     instance.save()
-    post_save.connect(update_kpi_fields, sender=KPI)
+    post_save.connect(update_supervisor_total_score_fields, sender=EmployeeKRA)
 
 
-@receiver(post_save, sender=KPI)
+@receiver(post_save, sender=EmployeeKRA)
+def update_emp_total_score_scores(sender, instance, created, **kwargs):
+    post_save.disconnect(update_emp_total_score_scores, sender=EmployeeKRA)
+    if created:
+
+        instance.computed_employee_score = round(
+            (instance.emp_total_score / 100) * instance.total_score, ndigits=2
+        )
+    instance.save()
+    post_save.connect(update_emp_total_score_scores, sender=EmployeeKRA)
+
+
+
+@receiver(post_save, sender=EmployeeKRA)
 def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
 
@@ -158,37 +168,41 @@ def update_performance_score(instance, **kwargs):
             total_kpi_scores = KPI.objects.filter(
                 employee_id=employee, period=active_period
             ).aggregate(total_kpi_scores=Sum("kpi_score"))["total_kpi_scores"]
-
+            
+            total_supervisor_total_score = EmployeeKRA.objects.filter(
+                employee_id=employee, period=active_period
+            ).aaggregate(total_supervisor_total_score=Sum("supervisor_total_score"))["total_supervisor_total_score"]
             kra_total_scores = EmployeeKRA.objects.filter(
                 employee_id=employee, period=active_period
             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
             # Update the performance score and total kpi score of the EmployeeAppraisal object
             appraisal.performance_score = appraisal.performance_score or 0
-            appraisal.performance_score += total_score
+            appraisal.performance_score += total_supervisor_total_score
             appraisal.weighted_score = appraisal.weighted_score or 0
-            appraisal.weighted_score += total_kpi_scores
+            appraisal.weighted_score += kra_total_scores
 
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
         return ValueError("Employee Appraisal Doesn't Exist")
-    post_save.disconnect(update_performance_score, sender=KPI)
+    post_save.disconnect(update_performance_score, sender=EmployeeKRA)
 
     instance.save()
 
-    post_save.connect(update_performance_score, sender=KPI)
+    post_save.connect(update_performance_score, sender=EmployeeKRA)
 
 
 @receiver(post_save, sender=EmployeeKRA)
 def update_kra_fields(sender, instance, created, **kwargs):
     post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
     employee = Employee.objects.get(id=instance.employee_id.id)
+    company = Company.objects.get(id=instance.company_id.id)
     if created:
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
         instance.department = instance.department_id.name
-        instance.company = instance.company_id.name
+        instance.company = company.name
 
         instance.save(
             update_fields=[
@@ -198,7 +212,6 @@ def update_kra_fields(sender, instance, created, **kwargs):
                 "company",
             ]
         )
-
     post_save.connect(update_kra_fields, sender=EmployeeKRA)
 
 
