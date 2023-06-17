@@ -58,5 +58,15 @@ router.register(
     employee_views.PropertyRequestViewSet,
     basename="property-request",
 )
+router.register(
+    "supervisor-rating-guide",
+    employee_views.SupervisorRatingGuideViewSet,
+    basename="supervisor-rating-guide",
+)
+router.register(
+    "supervisor-comment",
+    employee_views.SupervisorCommentViewSet,
+    basename="supervisor-comment",
+)
 
 urlpatterns = router.urls

@@ -183,6 +183,9 @@ class Employee(models.Model):
     is_super = models.PositiveIntegerField(_("Is Super"), default=0)
     is_hr = models.PositiveIntegerField(_("Is Hr"), default=0)
     is_super_hr = models.PositiveIntegerField(_("Is Super HR"), default=0)
+    is_accountant = models.PositiveIntegerField(
+        _("Is Accountant"), blank=True, null=True, default=0
+    )
 
     class Meta:
         unique_together = ("code", "company")
@@ -286,6 +289,14 @@ class EmployeeAppraisal(models.Model):
         _("Weighted Score"), blank=True, null=True
     )
     hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
+    emp_comment = models.TextField(_("Employee Comment"), blank=True, null=True)
+    supervisor_comment = models.ForeignKey(
+        "employee.SupervisorComment",
+        verbose_name=_(""),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Employee Appraisal"
@@ -1030,3 +1041,49 @@ class PropertyRequest(models.Model):
 
     def __str__(self) -> str:
         return f"{self.description[:50]} - {self.quantity} - {self.value}"
+
+
+class SupervisorRatingGuide(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    range = models.CharField(_("Range"), max_length=50, null=True, blank=True)
+    score_meaning = models.CharField(
+        _("Score Meaning"), max_length=50, null=True, blank=True
+    )
+    description = models.CharField(
+        _("Description"), max_length=50, null=True, blank=True
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    company_id = models.ForeignKey(
+        "company.Company", verbose_name=_("Company ID"), on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = _("SupervisorRatingGuide")
+        verbose_name_plural = _("SupervisorRatingGuides")
+
+    def __str__(self):
+        return f"{self.range}, {self.score_meaning} - {self.company}"
+
+
+class SupervisorComment(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=50, blank=True, null=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=50, blank=True, null=True
+    )
+
+    def __str__(self) -> str:
+        return f"{self.name}, {self.company_name}"
+
+    class Meta:
+        verbose_name = "Supervisor Comment"
+        verbose_name_plural = "Supervisor Comments"

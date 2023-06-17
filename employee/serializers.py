@@ -211,3 +211,15 @@ class PropertyRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.PropertyRequest
         fields = "__all__"
+
+
+class SupervisorRatingGuideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.SupervisorRatingGuide
+        fields = "__all__"
+
+
+class SupervisorCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.SupervisorComment
+        fields = "__all__"

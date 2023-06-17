@@ -210,3 +210,15 @@ class PropertyRequestViewSet(viewsets.ModelViewSet):
     queryset = employee_model.PropertyRequest.objects.all()
     serializer_class = serializers.PropertyRequestSerializer
     filterset_fields = "__all__"
+
+
+class SupervisorRatingGuideViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.SupervisorRatingGuide.objects.all()
+    serializer_class = serializers.SupervisorRatingGuideSerializer
+    filterset_fields = "__all__"
+
+
+class SupervisorCommentViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.SupervisorComment.objects.all()
+    serializer_class = serializers.SupervisorCommentSerializer
+    filterset_fields = "__all__"
