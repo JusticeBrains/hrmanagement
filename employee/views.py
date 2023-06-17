@@ -54,6 +54,11 @@ class EmployeeFilterSet(PropertyFilterSet):
             "mobile_no",
             "company_email",
             "unique_code",
+            "is_gm",
+            "is_accountant",
+            "is_super_hr",
+            "is_hr",
+            "is_super"
         ]
 
 

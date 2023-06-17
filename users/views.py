@@ -29,4 +29,5 @@ class UserViewset(viewsets.ModelViewSet):
         "unique_code",
         "is_accountant",
         "employee_id"
+        "is_gm",
     ]

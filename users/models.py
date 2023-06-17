@@ -60,6 +60,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_accountant = models.PositiveIntegerField(
         _("Is Accountant"), blank=True, null=True, default=0
     )
+    is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
+
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = [
@@ -72,7 +74,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-    
+
     objects = CustomUserManager()
 
     class Meta:

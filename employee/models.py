@@ -186,6 +186,7 @@ class Employee(models.Model):
     is_accountant = models.PositiveIntegerField(
         _("Is Accountant"), blank=True, null=True, default=0
     )
+    is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
 
     class Meta:
         unique_together = ("code", "company")
