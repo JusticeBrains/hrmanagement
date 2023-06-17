@@ -99,6 +99,7 @@ class LeaveBase(models.Model):
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
     is_maternity = models.PositiveIntegerField(_("Is Maternity"), default=0)
     unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), default=0)
+    accrued_leave = models.PositiveIntegerField(_("Accrued Leave"), default=0)
     class Meta:
         abstract = True
 
