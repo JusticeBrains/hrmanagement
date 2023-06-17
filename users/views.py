@@ -28,6 +28,6 @@ class UserViewset(viewsets.ModelViewSet):
         "is_verified",
         "unique_code",
         "is_accountant",
-        "employee_id"
+        "employee_id",
         "is_gm",
     ]
