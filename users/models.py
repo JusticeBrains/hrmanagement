@@ -65,7 +65,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = [
         "email",
     ]
-
+    employee_id = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee ID"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    
     objects = CustomUserManager()
 
     class Meta:
