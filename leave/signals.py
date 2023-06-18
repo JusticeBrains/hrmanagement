@@ -12,6 +12,10 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils import timezone
 
+from environs import Env
+
+env = Env()
+env.read_env()
 
 send_leave_reminder = Signal()
 
@@ -50,7 +54,7 @@ def send_email(sender, instance, created, **kwargs):
                     message = (
                         f"Hello, {instance.employee} has submitted a leave request"
                     )
-                    from_email = "justiceduodu14@gmail.com"
+                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                         from_email, employee.company_email
@@ -87,7 +91,7 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         message = (
                             f"Hello, {instance.employee} has submitted a leave request"
                         )
-                        from_email = "justiceduodu14@gmail.com"
+                        from_email = env.str("EMAIL_USER")
                         recipient_list = [
                             instance.employee.company_email,
                             from_email, employee.company_email
