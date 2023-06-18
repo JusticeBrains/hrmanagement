@@ -53,7 +53,7 @@ def send_email(sender, instance, created, **kwargs):
                     from_email = "justiceduodu14@gmail.com"
                     recipient_list = [
                         instance.employee.company_email,
-                        from_email,
+                        from_email, employee.company_email
                     ]
                     for email in recipient_list:
                         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
@@ -90,7 +90,7 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         from_email = "justiceduodu14@gmail.com"
                         recipient_list = [
                             instance.employee.company_email,
-                            from_email,
+                            from_email, employee.company_email
                         ]
                         for email in recipient_list:
                             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
