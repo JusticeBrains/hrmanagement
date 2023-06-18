@@ -7,9 +7,12 @@ from django.contrib.auth.hashers import make_password
 
 from environs import Env
 
+from users.models import CustomUser
+
 env = Env()
 env.read_env()
 
+@receiver(post_save, sender=CustomUser)
 def user_created(sender, instance, created, **kwargs):
     if created:
         try:
