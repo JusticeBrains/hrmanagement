@@ -1,3 +1,5 @@
+import re
+import traceback
 from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 from datetime import timedelta
@@ -29,6 +31,8 @@ send_leave_reminder = Signal()
 #     if created:
 #         send_leave_reminder.send(sender=LeaveRequest, instance=instance)
 
+# Send email report
+
 
 @receiver(post_save, sender=LeaveRequest)
 def send_email(sender, instance, created, **kwargs):
@@ -37,16 +41,69 @@ def send_email(sender, instance, created, **kwargs):
         employee_company = instance.employee.company_id
         for employee in employees:
             if employee.company_id == employee_company and employee.is_hr == 1:
-                subject = "Leave Request Submitted"
-                message = (
-                    f"Hello, {instance.employee.fullname} has submitted a leave request"
+                print(
+                    f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
                 )
-                send_mail(
-                    subject,
-                    message,
-                    "justiceduodu14@gmail.com",
-                    [instance.employee.company_email, employee.company_email],
-                )
+                try:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Request Submitted"
+                    message = (
+                        f"Hello, {instance.employee} has submitted a leave request"
+                    )
+                    from_email = "justiceduodu14@gmail.com"
+                    recipient_list = [
+                        instance.employee.company_email,
+                        from_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                except ValueError as ve:
+                    print(f"Error occurred while sending email: {str(ve)}")
+
+                except Exception as e:
+                    print("Error occurred while sending email:")
+                    print(str(e))
+                    traceback.print_exc()
+
+
+@receiver(post_save, sender=LeaveRequest)
+def send_going_on_leave_mail(sender, instance, created, **kwargs):
+    if created:
+        employees = Employee.objects.all()
+        employee_company = instance.employee.company_id
+        if timezone.now().date() + timedelta(days=1) == instance.start_date:
+            for employee in employees:
+                if (
+                    employee.company_id == employee_company
+                    and employee.is_hr == 1
+                    and instance.hr_status == 1
+                ):
+                    try:
+                        print("---------------Sending -----------------------")
+                        subject = "Leave Starting Tommorrow"
+                        message = (
+                            f"Hello, {instance.employee} has submitted a leave request"
+                        )
+                        from_email = "justiceduodu14@gmail.com"
+                        recipient_list = [
+                            instance.employee.company_email,
+                            from_email,
+                        ]
+                        for email in recipient_list:
+                            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                                raise ValueError(f"Invalid email address: {email}")
+                        send_mail(subject, message, from_email, recipient_list)
+                        print("---------------Sent -----------------------")
+                    except ValueError as ve:
+                        print(f"Error occurred while sending email: {str(ve)}")
+
+                    except Exception as e:
+                        print("Error occurred while sending email:")
+                        print(str(e))
+                        traceback.print_exc()
 
 
 @receiver(post_save, sender=LeaveRequest)
@@ -57,7 +114,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     employee_limits = EmployeeLeaveLimits.objects.filter(
         employee=employee, leave_type=leave_type
     ).first()
-    if instance.hr_status == 1 and instance.period == timezone.now().year:
+    if instance.hr_status == 1:
         if instance.no_of_days_requested > employee_limits.number_of_days_left:
             raise ValidationError(
                 f"Number of Requested{instance.no_of_days_requested} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
@@ -72,7 +129,7 @@ def update_employee_days_left(sender, instance, created, **kwargs):
     if (
         instance.hr_extension_status == 1
         and instance.is_extend == 1
-        and instance.hr_status == 1 
+        and instance.hr_status == 1
         and instance.period == timezone.now().year
     ):
         if instance.no_of_extension_days > employee_limits.number_of_days_left:
@@ -83,33 +140,6 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             employee_limits.number_of_days_exhausted += instance.no_of_extension_days
             employee_limits.number_of_days_left -= employee_limits.no_of_extension_days
             employee_limits.save()
-
-    # if (
-    #     instance.hr_extension_status == 1
-    #     and instance.is_extend == 1
-    #     and instance.hr_status == 1
-    # ):
-    #     max_days = instance.leave_type.max_number_of_days
-
-    #     employee = instance.employee
-    #     emp_days_left = employee.days_left
-    #     if emp_days_left is not None:
-    #         if instance.no_of_extension_days <= emp_days_left:
-    #             instance.no_of_days_left = emp_days_left - instance.no_of_extension_days
-
-    #     no_of_days_exhausted = instance.employee.no_of_days_exhausted or 0
-    #     no_of_days_exhausted += instance.no_of_extension_days
-
-    #     # update employee with new values of days_left and no_of_days_exhausted
-    #     Employee.objects.filter(id=instance.employee.id).update(
-    #         days_left=instance.no_of_days_left,
-    #         no_of_days_exhausted=no_of_days_exhausted,
-    #     )
-    # update employee with new values of days_left and no_of_days_exhausted
-    # Employee.objects.filter(id=instance.employee.id).update(
-    #     days_left=instance.no_of_days_left,
-    #     no_of_days_exhausted=no_of_days_exhausted,
-    # )
 
     post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
     instance.save()
