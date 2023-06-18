@@ -61,7 +61,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Is Accountant"), blank=True, null=True, default=0
     )
     is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
-
+    generated_pass = models.CharField(_("Generated Password"), max_length=150, null=True, blank=True)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = [
