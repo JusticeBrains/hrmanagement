@@ -5,7 +5,6 @@ from leave import models as lmodels
 # admin.site.register(lmodels.LeaveRequest)
 admin.site.register(lmodels.LeaveType)
 admin.site.register(lmodels.HolidayCalender)
-admin.site.register(lmodels.EmployeeLeaveLimits)
 admin.site.register(lmodels.LeaveLimits)
 
 @admin.register(lmodels.LeaveRequest)
@@ -36,3 +35,16 @@ class LeavePlanAdmin(admin.ModelAdmin):
         "date_applied",
     ]
 
+
+@admin.register(lmodels.EmployeeLeaveLimits)
+class EmployeeLeaveLimitAdmin(admin.ModelAdmin):
+    list_display = [
+        "employee",
+        "company",
+        "leave_type",
+    ]
+    search_fields = [
+        "employee",
+        "company",
+        "leave_type",
+    ]
