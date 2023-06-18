@@ -52,7 +52,7 @@ class LeaveBase(models.Model):
     )
     date_applied = models.DateField(_("Date Applied"), default=timezone.now)
     status = models.CharField(_("Status"), max_length=150, null=True, blank=True)
-    hod_status = models.PositiveIntegerField(_("HOD Status"), null=True, blank=True)
+    hod_status = models.PositiveIntegerField(_("HOD Status"), default=0)
     hod_remarks = models.CharField(
         _("HOD Remarks"), max_length=250, null=True, blank=True
     )
@@ -62,7 +62,7 @@ class LeaveBase(models.Model):
     hod_remarks_date = models.CharField(
         _("HOD Remarks Date"), blank=True, null=True, max_length=50
     )
-    hr_status = models.PositiveIntegerField(_("HR Status"), blank=True, null=True)
+    hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
     hr_remarks = models.CharField(_("HR Remarks"), max_length=50, null=True, blank=True)
     hr_remarks_date = models.CharField(
         _("HR Remarks Date"), blank=True, null=True, max_length=50
@@ -400,10 +400,10 @@ class EmployeeLeaveLimits(models.Model):
     period = models.CharField(_("Period"), max_length=80, blank=True, null=True, default=timezone.now().year)
     rollover_days = models.PositiveIntegerField(_("Rollover Days"), null=True, blank=True)
     class Meta:
-        unique_together = (
-            "leave_type",
-            "employee",
-        )
+        # unique_together = (
+        #     "leave_type",
+        #     "employee",
+        # )
         verbose_name = "Employee Leave Limits"
         verbose_name_plural = "Employee Leave Limits"
 
