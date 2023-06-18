@@ -17,7 +17,7 @@ def user_created(sender, instance, created, **kwargs):
     if created:
         try:
             print("---------------Sending -----------------------")
-            subject = "Leave Starting Tommorrow"
+            subject = "Login Credentials"
             message = (
                 f"Hello {instance.first_name} your password to signin is {instance.generated_pass}"
             )
