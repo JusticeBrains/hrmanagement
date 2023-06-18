@@ -14,7 +14,9 @@ env.read_env()
 
 @receiver(post_save, sender=CustomUser)
 def user_created(sender, instance, created, **kwargs):
+    post_save.disconnect(user_created, sender=CustomUser)
     if created:
+        pass_gen = instance.generated_pass
         try:
             print("---------------Sending -----------------------")
             subject = "Login Credentials"
@@ -30,7 +32,8 @@ def user_created(sender, instance, created, **kwargs):
                 if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                     raise ValueError(f"Invalid email address: {email}")
             send_mail(subject, message, from_email, recipient_list)
-            instance.generated_pass = make_password(instance.generated_pass)
+            instance.generated_pass = make_password(pass_gen)
+            instance.save()
             print("---------------Sent -----------------------")
         except ValueError as ve:
             print(f"Error occurred while sending email: {str(ve)}")
@@ -39,4 +42,5 @@ def user_created(sender, instance, created, **kwargs):
             print("Error occurred while sending email:")
             print(str(e))
             traceback.print_exc()
-    instance.save()
+
+    post_save.connect(user_created, sender=CustomUser)
