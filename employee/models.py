@@ -298,6 +298,8 @@ class EmployeeAppraisal(models.Model):
         blank=True,
         null=True,
     )
+    improvement_needs = models.TextField(_("Improvement Needs"), blank=True, null=True)
+    improvement_plan = models.TextField(_("Improvement Plan"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Appraisal"
