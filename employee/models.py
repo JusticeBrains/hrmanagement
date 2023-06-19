@@ -291,13 +291,13 @@ class EmployeeAppraisal(models.Model):
     )
     hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
     emp_comment = models.TextField(_("Employee Comment"), blank=True, null=True)
-    supervisor_comment = models.ForeignKey(
-        "employee.SupervisorComment",
-        verbose_name=_(""),
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
+    # supervisor_comment = models.ForeignKey(
+    #     "employee.SupervisorComment",
+    #     verbose_name=_(""),
+    #     on_delete=models.CASCADE,
+    #     blank=True,
+    #     null=True,
+    # )
     improvement_needs = models.TextField(_("Improvement Needs"), blank=True, null=True)
     improvement_plan = models.TextField(_("Improvement Plan"), blank=True, null=True)
 

@@ -128,7 +128,6 @@ def populate_appraisal_employee_grading(instance, **kwargs):
 def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
     post_save.disconnect(update_supervisor_total_score_fields, sender=EmployeeKRA)
     if created:
-
         instance.computed_supervisor_score = round(
             (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
         )
@@ -140,7 +139,6 @@ def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
 def update_emp_total_score_scores(sender, instance, created, **kwargs):
     post_save.disconnect(update_emp_total_score_scores, sender=EmployeeKRA)
     if created:
-
         instance.computed_employee_score = round(
             (instance.emp_total_score / 100) * instance.total_score, ndigits=2
         )
@@ -148,49 +146,43 @@ def update_emp_total_score_scores(sender, instance, created, **kwargs):
     post_save.connect(update_emp_total_score_scores, sender=EmployeeKRA)
 
 
+@receiver(post_save, sender=EmployeeKRA)
+def update_performance_score(instance, **kwargs):
+    employee = Employee.objects.get(id=instance.employee_id.id)
 
-# @receiver(post_save, sender=EmployeeKRA)
-# def update_performance_score(instance, **kwargs):
-#     employee = Employee.objects.get(id=instance.employee_id.id)
+    active_period = timezone.now().year
 
-#     active_period = timezone.now().year
+    try:
+        # Retrieve the corresponding EmployeeAppraisal object
+        appraisal = EmployeeAppraisal.objects.filter(
+            emp_id=employee, period=active_period
+        ).first()
+        if appraisal:
+            # Retrieve the total score from records
+            total_supervisor_total_score = EmployeeKRA.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(total_supervisor_total_score=Sum("computed_supervisor_score"))[
+                "total_supervisor_total_score"
+            ]
 
-#     try:
-#         # Retrieve the corresponding EmployeeAppraisal object
-#         appraisal = EmployeeAppraisal.objects.filter(
-#             emp_id=employee, period=active_period
-#         ).first()
-#         if appraisal:
-#             # Retrieve the total score from records
-#             total_score = KPI.objects.filter(
-#                 employee_id=employee, period=active_period
-#             ).aggregate(total_score=Sum("score"))["total_score"]
-#             total_kpi_scores = KPI.objects.filter(
-#                 employee_id=employee, period=active_period
-#             ).aggregate(total_kpi_scores=Sum("kpi_score"))["total_kpi_scores"]
-            
-#             total_supervisor_total_score = EmployeeKRA.objects.filter(
-#                 employee_id=employee, period=active_period
-#             ).aaggregate(total_supervisor_total_score=Sum("supervisor_total_score"))["total_supervisor_total_score"]
-#             kra_total_scores = EmployeeKRA.objects.filter(
-#                 employee_id=employee, period=active_period
-#             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
+            kra_total_scores = EmployeeKRA.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
-#             # Update the performance score and total kpi score of the EmployeeAppraisal object
-#             appraisal.performance_score = appraisal.performance_score or 0
-#             appraisal.performance_score += total_supervisor_total_score
-#             appraisal.weighted_score = appraisal.weighted_score or 0
-#             appraisal.weighted_score += kra_total_scores
+            # Update the performance score and total kra score of the EmployeeAppraisal object
+            appraisal.performance_score = (
+                total_supervisor_total_score
+                if total_supervisor_total_score is not None
+                else None
+            )
+            appraisal.weighted_score = (
+                kra_total_scores if kra_total_scores is not None else None
+            )
 
-#             # Save the updated EmployeeAppraisal object
-#             appraisal.save()
-#     except EmployeeAppraisal.DoesNotExist:
-#         return ValueError("Employee Appraisal Doesn't Exist")
-#     post_save.disconnect(update_performance_score, sender=EmployeeKRA)
-
-#     instance.save()
-
-#     post_save.connect(update_performance_score, sender=EmployeeKRA)
+            # Save the updated EmployeeAppraisal object
+            appraisal.save()
+    except EmployeeAppraisal.DoesNotExist:
+        return ValueError("Employee Appraisal Doesn't Exist")
 
 
 @receiver(post_save, sender=EmployeeKRA)
