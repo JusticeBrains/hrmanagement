@@ -59,39 +59,8 @@ def send_email(sender, instance, created, **kwargs):
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
-                        from_email,
-                    ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
-                except ValueError as ve:
-                    print(f"Error occurred while sending email: {str(ve)}")
-
-                except Exception as e:
-                    print("Error occurred while sending email:")
-                    print(str(e))
-                    traceback.print_exc()
-
-            if (
-                employee.company_id == employee_company
-                and employee.is_hr == 1
-                or employee.is_super == 1
-            ):
-                print(
-                    f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
-                )
-                try:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Request Submitted"
-                    message = (
-                        f"{instance.employee.fullname} has submitted a leave request"
-                    )
-                    from_email = env.str("EMAIL_USER")
-                    recipient_list = [
-                        from_email,
                         employee.company_email,
+                        from_email,
                     ]
                     for email in recipient_list:
                         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
@@ -105,6 +74,38 @@ def send_email(sender, instance, created, **kwargs):
                     print("Error occurred while sending email:")
                     print(str(e))
                     traceback.print_exc()
+
+            # if (
+            #     employee.company_id == employee_company
+            #     and employee.is_hr == 1
+            #     or employee.is_super == 1
+            # ):
+            #     print(
+            #         f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
+            #     )
+            #     try:
+            #         print("---------------Sending -----------------------")
+            #         subject = "Leave Request Submitted"
+            #         message = (
+            #             f"{instance.employee.fullname} has submitted a leave request"
+            #         )
+            #         from_email = env.str("EMAIL_USER")
+            #         recipient_list = [
+            #             from_email,
+            #             employee.company_email,
+            #         ]
+            #         for email in recipient_list:
+            #             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            #                 raise ValueError(f"Invalid email address: {email}")
+            #         send_mail(subject, message, from_email, recipient_list)
+            #         print("---------------Sent -----------------------")
+            #     except ValueError as ve:
+            #         print(f"Error occurred while sending email: {str(ve)}")
+
+            #     except Exception as e:
+            #         print("Error occurred while sending email:")
+            #         print(str(e))
+            #         traceback.print_exc()
 
 
 @receiver(post_save, sender=LeaveRequest)
