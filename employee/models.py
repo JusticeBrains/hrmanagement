@@ -1122,6 +1122,25 @@ class BehaviourialCompetencies(models.Model):
         _("Competency"), max_length=150, blank=True, null=True
     )
     target_score = models.PositiveIntegerField(_("Target Score"), default=0)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    class Meta:
+        verbose_name = "Behaviourial Competencies"
+        verbose_name_plural = "Behaviourial Competencies"
+
+    def __str__(self):
+        return f"{self.target}, {self.competency}, {self.target_score}, {self.score_on_target}, {self.final_score}"
+
+class EmployeeBehaviourial(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     score_on_target = models.DecimalField(
         _("Score On Target"), max_digits=5, decimal_places=2, default=0.0
     )
@@ -1138,10 +1157,3 @@ class BehaviourialCompetencies(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
-
-    class Meta:
-        verbose_name = "Behaviourial Competencies"
-        verbose_name_plural = "Behaviourial Competencies"
-
-    def __str__(self):
-        return f"{self.target}, {self.competency}, {self.target_score}, {self.score_on_target}, {self.final_score}"
