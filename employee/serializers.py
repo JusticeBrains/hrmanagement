@@ -223,3 +223,15 @@ class SupervisorCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = employee_model.SupervisorComment
         fields = "__all__"
+    
+
+class BehaviourialRatingGuideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.BehaviourialRatingGuide
+        fields = "__all__"
+
+
+class BehaviourialCompetenciesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.BehaviourialCompetencies
+        fields = "__all__"

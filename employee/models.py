@@ -1088,3 +1088,32 @@ class SupervisorComment(models.Model):
     class Meta:
         verbose_name = "Supervisor Comment"
         verbose_name_plural = "Supervisor Comments"
+
+
+class BehaviourialRatingGuide(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    score = models.PositiveIntegerField(_("Score"), blank=True, null=True)
+    interpretation = models.CharField(_("Interpretation"), max_length=150, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Behaviourial Rating Guide"
+        verbose_name_plural = "Behaviourial Rating Guide"
+    
+    def __str__(self):
+        return f"{self.score}, {self.interpretation}"
+
+
+class BehaviourialCompetencies(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    target = models.CharField(_("Target"), max_length=150, blank=True, null=True)
+    competency = models.CharField(_("Competency"), max_length=150, blank=True, null=True)
+    target_score = models.PositiveIntegerField(_("Target Score"), default=0)
+    score_on_target = models.DecimalField(_("Score On Target"), max_digits=5, decimal_places=2, default=0.0)
+    final_score = models.DecimalField(_("Final Score"), max_digits=5, decimal_places=2, default=0)
+
+    class Meta:
+        verbose_name = "Behaviourial Competencies"
+        verbose_name_plural = "Behaviourial Competencies"
+    
+    def __str__(self):
+        return f"{self.target}, {self.competency}, {self.target_score}, {self.score_on_target}, {self.final_score}"
