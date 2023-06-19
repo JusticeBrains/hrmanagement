@@ -223,7 +223,7 @@ def hr_approved_status(sender, instance, **kwargs):
             if instance.hod_status == 1 and instance.hr_status == 1:
                 try:
                     print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By Head Of Department"
+                    subject = "Leave Request Approved By HR"
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
@@ -245,7 +245,7 @@ def hr_approved_status(sender, instance, **kwargs):
     if instance.employee and instance.hod_status == 1 and instance.hr_status == 1:
         try:
             print("---------------Sending -----------------------")
-            subject = "Leave Request Approved By Head Of Department"
+            subject = "Leave Request Approved By HR"
             message = f"Hello {instance.employee.fullname}, your request has been approved by the HR. <br>Thank You.<br>"
             from_email = env.str("EMAIL_USER")
             recipient_list = [
