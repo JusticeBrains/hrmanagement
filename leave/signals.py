@@ -90,7 +90,7 @@ def send_email(sender, instance, created, **kwargs):
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         from_email,
-                        instance.employee.company_email,
+                        employee.company_email,
                     ]
                     for email in recipient_list:
                         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
@@ -150,7 +150,7 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         message = f"Hello {instance.employee.fullname},you will be starting your leave Tommorrow"
                         from_email = env.str("EMAIL_USER")
                         recipient_list = [
-                            instance.employee.company_email,
+                            employee.company_email,
                             from_email,
                         ]
                         for email in recipient_list:
@@ -206,7 +206,7 @@ def hod_approved_status(sender, instance, **kwargs):
                         message = f"Hello {instance.employee.fullname}, your request has been approved by the HOD. <br>Thank You.<br>"
                         from_email = env.str("EMAIL_USER")
                         recipient_list = [
-                            instance.employee.company_email,
+                            employee.company_email,
                             from_email,
                         ]
                         for email in recipient_list:
@@ -262,7 +262,7 @@ def hr_approved_status(sender, instance, **kwargs):
                         message = f"Hello {instance.employee.fullname}, your request has been approved by your HR. <br>Thank You.<br>"
                         from_email = env.str("EMAIL_USER")
                         recipient_list = [
-                            instance.employee.company_email,
+                            employee.company_email,
                             from_email,
                         ]
                         for email in recipient_list:
