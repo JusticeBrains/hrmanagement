@@ -218,13 +218,12 @@ def hod_approved_status(sender, instance, **kwargs):
 @receiver(post_save, sender=LeaveRequest)
 def hr_approved_status(sender, instance, **kwargs):
     employees = Employee.objects.filter(company_id=instance.employee.company_id)
-
     for employee in employees:
-        if instance.hr_status == 1 and instance.hod_status == 1:
-            if employee.is_super == 1 or employee.is_hr == 1:
+        if employee.is_super == 1 or employee.is_hr == 1:
+            if instance.hod_status == 1 and instance.hr_status == 1:
                 try:
                     print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By HR"
+                    subject = "Leave Request Approved By Head Of Department"
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
@@ -243,15 +242,14 @@ def hr_approved_status(sender, instance, **kwargs):
                     print("Error occurred while sending email:")
                     print(str(e))
                     traceback.print_exc()
-
-    if instance.employee and instance.hr_status == 1 and instance.hod_status == 1:
+    if instance.employee and instance.hod_status == 1 and instance.hr_status == 1:
         try:
             print("---------------Sending -----------------------")
-            subject = "Leave Request Approved By HR"
-            message = f"Hello {instance.employee.fullname}, your request has been approved by your HR. <br>Thank You.<br>"
+            subject = "Leave Request Approved By Head Of Department"
+            message = f"Hello {instance.employee.fullname}, your request has been approved by the HR. <br>Thank You.<br>"
             from_email = env.str("EMAIL_USER")
             recipient_list = [
-                employee.company_email,
+                instance.employee.company_email,
                 from_email,
             ]
             for email in recipient_list:
