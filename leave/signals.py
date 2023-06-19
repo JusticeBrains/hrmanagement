@@ -46,8 +46,8 @@ def send_email(sender, instance, created, **kwargs):
         for employee in employees:
             if (
                 employee.company_id == employee_company
-                and employee.is_hr == 0
-                or employee.is_super == 0
+                and employee.is_hr == 1
+                or employee.is_super == 1
             ):
                 print(
                     f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
@@ -55,10 +55,11 @@ def send_email(sender, instance, created, **kwargs):
                 try:
                     print("---------------Sending -----------------------")
                     subject = "Leave Request Submitted"
-                    message = f"Hello {instance.employee.fullname}, your request has been submitted"
+                    message = (
+                        f"{instance.employee.fullname} has submitted a leave request"
+                    )
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
-                        instance.employee.company_email,
                         employee.company_email,
                         from_email,
                     ]
@@ -75,37 +76,34 @@ def send_email(sender, instance, created, **kwargs):
                     print(str(e))
                     traceback.print_exc()
 
-            # if (
-            #     employee.company_id == employee_company
-            #     and employee.is_hr == 1
-            #     or employee.is_super == 1
-            # ):
-            #     print(
-            #         f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
-            #     )
-            #     try:
-            #         print("---------------Sending -----------------------")
-            #         subject = "Leave Request Submitted"
-            #         message = (
-            #             f"{instance.employee.fullname} has submitted a leave request"
-            #         )
-            #         from_email = env.str("EMAIL_USER")
-            #         recipient_list = [
-            #             from_email,
-            #             employee.company_email,
-            #         ]
-            #         for email in recipient_list:
-            #             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            #                 raise ValueError(f"Invalid email address: {email}")
-            #         send_mail(subject, message, from_email, recipient_list)
-            #         print("---------------Sent -----------------------")
-            #     except ValueError as ve:
-            #         print(f"Error occurred while sending email: {str(ve)}")
+            elif (
+                employee.company_id == employee_company
+                and employee.id == instance.employee
+            ):
+                print(
+                    f"{employee.company_id}, {employee_company}, {instance.employee.fullname}"
+                )
+                try:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Request Submitted"
+                    message = f"Hello {instance.employee.fullname}, your request has been submitted"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        from_email,
+                        instance.employee.company_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                except ValueError as ve:
+                    print(f"Error occurred while sending email: {str(ve)}")
 
-            #     except Exception as e:
-            #         print("Error occurred while sending email:")
-            #         print(str(e))
-            #         traceback.print_exc()
+                except Exception as e:
+                    print("Error occurred while sending email:")
+                    print(str(e))
+                    traceback.print_exc()
 
 
 @receiver(post_save, sender=LeaveRequest)
@@ -142,7 +140,10 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         print("Error occurred while sending email:")
                         print(str(e))
                         traceback.print_exc()
-                if instance.employee:
+                elif (
+                    employee.company_id == employee_company
+                    and employee.id == instance.employee
+                ):
                     try:
                         print("---------------Sending -----------------------")
                         subject = "Leave Starting Tommorrow"
@@ -195,7 +196,10 @@ def hod_approved_status(sender, instance, **kwargs):
                         print("Error occurred while sending email:")
                         print(str(e))
                         traceback.print_exc()
-                if instance.employee:
+                elif (
+                    employee.company_id == employee_company
+                    and employee.id == instance.employee
+                ):
                     try:
                         print("---------------Sending -----------------------")
                         subject = "Leave Request Approved By Head Of Department"
@@ -248,7 +252,10 @@ def hr_approved_status(sender, instance, **kwargs):
                         print("Error occurred while sending email:")
                         print(str(e))
                         traceback.print_exc()
-                if instance.employee:
+                elif (
+                    employee.company_id == employee_company
+                    and employee.id == instance.employee
+                ):
                     try:
                         print("---------------Sending -----------------------")
                         subject = "Leave Request Approved By HR"
