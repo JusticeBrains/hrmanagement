@@ -5,7 +5,7 @@ from employee import models as emodels
 
 @admin.register(emodels.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    search_fields = ["code", "company", "pay_group_code", "second_category_level"]
+    search_fields = ["code", "company", "pay_group_code", "second_category_level", "company_email"]
     list_display = [
         "fullname",
         "code",
