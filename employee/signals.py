@@ -282,6 +282,7 @@ def update_property_request(sender, instance, created, **kwargs):
     post_save.connect(update_property_request, sender=PropertyRequest)
 
 
+
 @receiver(post_save, sender=EmployeeAppraisal)
 def create_employee_behaviourial(sender, instance, created, **kwargs):
     if created:
@@ -298,3 +299,13 @@ def create_employee_behaviourial(sender, instance, created, **kwargs):
                 competency=behaviorial.competency,
                 period=behaviorial.period
             )
+
+
+@receiver(pre_save, sender=EmployeeBehavioural)
+def update_emp_total_score_scores(sender, instance, **kwargs):
+    if instance:
+        if instance.final_score is not None and instance.score_on_target is not None:
+            instance.computed_score = round(
+                (instance.final_score / 100) * instance.score_on_target, ndigits=2
+            )
+
