@@ -721,7 +721,7 @@ class Base(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, null=True, blank=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    comp_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    comp_id = models.ForeignKey("company.Company", verbose_name=_("Comp ID"), on_delete=models.DO_NOTHING, blank=True, null=True)
     company_id = models.CharField(_("Company ID"), max_length=150, blank=True,null=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
