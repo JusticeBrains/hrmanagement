@@ -65,10 +65,14 @@ class EmployeeMedicalClaim(admin.ModelAdmin):
     search_fields = ["emp_name", "department", "company"]
 
 
+@admin.register(emodels.Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ["code", "name", "company"]
+    search_fields = ["code", "name"]
+
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
 admin.site.register(emodels.Unit)
-admin.site.register(emodels.Department)
 admin.site.register(emodels.Notch)
 admin.site.register(emodels.AppraisalGrading)
 admin.site.register(emodels.EmployeeAppraisal)

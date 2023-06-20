@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("--------Loading Departments-------"))
         for comp in companies:
-            if comp.name == "INTERCITY STC COACHES LTD":
+            if comp.name == "INTERCITY STC LTD":
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
@@ -305,7 +305,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC COACHES LTD":
+            if comp.name == "INTERCITY STC LTD":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -507,7 +507,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC COACHES LTD":
+            if comp.name == "INTERCITY STC LTD":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -756,7 +756,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if company.name == "INTERCITY STC COACHES LTD":
+            if company.name == "INTERCITY STC LTD":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {company.id} -- {company.name}"
@@ -960,7 +960,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     employee_obj = Employee.objects.get(
                         code=employee["No"], company=company
                     )
-                    print(f"--updating-- {employee_obj}")
+                    print(f"--updating-- {employee_obj} --- Department -- {employee['Second_Category_Level']}")
                     Employee.objects.filter(id=employee_obj.id).update(
                         code=employee["No"],
                         first_name=employee["First_Name"],
@@ -986,7 +986,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         alt_address_start_date=employee["Alt_Address_Start_Date"],
                         alt_address_end_date=employee["Alt_Address_End_Date"],
                         first_category_level=employee["First_Category_Level"],
-                        second_category_level=employee["Second_Category_Level"],
+                        second_category_level=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
                         third_category_level=employee["Third_Category_Level"],
                         fourth_category_level=employee["Fourth_Category_Level"],
                         fifth_category_level=employee["Fifth_Category_Level"],
@@ -1031,7 +1031,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     )
                 if not Employee.objects.filter(
                     code=employee["No"], company=company
-                ).exists():
+                ).exists() and Department.objects.filter(code=employee["Second_Category_Level"],company_id=company_id).exists():
                     print(f"--creating-- {employee['No']}")
                     Employee.objects.create(
                         code=employee["No"],
@@ -1058,7 +1058,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         alt_address_start_date=employee["Alt_Address_Start_Date"],
                         alt_address_end_date=employee["Alt_Address_End_Date"],
                         first_category_level=employee["First_Category_Level"],
-                        second_category_level=employee["Second_Category_Level"],
+                        second_category_level=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
                         third_category_level=employee["Third_Category_Level"],
                         fourth_category_level=employee["Fourth_Category_Level"],
                         fifth_category_level=employee["Fifth_Category_Level"],
@@ -1131,7 +1131,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     alt_address_start_date=employee["Alt_Address_Start_Date"],
                     alt_address_end_date=employee["Alt_Address_End_Date"],
                     first_category_level=employee["First_Category_Level"],
-                    second_category_level=employee["Second_Category_Level"],
+                    second_category_level=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
                     third_category_level=employee["Third_Category_Level"],
                     fourth_category_level=employee["Fourth_Category_Level"],
                     fifth_category_level=employee["Fifth_Category_Level"],
@@ -1246,21 +1246,24 @@ def load_department(url, auth, company, comp_id):
             dep_id = Department.objects.get(code=dep["Code"], company=company)
             print("Updating Existing Departments")
             Department.objects.filter(code=dep_id).update(
-                code=dep["Code"],
-                name=dep["Name"],
-                first_category_code=dep["First_Category_Code"],
-                company=company,
-                company_id=Company.objects.get(id=comp_id),
+                code=dep["Code"].strip(),
+                name=dep["Name"].strip(),
+                first_category_code=dep["First_Category_Code"].strip(),
+                company=company.strip(),
+                company_id=comp_id,
+                comp_id=Company.objects.get(id=comp_id)
             )
         elif not Department.objects.filter(code=dep["Code"], company=company).exists():
             print("------Creating New Department------")
-            Department.objects.create(
-                code=dep["Code"],
-                name=dep["Name"],
-                first_category_code=dep["First_Category_Code"],
-                company=company,
-                company_id=Company.objects.get(id=comp_id),
-            )
+            if dep["Code"] is not None or dep["Name"] is not None:
+                Department.objects.create(
+                    code=dep["Code"].strip(),
+                    name=dep["Name"].strip(),
+                    first_category_code=dep["First_Category_Code"].strip(),
+                    company=company.strip(),
+                    company_id=comp_id,
+                    comp_id=Company.objects.get(id=comp_id)
+                )
 
 
 def load_jobtitles(url, auth, company, comp_id):

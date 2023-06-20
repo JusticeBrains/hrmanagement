@@ -45,7 +45,7 @@ class Company(models.Model):
         verbose_name_plural = "Companies"
 
     def __str__(self):
-        return f"{self.name}, {self.comp_type}"
+        return f"{self.name}"
 
     @property
     def alias(self):

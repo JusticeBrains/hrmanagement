@@ -45,8 +45,8 @@ def update_employee_appraisal(sender, instance, **kwargs):
     instance.emp_name = employee.fullname
     instance.employee_code = employee.code
     instance.job_title = employee.job_titles
-    instance.department = employee.second_category_level
-    instance.company = employee.company
+    instance.department = instance.department_id.name
+    instance.company = instance.company_id.name
 
     # Temporarily disconnect the signal receiver
     post_save.disconnect(update_employee_appraisal, sender=EmployeeAppraisal)
@@ -124,7 +124,6 @@ def populate_appraisal_employee_grading(instance, **kwargs):
     post_save.connect(populate_appraisal_employee_grading, sender=AppraisalGrading)
 
 
-@receiver(post_save, sender=EmployeeKRA)
 def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
     post_save.disconnect(update_supervisor_total_score_fields, sender=EmployeeKRA)
     if created:
@@ -139,6 +138,9 @@ def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
 def update_emp_total_score_scores(sender, instance, created, **kwargs):
     post_save.disconnect(update_emp_total_score_scores, sender=EmployeeKRA)
     if created:
+        instance.computed_supervisor_score = round(
+            (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
+        )
         instance.computed_employee_score = round(
             (instance.emp_total_score / 100) * instance.total_score, ndigits=2
         )
