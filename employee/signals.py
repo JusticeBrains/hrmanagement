@@ -4,9 +4,11 @@ from django.db.models import Sum
 from employee.models import (
     KPI,
     AppraisalGrading,
+    BehaviouralCompetencies,
     Department,
     EmployeeAppraisal,
     Employee,
+    EmployeeBehavioural,
     EmployeeDeduction,
     EmployeeKRA,
     EmployeeMedicalClaim,
@@ -278,3 +280,21 @@ def update_property_request(sender, instance, created, **kwargs):
 
     instance.save()
     post_save.connect(update_property_request, sender=PropertyRequest)
+
+
+@receiver(post_save, sender=EmployeeAppraisal)
+def create_employee_behaviourial(sender, instance, created, **kwargs):
+    if created:
+        behaviourials = BehaviouralCompetencies.objects.filter(
+            company_id=instance.company_id,
+            period=instance.period
+        )
+
+        for behaviorial in behaviourials:
+            EmployeeBehavioural.objects.get_or_create(
+                employee_id=instance.emp_id,
+                employee_name=instance.emp_id.fullname,
+                score_on_target=behaviorial.target_score,
+                competency=behaviorial.competency,
+                period=behaviorial.period
+            )

@@ -64,11 +64,6 @@ router.register(
     basename="supervisor-rating-guide",
 )
 router.register(
-    "supervisor-comment",
-    employee_views.SupervisorCommentViewSet,
-    basename="supervisor-comment",
-)
-router.register(
     "behaviourial-rating-guide",
     employee_views.BehaviourialRatingGuideViewSet,
     basename="behaviourial-rating-guide",
@@ -78,5 +73,9 @@ router.register(
     employee_views.BehavourialCompetenciesViewSet,
     basename="behaviourial-competencies",
 )
-
+router.register(
+    "employee-behaviourial",
+    employee_views.EmployeeBehaviouralViewSet,
+    basename="employee-behavourial",
+)
 urlpatterns = router.urls

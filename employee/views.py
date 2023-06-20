@@ -223,18 +223,18 @@ class SupervisorRatingGuideViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
-class SupervisorCommentViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.SupervisorComment.objects.all()
-    serializer_class = serializers.SupervisorCommentSerializer
-    filterset_fields = "__all__"
-
-
 class BehaviourialRatingGuideViewSet(viewsets.ModelViewSet):
     queryset = employee_model.BehaviourialRatingGuide.objects.all()
     serializer_class = serializers.BehaviourialRatingGuideSerializer
     filterset_fields = "__all__"
 
 class BehavourialCompetenciesViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.BehaviourialCompetencies.objects.all()
+    queryset = employee_model.BehaviouralCompetencies.objects.all()
     serializer_class = serializers.BehaviourialCompetenciesSerializer
+    filterset_fields = "__all__"
+
+
+class EmployeeBehaviouralViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.EmployeeBehavioural.objects.all()
+    serializer_class = serializers.EmployeeBehaviourialSerializer
     filterset_fields = "__all__"
