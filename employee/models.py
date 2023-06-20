@@ -165,9 +165,7 @@ class Employee(models.Model):
         _("Total Number Of Leave Days"), null=True, blank=True
     )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(
-        _("Company ID"), max_length=150, null=True, blank=True
-    )
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, blank=True, null=True)
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
@@ -291,13 +289,6 @@ class EmployeeAppraisal(models.Model):
     )
     hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
     emp_comment = models.TextField(_("Employee Comment"), blank=True, null=True)
-    # supervisor_comment = models.ForeignKey(
-    #     "employee.SupervisorComment",
-    #     verbose_name=_(""),
-    #     on_delete=models.CASCADE,
-    #     blank=True,
-    #     null=True,
-    # )
     improvement_needs = models.TextField(_("Improvement Needs"), blank=True, null=True)
     improvement_plan = models.TextField(_("Improvement Plan"), blank=True, null=True)
 
@@ -732,7 +723,7 @@ class Base(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, null=True, blank=True)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    company_id = models.CharField(_("CompanyID"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, blank=True, null=True)
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
 
     class Meta:
@@ -1134,12 +1125,14 @@ class BehaviourialCompetencies(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
+
     class Meta:
         verbose_name = "Behaviourial Competencies"
         verbose_name_plural = "Behaviourial Competencies"
 
     def __str__(self):
         return f"{self.target}, {self.competency}, {self.target_score}, {self.score_on_target}, {self.final_score}"
+
 
 class EmployeeBehaviourial(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)

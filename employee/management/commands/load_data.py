@@ -1026,7 +1026,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         swift_code=employee["SWIFT_Code"],
                         grounds_for_term=employee["Grounds_for_Term_Code"],
                         company=company,
-                        company_id=company_id,
+                        company_id=Company.objects.get(id=company_id),
                         unique_code=comp_code,
                     )
                 if not Employee.objects.filter(
@@ -1099,7 +1099,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         grounds_for_term=employee["Grounds_for_Term_Code"],
                         # days_left = staff_category.max_number_of_days,
                         company=company,
-                        company_id=company_id,
+                        company_id=Company.objects.get(id=company_id),
                         unique_code=comp_code,
                     )
                 print(f"Ending -- Employee {employee['No']}")
@@ -1168,7 +1168,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     grounds_for_term=employee["Grounds_for_Term_Code"],
                     # days_left = staff_category.max_number_of_days,
                     company=company,
-                    company_id=company_id,
+                    company_id=Company.objects.get(id=company_id),
                     unique_code=comp_code,
                 )
                 print(f"Ending -- Employee {employee['No']}")
@@ -1196,7 +1196,7 @@ def load_paygroup(url, auth, company, comp_id):
                     bonus_tax_description=paygroup["Bonus_Tax_Description"],
                     gross_up=paygroup["Gross_Up"],
                     company=company,
-                    comp_id=comp_id,
+                    comp_id=Company.objects.get(id=comp_id),
                 )
             elif not PayGroup.objects.filter(
                 no=paygroup["No"], company=company
@@ -1216,7 +1216,7 @@ def load_paygroup(url, auth, company, comp_id):
                     bonus_tax_description=paygroup["Bonus_Tax_Description"],
                     gross_up=paygroup["Gross_Up"],
                     company=company,
-                    comp_id=comp_id,
+                    comp_id=Company.objects.get(id=comp_id),
                 )
         except PayGroup.DoesNotExist:
             print("Creating Paygroup If Paygroup doesnot exist")
@@ -1234,7 +1234,7 @@ def load_paygroup(url, auth, company, comp_id):
                 bonus_tax_description=paygroup["Bonus_Tax_Description"],
                 gross_up=paygroup["Gross_Up"],
                 company=company,
-                comp_id=comp_id,
+                comp_id=Company.objects.get(id=comp_id),
             )
 
 
@@ -1250,7 +1250,7 @@ def load_department(url, auth, company, comp_id):
                 name=dep["Name"],
                 first_category_code=dep["First_Category_Code"],
                 company=company,
-                company_id=comp_id,
+                company_id=Company.objects.get(id=comp_id),
             )
         elif not Department.objects.filter(code=dep["Code"], company=company).exists():
             print("------Creating New Department------")
@@ -1259,7 +1259,7 @@ def load_department(url, auth, company, comp_id):
                 name=dep["Name"],
                 first_category_code=dep["First_Category_Code"],
                 company=company,
-                company_id=comp_id,
+                company_id=Company.objects.get(id=comp_id),
             )
 
 
@@ -1278,7 +1278,7 @@ def load_jobtitles(url, auth, company, comp_id):
                         code=val["Code"],
                         description=val["Description"],
                         company=company,
-                        company_id=comp_id,
+                        company_id=Company.objects.get(id=comp_id),
                     )
 
                 elif not JobTitles.objects.filter(
@@ -1288,7 +1288,7 @@ def load_jobtitles(url, auth, company, comp_id):
                         code=val["Code"],
                         description=val["Description"],
                         company=company,
-                        company_id=comp_id,
+                        company_id=Company.objects.get(id=comp_id),
                     )
                 print(f"--End-- {val['Description']}")
             except JobTitles.DoesNotExist:

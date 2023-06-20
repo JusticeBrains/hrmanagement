@@ -206,9 +206,7 @@ class JobTitles(BaseCom):
     )
     description = models.CharField(_("Description"), max_length=80)
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
-    company_id = models.CharField(
-        _("Company ID"), max_length=150, null=True, blank=True
-    )
+    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, null=True, blank=True)
 
     class Meta:
         verbose_name = "Job Titles"
