@@ -137,18 +137,14 @@ def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=EmployeeKRA)
 def update_emp_total_score_scores(sender, instance, **kwargs):
     if instance:
-        supervisor_total_score = instance.supervisor_total_score or 0
-        total_score = instance.total_score or 0
-
-        instance.computed_supervisor_score = round(
-            (supervisor_total_score / 100) * total_score, ndigits=2
-        )
-
-        emp_total_score = instance.emp_total_score or 0
-
-        instance.computed_employee_score = round(
-            (emp_total_score / 100) * total_score, ndigits=2
-        )
+        if instance.supervisor_total_score is not None and instance.total_score is not None:
+            instance.computed_supervisor_score = round(
+                (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
+            )
+        if instance.emp_total_score is not None and instance.total_score is not None:
+            instance.computed_employee_score = round(
+                (instance.emp_total_score / 100) * instance.total_score, ndigits=2
+            )
 
 
 
