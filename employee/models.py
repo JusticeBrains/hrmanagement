@@ -911,8 +911,7 @@ class PayGroup(models.Model):
         _("Medical Claim Amount"), null=True, blank=True
     )
     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
-    comp_id = models.CharField(_("Company ID"), max_length=150, null=True, blank=True)
-
+    comp_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, blank=True, null=True)
     class Meta:
         verbose_name = "Pay Group"
         verbose_name_plural = "Pay Groups"
