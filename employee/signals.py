@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from django.db.models import Sum
 from employee.models import (
@@ -134,18 +134,17 @@ def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
     post_save.connect(update_supervisor_total_score_fields, sender=EmployeeKRA)
 
 
-@receiver(post_save, sender=EmployeeKRA)
-def update_emp_total_score_scores(sender, instance, created, **kwargs):
-    post_save.disconnect(update_emp_total_score_scores, sender=EmployeeKRA)
-    if created:
+@receiver(pre_save, sender=EmployeeKRA)
+def update_emp_total_score_scores(sender, instance, **kwargs):
+
+    if instance:
         instance.computed_supervisor_score = round(
             (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
         )
         instance.computed_employee_score = round(
             (instance.emp_total_score / 100) * instance.total_score, ndigits=2
         )
-    instance.save()
-    post_save.connect(update_emp_total_score_scores, sender=EmployeeKRA)
+
 
 
 @receiver(post_save, sender=EmployeeKRA)
