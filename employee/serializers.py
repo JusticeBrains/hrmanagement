@@ -1,6 +1,6 @@
 from rest_framework import serializers, exceptions
 from . import models as employee_model
-from drf_extra_fields.fields import DecimalRangeField
+from drf_extra_fields.fields import IntegerRangeField
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -88,7 +88,7 @@ class NotchesSerializer(serializers.ModelSerializer):
 
 
 class AppraisalGradingSerializer(serializers.ModelSerializer):
-    score_range = DecimalRangeField()
+    score_range = IntegerRangeField()
     company = serializers.ReadOnlyField()
 
     class Meta:

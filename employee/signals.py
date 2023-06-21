@@ -57,14 +57,15 @@ def update_employee_appraisal(sender, instance, **kwargs):
 @receiver(pre_save, sender=EmployeeAppraisal)
 def update_grade(sender, instance, **kwargs):
     grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
-    if grading:
-        instance.grade = grading.grade
-        instance.recommendation = grading.recommendation
-        # instance.percentage_score = f"{round((instance.performance_score / instance.total_kpi_scores) * 100, ndigits=2)}%"
-    else:
-        instance.grade = None
-        instance.recommendation = None
-        instance.percentage_score = None
+    if instance:
+        if grading:
+            instance.grade = grading.grade
+            instance.recommendation = grading.recommendation
+            # instance.percentage_score = f"{round((instance.performance_score / instance.total_kpi_scores) * 100, ndigits=2)}%"
+        else:
+            instance.grade = None
+            instance.recommendation = None
+            instance.percentage_score = None
 
 
 @receiver(post_save, sender=Department)

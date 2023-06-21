@@ -275,9 +275,7 @@ class EmployeeAppraisal(models.Model):
         null=True,
     )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
-    performance_score = models.DecimalField(
-        _("Performance Score"), max_digits=5, decimal_places=2, blank=True, null=True
-    )
+    performance_score = models.DecimalField(_("Performance Score"), max_digits=5, decimal_places=2, blank=True, null=True)
     appraisal_score = models.DecimalField(
         _("Appraisal Score"), max_digits=5, decimal_places=2, null=True, blank=True
     )
@@ -320,7 +318,7 @@ class EmployeeAppraisal(models.Model):
 
 
 class AppraisalGrading(models.Model):
-    score_range = DecimalRangeField(blank=True, null=True)
+    score_range = IntegerRangeField(blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=50, null=True, blank=True)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
