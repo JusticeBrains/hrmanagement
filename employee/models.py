@@ -1115,7 +1115,7 @@ class BehaviourialRatingGuide(models.Model):
 class BehaviouralCompetencies(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     competency = models.CharField(
-        _("Competency"), max_length=150, blank=True, null=True
+        _("Competency"), max_length=250, blank=True, null=True
     )
     target_score = models.PositiveIntegerField(_("Target Score"), default=0)
     company_id = models.ForeignKey(
