@@ -134,8 +134,8 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             )
 
 
-@receiver(pre_save, sender=EmployeeBehavioural)
-@receiver(pre_save, sender=EmployeeKRA)
+@receiver(post_save, sender=EmployeeBehavioural)
+@receiver(post_save, sender=EmployeeKRA)
 def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
 
