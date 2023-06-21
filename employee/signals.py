@@ -154,6 +154,15 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=EmployeeBehavioural)
+def update_emp_total_score_scores(sender, instance, **kwargs):
+    if instance:
+        if instance.final_score is not None and instance.score_on_target is not None:
+            instance.computed_score = round(
+                (instance.final_score / 100) * instance.score_on_target, ndigits=2
+            )
+
+
+@receiver(pre_save, sender=EmployeeBehavioural)
 @receiver(pre_save, sender=EmployeeKRA)
 def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
