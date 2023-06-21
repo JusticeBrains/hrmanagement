@@ -43,13 +43,6 @@ def send_birthday_reminder(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=EmployeeAppraisal)
 def update_employee_appraisal(sender, instance, **kwargs):
-    # employee = Employee.objects.get(id=instance.emp_id.id)
-    # instance.emp_name = employee.fullname
-    # instance.employee_code = employee.code
-    # instance.job_title = employee.job_titles
-    # instance.department = instance.department_id.name
-    # instance.company = instance.company_id.name
-
     employee = Employee.objects.get(id=instance.emp_id.id)
     if instance:
         instance.emp_name = employee.fullname
@@ -58,6 +51,7 @@ def update_employee_appraisal(sender, instance, **kwargs):
         instance.department = employee.second_category_level.name
         instance.department_id = employee.second_category_level
         instance.company = employee.company_id.name
+        instance.company_id = employee.company_id
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
