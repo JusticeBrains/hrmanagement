@@ -8,7 +8,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from django.contrib.postgres.fields import IntegerRangeField
+from django.contrib.postgres.fields import IntegerRangeField, DecimalRangeField
 
 User = get_user_model()
 
@@ -320,7 +320,7 @@ class EmployeeAppraisal(models.Model):
 
 
 class AppraisalGrading(models.Model):
-    score_range = IntegerRangeField(blank=True, null=True)
+    score_range = DecimalRangeField(blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=50, null=True, blank=True)
     recommendation = models.CharField(
         _("Recommendation"), max_length=150, blank=True, null=True
