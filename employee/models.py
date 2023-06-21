@@ -1084,7 +1084,7 @@ class SupervisorRatingGuide(models.Model):
         verbose_name_plural = _("SupervisorRatingGuides")
 
     def __str__(self):
-        return f"{self.range}, {self.score_meaning} - {self.company}"
+        return f"{self.range}, {self.score_meaning} - {self.company_name}"
 
 
 class BehaviourialRatingGuide(models.Model):
