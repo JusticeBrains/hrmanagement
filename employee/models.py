@@ -216,6 +216,7 @@ class Employee(models.Model):
 
 
 class EmployeeDeduction(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     employee = models.ForeignKey(
         "employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE
     )
@@ -238,6 +239,7 @@ class EmployeeDeduction(models.Model):
 
 
 class EmployeeAppraisal(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     emp_id = models.ForeignKey(
         Employee,
         verbose_name=_("Employee"),
@@ -318,6 +320,7 @@ class EmployeeAppraisal(models.Model):
 
 
 class AppraisalGrading(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     score_range = IntegerRangeField(blank=True, null=True)
     grade = models.CharField(_("Grade"), max_length=50, null=True, blank=True)
     recommendation = models.CharField(
@@ -642,6 +645,7 @@ class EmployeeMedicalClaim(models.Model):
 
 
 class EmployeeDisciplinaryActions(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     emp_name = models.ForeignKey(
         Employee, verbose_name=_("Employee Name"), on_delete=models.CASCADE
     )
@@ -690,6 +694,7 @@ class EmployeeDisciplinaryActions(models.Model):
 
 
 class EmployeePayReview(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     no = models.CharField(_("Code"), max_length=50)
     review_type = models.CharField(
         _("Review Type"),
