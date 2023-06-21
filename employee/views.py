@@ -71,23 +71,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 class EmployeeAppraisalViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeAppraisal.objects.all()
     serializer_class = serializers.EmployeeAppraisalSerializer
-    filterset_fields = [
-        "id",
-        "emp_name",
-        "employee_code",
-        "job_title",
-        "appraiser",
-        "department",
-        "grade",
-        "performance_score",
-        "percentage_score",
-        "period",
-        "hr_status",
-        "emp_id",
-        "department_id",
-        "company_id",
-        "status"
-    ]
+    filterset_fields = "__all__"
 
 
 # class SelfAppraisalResponseViewSet(viewsets.ModelViewSet):

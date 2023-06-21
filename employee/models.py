@@ -340,8 +340,11 @@ class AppraisalGrading(models.Model):
 
     @staticmethod
     def get_grading_for_score(score):
-        grading = AppraisalGrading.objects.filter(score_range__contains=score).first()
-        return grading
+        if score is not None:
+            grading = AppraisalGrading.objects.filter(score_range__contains=score).first()
+            return grading
+        return None
+
 
     def __str__(self) -> str:
         return f"{self.grade} - {self.recommendation}"
