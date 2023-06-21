@@ -41,24 +41,23 @@ def send_birthday_reminder(sender, instance, **kwargs):
         send_mail(subject, message, "hr@pay360.com", [employee.company_email])
 
 
-@receiver(post_save, sender=EmployeeAppraisal)
+@receiver(pre_save, sender=EmployeeAppraisal)
 def update_employee_appraisal(sender, instance, **kwargs):
+    # employee = Employee.objects.get(id=instance.emp_id.id)
+    # instance.emp_name = employee.fullname
+    # instance.employee_code = employee.code
+    # instance.job_title = employee.job_titles
+    # instance.department = instance.department_id.name
+    # instance.company = instance.company_id.name
+
     employee = Employee.objects.get(id=instance.emp_id.id)
-    instance.emp_name = employee.fullname
-    instance.employee_code = employee.code
-    instance.job_title = employee.job_titles
-    instance.department = instance.department_id.name
-    instance.company = instance.company_id.name
-
-    # Temporarily disconnect the signal receiver
-    post_save.disconnect(update_employee_appraisal, sender=EmployeeAppraisal)
-
-    instance.save(
-        update_fields=["emp_name", "employee_code", "job_title", "department"]
-    )
-
-    # Reconnect the signal receiver
-    post_save.connect(update_employee_appraisal, sender=EmployeeAppraisal)
+    if instance:
+        instance.emp_name = employee.fullname
+        instance.employee_code = employee.code
+        instance.job_title = employee.job_titles
+        instance.department = employee.second_category_level.name
+        instance.department_id = employee.second_category_level
+        instance.company = employee.company_id.name
 
 
 @receiver(post_save, sender=EmployeeAppraisal)
@@ -114,26 +113,6 @@ def leave_days_deduction(sender, instance, **kwargs):
 
     post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
-
-def populate_appraisal_employee_grading(instance, **kwargs):
-    """
-    Populate employee grading from appraisal grading
-    """
-    post_save.disconnect(populate_appraisal_employee_grading, sender=AppraisalGrading)
-    if instance.company_id:
-        instance.company = instance.company_id.name
-    instance.save()
-    post_save.connect(populate_appraisal_employee_grading, sender=AppraisalGrading)
-
-
-def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
-    post_save.disconnect(update_supervisor_total_score_fields, sender=EmployeeKRA)
-    if created:
-        instance.computed_supervisor_score = round(
-            (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
-        )
-    instance.save()
-    post_save.connect(update_supervisor_total_score_fields, sender=EmployeeKRA)
 
 
 @receiver(pre_save, sender=EmployeeKRA)

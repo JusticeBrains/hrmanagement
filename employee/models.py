@@ -265,7 +265,7 @@ class EmployeeAppraisal(models.Model):
         verbose_name="Appraiser", max_length=200, blank=True, null=True
     )
     department = models.CharField(
-        _("Department"), max_length=150, null=True, blank=True, editable=False
+        _("Department"), max_length=250, null=True, blank=True
     )
     department_id = models.ForeignKey(
         "employee.Department",
@@ -311,13 +311,6 @@ class EmployeeAppraisal(models.Model):
     def __str__(self) -> str:
         return f"{self.emp_name} {self.employee_code} - {self.grade}"
 
-    def clean(self):
-        if self.emp_id:
-            self.emp_name = self.emp_id.fullname
-            self.job_title = self.emp_id.job_titles
-            self.department = self.emp_id.second_category_level
-            self.employee_code = self.emp_id.code
-            self.company = self.emp_id.company
 
 
 class AppraisalGrading(models.Model):
