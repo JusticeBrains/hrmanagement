@@ -1067,10 +1067,10 @@ class SupervisorRatingGuide(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     range = models.CharField(_("Range"), max_length=50, null=True, blank=True)
     score_meaning = models.CharField(
-        _("Score Meaning"), max_length=50, null=True, blank=True
+        _("Score Meaning"), max_length=250, null=True, blank=True
     )
     description = models.CharField(
-        _("Description"), max_length=50, null=True, blank=True
+        _("Description"), max_length=250, null=True, blank=True
     )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
