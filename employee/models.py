@@ -278,8 +278,12 @@ class EmployeeAppraisal(models.Model):
     performance_score = models.PositiveIntegerField(
         _("Performance Score"), null=True, blank=True
     )
-    appraisal_score = models.DecimalField(_("Appraisal Score"), max_digits=5, decimal_places=2, null=True, blank=True)
-    behavioural_score = models.DecimalField(_("Behavioural Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    appraisal_score = models.DecimalField(
+        _("Appraisal Score"), max_digits=5, decimal_places=2, null=True, blank=True
+    )
+    behavioural_score = models.DecimalField(
+        _("Behavioural Score"), max_digits=5, decimal_places=2, null=True, blank=True
+    )
     percentage_score = models.CharField(
         _("Percentage Score"), null=True, blank=True, max_length=50
     )
@@ -299,6 +303,9 @@ class EmployeeAppraisal(models.Model):
     weighted_score = models.PositiveIntegerField(
         _("Weighted Score"), blank=True, null=True
     )
+    weighted_behavioural_score = models.PositiveIntegerField(
+        _("Weighted Behavioural Score"), null=True, blank=True
+    )
     hr_status = models.PositiveIntegerField(_("HR Status"), default=0)
     emp_comment = models.TextField(_("Employee Comment"), blank=True, null=True)
     improvement_needs = models.TextField(_("Improvement Needs"), blank=True, null=True)
@@ -310,7 +317,6 @@ class EmployeeAppraisal(models.Model):
 
     def __str__(self) -> str:
         return f"{self.emp_name} {self.employee_code} - {self.grade}"
-
 
 
 class AppraisalGrading(models.Model):
@@ -1157,7 +1163,9 @@ class EmployeeBehavioural(models.Model):
         _("Employee Name"), max_length=150, blank=True, null=True
     )
     period = models.CharField(_("Period"), max_length=50, default=timezone.now().year)
-    created_at = models.DateField(_("Created At"), auto_now=False, auto_now_add=True, null=True, blank=True)
+    created_at = models.DateField(
+        _("Created At"), auto_now=False, auto_now_add=True, null=True, blank=True
+    )
 
     class Meta:
         verbose_name = "Employee Behaviourial"

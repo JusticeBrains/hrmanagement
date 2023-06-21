@@ -114,7 +114,6 @@ def leave_days_deduction(sender, instance, **kwargs):
     post_save.connect(leave_days_deduction, sender=EmployeeDeduction)
 
 
-
 @receiver(pre_save, sender=EmployeeKRA)
 def update_emp_total_score_scores(sender, instance, **kwargs):
     if instance:
@@ -165,6 +164,9 @@ def update_performance_score(instance, **kwargs):
                 employee_id=employee, period=active_period
             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
+            score_on_target = EmployeeBehavioural.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(score_on_target=Sum("score_on_target"))["score_on_target"]
             # Update the performance score and total kra score of the EmployeeAppraisal object
             appraisal.appraisal_score = (
                 total_supervisor_total_score
@@ -187,32 +189,25 @@ def update_performance_score(instance, **kwargs):
                 if total_supervisor_total_score and total_behavioural_score is not None
                 else None
             )
+            appraisal.weighted_behavioural_score = (
+                score_on_target if score_on_target is not None else None
+            )
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
         return ValueError("Employee Appraisal Doesn't Exist")
 
 
-@receiver(post_save, sender=EmployeeKRA)
-def update_kra_fields(sender, instance, created, **kwargs):
-    post_save.disconnect(update_kra_fields, sender=EmployeeKRA)
+@receiver(pre_save, sender=EmployeeKRA)
+def update_kra_fields(sender, instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
-    company = Company.objects.get(id=instance.company_id.id)
-    if created:
+    if instance:
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
-        instance.department = instance.department_id.name
-        instance.company = company.name
-
-        instance.save(
-            update_fields=[
-                "emp_code",
-                "emp_name",
-                "department",
-                "company",
-            ]
-        )
-    post_save.connect(update_kra_fields, sender=EmployeeKRA)
+        instance.department = employee.second_category_level.name
+        instance.department_id = employee.second_category_level
+        instance.company = employee.company_id.name
+        instance.company_id = employee.company_id
 
 
 @receiver(post_save, sender=EmployeeMedicalClaim)
