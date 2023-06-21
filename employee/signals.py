@@ -274,9 +274,9 @@ def update_property_request(sender, instance, created, **kwargs):
     post_save.connect(update_property_request, sender=PropertyRequest)
 
 
-@receiver(post_save, sender=EmployeeAppraisal)
-def create_employee_behaviourial(sender, instance, created, **kwargs):
-    if created:
+@receiver(pre_save, sender=EmployeeAppraisal)
+def create_employee_behaviourial(sender, instance, **kwargs):
+    if instance:
         behaviourials = BehaviouralCompetencies.objects.filter(
             company_id=instance.company_id, period=instance.period
         )
