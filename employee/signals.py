@@ -139,9 +139,13 @@ def update_supervisor_total_score_fields(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=EmployeeKRA)
 def update_emp_total_score_scores(sender, instance, **kwargs):
     if instance:
-        if instance.supervisor_total_score is not None and instance.total_score is not None:
+        if (
+            instance.supervisor_total_score is not None
+            and instance.total_score is not None
+        ):
             instance.computed_supervisor_score = round(
-                (instance.supervisor_total_score / 100) * instance.total_score, ndigits=2
+                (instance.supervisor_total_score / 100) * instance.total_score,
+                ndigits=2,
             )
         if instance.emp_total_score is not None and instance.total_score is not None:
             instance.computed_employee_score = round(
@@ -149,9 +153,8 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             )
 
 
-
-
-@receiver(post_save, sender=EmployeeKRA)
+@receiver(pre_save, sender=EmployeeBehavioural)
+@receiver(pre_save, sender=EmployeeKRA)
 def update_performance_score(instance, **kwargs):
     employee = Employee.objects.get(id=instance.employee_id.id)
 
@@ -175,15 +178,27 @@ def update_performance_score(instance, **kwargs):
             ).aggregate(kra_total_scores=Sum("total_score"))["kra_total_scores"]
 
             # Update the performance score and total kra score of the EmployeeAppraisal object
-            appraisal.performance_score = (
+            appraisal.appraisal_score = (
                 total_supervisor_total_score
                 if total_supervisor_total_score is not None
                 else None
             )
+            total_behavioural_score = EmployeeBehavioural.objects.filter(
+                employee_id=employee, period=active_period
+            ).aggregate(total_behavioural_score=Sum("computed_score"))[
+                "total_behavioural_score"
+            ]
+            appraisal.behavioural_score = (
+                total_behavioural_score if total_behavioural_score is not None else None
+            )
             appraisal.weighted_score = (
                 kra_total_scores if kra_total_scores is not None else None
             )
-
+            appraisal.performance_score = (
+                total_supervisor_total_score + total_behavioural_score
+                if total_supervisor_total_score and total_behavioural_score is not None
+                else None
+            )
             # Save the updated EmployeeAppraisal object
             appraisal.save()
     except EmployeeAppraisal.DoesNotExist:
@@ -282,13 +297,11 @@ def update_property_request(sender, instance, created, **kwargs):
     post_save.connect(update_property_request, sender=PropertyRequest)
 
 
-
 @receiver(post_save, sender=EmployeeAppraisal)
 def create_employee_behaviourial(sender, instance, created, **kwargs):
     if created:
         behaviourials = BehaviouralCompetencies.objects.filter(
-            company_id=instance.company_id,
-            period=instance.period
+            company_id=instance.company_id, period=instance.period
         )
 
         for behaviorial in behaviourials:
@@ -297,7 +310,7 @@ def create_employee_behaviourial(sender, instance, created, **kwargs):
                 employee_name=instance.emp_id.fullname,
                 score_on_target=behaviorial.target_score,
                 competency=behaviorial.competency,
-                period=behaviorial.period
+                period=behaviorial.period,
             )
 
 
@@ -308,4 +321,3 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             instance.computed_score = round(
                 (instance.final_score / 100) * instance.score_on_target, ndigits=2
             )
-

@@ -278,6 +278,8 @@ class EmployeeAppraisal(models.Model):
     performance_score = models.PositiveIntegerField(
         _("Performance Score"), null=True, blank=True
     )
+    appraisal_score = models.DecimalField(_("Appraisal Score"), max_digits=5, decimal_places=2, null=True, blank=True)
+    behavioural_score = models.DecimalField(_("Behavioural Score"), max_digits=5, decimal_places=2, null=True, blank=True)
     percentage_score = models.CharField(
         _("Percentage Score"), null=True, blank=True, max_length=50
     )
