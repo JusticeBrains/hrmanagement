@@ -54,9 +54,8 @@ def update_employee_appraisal(sender, instance, **kwargs):
         instance.company_id = employee.company_id
 
 
-@receiver(post_save, sender=EmployeeAppraisal)
+@receiver(pre_save, sender=EmployeeAppraisal)
 def update_grade(sender, instance, **kwargs):
-    post_save.disconnect(update_grade, sender=EmployeeAppraisal)
     grading = AppraisalGrading.get_grading_for_score(instance.performance_score)
     if grading:
         instance.grade = grading.grade
@@ -66,9 +65,6 @@ def update_grade(sender, instance, **kwargs):
         instance.grade = None
         instance.recommendation = None
         instance.percentage_score = None
-    instance.save()
-
-    post_save.connect(update_grade, sender=EmployeeAppraisal)
 
 
 @receiver(post_save, sender=Department)
