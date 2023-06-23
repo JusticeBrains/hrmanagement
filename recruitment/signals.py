@@ -28,31 +28,27 @@ def update_total_interview_score(sender, instance, **kwargs):
     post_save.connect(update_total_interview_score, sender=Interview)
 
 
-@receiver(post_save, sender=ApplicantQualification)
+@receiver(pre_save, sender=ApplicantQualification)
 def populate_company_field_application(sender, instance, **kwargs):
     """
     Populate company field with company name from the job application
     """
-    post_save.disconnect(
-        populate_company_field_application, sender=ApplicantQualification
-    )
-    if instance.job_application:
-        instance.company = instance.job_application.company
-        instance.save()
-    post_save.connect(populate_company_field_application, sender=ApplicantQualification)
+    if instance:
+        if instance.job_application:
+            instance.company = instance.job_application.company
 
 
-@receiver(post_save, sender=EmployeeRequisition)
+
+@receiver(pre_save, sender=EmployeeRequisition)
 def populate_company_field_requistion(sender, instance, **kwargs):
     """
     Populate company field with company name from the job application
     """
-    post_save.disconnect(populate_company_field_requistion, sender=EmployeeRequisition)
-    if instance.department:
-        instance.company = instance.department.company
-        instance.company_id = instance.department.company_id
-        instance.save()
-    post_save.connect(populate_company_field_requistion, sender=EmployeeRequisition)
+    if instance:
+        if instance.department:
+            instance.company = instance.department.company
+            instance.company_id = instance.department.company_id
+    
 
 
 @receiver(pre_save, sender=JobApplication)
