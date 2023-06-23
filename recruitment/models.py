@@ -130,8 +130,8 @@ class JobApplication(models.Model):
     applicant_othername = models.CharField(
         _("Applicant OtherName"), max_length=150, null=True, blank=True
     )
-    email = models.EmailField(_("Email"))
-    phone = models.CharField(_("Phone"), max_length=15)
+    email = models.EmailField(_("Email"), blank=True, null=True)
+    phone = models.CharField(_("Phone"), max_length=15, blank=True, null=True)
     resume = models.TextField(_("Resume"), blank=True, null=True)
     cover_letter = models.TextField(_("Cover Letter"), blank=True, null=True)
     status = models.CharField(_("Status"), max_length=50, default="Pending")
@@ -157,7 +157,7 @@ class JobApplication(models.Model):
         _("Company ID"), max_length=150, blank=True, null=True
     )
     company_qualifications = models.ForeignKey(
-        "company.Company",
+        "recruitment.CompanyQualifications",
         verbose_name=_("Company Qualifications"),
         on_delete=models.CASCADE,
         blank=True,
