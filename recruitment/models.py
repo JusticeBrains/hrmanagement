@@ -29,7 +29,7 @@ class CompanyQualifications(models.Model):
         blank=True,
         null=True,
     )
-    company_name = models.CharField(_("Company Name"), max_length=150)
+    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Company Qualifications"
@@ -75,7 +75,7 @@ class EmployeeRequisition(models.Model):
         blank=True,
         null=True,
     )
-    
+
 
     class Meta:
         verbose_name = "Employee Requisition"

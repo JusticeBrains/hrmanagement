@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import (
+    CompanyQualifications,
     EmployeeRequisition,
+    GlobalQualification,
     JobApplication,
     ApplicantQualification,
     Interview,
@@ -55,3 +57,15 @@ class ApplicationQualificationAdmin(admin.ModelAdmin):
         list_display = ['job_application','qualification_name',]
     else:
         list_display = ['qualification_name',]
+
+@admin.register(GlobalQualification)
+class GlobalQualificationAdmin(admin.ModelAdmin):
+    list_display = ["name", "value"]
+
+@admin.register(CompanyQualifications)
+class CompanyQualificationAdmin(admin.ModelAdmin):
+    if CompanyQualifications.globalqualification:
+        list_display = ["globalqualification", "company", "company_name"]
+    else:
+        list_display = ["company", "company_name"]
+
