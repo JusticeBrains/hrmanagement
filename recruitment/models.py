@@ -21,7 +21,7 @@ class GlobalQualification(models.Model):
 
 class CompanyQualifications(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    globalqualification = models.ManyToManyField(to=GlobalQualification)
+    # globalqualification = models.ManyToManyField(to=GlobalQualification)
     global_qualification = models.ForeignKey(
         "recruitment.GlobalQualification",
         verbose_name=_("Global Qualification"),
