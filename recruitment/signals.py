@@ -58,11 +58,14 @@ def get_years_of_experience(sender, instance, **kwargs):
     )
 
     if instance:
-        age = (datetime.date.today().year - instance.date_of_brith.year)
+        age = datetime.date.today().year - instance.date_of_brith.year
         age_limit = EmployeeRequisition.get_age_for_shortlisting(age)
         instance.age = age
         if (years_of_experiences and age_limit) is not None:
             instance.system_shortlisted = True
+        else:
+            instance.system_shortlisted = False
+
         if instance.employee_requisition:
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
