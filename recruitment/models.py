@@ -29,7 +29,9 @@ class CompanyQualifications(models.Model):
         blank=True,
         null=True,
     )
-    qualification_name = models.CharField(_("Qualifcation Name"), max_length=150, blank=True, null=True)
+    qualification_name = models.CharField(
+        _("Qualifcation Name"), max_length=150, blank=True, null=True
+    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company ID"),
@@ -40,7 +42,6 @@ class CompanyQualifications(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-
 
     class Meta:
         verbose_name = "Company Qualifications"
@@ -85,6 +86,9 @@ class EmployeeRequisition(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+    )
+    published_date = models.DateField(
+        _("Published Date"), auto_now=False, auto_now_add=False, null=True, blank=True
     )
 
     class Meta:
@@ -163,7 +167,17 @@ class JobApplication(models.Model):
         blank=True,
         null=True,
     )
-    qualifications = models.CharField(_("Qualification"), null=True, blank=True, max_length=50)
+    qualifications = models.CharField(
+        _("Qualification"), null=True, blank=True, max_length=50
+    )
+    date_of_application = models.DateField(
+        _("Date Of Application"),
+        auto_now=False,
+        auto_now_add=False,
+        auto_created=True,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Job Application"
