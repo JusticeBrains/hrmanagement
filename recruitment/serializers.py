@@ -19,7 +19,6 @@ class EmployeeRequisitionSerializer(serializers.ModelSerializer):
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
-    years_of_experience = IntegerRangeField()
     class Meta:
         model = JobApplication
         fields = "__all__"
