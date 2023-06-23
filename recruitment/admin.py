@@ -64,8 +64,5 @@ class GlobalQualificationAdmin(admin.ModelAdmin):
 
 @admin.register(CompanyQualifications)
 class CompanyQualificationAdmin(admin.ModelAdmin):
-    if CompanyQualifications.globalqualification:
-        list_display = ["globalqualification", "company", "company_name"]
-    else:
-        list_display = ["company", "company_name"]
+    list_display = ["company", "company_name"]
 
