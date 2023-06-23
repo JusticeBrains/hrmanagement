@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.db.models import Sum
 from recruitment.models import (
     ApplicantQualification,
+    CompanyQualifications,
     EmployeeRequisition,
     Interview,
     JobApplication,
@@ -69,3 +70,12 @@ def get_years_of_experience(sender, instance, **kwargs):
         if instance.employee_requisition:
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
+
+
+@receiver(pre_save, sender=CompanyQualifications)
+def populate_qualification_name(sender, instance, **kwargs):
+    if instance:
+        # qualifications = CompanyQualifications.objects.filter(
+        #     id__in=[q for q in instance.globalqualification])
+        instance.qualification_name = instance.global_qualification.name
+        instance.company_name = instance.company.name

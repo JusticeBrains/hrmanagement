@@ -29,6 +29,7 @@ class CompanyQualifications(models.Model):
         blank=True,
         null=True,
     )
+    qualification_name = models.CharField(_("Qualifcation Name"), max_length=150, blank=True, null=True)
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company ID"),
@@ -39,9 +40,7 @@ class CompanyQualifications(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    instance_names = models.CharField(
-        _("Instance Names"), max_length=255, blank=True, null=True, choices=[]
-    )
+
 
     class Meta:
         verbose_name = "Company Qualifications"
