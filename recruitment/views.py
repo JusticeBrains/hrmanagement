@@ -3,12 +3,16 @@ from rest_framework import viewsets
 from .models import (
     EmployeeRequisition,
     ApplicantQualification,
+    GlobalQualification,
     JobApplication,
     Interview,
+    CompanyQualifications,
 )
 
 from .serializers import (
+    CompanyQualificationsSerializer,
     EmployeeRequisitionSerializer,
+    GlobalQualificationSerializer,
     JobApplicationSerializer,
     InterviewSerializer,
     ApplicantQualificationSerializer,
@@ -26,7 +30,7 @@ class EmployeeRequisitionViewSet(viewsets.ModelViewSet):
         "status",
         "published",
         "company",
-        'company_id',
+        "company_id",
         "unique_code",
     ]
 
@@ -67,3 +71,15 @@ class AppicantQualifivationViewSet(viewsets.ModelViewSet):
     queryset = ApplicantQualification.objects.all()
     serializer_class = ApplicantQualificationSerializer
     filterset_fields = ["id", "job_application", "qualification_name", "company"]
+
+
+class GlobalQualificationViewSet(viewsets.ModelViewSet):
+    queryset = GlobalQualification.objects.all()
+    serializer_class = GlobalQualificationSerializer
+    filterset_fields = "__all__"
+
+
+class CompanyQualificationsViewSet(viewsets.ModelViewSet):
+    queryset = CompanyQualifications.objects.all()
+    serializer_class = CompanyQualificationsSerializer
+    filterset_fields = "__all__"
