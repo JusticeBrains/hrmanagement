@@ -49,6 +49,7 @@ def populate_company_field_requistion(sender, instance, **kwargs):
         if instance.department:
             instance.company = instance.department.company
             instance.company_id = instance.department.company_id
+            instance.qualifications = instance.company_qualifications.qualification_name
     
 
 
@@ -59,7 +60,7 @@ def get_years_of_experience(sender, instance, **kwargs):
     )
 
     if instance:
-        age = datetime.date() - instance.date_of_brith
+        age = datetime.now().date() - instance.date_of_brith
         age_limit = EmployeeRequisition.get_age_for_shortlisting(age)
         if years_of_experiences:
             if (

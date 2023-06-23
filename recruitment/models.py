@@ -58,7 +58,7 @@ class EmployeeRequisition(models.Model):
         "company.JobTitles", verbose_name=_("Position"), on_delete=models.DO_NOTHING
     )
     no_of_vacancies = models.PositiveIntegerField(_("No Of Vacancies"))
-    qualifcations = models.TextField(_("Qualification"), null=True, blank=True)
+    qualifications = models.TextField(_("Qualification"), null=True, blank=True)
     status = models.CharField(_("Status"), default=0, max_length=50)
     created_at = models.DateField(
         _("Created At"), auto_now_add=True, null=True, blank=True
