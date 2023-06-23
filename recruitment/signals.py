@@ -66,6 +66,7 @@ def get_years_of_experience(sender, instance, **kwargs):
         if instance.employee_requisition:
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
+            instance.qualifications = instance.company_qualifications.qualification_name
 
 
 @receiver(pre_save, sender=CompanyQualifications)

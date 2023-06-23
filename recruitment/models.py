@@ -163,6 +163,7 @@ class JobApplication(models.Model):
         blank=True,
         null=True,
     )
+    qualifications = models.TextField(_("Qualification"), null=True, blank=True)
 
     class Meta:
         verbose_name = "Job Application"
