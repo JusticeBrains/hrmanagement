@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Sum
@@ -39,7 +39,6 @@ def populate_company_field_application(sender, instance, **kwargs):
             instance.company = instance.job_application.company
 
 
-
 @receiver(pre_save, sender=EmployeeRequisition)
 def populate_company_field_requistion(sender, instance, **kwargs):
     """
@@ -50,7 +49,6 @@ def populate_company_field_requistion(sender, instance, **kwargs):
             instance.company = instance.department.company
             instance.company_id = instance.department.company_id
             instance.qualifications = instance.company_qualifications.qualification_name
-    
 
 
 @receiver(pre_save, sender=JobApplication)
@@ -60,14 +58,11 @@ def get_years_of_experience(sender, instance, **kwargs):
     )
 
     if instance:
-        age = datetime.now().date() - instance.date_of_brith
+        age = (datetime.date.today().year - instance.date_of_brith.year)
         age_limit = EmployeeRequisition.get_age_for_shortlisting(age)
-        if years_of_experiences:
-            if (
-                instance.years_of_experience in years_of_experiences.years_of_experience
-                and age in age_limit
-            ):
-                instance.system_shortlisted = True
+        instance.age = age
+        if (years_of_experiences and age_limit) is not None:
+            instance.system_shortlisted = True
         if instance.employee_requisition:
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
