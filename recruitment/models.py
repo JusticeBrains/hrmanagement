@@ -22,6 +22,13 @@ class GlobalQualification(models.Model):
 class CompanyQualifications(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     globalqualification = models.ManyToManyField(to=GlobalQualification)
+    global_qualification = models.ForeignKey(
+        "recruitment.GlobalQualification",
+        verbose_name=_("Global Qualification"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company ID"),
@@ -29,7 +36,12 @@ class CompanyQualifications(models.Model):
         blank=True,
         null=True,
     )
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    instance_names = models.CharField(
+        _("Instance Names"), max_length=255, blank=True, null=True, choices=[]
+    )
 
     class Meta:
         verbose_name = "Company Qualifications"
@@ -76,25 +88,27 @@ class EmployeeRequisition(models.Model):
         null=True,
     )
 
-
     class Meta:
         verbose_name = "Employee Requisition"
         verbose_name_plural = "Employee Requisitions"
-    
+
     @staticmethod
     def get_age_for_shortlisting(age):
         if age is not None:
-            age_limit = EmployeeRequisition.objects.filter(age_limits__contains=age).first()
+            age_limit = EmployeeRequisition.objects.filter(
+                age_limits__contains=age
+            ).first()
             return age_limit
         return None
-    
+
     @staticmethod
     def get_years_of_experience_for_shortlisting(year):
         if year is not None:
-            experience_years = EmployeeRequisition.objects.filter(years_of_experience__contains=year).first()
+            experience_years = EmployeeRequisition.objects.filter(
+                years_of_experience__contains=year
+            ).first()
             return experience_years
         return None
-
 
     def __str__(self) -> str:
         return f"{self.department} - {self.position} - {self.no_of_vacancies}"
