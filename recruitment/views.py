@@ -51,6 +51,7 @@ class JobApplicationViewSet(viewsets.ModelViewSet):
         "interviewed",
         "short_list",
         "company",
+        "system_shortlisted",
     ]
 
 
