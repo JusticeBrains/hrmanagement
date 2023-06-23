@@ -79,8 +79,8 @@ class EmployeeRequisition(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
-    company_qalifications = models.ForeignKey(
-        "company.Company",
+    company_qualifications = models.ForeignKey(
+        "recruitment.CompanyQualifications",
         verbose_name=_("Company Qualifications"),
         on_delete=models.CASCADE,
         blank=True,
