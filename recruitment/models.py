@@ -156,7 +156,7 @@ class JobApplication(models.Model):
     company_id = models.CharField(
         _("Company ID"), max_length=150, blank=True, null=True
     )
-    company_qalifications = models.ForeignKey(
+    company_qualifications = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company Qualifications"),
         on_delete=models.CASCADE,
