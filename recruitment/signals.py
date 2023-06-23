@@ -42,19 +42,6 @@ def populate_company_field_application(sender, instance, **kwargs):
     post_save.connect(populate_company_field_application, sender=ApplicantQualification)
 
 
-@receiver(post_save, sender=JobApplication)
-def populate_company_field(sender, instance, **kwargs):
-    """
-    Populate company field with company name from the job application
-    """
-    post_save.disconnect(populate_company_field, sender=JobApplication)
-    if instance.employee_requisition:
-        instance.company = instance.employee_requisition.company
-        instance.company_id = instance.employee_requisition.company_id
-        instance.save()
-    post_save.connect(populate_company_field, sender=JobApplication)
-
-
 @receiver(post_save, sender=EmployeeRequisition)
 def populate_company_field_requistion(sender, instance, **kwargs):
     """
@@ -83,3 +70,6 @@ def get_years_of_experience(sender, instance, **kwargs):
                 and age in age_limit
             ):
                 instance.system_shortlisted = True
+        if instance.employee_requisition:
+            instance.company = instance.employee_requisition.company
+            instance.company_id = instance.employee_requisition.company_id
