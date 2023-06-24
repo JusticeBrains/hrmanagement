@@ -51,44 +51,33 @@ def send_email(sender, instance, created, **kwargs):
 
         for employee in employees:
             try:
+                print("---------------Sending -----------------------")
+                subject = "Leave Request Submitted"
                 if employee.id == instance.employee.id:
-                    print(f"{instance.employee.id}")
-
-                    print("---------------Sending -----------------------")
-                    print(
-                        f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
+                    print(employee.id == instance.employee.id)
+                    message = (
+                        f"Hello {employee.fullname}, your request has been submitted"
                     )
-                    subject = "Leave Request Submitted"
-                    message = f"Hello your request has been submitted"
-                    from_email = env.str("EMAIL_USER")
-                    recipient_list = [
-                        instance.employee.company_email
-                    ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(
-                                f"Invalid email address: {email}"
-                            )  # Validates email address
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+                    recipient_list = [employee.company_email]
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Request Submitted"
                     message = (
                         f"{instance.employee.fullname} has submitted a leave request"
                     )
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
-                        from_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(
-                                f"Invalid email address: {email}"
-                            )  # Validates email address
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+
+                from_email = env.str("EMAIL_USER")
+
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(
+                            f"Invalid email address: {email}"
+                        )  # Validates email address
+
+                send_mail(subject, message, from_email, recipient_list)
+
+                print("---------------Sent -----------------------")
 
             except ValueError as ve:
                 print(f"Error occurred while sending email: {str(ve)}")
@@ -109,6 +98,8 @@ def send_email(sender, instance, created, **kwargs):
 
         for employee in employees:
             try:
+                subject = "Leave Plan Submitted"
+
                 if employee.id == instance.employee.id:
                     print(f"{instance.employee.id}")
 
@@ -116,35 +107,25 @@ def send_email(sender, instance, created, **kwargs):
                     print(
                         f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
                     )
-                    subject = "Leave Plan Submitted"
                     message = f"Hello {instance.employee.fullname}, your leave plan has been submitted"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(
-                                f"Invalid email address: {email}"
-                            )  # Validates email address
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Plan Submitted"
                     message = f"{instance.employee.fullname} has submitted a leave plan"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
 
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(
-                                f"Invalid email address: {email}"
-                            )  # Validates email address
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(
+                            f"Invalid email address: {email}"
+                        )  # Validates email address
+                send_mail(subject, message, from_email, recipient_list)
+                print("---------------Sent -----------------------")
             except ValueError as ve:
                 print(f"Error occurred while sending email: {str(ve)}")
             except Exception as e:
@@ -163,42 +144,35 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
         )
         if timezone.now().date() + timedelta(days=1) == instance.start_date:
             for employee in employees:
-                    try:
-                        if employee.id == instance.employee.id:
-                            print("---------------Sending -----------------------")
-                            subject = "Leave Starting Tommorrow"
-                            message = f"Hello you will be starting your leave Tommorrow"
-                            from_email = env.str("EMAIL_USER")
-                            recipient_list = [
-                                employee.company_email,
-                            ]
-                            for email in recipient_list:
-                                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                                    raise ValueError(
-                                        f"Invalid email address: {email}"
-                                    )  # Validates email address
-                            send_mail(subject, message, from_email, recipient_list)
-                            print("---------------Sent -----------------------")
-                        else:
-                            print("---------------Sending -----------------------")
-                            subject = "Leave Starting Tommorrow"
-                            message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
-                            from_email = env.str("EMAIL_USER")
-                            recipient_list = [
-                                employee.company_email,
-                            ]
-                            for email in recipient_list:
-                                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                                    raise ValueError(f"Invalid email address: {email}")
-                            send_mail(subject, message, from_email, recipient_list)
-                            print("---------------Sent -----------------------")
-                    except ValueError as ve:
-                        print(f"Error occurred while sending email: {str(ve)}")
+                try:
+                    subject = "Leave Starting Tommorrow"
+                    if employee.id == instance.employee.id:
+                        print("---------------Sending -----------------------")
 
-                    except Exception as e:
-                        print("Error occurred while sending email:")
-                        print(str(e))
-                        traceback.print_exc()
+                        message = f"Hello you will be starting your leave Tommorrow"
+                        from_email = env.str("EMAIL_USER")
+                        recipient_list = [
+                            employee.company_email,
+                        ]
+
+                    else:
+                        message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
+                        from_email = env.str("EMAIL_USER")
+                        recipient_list = [
+                            employee.company_email,
+                        ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                except ValueError as ve:
+                    print(f"Error occurred while sending email: {str(ve)}")
+
+                except Exception as e:
+                    print("Error occurred while sending email:")
+                    print(str(e))
+                    traceback.print_exc()
 
 
 @receiver(pre_save, sender=LeaveRequest)
@@ -211,33 +185,27 @@ def hod_approved_status(sender, instance, **kwargs):
     for employee in employees:
         if instance.hod_status == 1 and instance.hr_status == 0:
             try:
+                subject = "Leave Request Approved By Head Of Department"
+
                 if employee.id == instance.employee.id:
                     print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By Head Of Department"
                     message = f"Hello your request has been approved by the HOD. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
 
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By Head Of Department"
                     message = f"{instance.employee.fullname}'s request has been approved by the HOD. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(f"Invalid email address: {email}")
+                send_mail(subject, message, from_email, recipient_list)
+                print("---------------Sent -----------------------")
             except ValueError as ve:
                 print(f"Error occurred while sending email: {str(ve)}")
 
@@ -257,33 +225,28 @@ def hod_approved_status(sender, instance, **kwargs):
     for employee in employees:
         if instance.hod_status == 1 and instance.hr_status == 0:
             try:
+                subject = "Leave Plan Approved By Head Of Department"
+
                 if employee.id == instance.employee.id:
                     print(f"{instance.employee.id}")
                     print("---------------Sending -----------------------")
-                    subject = "Leave Plan Approved By Head Of Department"
                     message = f"Hello {instance.employee.fullname}, your leave plan has been approved by the HOD. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Plan Approved By Head Of Department"
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HOD. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(f"Invalid email address: {email}")
+                send_mail(subject, message, from_email, recipient_list)
+                print("---------------Sent -----------------------")
             except ValueError as ve:
                 print(f"Error occurred while sending email: {str(ve)}")
 
@@ -303,33 +266,27 @@ def hr_approved_status(sender, instance, **kwargs):
     for employee in employees:
         if instance.hod_status == 1 and instance.hr_status == 1:
             try:
+                subject = "Leave Request Approved By HR"
+
                 if employee.id == instance.employee.id:
                     print(f"{instance.employee.id}")
                     print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By HR"
                     message = f"Hello your request has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Request Approved By HR"
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
-                    for email in recipient_list:
-                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                            raise ValueError(f"Invalid email address: {email}")
-                    send_mail(subject, message, from_email, recipient_list)
-                    print("---------------Sent -----------------------")
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(f"Invalid email address: {email}")
+                send_mail(subject, message, from_email, recipient_list)
+                print("---------------Sent -----------------------")
             except ValueError as ve:
                 print(f"Error occurred while sending email: {str(ve)}")
 
@@ -349,17 +306,16 @@ def hr_approved_status(sender, instance, **kwargs):
     for employee in employees:
         if instance.hod_status == 1 and instance.hr_status == 1:
             try:
+                subject = "Leave Plan Approved By HR"
+
                 if employee.id == instance.employee.id:
                     print("---------------Sending -----------------------")
-                    subject = "Leave Plan Approved By HR"
                     message = f"Hello your leave plan has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
                 else:
-                    print("---------------Sending -----------------------")
-                    subject = "Leave Plan Approved By HR"
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
