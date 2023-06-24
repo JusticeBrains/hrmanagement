@@ -194,7 +194,7 @@ class LeaveRequest(LeaveBase):
         self.employee_branch = self.employee.third_category_level
         self.job_title = self.employee.job_titles
         self.employee_unit = self.employee.third_category_level
-        self.dep = self.employee.second_category_level
+        self.dep = self.employee.second_category_level.name
 
     class Meta:
         verbose_name = "Leave Request"
@@ -239,38 +239,6 @@ class LeavePlan(LeaveBase):
         self.dep = self.employee.first_category_level
         self.employee_unit = self.employee.second_category_level
 
-    # def save(self, *args, **kwargs):
-    #     if self.hr_status == 2:
-    #         if self.leave_type.name == "Maternity":
-    #             self.no_of_days_requested = self.leave_type.max_number_of_days
-    #             self.no_of_days_left = self.employee.plan_days_left
-
-    #         if self.leave_type.name == "Medical":
-    #             self.no_of_days_requested = self.no_of_days_requested
-    #             employee = self.employee
-    #             emp_days_left = employee.plan_days_left
-    #             if emp_days_left is not None:
-    #                 if self.no_of_days_requested <= emp_days_left:
-    #                     self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-    #         elif self.leave_type.name == "Annual":
-    #             self.no_of_days_requested = self.no_of_days_requested
-
-    #             employee = self.employee
-    #             emp_days_left = employee.plan_days_left
-    #             if emp_days_left is not None:
-    #                 if self.no_of_days_requested <= emp_days_left:
-    #                     self.no_of_days_left = emp_days_left - self.no_of_days_requested
-
-    #         no_of_days_exhausted = self.employee.plan_no_of_days_exhausted or 0
-    #         no_of_days_exhausted += self.no_of_days_requested
-
-    #         # update employee with new values of days_left and no_of_days_exhausted
-    #         Employee.objects.filter(id=self.employee.id).update(
-    #             days_left=self.no_of_days_left, no_of_days_exhausted=no_of_days_exhausted
-    #         )
-    #     super(LeavePlan, self).save(*args, **kwargs)
-
 
 class LeaveType(models.Model):
     code = models.UUIDField(
@@ -290,18 +258,6 @@ class LeaveType(models.Model):
     unpaid_leave = models.PositiveIntegerField(_("Unpaid Leave"), blank=True, null=True)
     rollover = models.PositiveIntegerField(_("Rollover"), default=0)
 
-    # def calculate_max_days(self, employee):
-    #     if self.name == "Medical":
-    #         max_days = employee.days_left
-    #     elif self.name == "Annual":
-    #         max_days = employee.days_left
-    #     else:
-    #         max_days = self.max_number_of_days
-
-    #     if self.staff_category == employee.staff_category_code:
-    #         return max_days
-    #     else:
-    #         return 0
 
     def __str__(self):
         return f"{self.name} - {self.company}"
@@ -382,6 +338,11 @@ class EmployeeLeaveLimits(models.Model):
         _("Number of Days Left"), blank=True, null=True, default=0
     )
     number_of_days_exhausted = models.PositiveIntegerField(_("Number of Days Exhausted"), default=0)
+    number_of_plan_days_left = models.PositiveIntegerField(
+        _("Number of Plan Days Left"), blank=True, null=True, default=0
+    )
+    number_of_plan_days_exhausted = models.PositiveIntegerField(_("Number of Plan Days Exhausted"), default=0)
+
     unpaid_leave_days = models.PositiveIntegerField(_("Unpaid Leave Days"), default=0)
     company = models.ForeignKey(
         "company.Company",

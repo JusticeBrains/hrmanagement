@@ -1,6 +1,6 @@
 import re
 import traceback
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from datetime import timedelta
 
@@ -43,14 +43,35 @@ send_leave_reminder = Signal()
 @receiver(post_save, sender=LeaveRequest)
 def send_email(sender, instance, created, **kwargs):
     if created:
-        employees = Employee.objects.filter(company_id=instance.employee.company_id)
+        employees = Employee.objects.filter(
+            Q(company_id=instance.employee.company_id, is_hr=1)
+            | Q(company_id=instance.employee.company_id, is_super=1)
+            | Q(id=instance.employee.id)
+        )
 
         for employee in employees:
-            if employee.is_hr == 1 or employee.is_super == 1:
-                print(
-                    f"{employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
-                )
-                try:
+            try:
+                if employee.id == instance.employee.id:
+                    print(f"{instance.employee.id}")
+
+                    print("---------------Sending -----------------------")
+                    print(
+                        f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
+                    )
+                    subject = "Leave Request Submitted"
+                    message = f"Hello your request has been submitted"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(
+                                f"Invalid email address: {email}"
+                            )  # Validates email address
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                else:
                     print("---------------Sending -----------------------")
                     subject = "Leave Request Submitted"
                     message = (
@@ -68,68 +89,109 @@ def send_email(sender, instance, created, **kwargs):
                             )  # Validates email address
                     send_mail(subject, message, from_email, recipient_list)
                     print("---------------Sent -----------------------")
-                except ValueError as ve:
-                    print(f"Error occurred while sending email: {str(ve)}")
-                except Exception as e:
-                    print("Error occurred while sending email:")
-                    print(str(e))
-                    traceback.print_exc()
 
-    elif instance.employee:
-        print(
-            f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
+
+
+@receiver(post_save, sender=LeavePlan)
+def send_email(sender, instance, created, **kwargs):
+    if created:
+        employees = Employee.objects.filter(
+            Q(company_id=instance.employee.company_id, is_hr=1)
+            | Q(company_id=instance.employee.company_id, is_super=1)
+            | Q(id=instance.employee.id)
         )
-        try:
-            print("---------------Sending -----------------------")
-            subject = "Leave Request Submitted"
-            message = (
-                f"Hello {instance.employee.fullname}, your request has been submitted"
-            )
-            from_email = env.str("EMAIL_USER")
-            recipient_list = [
-                from_email,
-                instance.employee.company_email,
-            ]
-            for email in recipient_list:
-                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                    raise ValueError(
-                        f"Invalid email address: {email}"
-                    )  # Validates email address
-            send_mail(subject, message, from_email, recipient_list)
-            print("---------------Sent -----------------------")
-        except ValueError as ve:
-            print(f"Error occurred while sending email: {str(ve)}")
-        except Exception as e:
-            print("Error occurred while sending email:")
-            print(str(e))
-            traceback.print_exc()
+
+        for employee in employees:
+            try:
+                if employee.id == instance.employee.id:
+                    print(f"{instance.employee.id}")
+
+                    print("---------------Sending -----------------------")
+                    print(
+                        f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
+                    )
+                    subject = "Leave Plan Submitted"
+                    message = f"Hello {instance.employee.fullname}, your leave plan has been submitted"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(
+                                f"Invalid email address: {email}"
+                            )  # Validates email address
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                else:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Plan Submitted"
+                    message = f"{instance.employee.fullname} has submitted a leave plan"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        employee.company_email,
+                    ]
+
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(
+                                f"Invalid email address: {email}"
+                            )  # Validates email address
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
 
 
 @receiver(post_save, sender=LeaveRequest)
 def send_going_on_leave_mail(sender, instance, created, **kwargs):
     if created:
-        employees = Employee.objects.filter(company_id=instance.employee.company_id)
+        employees = Employee.objects.filter(
+            Q(company_id=instance.employee.company_id, is_hr=1)
+            | Q(company_id=instance.employee.company_id, is_super=1)
+            | Q(id=instance.employee.id)
+        )
         if timezone.now().date() + timedelta(days=1) == instance.start_date:
             for employee in employees:
-                if (
-                    employee.is_hr == 1
-                    or employee.is_super == 1
-                    and instance.hr_status == 1
-                ):
                     try:
-                        print("---------------Sending -----------------------")
-                        subject = "Leave Starting Tommorrow"
-                        message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
-                        from_email = env.str("EMAIL_USER")
-                        recipient_list = [
-                            from_email,
-                            employee.company_email,
-                        ]
-                        for email in recipient_list:
-                            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                                raise ValueError(f"Invalid email address: {email}")
-                        send_mail(subject, message, from_email, recipient_list)
-                        print("---------------Sent -----------------------")
+                        if employee.id == instance.employee.id:
+                            print("---------------Sending -----------------------")
+                            subject = "Leave Starting Tommorrow"
+                            message = f"Hello you will be starting your leave Tommorrow"
+                            from_email = env.str("EMAIL_USER")
+                            recipient_list = [
+                                employee.company_email,
+                            ]
+                            for email in recipient_list:
+                                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                                    raise ValueError(
+                                        f"Invalid email address: {email}"
+                                    )  # Validates email address
+                            send_mail(subject, message, from_email, recipient_list)
+                            print("---------------Sent -----------------------")
+                        else:
+                            print("---------------Sending -----------------------")
+                            subject = "Leave Starting Tommorrow"
+                            message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
+                            from_email = env.str("EMAIL_USER")
+                            recipient_list = [
+                                employee.company_email,
+                            ]
+                            for email in recipient_list:
+                                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                                    raise ValueError(f"Invalid email address: {email}")
+                            send_mail(subject, message, from_email, recipient_list)
+                            print("---------------Sent -----------------------")
                     except ValueError as ve:
                         print(f"Error occurred while sending email: {str(ve)}")
 
@@ -137,46 +199,38 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         print("Error occurred while sending email:")
                         print(str(e))
                         traceback.print_exc()
-    elif (
-        instance.employee
-        and timezone.now().date() + timedelta(days=1) == instance.start_date
-    ):
-        try:
-            print("---------------Sending -----------------------")
-            subject = "Leave Starting Tommorrow"
-            message = f"Hello {instance.employee.fullname},you will be starting your leave Tommorrow"
-            from_email = env.str("EMAIL_USER")
-            recipient_list = [
-                employee.company_email,
-                from_email,
-            ]
-            for email in recipient_list:
-                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                    raise ValueError(f"Invalid email address: {email}")
-            send_mail(subject, message, from_email, recipient_list)
-            print("---------------Sent -----------------------")
-        except ValueError as ve:
-            print(f"Error occurred while sending email: {str(ve)}")
-
-        except Exception as e:
-            print("Error occurred while sending email:")
-            print(str(e))
-            traceback.print_exc()
 
 
-@receiver(post_save, sender=LeaveRequest)
+@receiver(pre_save, sender=LeaveRequest)
 def hod_approved_status(sender, instance, **kwargs):
-    employees = Employee.objects.filter(company_id=instance.employee.company_id)
+    employees = Employee.objects.filter(
+        Q(company_id=instance.employee.company_id, is_hr=1)
+        | Q(company_id=instance.employee.company_id, is_super=1)
+        | Q(id=instance.employee.id)
+    )
     for employee in employees:
-        if employee.is_super == 1 or employee.is_hr == 1:
-            if instance.hod_status == 1 and instance.hr_status == 0:
-                try:
+        if instance.hod_status == 1 and instance.hr_status == 0:
+            try:
+                if employee.id == instance.employee.id:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Request Approved By Head Of Department"
+                    message = f"Hello your request has been approved by the HOD. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email,
+                    ]
+
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                else:
                     print("---------------Sending -----------------------")
                     subject = "Leave Request Approved By Head Of Department"
                     message = f"{instance.employee.fullname}'s request has been approved by the HOD. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
-                        from_email,
                         employee.company_email,
                     ]
                     for email in recipient_list:
@@ -184,50 +238,91 @@ def hod_approved_status(sender, instance, **kwargs):
                             raise ValueError(f"Invalid email address: {email}")
                     send_mail(subject, message, from_email, recipient_list)
                     print("---------------Sent -----------------------")
-                except ValueError as ve:
-                    print(f"Error occurred while sending email: {str(ve)}")
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
 
-                except Exception as e:
-                    print("Error occurred while sending email:")
-                    print(str(e))
-                    traceback.print_exc()
-    if instance.employee and instance.hod_status == 1 and instance.hr_status == 0:
-        try:
-            print("---------------Sending -----------------------")
-            subject = "Leave Request Approved By Head Of Department"
-            message = f"Hello {instance.employee.fullname}, your request has been approved by the HOD. <br>Thank You.<br>"
-            from_email = env.str("EMAIL_USER")
-            recipient_list = [
-                instance.employee.company_email,
-                from_email,
-            ]
-            for email in recipient_list:
-                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                    raise ValueError(f"Invalid email address: {email}")
-            send_mail(subject, message, from_email, recipient_list)
-            print("---------------Sent -----------------------")
-        except ValueError as ve:
-            print(f"Error occurred while sending email: {str(ve)}")
-
-        except Exception as e:
-            print("Error occurred while sending email:")
-            print(str(e))
-            traceback.print_exc()
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
 
 
-@receiver(post_save, sender=LeaveRequest)
-def hr_approved_status(sender, instance, **kwargs):
-    employees = Employee.objects.filter(company_id=instance.employee.company_id)
+@receiver(pre_save, sender=LeavePlan)
+def hod_approved_status(sender, instance, **kwargs):
+    employees = Employee.objects.filter(
+        Q(company_id=instance.employee.company_id, is_hr=1)
+        | Q(company_id=instance.employee.company_id, is_super=1)
+        | Q(id=instance.employee.id)
+    )
     for employee in employees:
-        if employee.is_super == 1 or employee.is_hr == 1:
-            if instance.hod_status == 1 and instance.hr_status == 1:
-                try:
+        if instance.hod_status == 1 and instance.hr_status == 0:
+            try:
+                if employee.id == instance.employee.id:
+                    print(f"{instance.employee.id}")
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Plan Approved By Head Of Department"
+                    message = f"Hello {instance.employee.fullname}, your leave plan has been approved by the HOD. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                else:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Plan Approved By Head Of Department"
+                    message = f"{instance.employee.fullname}'s leave plan has been approved by the HOD. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        employee.company_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
+
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
+
+
+@receiver(pre_save, sender=LeaveRequest)
+def hr_approved_status(sender, instance, **kwargs):
+    employees = Employee.objects.filter(
+        Q(company_id=instance.employee.company_id, is_hr=1)
+        | Q(company_id=instance.employee.company_id, is_super=1)
+        | Q(id=instance.employee.id)
+    )
+    for employee in employees:
+        if instance.hod_status == 1 and instance.hr_status == 1:
+            try:
+                if employee.id == instance.employee.id:
+                    print(f"{instance.employee.id}")
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Request Approved By HR"
+                    message = f"Hello your request has been approved by the HR. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email,
+                    ]
+                    for email in recipient_list:
+                        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                            raise ValueError(f"Invalid email address: {email}")
+                    send_mail(subject, message, from_email, recipient_list)
+                    print("---------------Sent -----------------------")
+                else:
                     print("---------------Sending -----------------------")
                     subject = "Leave Request Approved By HR"
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
                     from_email = env.str("EMAIL_USER")
                     recipient_list = [
-                        from_email,
                         employee.company_email,
                     ]
                     for email in recipient_list:
@@ -235,42 +330,59 @@ def hr_approved_status(sender, instance, **kwargs):
                             raise ValueError(f"Invalid email address: {email}")
                     send_mail(subject, message, from_email, recipient_list)
                     print("---------------Sent -----------------------")
-                except ValueError as ve:
-                    print(f"Error occurred while sending email: {str(ve)}")
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
 
-                except Exception as e:
-                    print("Error occurred while sending email:")
-                    print(str(e))
-                    traceback.print_exc()
-    if instance.employee and instance.hod_status == 1 and instance.hr_status == 1:
-        try:
-            print("---------------Sending -----------------------")
-            subject = "Leave Request Approved By HR"
-            message = f"Hello {instance.employee.fullname}, your request has been approved by the HR. <br>Thank You.<br>"
-            from_email = env.str("EMAIL_USER")
-            recipient_list = [
-                instance.employee.company_email,
-                from_email,
-            ]
-            for email in recipient_list:
-                if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                    raise ValueError(f"Invalid email address: {email}")
-            send_mail(subject, message, from_email, recipient_list)
-            print("---------------Sent -----------------------")
-        except ValueError as ve:
-            print(f"Error occurred while sending email: {str(ve)}")
-
-        except Exception as e:
-            print("Error occurred while sending email:")
-            print(str(e))
-            traceback.print_exc()
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
 
 
-@receiver(post_save, sender=LeaveRequest)
-def update_employee_days_left(sender, instance, created, **kwargs):
+@receiver(post_save, sender=LeavePlan)
+def hr_approved_status(sender, instance, **kwargs):
+    employees = Employee.objects.filter(
+        Q(company_id=instance.employee.company_id, is_hr=1)
+        | Q(company_id=instance.employee.company_id, is_super=1)
+        | Q(id=instance.employee.id)
+    )
+    for employee in employees:
+        if instance.hod_status == 1 and instance.hr_status == 1:
+            try:
+                if employee.id == instance.employee.id:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Plan Approved By HR"
+                    message = f"Hello your leave plan has been approved by the HR. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        instance.employee.company_email,
+                    ]
+                else:
+                    print("---------------Sending -----------------------")
+                    subject = "Leave Plan Approved By HR"
+                    message = f"{instance.employee.fullname}'s leave plan has been approved by the HR. <br>Thank You.<br>"
+                    from_email = env.str("EMAIL_USER")
+                    recipient_list = [
+                        employee.company_email,
+                    ]
+                for email in recipient_list:
+                    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                        raise ValueError(f"Invalid email address: {email}")
+                send_mail(subject, message, from_email, recipient_list)
+                print("---------------Sent -----------------------")
+            except ValueError as ve:
+                print(f"Error occurred while sending email: {str(ve)}")
+
+            except Exception as e:
+                print("Error occurred while sending email:")
+                print(str(e))
+                traceback.print_exc()
+
+
+@receiver(pre_save, sender=LeaveRequest)
+def update_employee_days_left(sender, instance, **kwargs):
     employee = instance.employee
     leave_type = instance.leave_type
-    period = instance.period
     employee_limits = EmployeeLeaveLimits.objects.filter(
         employee=employee, leave_type=leave_type
     ).first()
@@ -301,86 +413,36 @@ def update_employee_days_left(sender, instance, created, **kwargs):
             employee_limits.number_of_days_left -= employee_limits.no_of_extension_days
             employee_limits.save()
 
-    post_save.disconnect(update_employee_days_left, sender=LeaveRequest)
-    instance.save()
-    post_save.connect(update_employee_days_left, sender=LeaveRequest)
 
-
-@receiver(post_save, sender=LeavePlan)
-def update_employee_days_left_leave_plan(sender, instance, created, **kwargs):
+@receiver(pre_save, sender=LeavePlan)
+def update_employee_plan_days_left(sender, instance, **kwargs):
+    employee = instance.employee
+    leave_type = instance.leave_type
+    employee_limits = EmployeeLeaveLimits.objects.filter(
+        employee=employee, leave_type=leave_type
+    ).first()
     if instance.hr_status == 1:
-        if instance.leave_type.name == "Maternity":
-            instance.no_of_days_requested = instance.leave_type.max_number_of_days
-            instance.plan_days_left = instance.employee.plan_days_left
-
-        else:
-            # instance.no_of_days_requested = instance.no_of_days_requested
-            max_days = instance.leave_type.max_number_of_days
-            employee = instance.employee
-            emp_days_left = employee.plan_days_left
-            if emp_days_left is not None:
-                if (
-                    instance.no_of_days_requested <= emp_days_left
-                    and instance.no_of_days_requested <= max_days
-                ):
-                    instance.plan_days_left = (
-                        emp_days_left - instance.no_of_days_requested
-                    )
-
-        no_of_days_exhausted = instance.employee.plan_no_of_days_exhausted or 0
-        no_of_days_exhausted += instance.no_of_days_requested
-
-        # update employee with new values of days_left and no_of_days_exhausted
-        Employee.objects.filter(id=instance.employee.id).update(
-            days_left=instance.no_of_days_left,
-            plan_no_of_days_exhausted=no_of_days_exhausted,
-        )
-
-    post_save.disconnect(update_employee_days_left_leave_plan, sender=LeavePlan)
-    instance.save()
-    post_save.connect(update_employee_days_left_leave_plan, sender=LeavePlan)
+        if instance.no_of_days_requested > employee_limits.number_of_plan_days_left:
+            raise ValidationError(
+                f"Number of Requested{instance.no_of_days_requested} is greated than your leave days left for this leave type of {employee_limits.number_of_days_left}"
+            )
+        if instance.no_of_days_requested <= employee_limits.number_of_plan_days_left:
+            employee_limits.number_of_plan_days_exhausted += (
+                instance.no_of_days_requested
+            )
+            employee_limits.number_of_plan_days_left -= (
+                employee_limits.number_of_days_exhausted
+            )
+            employee_limits.save()
 
 
-# @receiver(post_save, sender=LeaveType)
-# def update_paygroup_code(sender, instance, created, **kwargs):
-#     if created:
-#         instance.pay_group_code = instance.paygroup.no
-#         instance.save()
-
-
-# @receiver(post_save, sender=LeavePlan)
-# @receiver(post_save, sender=LeaveRequest)
-# def compute_leave_resumption_date(sender, instance, created, **kwargs):
-#     if created:
-#         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
-#         instance.resumption_date = instance.end_date + timedelta(days=1)
-#         while instance.resumption_date in holidays or instance.resumption_date.weekday() >= 5:
-#             instance.resumption_date += timedelta(days=1)
-#         instance.save()
-
-
-# @receiver(post_save, sender=LeaveRequest)
-# @receiver(post_save, sender=LeavePlan)
-# def compute_leave_resumption_date(sender, instance, created, **kwargs):
-#     if created:
-#         holidays = HolidayCalender.objects.values_list("holiday_date", flat=True)
-#         resumption_date = instance.end_date + timedelta(days=1)
-
-#         while resumption_date.weekday() >= 5 or resumption_date.date() in holidays:
-#             resumption_date += timedelta(days=1)
-
-#         instance.resumption_date = resumption_date
-#         instance.save()
-
-
-@receiver(post_save, sender=LeaveLimits)
-def create_employee_leave_limits(sender, instance, created, **kwargs):
-    post_save.disconnect(create_employee_leave_limits, sender=LeaveLimits)
+@receiver(pre_save, sender=LeaveLimits)
+def create_employee_leave_limits(sender, instance, **kwargs):
     employee = Employee.objects.all()
-    if created:
+    if instance:
         instance.leave_name = instance.leave_type.name
         instance.leave_type_id = instance.leave_type.code
-        instance.company_id = instance.paygroup.comp_id
+        instance.company_id = instance.leave_type.company.id
         instance.paygroup_name = instance.paygroup.no
         print("------------------Starting--------------------------")
         for emp in employee:
@@ -400,7 +462,7 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                         leave_type_id=instance.leave_type.code,
                         max_number_of_days=instance.max_number_of_days,
                         paygroup=instance.paygroup,
-                        company=Company.objects.get(id=instance.paygroup.comp_id),
+                        company=Company.objects.get(id=instance.leave_type.company.id),
                     )
                 elif EmployeeLeaveLimits.objects.filter(
                     leave_type=instance.leave_type,
@@ -411,5 +473,3 @@ def create_employee_leave_limits(sender, instance, created, **kwargs):
                         max_number_of_days=instance.max_number_of_days,
                         leave_type_id=instance.leave_type.code,
                     )
-    instance.save()
-    post_save.connect(create_employee_leave_limits, sender=LeaveLimits)
