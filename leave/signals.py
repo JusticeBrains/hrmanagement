@@ -53,7 +53,6 @@ def send_email(sender, instance, created, **kwargs):
             try:
                 print("---------------Sending -----------------------")
                 subject = "Leave Request Submitted"
-                
 
                 if employee.id == instance.employee.id:
                     print(employee.id == instance.employee.id)
@@ -61,10 +60,9 @@ def send_email(sender, instance, created, **kwargs):
                         f"Hello {employee.fullname}, your request has been submitted"
                     )
                     recipient_list = [employee.company_email]
-                    
-                    print("---------------Sent -----------------------")
 
-                if employee.is_hr == 1 or employee.is_super == 1:
+                    print("---------------Sent -----------------------")
+                else:
                     message = (
                         f"{instance.employee.fullname} has submitted a leave request"
                     )
@@ -117,10 +115,9 @@ def send_email(sender, instance, created, **kwargs):
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-
-                if employee.is_hr == 1 or employee.is_super == 1:
+                else:
                     message = f"{instance.employee.fullname} has submitted a leave plan"
-                    
+
                     recipient_list = [
                         employee.company_email,
                     ]
@@ -161,9 +158,9 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                             employee.company_email,
                         ]
 
-                    if employee.is_hr == 1 or employee.is_super == 1:
+                    else:
                         message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
-                       
+
                         recipient_list = [
                             employee.company_email,
                         ]
@@ -202,7 +199,7 @@ def hod_approved_status(sender, instance, **kwargs):
                         instance.employee.company_email,
                     ]
 
-                if employee.is_hr == 1 or employee.is_super == 1:
+                else:
                     message = f"{instance.employee.fullname}'s request has been approved by the HOD. <br>Thank You.<br>"
                     recipient_list = [
                         employee.company_email,
@@ -243,7 +240,7 @@ def hod_approved_status(sender, instance, **kwargs):
                         instance.employee.company_email,
                     ]
 
-                if employee.is_hr == 1 or employee.is_super == 1:
+                else:
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HOD. <br>Thank You.<br>"
                     recipient_list = [
                         employee.company_email,
@@ -284,7 +281,7 @@ def hr_approved_status(sender, instance, **kwargs):
                         instance.employee.company_email,
                     ]
 
-                if employee.is_hr == 1 or employee.is_super == 1:
+                else:
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
                     recipient_list = [
                         employee.company_email,
@@ -323,8 +320,7 @@ def hr_approved_status(sender, instance, **kwargs):
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                    
-                if employee.is_hr == 1 or employee.is_super == 1:
+                else:
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HR. <br>Thank You.<br>"
                     recipient_list = [
                         employee.company_email,
