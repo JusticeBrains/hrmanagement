@@ -52,7 +52,7 @@ def populate_company_field_requistion(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=JobApplication)
-def get_years_of_experience(sender, instance, **kwargs):
+def system_shortlist(sender, instance, **kwargs):
     years_of_experiences = EmployeeRequisition.get_years_of_experience_for_shortlisting(
         instance.years_of_experience
     )
@@ -61,7 +61,16 @@ def get_years_of_experience(sender, instance, **kwargs):
         age = datetime.date.today().year - instance.date_of_brith.year
         age_limit = EmployeeRequisition.get_age_for_shortlisting(age)
         instance.age = age
-        if (years_of_experiences and age_limit) is not None:
+        application_qualification_value = (
+            instance.company_qualifications.global_qualification.value
+        )
+        requistion_value = (
+            instance.employee_requisition.company_qualifications.global_qualification.value
+        )
+
+        if (years_of_experiences and age_limit) is not None and (
+            application_qualification_value >= requistion_value
+        ):
             instance.system_shortlisted = True
         else:
             instance.system_shortlisted = False
