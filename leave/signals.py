@@ -5,9 +5,9 @@ from django.dispatch import receiver, Signal
 from datetime import timedelta
 
 from company.models import Company
-from .models import EmployeeLeaveLimits, HolidayCalender, LeaveLimits
+from .models import EmployeeLeaveLimits, LeaveLimits
 from employee.models import Employee
-from leave.models import LeaveRequest, LeaveType, LeavePlan
+from leave.models import LeaveRequest, LeavePlan
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils import timezone
@@ -53,13 +53,18 @@ def send_email(sender, instance, created, **kwargs):
             try:
                 print("---------------Sending -----------------------")
                 subject = "Leave Request Submitted"
+                
+
                 if employee.id == instance.employee.id:
                     print(employee.id == instance.employee.id)
                     message = (
                         f"Hello {employee.fullname}, your request has been submitted"
                     )
                     recipient_list = [employee.company_email]
-                else:
+                    
+                    print("---------------Sent -----------------------")
+
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = (
                         f"{instance.employee.fullname} has submitted a leave request"
                     )
@@ -68,7 +73,6 @@ def send_email(sender, instance, created, **kwargs):
                     ]
 
                 from_email = env.str("EMAIL_USER")
-
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(
@@ -102,23 +106,26 @@ def send_email(sender, instance, created, **kwargs):
 
                 if employee.id == instance.employee.id:
                     print(f"{instance.employee.id}")
+                    print(f"employee.id: {employee.id}")
+                    print(f"instance.employee.id: {instance.employee.id}")
 
                     print("---------------Sending -----------------------")
                     print(
                         f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
                     )
                     message = f"Hello {instance.employee.fullname}, your leave plan has been submitted"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                else:
+
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = f"{instance.employee.fullname} has submitted a leave plan"
-                    from_email = env.str("EMAIL_USER")
+                    
                     recipient_list = [
                         employee.company_email,
                     ]
 
+                from_email = env.str("EMAIL_USER")
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(
@@ -150,17 +157,18 @@ def send_going_on_leave_mail(sender, instance, created, **kwargs):
                         print("---------------Sending -----------------------")
 
                         message = f"Hello you will be starting your leave Tommorrow"
-                        from_email = env.str("EMAIL_USER")
                         recipient_list = [
                             employee.company_email,
                         ]
 
-                    else:
+                    if employee.is_hr == 1 or employee.is_super == 1:
                         message = f"{instance.employee.fullname}, will be starting their leave Tommorrow"
-                        from_email = env.str("EMAIL_USER")
+                       
                         recipient_list = [
                             employee.company_email,
                         ]
+
+                    from_email = env.str("EMAIL_USER")
                     for email in recipient_list:
                         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                             raise ValueError(f"Invalid email address: {email}")
@@ -190,17 +198,17 @@ def hod_approved_status(sender, instance, **kwargs):
                 if employee.id == instance.employee.id:
                     print("---------------Sending -----------------------")
                     message = f"Hello your request has been approved by the HOD. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
 
-                else:
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = f"{instance.employee.fullname}'s request has been approved by the HOD. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
+
+                from_email = env.str("EMAIL_USER")
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(f"Invalid email address: {email}")
@@ -231,17 +239,17 @@ def hod_approved_status(sender, instance, **kwargs):
                     print(f"{instance.employee.id}")
                     print("---------------Sending -----------------------")
                     message = f"Hello {instance.employee.fullname}, your leave plan has been approved by the HOD. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
 
-                else:
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HOD. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
+
+                from_email = env.str("EMAIL_USER")
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(f"Invalid email address: {email}")
@@ -272,16 +280,17 @@ def hr_approved_status(sender, instance, **kwargs):
                     print(f"{instance.employee.id}")
                     print("---------------Sending -----------------------")
                     message = f"Hello your request has been approved by the HR. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                else:
+
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = f"{instance.employee.fullname}'s request has been approved by the HR. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
+
+                from_email = env.str("EMAIL_USER")
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(f"Invalid email address: {email}")
@@ -311,16 +320,17 @@ def hr_approved_status(sender, instance, **kwargs):
                 if employee.id == instance.employee.id:
                     print("---------------Sending -----------------------")
                     message = f"Hello your leave plan has been approved by the HR. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         instance.employee.company_email,
                     ]
-                else:
+                    
+                if employee.is_hr == 1 or employee.is_super == 1:
                     message = f"{instance.employee.fullname}'s leave plan has been approved by the HR. <br>Thank You.<br>"
-                    from_email = env.str("EMAIL_USER")
                     recipient_list = [
                         employee.company_email,
                     ]
+
+                from_email = env.str("EMAIL_USER")
                 for email in recipient_list:
                     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                         raise ValueError(f"Invalid email address: {email}")
