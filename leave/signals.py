@@ -55,7 +55,6 @@ def send_email(sender, instance, created, **kwargs):
                 subject = "Leave Request Submitted"
 
                 if employee.id == instance.employee.id:
-                    print(employee.id == instance.employee.id)
                     message = (
                         f"Hello {employee.fullname}, your request has been submitted"
                     )
@@ -103,14 +102,8 @@ def send_email(sender, instance, created, **kwargs):
                 subject = "Leave Plan Submitted"
 
                 if employee.id == instance.employee.id:
-                    print(f"{instance.employee.id}")
-                    print(f"employee.id: {employee.id}")
-                    print(f"instance.employee.id: {instance.employee.id}")
-
                     print("---------------Sending -----------------------")
-                    print(
-                        f"{instance.employee.company_id}, {instance.employee.company_id}, {instance.employee.fullname}"
-                    )
+
                     message = f"Hello {instance.employee.fullname}, your leave plan has been submitted"
                     recipient_list = [
                         instance.employee.company_email,

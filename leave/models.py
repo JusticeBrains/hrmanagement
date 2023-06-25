@@ -237,7 +237,7 @@ class LeavePlan(LeaveBase):
         self.employee_branch = self.employee.third_category_level
         self.job_title = self.employee.job_titles
         self.dep = self.employee.first_category_level
-        self.employee_unit = self.employee.second_category_level
+        self.employee_unit = self.employee.third_category_level
 
 
 class LeaveType(models.Model):
