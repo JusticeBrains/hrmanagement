@@ -74,8 +74,8 @@ class LeaveBase(models.Model):
         null=True,
         blank=True,
     )
-    dep_code = models.CharField(
-        _("Department Code"), max_length=50, null=True, blank=True
+    dep_id = models.CharField(
+        _("Department ID"), max_length=50, null=True, blank=True
     )
     dep = models.CharField(_("Department"), max_length=50, null=True, blank=True)
     supporting_doc = models.TextField(_("Supporting Document"), null=True, blank=True)
@@ -189,12 +189,6 @@ class LeaveRequest(LeaveBase):
     def resumption_date(self, value):
         self._resumption_date = value
 
-    def clean(self):
-        self.emp_code = self.employee.code
-        self.employee_branch = self.employee.third_category_level
-        self.job_title = self.employee.job_titles
-        self.employee_unit = self.employee.third_category_level
-        self.dep = self.employee.second_category_level.name
 
     class Meta:
         verbose_name = "Leave Request"
@@ -231,13 +225,6 @@ class LeavePlan(LeaveBase):
     @resumption_date.setter
     def resumption_date(self, value):
         self._resumption_date = value
-
-    def clean(self):
-        self.emp_code = self.employee.code
-        self.employee_branch = self.employee.third_category_level
-        self.job_title = self.employee.job_titles
-        self.dep = self.employee.first_category_level
-        self.employee_unit = self.employee.third_category_level
 
 
 class LeaveType(models.Model):

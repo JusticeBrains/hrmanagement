@@ -428,3 +428,14 @@ def create_employee_leave_limits(sender, instance, **kwargs):
                         max_number_of_days=instance.max_number_of_days,
                         leave_type_id=instance.leave_type.code,
                     )
+
+
+@receiver(pre_save, sender=LeavePlan)
+@receiver(pre_save, sender=LeaveRequest)
+def populate_fields(sender, instance, **kwargs):
+    if instance:
+        instance.dep_id = instance.employee.second_category_level.id
+        instance.dep = instance.employee.second_category_level.name
+        instance.employee_branch = instance.employee.third_category_level
+        instance.emp_code = instance.employee.code
+        instance.job_title = instance.employee.job_titles
