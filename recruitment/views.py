@@ -1,8 +1,10 @@
 from rest_framework import viewsets
 
 from .models import (
+    CompanyMajors,
     EmployeeRequisition,
     ApplicantQualification,
+    GlobalMajors,
     GlobalQualification,
     JobApplication,
     Interview,
@@ -10,8 +12,10 @@ from .models import (
 )
 
 from .serializers import (
+    CompanyMajorsSerializer,
     CompanyQualificationsSerializer,
     EmployeeRequisitionSerializer,
+    GlobalMajorsSerializer,
     GlobalQualificationSerializer,
     JobApplicationSerializer,
     InterviewSerializer,
@@ -83,4 +87,16 @@ class GlobalQualificationViewSet(viewsets.ModelViewSet):
 class CompanyQualificationsViewSet(viewsets.ModelViewSet):
     queryset = CompanyQualifications.objects.all()
     serializer_class = CompanyQualificationsSerializer
+    filterset_fields = "__all__"
+
+
+class GlobalMajorsViewSet(viewsets.ModelViewSet):
+    queryset = GlobalMajors.objects.all()
+    serializer_class = GlobalMajorsSerializer
+    filterset_fields = "__all__"
+
+
+class CompanyMajorsViewSet(viewsets.ModelViewSet):
+    queryset = CompanyMajors.objects.all()
+    serializer_class = CompanyMajorsSerializer
     filterset_fields = "__all__"

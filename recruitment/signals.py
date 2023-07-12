@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.db.models import Sum
 from recruitment.models import (
     ApplicantQualification,
+    CompanyMajors,
     CompanyQualifications,
     EmployeeRequisition,
     Interview,
@@ -49,6 +50,7 @@ def populate_company_field_requistion(sender, instance, **kwargs):
             instance.company = instance.department.company
             instance.company_id = instance.department.company_id
             instance.qualifications = instance.company_qualifications.qualification_name
+            instance.company_majors_name = instance.company_majors.major_name
 
 
 @receiver(pre_save, sender=JobApplication)
@@ -65,12 +67,14 @@ def system_shortlist(sender, instance, **kwargs):
         application_qualification_value = (
             instance.company_qualifications.global_qualification.value
         )
+        application_company_major = instance.company_majors.GlobalMajors.name
+        requistion_major = instance.employee_requisition.company_majors.name
         requistion_value = (
             instance.employee_requisition.company_qualifications.global_qualification.value
         )
         if (years_of_experiences and age_limit) is not None and (
             application_qualification_value >= requistion_value
-        ):
+        ) and (application_company_major == requistion_major):
             instance.system_shortlisted = True
         else:
             instance.system_shortlisted = False
@@ -79,6 +83,7 @@ def system_shortlist(sender, instance, **kwargs):
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
             instance.qualifications = instance.company_qualifications.qualification_name
+            instance.company_majors_name = instance.company_majors.major_name
 
 
 @receiver(pre_save, sender=CompanyQualifications)
@@ -87,4 +92,12 @@ def populate_qualification_name(sender, instance, **kwargs):
         # qualifications = CompanyQualifications.objects.filter(
         #     id__in=[q for q in instance.globalqualification])
         instance.qualification_name = instance.global_qualification.name
+        instance.company_name = instance.company.name
+
+
+@receiver(pre_save, sender=CompanyMajors)
+def populate_company_major_name(sender, instance, **kwargs):
+    """Populate company major name"""
+    if instance:
+        instance.major_name = instance.global_major.name
         instance.company_name = instance.company.name

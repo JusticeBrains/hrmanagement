@@ -1,7 +1,9 @@
 from rest_framework.routers import SimpleRouter
 from .views import (
     AppicantQualifivationViewSet,
+    CompanyMajorsViewSet,
     CompanyQualificationsViewSet,
+    GlobalMajorsViewSet,
     GlobalQualificationViewSet,
     JobApplicationViewSet,
     EmployeeRequisitionViewSet,
@@ -26,5 +28,14 @@ router.register(
     CompanyQualificationsViewSet,
     basename="company-qualification",
 )
+router.register(
+    "global-majors", GlobalMajorsViewSet, basename="global-major"
+)
+router.register(
+    "company-major",
+    CompanyMajorsViewSet,
+    basename="company-major",
+)
+
 
 urlpatterns = router.urls

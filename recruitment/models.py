@@ -19,6 +19,19 @@ class GlobalQualification(models.Model):
         return f"{self.value} - {self.name}" if self.name else ""
 
 
+class GlobalMajors(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+    value = models.PositiveIntegerField(_("Value"), blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Global Majors"
+        verbose_name_plural = "Global Majors"
+
+    def __str__(self):
+        return f"{self.value} - {self.name}" if self.name else ""
+
+
 class CompanyQualifications(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     # globalqualification = models.ManyToManyField(to=GlobalQualification)
@@ -46,6 +59,37 @@ class CompanyQualifications(models.Model):
     class Meta:
         verbose_name = "Company Qualifications"
         verbose_name_plural = "Company Qualifications"
+
+    def __str__(self):
+        return str(self.company_name)
+
+
+class CompanyMajors(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    global_major = models.ForeignKey(
+        "recruitment.GlobalMajors",
+        verbose_name=_("Global Majors"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    major_name = models.CharField(
+        _("Major Name"), max_length=150, blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Company Majors"
+        verbose_name_plural = "Company Majors"
 
     def __str__(self):
         return str(self.company_name)
@@ -87,9 +131,20 @@ class EmployeeRequisition(models.Model):
         blank=True,
         null=True,
     )
+    company_majors = models.ForeignKey(
+        "recruitment.CompanyMajors",
+        verbose_name=_("Company Majors"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    company_majors_name = models.CharField(
+        _("Company Major Name"), max_length=150, blank=True, null=True
+    )
     published_date = models.DateField(
         _("Published Date"), auto_now=False, auto_now_add=False, null=True, blank=True
     )
+    picture = models.ImageField(upload_to="pic/", blank=True, null=True)
 
     class Meta:
         verbose_name = "Employee Requisition"
@@ -168,6 +223,16 @@ class JobApplication(models.Model):
         null=True,
     )
     qualifications = models.CharField(
+        _("Qualification"), null=True, blank=True, max_length=50
+    )
+    company_majors = models.ForeignKey(
+        "recruitment.CompanyMajors",
+        verbose_name=_("Company Majors"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    major_name = models.CharField(
         _("Qualification"), null=True, blank=True, max_length=50
     )
     date_of_application = models.DateField(
