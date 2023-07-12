@@ -239,8 +239,7 @@ class JobApplication(models.Model):
         auto_now=False,
         auto_now_add=False,
         auto_created=True,
-        blank=True,
-        null=True,
+        default=timezone.now
     )
 
     class Meta:
