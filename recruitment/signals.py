@@ -67,8 +67,8 @@ def system_shortlist(sender, instance, **kwargs):
         application_qualification_value = (
             instance.company_qualifications.global_qualification.value
         )
-        application_company_major = instance.company_majors.GlobalMajors.name
-        requistion_major = instance.employee_requisition.company_majors.name
+        application_company_major = instance.company_majors.global_major.name
+        requistion_major = instance.employee_requisition.company_majors.major_name
         requistion_value = (
             instance.employee_requisition.company_qualifications.global_qualification.value
         )

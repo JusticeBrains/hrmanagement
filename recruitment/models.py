@@ -233,7 +233,7 @@ class JobApplication(models.Model):
         null=True,
     )
     major_name = models.CharField(
-        _("Qualification"), null=True, blank=True, max_length=50
+        _(" Major Qualification"), null=True, blank=True, max_length=50
     )
     date_of_application = models.DateField(
         _("Date Of Application"),

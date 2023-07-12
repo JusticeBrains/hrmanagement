@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import (
+    CompanyMajors,
     CompanyQualifications,
     EmployeeRequisition,
+    GlobalMajors,
     GlobalQualification,
     JobApplication,
     ApplicantQualification,
@@ -66,3 +68,11 @@ class GlobalQualificationAdmin(admin.ModelAdmin):
 class CompanyQualificationAdmin(admin.ModelAdmin):
     list_display = ["company", "company_name"]
 
+
+@admin.register(GlobalMajors)
+class GlobalQualificationAdmin(admin.ModelAdmin):
+    list_display = ["name", "value"]
+
+@admin.register(CompanyMajors)
+class CompanyQualificationAdmin(admin.ModelAdmin):
+    list_display = ["company", "company_name", "major_name"]
