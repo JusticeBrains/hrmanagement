@@ -83,7 +83,7 @@ def system_shortlist(sender, instance, **kwargs):
             instance.company = instance.employee_requisition.company
             instance.company_id = instance.employee_requisition.company_id
             instance.qualifications = instance.company_qualifications.qualification_name
-            instance.company_majors_name = instance.company_majors.major_name
+            instance.major_name = instance.company_majors.major_name
 
 
 @receiver(pre_save, sender=CompanyQualifications)
