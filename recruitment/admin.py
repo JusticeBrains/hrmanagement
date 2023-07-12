@@ -71,7 +71,7 @@ class CompanyQualificationAdmin(admin.ModelAdmin):
 
 @admin.register(GlobalMajors)
 class GlobalQualificationAdmin(admin.ModelAdmin):
-    list_display = ["name", "value"]
+    list_display = ["name"]
 
 @admin.register(CompanyMajors)
 class CompanyQualificationAdmin(admin.ModelAdmin):

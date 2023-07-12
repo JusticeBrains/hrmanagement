@@ -22,14 +22,13 @@ class GlobalQualification(models.Model):
 class GlobalMajors(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    value = models.PositiveIntegerField(_("Value"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Global Majors"
         verbose_name_plural = "Global Majors"
 
     def __str__(self):
-        return f"{self.value} - {self.name}" if self.name else ""
+        return f"{self.name}" if self.name else ""
 
 
 class CompanyQualifications(models.Model):
