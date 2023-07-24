@@ -72,9 +72,10 @@ def system_shortlist(sender, instance, **kwargs):
         requistion_value = (
             instance.employee_requisition.company_qualifications.global_qualification.value
         )
+        requistion_company_majors = instance.employee_requisition.company_majors_array
         if (years_of_experiences and age_limit) is not None and (
             application_qualification_value >= requistion_value
-        ) and (application_company_major == requistion_major):
+        ) and (application_company_major in requistion_company_majors):
             instance.system_shortlisted = True
         else:
             instance.system_shortlisted = False

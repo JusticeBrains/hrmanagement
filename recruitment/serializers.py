@@ -15,6 +15,9 @@ from drf_extra_fields.fields import IntegerRangeField
 class EmployeeRequisitionSerializer(serializers.ModelSerializer):
     age_limits = IntegerRangeField()
     years_of_experience = IntegerRangeField()
+    company_majors_array = serializers.ListField(
+        child=serializers.CharField(required=False), allow_empty=True
+    )
 
     class Meta:
         model = EmployeeRequisition

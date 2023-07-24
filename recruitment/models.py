@@ -1,9 +1,8 @@
 import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, IntegerRangeField
 from django.utils import timezone
-from django.contrib.postgres.fields import IntegerRangeField
 
 
 class GlobalQualification(models.Model):
@@ -65,6 +64,7 @@ class CompanyQualifications(models.Model):
 
 class CompanyMajors(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    # globalmajors = models.ManyToManyField(to=GlobalQualification)
     global_major = models.ForeignKey(
         "recruitment.GlobalMajors",
         verbose_name=_("Global Majors"),
@@ -134,6 +134,11 @@ class EmployeeRequisition(models.Model):
         "recruitment.CompanyMajors",
         verbose_name=_("Company Majors"),
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    company_majors_array = ArrayField(
+        base_field=models.CharField(_("Company Majors Array"), max_length=150),
         blank=True,
         null=True,
     )
@@ -239,7 +244,7 @@ class JobApplication(models.Model):
         auto_now=False,
         auto_now_add=False,
         auto_created=True,
-        default=timezone.now
+        default=timezone.now,
     )
 
     class Meta:
