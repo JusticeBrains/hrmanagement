@@ -50,7 +50,7 @@ def populate_company_field_requistion(sender, instance, **kwargs):
             instance.company = instance.department.company
             instance.company_id = instance.department.company_id
             instance.qualifications = instance.company_qualifications.qualification_name
-            instance.company_majors_name = instance.company_majors.major_name
+            # instance.company_majors_name = instance.company_majors.major_name
 
 
 @receiver(pre_save, sender=JobApplication)
