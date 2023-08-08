@@ -21,8 +21,20 @@ from company.models import Company
 from django.utils import timezone
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
+# from celery.task import periodic_task
+from django.core.management import call_command
+
+
+from employee.management.commands import update_scheduler
+
 
 birth_date_remainder = Signal()
+
+
+# @periodic_task(run_every=timedelta(minutes=1))
+# def update_employees_signal(sender, **kwargs):
+#     call_command('update_scheduler')
+
 
 
 @receiver(birth_date_remainder)

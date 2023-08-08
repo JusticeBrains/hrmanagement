@@ -50,14 +50,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "users.apps.UsersConfig",
     "company.apps.CompanyConfig",
-    "jobanalysis.apps.JobanalysisConfig",
     "employee.apps.EmployeeConfig",
-    "medicals.apps.MedicalsConfig",
-    # 'paygroup.apps.PaygroupConfig',
-    # 'trainingapplication.apps.TrainingapplicationConfig',
     "leave.apps.LeaveConfig",
-    "objectivesapplication.apps.ObjectivesapplicationConfig",
-    "insuranceapp.apps.InsuranceappConfig",
     "calenders.apps.CalendersConfig",
     "recruitment.apps.RecruitmentConfig",
 ]

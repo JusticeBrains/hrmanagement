@@ -10,7 +10,7 @@ api_info = openapi.Info(
         default_version='v1',
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        contact=openapi.Contact(email="justice@faabsystems.com"),
         license=openapi.License(name="BSD License"),
 )
 
@@ -24,12 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('leave/', include('leave.urls')),
-    path('insuranceapp/', include('insuranceapp.urls')),
     path('employee/', include('employee.urls')),
-    path('jobanalysis/', include('jobanalysis.urls')),
-    path('objectivesapplication/', include('objectivesapplication.urls')),
-    # path('trainingapplication/', include('trainingapplication.urls')),
-    # path('paygroup/', include("paygroup.urls")),
     path('company/', include('company.urls')),
     path('recruitment/', include('recruitment.urls')),
 
