@@ -24,6 +24,10 @@ jobs:
       PGPORT: 5432
       SECRET_KEY: test-key-n)ot-12)3good
       DATABASE_URL: postgresql://zerah:actionsdb123@localhost:5432/actionsdb
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_HOST_USER: actionsdb@petalmail.com
+      EMAIL_HOST_PASSWORD: afsgdhjyjheuyuhjs
+      DEFAULT_FROM_EMAIL: actionsdb@petailmail.com
     services:
       postgres_main:
         image: postgres:14
