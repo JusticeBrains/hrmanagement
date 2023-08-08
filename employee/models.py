@@ -54,21 +54,18 @@ class Employee(models.Model):
     alt_address_end_date = models.CharField(
         _("Alt Address End Date"), max_length=250, blank=True, null=True
     )
-    first_category_level = models.CharField(
-        _("First Category Level"), max_length=250, blank=True, null=True
-    )
-    second_category_level = models.ForeignKey(
+    department = models.ForeignKey(
         "employee.Department",
         verbose_name=_("Department"),
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True,
     )
-    third_category_level = models.CharField(
-        _("Third Category Level"), max_length=250, blank=True, null=True
+    unit = models.CharField(
+        _("Unit"), max_length=250, blank=True, null=True
     )
-    fourth_category_level = models.CharField(
-        _("Fourth Category Level"), max_length=250, blank=True, null=True
+    branch = models.CharField(
+        _("Branch"), max_length=250, blank=True, null=True
     )
     fifth_category_level = models.CharField(
         _("Fifth Category Level"), max_length=250, blank=True, null=True
@@ -155,19 +152,6 @@ class Employee(models.Model):
         _("Employee Level"), max_length=50, blank=True, null=True
     )
     profile_pic = models.TextField(_("Profile Pic"), null=True, blank=True)
-    days_left = models.PositiveIntegerField(_("Days Left"), null=True, blank=True)
-    no_of_days_exhausted = models.PositiveIntegerField(
-        _("No. Of Days Exhausted"), blank=True, null=True
-    )
-    plan_days_left = models.PositiveIntegerField(
-        _("Plan Days Left"), null=True, blank=True
-    )
-    plan_no_of_days_exhausted = models.PositiveIntegerField(
-        _("Plan No. Of Days Exhausted"), blank=True, null=True
-    )
-    total_number_of_leave_days = models.PositiveIntegerField(
-        _("Total Number Of Leave Days"), null=True, blank=True
-    )
     company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
     company_id = models.ForeignKey(
         "company.Company",

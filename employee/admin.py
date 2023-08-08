@@ -11,7 +11,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         "code",
         "company",
         "pay_group_code",
-        "second_category_level",
+        "department",
         "is_hr",
         "company_email"
     ]
