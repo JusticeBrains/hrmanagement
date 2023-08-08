@@ -129,7 +129,7 @@ class UnitViewSet(viewsets.ModelViewSet):
         "id",
         "code",
         "name",
-        "second_category_code",
+        "department",
     ]
 
 
@@ -139,7 +139,7 @@ class BranchViewSet(viewsets.ModelViewSet):
     filterset_fields = [
         "code",
         "name",
-        "third_category_code",
+        "unit",
     ]
 
 

@@ -71,9 +71,13 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_display = ["code", "name", "company"]
     search_fields = ["code", "name"]
 
+@admin.register(emodels.Unit)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ["code", "name", "company","department"]
+    search_fields = ["code", "name"]
+
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
-admin.site.register(emodels.Unit)
 admin.site.register(emodels.Notch)
 admin.site.register(emodels.AppraisalGrading)
 admin.site.register(emodels.EmployeeAppraisal)
