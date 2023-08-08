@@ -60,8 +60,8 @@ def update_employee_appraisal(sender, instance, **kwargs):
         instance.emp_name = employee.fullname
         instance.employee_code = employee.code
         instance.job_title = employee.job_titles
-        instance.department = employee.second_category_level.name
-        instance.department_id = employee.second_category_level
+        instance.department = employee.department.name
+        instance.department_id = employee.department
         instance.company = employee.company_id.name
         instance.company_id = employee.company_id
 
@@ -207,8 +207,8 @@ def update_kra_fields(sender, instance, **kwargs):
     if instance:
         instance.emp_code = employee.code
         instance.emp_name = employee.fullname
-        instance.department = employee.second_category_level.name
-        instance.department_id = employee.second_category_level
+        instance.department = employee.department.name
+        instance.department_id = employee.department
         instance.company = employee.company_id.name
         instance.company_id = employee.company_id
 
