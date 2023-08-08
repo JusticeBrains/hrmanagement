@@ -2,9 +2,11 @@ from typing import Any
 from django.core.management.base import BaseCommand
 from company.models import JobTitles, Company
 from employee.models import (
+    Branch,
     Department,
     PayGroup,
     Employee,
+    Unit,
 )
 
 
@@ -668,6 +670,202 @@ class Command(BaseCommand):
             #     )
         self.stdout.write(self.style.SUCCESS("--------Ended Loading JobTitles-------"))
 
+
+
+        self.stdout.write(self.style.SUCCESS("--------Loading Units-------"))
+        for comp in companies:
+            if comp.name == "INTERCITY STC LTD":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                load_units(
+                    url=env.str("intercity_sen_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+                load_units(
+                    url=env.str("intercity_jun_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("intercity_driver_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Rock City Hotel":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                load_units(
+                    url=env.str("rch_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                load_units(
+                    url=env.str("baf_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Emery Invest":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                load_units(
+                    url=env.str("emery_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "FAAB Systems Gh. Ltd":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                load_units(
+                    url=env.str("faab_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Rock City Hotel Heads of Department":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("rch_hod_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Republic Media Limited":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("repub_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Intu IT Professional Allowance":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("intuprof_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "INTU-IT GHANA LIMITED":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("intu_ghana_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Rock City Professional Allowance":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("rch_prof_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("nla_man_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA JUNIOR SENIOR":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_units(
+                    url=env.str("nla_jun_sen_units"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+
         self.stdout.write(self.style.SUCCESS("--------Loading Employees-------"))
 
         for company in companies:
@@ -1261,6 +1459,58 @@ def load_department(url, auth, company, comp_id):
                     comp_id=Company.objects.get(id=comp_id)
                 )
 
+
+def load_units(url, auth, company, comp_id):
+    res = requests.get(url=url, auth=auth, timeout=60)
+    data = res.json()
+
+    for unit in data["value"]:
+        if Unit.objects.filter(code=unit["Code"],company=company).exists():
+            unit_id = Unit.objects.get(code=unit["Code"], company=company)
+            print("Updating Existing Unit")
+            Unit.objects.filter(code=unit_id).update(
+                code=unit["Code"].strip(),
+                name=unit["Name"].strip(),
+                department=Department.objects.get(code=unit["Second_Category_Code"],company=company),
+                comp_id=Company.objects.get(id=comp_id),
+                company=company.strip()
+            )
+        elif not Unit.objects.filter(code=unit["Code"],company=company).exists():
+            print(f"--Creating New Unit--- Unit -- {unit['Code']} -- Company {company}")
+            depart = Department.objects.filter(code=unit["Second_Category_Code"],company=company)
+            if depart.exists():
+                Unit.objects.create(
+                    code=unit["Code"].strip(),
+                    name=unit["Name"].strip(),
+                    department=Department.objects.get(code=unit["Second_Category_Code"],company=company),
+                    comp_id=Company.objects.get(id=comp_id),
+                    company=company.strip()
+                )  
+
+def load_branches(url, auth, company, comp_id):
+    res = requests.get(url=url, auth=auth, timeout=60)
+    data = res.json()
+
+    for unit in data["value"]:
+        if Branch.objects.filter(code=unit["Code"],company=company).exists():
+            unit_id = Branch.objects.get(code=unit["Code"], company=company)
+            print("Updating Existing Unit")
+            Branch.objects.filter(code=unit_id).update(
+                code=unit["Code"].strip(),
+                name=unit["Name"].strip(),
+                unit=Unit.objects.get(code=unit["Second_Category_Code"],company=company),
+                comp_id=Company.objects.get(id=comp_id),
+                company=company.strip()
+            )
+        elif not Unit.objects.filter(code=unit["Code"],company=company).exists():
+            print("--Creating New Unit---")
+            Branch.objects.create(
+                code=unit["Code"].strip(),
+                name=unit["Name"].strip(),
+                unit=Unit.objects.get(code=unit["Second_Category_Code"],company=company),
+                comp_id=Company.objects.get(id=comp_id),
+                company=company.strip()
+            )   
 
 def load_jobtitles(url, auth, company, comp_id):
     res = requests.get(url=url, auth=auth, timeout=60)

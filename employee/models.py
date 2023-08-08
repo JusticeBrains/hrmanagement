@@ -752,16 +752,14 @@ class Department(Base):
 
 
 class Unit(Base):
-    second_category_code = models.CharField(
-        _("Second Category Code"), max_length=50, blank=True, null=True
-    )
+    department = models.ForeignKey("employee.Department", verbose_name=_("Department"), on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = "Unit"
         verbose_name_plural = "Units"
 
     def __str__(self):
-        return f"{self.code} - {self.second_category_code}"
+        return f"{self.code} - {self.department}"
 
 
 # if connection.vendor == "postgresql":
@@ -782,16 +780,14 @@ class Unit(Base):
 
 
 class Branch(Base):
-    third_category_code = models.CharField(
-        _("Third Category Code"), max_length=50, blank=True, null=True
-    )
+    unit = models.ForeignKey("employee.Unit", verbose_name=_("Unit"), on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = "Branch"
         verbose_name_plural = "Branches"
 
     def __str__(self):
-        return f"{self.code} - {self.third_category_code}"
+        return f"{self.code} - {self.unit}"
 
 
 # # Set the data type of the primary key to VARCHAR in PostgreSQL
