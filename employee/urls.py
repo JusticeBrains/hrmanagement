@@ -9,18 +9,11 @@ router.register(
     employee_views.EmployeeAppraisalViewSet,
     basename="employeeappraisal",
 )
-# router.register('employeepromotion', employee_views.EmployeePromotionViewSet, basename='employeepromotion')
 router.register(
     "employeemedicalclaim",
     employee_views.EmployeeMedicalClaimViewSet,
     basename="employeemedicalclaim",
 )
-router.register(
-    "employeedisciplinaryactions",
-    employee_views.EmployeeDisciplinaryActionViewSet,
-    basename="employeedisciplinaryactions",
-)
-# router.register('employeepolicy', employee_views.EmployeePolicyViewSet, basename='employeepolicy')
 router.register(
     "employeepayreview",
     employee_views.EmployeePayReviewViewSet,

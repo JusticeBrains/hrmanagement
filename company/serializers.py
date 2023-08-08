@@ -45,10 +45,3 @@ class JobSerializer(serializers.ModelSerializer):
 
 
 
-
-class OrganizationStructureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.OrganizationalStructure
-        fields = "__all__"
-
-

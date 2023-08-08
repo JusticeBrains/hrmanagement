@@ -45,8 +45,3 @@ class JobViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Job.objects.all()
     serializer_class = serializers.JobSerializer
     filterset_fields = "__all__"
-
-
-class OrganizationStructureViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.OrganizationalStructure.objects.all()
-    serializer_class = serializers.OrganizationStructureSerializer

@@ -644,55 +644,6 @@ class EmployeeMedicalClaim(models.Model):
         return f"{self.emp_name} - {self.claim_amount} - {self.created_at}"
 
 
-class EmployeeDisciplinaryActions(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    emp_name = models.ForeignKey(
-        Employee, verbose_name=_("Employee Name"), on_delete=models.CASCADE
-    )
-    department_name = models.ForeignKey(
-        "company.Department",
-        verbose_name=_("Department Name"),
-        on_delete=models.CASCADE,
-    )
-    division_code = models.CharField(_("Division Code"), max_length=50)
-    division_name = models.CharField(_("Division Name"), max_length=50)
-    disciplinary_code = models.CharField(
-        verbose_name=_("Disciplinary Code"), max_length=50
-    )
-    description = models.CharField(_("Description"), max_length=100)
-    offense_type = models.CharField(
-        _("Offense Type"), choices=OffenseType.choices, max_length=50
-    )
-    recommended_action = models.CharField(
-        _("Recommended Action"), choices=RecommendedAction.choices, max_length=50
-    )
-    remarks = models.CharField(_("Remarks"), max_length=250)
-    suspension_start_date = models.DateField(
-        _("Supsension Date"), blank=True, null=True, auto_now=False, auto_now_add=False
-    )
-    suspension_end_date = models.DateField(
-        _("Suspension End Date"),
-        blank=True,
-        null=True,
-        auto_now=False,
-        auto_now_add=False,
-    )
-    effective_date = models.DateField(
-        _("Effective Date"), blank=True, null=True, auto_now=False, auto_now_add=False
-    )
-    transaction_date = models.DateField(
-        _("Transaction Date"), blank=True, null=True, auto_now=False, auto_now_add=False
-    )
-    posted = models.BooleanField(_("Posted"))
-
-    class Meta:
-        verbose_name = "Employee Disciplinary Actions"
-        verbose_name_plural = "Employee Disciplinary Actions"
-
-    def __str__(self):
-        return f"{self.emp_name}, {self.disciplinary_code}, {self.recommended_action}"
-
-
 class EmployeePayReview(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     no = models.CharField(_("Code"), max_length=50)

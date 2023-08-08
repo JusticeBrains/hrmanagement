@@ -64,17 +64,6 @@ class CompanyType(models.Model):
         return f"{self.type}"
 
 
-class Department(models.Model):
-    name = models.CharField(_("Name Of Department"), max_length=50)
-
-    class Meta:
-        verbose_name = "Department"
-        verbose_name_plural = "Departments"
-
-    def __str__(self):
-        return f"{self.name}"
-
-
 class Holidays(models.Model):
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     holiday = models.CharField(_("Holiday"), max_length=50)
@@ -190,32 +179,6 @@ class Job(models.Model):
 
     def __str__(self):
         return f"{self.job_code}"
-
-
-
-
-
-class OrganizationalStructure(models.Model):
-    department_code = models.ForeignKey(
-        "company.Department",
-        verbose_name=_("Department Code"),
-        on_delete=models.CASCADE,
-    )
-    organizational_level_code = models.CharField(
-        _("Organizational Level Code"), max_length=50
-    )
-    level_description = models.CharField(_("Level Description"), max_length=50)
-    reports_to_level = models.CharField(_("Reports To Level"), max_length=50)
-    level_in_structure = models.PositiveIntegerField(_("Level In Structure"))
-
-    class Meta:
-        verbose_name = "Organizational Structure"
-        verbose_name_plural = "Organizational Structure"
-
-    def __str__(self):
-        return self.organizational_level_code
-
-
 
 
 class FirstCategoryLevel(models.Model):

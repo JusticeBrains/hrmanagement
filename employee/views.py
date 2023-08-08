@@ -90,12 +90,6 @@ class EmployeeMedicalClaimViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
-class EmployeeDisciplinaryActionViewSet(viewsets.ModelViewSet):
-    queryset = employee_model.EmployeeDisciplinaryActions.objects.all()
-    serializer_class = serializers.EmployeeDisciplinaryActionsSerializer
-    filterset_fields = "__all__"
-
-
 class EmployeePayReviewFilterSet(PropertyFilterSet):
     new_base_pay = PropertyNumberFilter(field_name="new_base_pay")
 

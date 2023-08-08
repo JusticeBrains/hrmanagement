@@ -34,12 +34,6 @@ class EmployeeMedicalClaimSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class EmployeeDisciplinaryActionsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = employee_model.EmployeeDisciplinaryActions
-        fields = "__all__"
-
-
 class EmployeePayReviewSerializer(serializers.ModelSerializer):
     new_base_pay = serializers.SerializerMethodField()
 
