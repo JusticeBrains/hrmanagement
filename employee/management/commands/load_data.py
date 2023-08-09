@@ -8,8 +8,9 @@ from employee.models import (
     Employee,
     Unit,
 )
+import logging
 
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 
 import requests
@@ -20,6 +21,8 @@ from environs import Env
 env = Env()
 env.read_env()
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 class Command(BaseCommand):
     help = "load data to database"
@@ -29,179 +32,623 @@ class Command(BaseCommand):
 
         auth = HttpNtlmAuth(username=env.str("username"), password=env.str("password"))
 
-        self.stdout.write(self.style.SUCCESS("--------Loading Departments-------"))
+        # self.stdout.write(self.style.SUCCESS("--------Loading Departments-------"))
+        # for comp in companies:
+        #     if comp.name == "INTERCITY STC LTD":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("intercity_sen_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("intercity_jun_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("intercity_driver_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Hotel":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("rch_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("baf_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Emery Invest":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("emery_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "FAAB Systems Gh. Ltd":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_department(
+        #             url=env.str("faab_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Hotel Heads of Department":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("rch_hod_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Republic Media Limited":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("repub_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Intu IT Professional Allowance":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("intuprof_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "INTU-IT GHANA LIMITED":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("inut_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Professional Allowance":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("rch_prof_allowance_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA MANAGEMENT":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("nla_exc_man_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA JUNIOR SENIOR":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_department(
+        #             url=env.str("nla_jun_sen_dep"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        # self.stdout.write(
+        #     self.style.SUCCESS("-------- Done Loading Departments-------")
+        # )
+
+        # self.stdout.write(
+        #     self.style.SUCCESS("--------Starting Loading JobTitles-------")
+        # )
+
+        # for comp in companies:
+        #     if comp.name == "Rock City Hotel":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("rch_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("baf_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Emery Invest":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("emery_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "FAAB Systems Gh. Ltd":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("faab_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "Rock City Hotel Heads of Department":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("rch_hod_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "INTERCITY STC LTD":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("intercity_jun_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("intercity_driver_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("intercity_sen_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Intu IT Professional Allowance":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("intuprof_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA MANAGEMENT":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("nla_man_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA JUNIOR SENIOR":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(
+        #                 f"Starting load data to database {comp.id} -- {comp.name}"
+        #             )
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("nla_jun_sen_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Republic Media Limited":
+        #         load_jobtitles(
+        #             url=env.str("repub_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Professional Allowance":
+        #         load_jobtitles(
+        #             url=env.str("rch_prof_jobs"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "INTU-IT GHANA LIMITED":
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #         load_jobtitles(
+        #             url=env.str("intu_ghana_jobtitles"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        # self.stdout.write(self.style.SUCCESS("--------Ended Loading JobTitles-------"))
+
+        # self.stdout.write(self.style.SUCCESS("--------Loading Units-------"))
+        # for comp in companies:
+        #     if comp.name == "INTERCITY STC LTD":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_units(
+        #             url=env.str("intercity_sen_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #         load_units(
+        #             url=env.str("intercity_jun_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("intercity_driver_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Hotel":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_units(
+        #             url=env.str("rch_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_units(
+        #             url=env.str("baf_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Emery Invest":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_units(
+        #             url=env.str("emery_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "FAAB Systems Gh. Ltd":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #         )
+        #         load_units(
+        #             url=env.str("faab_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Hotel Heads of Department":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("rch_hod_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Republic Media Limited":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("repub_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Intu IT Professional Allowance":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("intuprof_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "INTU-IT GHANA LIMITED":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("intu_ghana_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     if comp.name == "Rock City Professional Allowance":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("rch_prof_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA MANAGEMENT":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("nla_man_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+        #     if comp.name == "NLA JUNIOR SENIOR":
+        #         self.stdout.write(
+        #             self.style.SUCCESS(f"Starting load data to database {comp.id}")
+        #         )
+        #         load_units(
+        #             url=env.str("nla_jun_sen_units"),
+        #             auth=auth,
+        #             company=comp.name,
+        #             comp_id=comp.id,
+        #         )
+        #         self.stdout.write(
+        #             self.style.SUCCESS("Successfully load data to database")
+        #         )
+
+        #     self.stdout.write(
+        #         self.style.SUCCESS(f"Starting load data to database {comp.name}")
+        #     )
+
+        self.stdout.write(self.style.SUCCESS("--------Loading Branches-------"))
         for comp in companies:
-            if comp.name == "INTERCITY STC LTD":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("intercity_sen_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("intercity_jun_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("intercity_driver_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Hotel":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("rch_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("baf_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Emery Invest":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("emery_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "FAAB Systems Gh. Ltd":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_department(
-                    url=env.str("faab_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("rch_hod_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Republic Media Limited":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("repub_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Intu IT Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("intuprof_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTU-IT GHANA LIMITED":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("inut_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_department(
-                    url=env.str("rch_prof_allowance_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
             if comp.name == "NLA MANAGEMENT":
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
-                    url=env.str("nla_exc_man_dep"),
+                load_branches(
+                    url=env.str("nla_exc_man_branch"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
@@ -213,28 +660,8 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
-                    url=env.str("nla_jun_sen_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-        self.stdout.write(
-            self.style.SUCCESS("-------- Done Loading Departments-------")
-        )
-
-        self.stdout.write(self.style.SUCCESS("--------Loading PayGroups-------"))
-
-        for comp in companies:
-            if comp.name == "Rock City Hotel":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_paygroup(
-                    url=env.str("rchpay_group"),
+                load_branches(
+                    url=env.str("nla_jun_sen_branch"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
@@ -243,628 +670,9 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("baf_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Emery Invest":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("emery_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "FAAB Systems Gh. Ltd":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("faab_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("rock_hod_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTERCITY STC LTD":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("intercity_jun_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("intercity_driver_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("intercity_sen_pay_group"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Intu IT Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("intuprof_allow_pay"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "NLA":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_paygroup(
-                    url=env.str("nla_exc_man_paygroup"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "Republic Media Limited":
-                load_paygroup(
-                    url=env.str("repub_paygroup"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Professional Allowance":
-                load_paygroup(
-                    url=env.str("nlajun_sen_paygroup"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTU-IT GHANA LIMITED":
-                load_paygroup(
-                    url=env.str("intu_ghana"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-        self.stdout.write(self.style.SUCCESS("--------Ended Loading PayGroups-------"))
-
-        self.stdout.write(
-            self.style.SUCCESS("--------Starting Loading JobTitles-------")
-        )
-
-        for comp in companies:
-            if comp.name == "Rock City Hotel":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_jobtitles(
-                    url=env.str("rch_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("baf_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Emery Invest":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("emery_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "FAAB Systems Gh. Ltd":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("faab_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("rch_hod_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTERCITY STC LTD":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("intercity_jun_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("intercity_driver_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("intercity_sen_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Intu IT Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("intuprof_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "NLA MANAGEMENT":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("nla_man_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "NLA JUNIOR SENIOR":
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Starting load data to database {comp.id} -- {comp.name}"
-                    )
-                )
-                load_jobtitles(
-                    url=env.str("nla_jun_sen_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Republic Media Limited":
-                load_jobtitles(
-                    url=env.str("repub_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Professional Allowance":
-                load_jobtitles(
-                    url=env.str("rch_prof_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTU-IT GHANA LIMITED":
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                load_jobtitles(
-                    url=env.str("intu_ghana_jobtitles"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            # if comp.name == "NLA JUNIOR SENIOR":
-            #     self.stdout.write(
-            #         self.style.SUCCESS("Successfully load data to database")
-            #     )
-            #     load_jobtitles(
-            #         url=env.str("nla_jun_sen"),
-            #         auth=auth,
-            #         company=comp.name,
-            #         comp_id=comp.id,
-            #     )
-            #     self.stdout.write(
-            #         self.style.SUCCESS("Successfully load data to database")
-            #     )
-            # if comp.name == "NLA MANAGEMENT":
-            #     self.stdout.write(
-            #         self.style.SUCCESS("Successfully load data to database")
-            #     )
-            #     load_jobtitles(
-            #         url=env.str("nla_man"),
-            #         auth=auth,
-            #         company=comp.name,
-            #         comp_id=comp.id,
-            #     )
-            #     self.stdout.write(
-            #         self.style.SUCCESS("Successfully load data to database")
-            #     )
-        self.stdout.write(self.style.SUCCESS("--------Ended Loading JobTitles-------"))
-
-
-
-        self.stdout.write(self.style.SUCCESS("--------Loading Units-------"))
-        for comp in companies:
-            if comp.name == "INTERCITY STC LTD":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_units(
-                    url=env.str("intercity_sen_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                load_units(
-                    url=env.str("intercity_jun_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("intercity_driver_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Hotel":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_units(
-                    url=env.str("rch_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_units(
-                    url=env.str("baf_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Emery Invest":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_units(
-                    url=env.str("emery_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "FAAB Systems Gh. Ltd":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                load_units(
-                    url=env.str("faab_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Hotel Heads of Department":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("rch_hod_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Republic Media Limited":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("repub_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Intu IT Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("intuprof_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "INTU-IT GHANA LIMITED":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("intu_ghana_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-            if comp.name == "Rock City Professional Allowance":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("rch_prof_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "NLA MANAGEMENT":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("nla_man_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-            if comp.name == "NLA JUNIOR SENIOR":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
-                )
-                load_units(
-                    url=env.str("nla_jun_sen_units"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
+            self.stdout.write(
+                self.style.SUCCESS(f"Starting load data to database {comp.name}")
+            )
 
         self.stdout.write(self.style.SUCCESS("--------Loading Employees-------"))
 
@@ -1103,7 +911,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-            
+
             if company.name == "NLA MANAGEMENT":
                 self.stdout.write(
                     self.style.SUCCESS(
@@ -1127,7 +935,7 @@ class Command(BaseCommand):
                     company_id=company.id,
                     comp_code=company.unique_code,
                 )
-            
+
             if company.name == "NLA JUNIOR SENIOR":
                 self.stdout.write(self.style.SUCCESS("----Starting Jun Senior-----"))
                 get_user_data(
@@ -1140,8 +948,209 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-        update_employee_record()
         self.stdout.write(self.style.SUCCESS("--------Ended Loading Employees-------"))
+
+        self.stdout.write(self.style.SUCCESS("--------Loading PayGroups-------"))
+
+        for comp in companies:
+            if comp.name == "Rock City Hotel":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_paygroup(
+                    url=env.str("rchpay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "BRYAN ACHEAMPONG FOUNDATION":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("baf_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Emery Invest":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("emery_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "FAAB Systems Gh. Ltd":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("faab_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Rock City Hotel Heads of Department":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("rock_hod_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "INTERCITY STC LTD":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("intercity_jun_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("intercity_driver_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("intercity_sen_pay_group"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Intu IT Professional Allowance":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("intuprof_allow_pay"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("nla_exc_man_paygroup"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "Republic Media Limited":
+                load_paygroup(
+                    url=env.str("repub_paygroup"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "Rock City Professional Allowance":
+                load_paygroup(
+                    url=env.str("nlajun_sen_paygroup"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+
+            if comp.name == "INTU-IT GHANA LIMITED":
+                load_paygroup(
+                    url=env.str("intu_ghana"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+                update_employee_record()
+
+        self.stdout.write(self.style.SUCCESS("--------Ended Loading PayGroups-------"))
 
 
 def get_user_data(url, auth, company, company_id, comp_code):
@@ -1151,14 +1160,45 @@ def get_user_data(url, auth, company, company_id, comp_code):
     for employee in data["value"]:
         if employee["Status"] == "Active":
             print(f"{employee['No'] }- {employee['Status']}")
+            logging.info(f"{employee['No']} - {employee['Status']}")
             try:
+                try:
+                    depart = Department.objects.get(
+                        code=employee["Second_Category_Level"],
+                        company_id=company_id,
+                    )
+                except Department.DoesNotExist:
+                    depart = None
+
+                try:
+                    unit = None
+                    if employee["Third_Category_Level"].strip():
+                        unit = Unit.objects.get(
+                            code=employee["Third_Category_Level"],
+                            company=company,
+                            department=depart,
+                        )
+                except Unit.DoesNotExist:
+                    unit = None
+
+                try:
+                    branch_code = employee["Fourth_Category_Level"].strip()
+                    if branch_code:
+                        branch = Branch.objects.get(code=branch_code, company=company)
+                    else:
+                        branch = None
+                except ObjectDoesNotExist:
+                    branch = None
+
                 if Employee.objects.filter(
                     code=employee["No"], company=company
                 ).exists():
                     employee_obj = Employee.objects.get(
                         code=employee["No"], company=company
                     )
-                    print(f"--updating-- {employee_obj} --- Department -- {employee['Second_Category_Level']}")
+                    logging.info(
+                        f"--updating-- {employee_obj} --- Department -- {employee['Second_Category_Level']}"
+                    )
                     Employee.objects.filter(id=employee_obj.id).update(
                         code=employee["No"],
                         first_name=employee["First_Name"],
@@ -1183,9 +1223,15 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         alt_address_code=employee["Alt_Address_Code"],
                         alt_address_start_date=employee["Alt_Address_Start_Date"],
                         alt_address_end_date=employee["Alt_Address_End_Date"],
-                        department=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
-                        unit=employee["Third_Category_Level"],
-                        branch=employee["Fourth_Category_Level"],
+                        department=depart
+                        if employee["Second_Category_Level"].strip() != ""
+                        else None,
+                        unit=unit
+                        if employee["Third_Category_Level"].strip() != ""
+                        else None,
+                        branch=branch
+                        if employee["Fourth_Category_Level"].strip() != ""
+                        else None,
                         fifth_category_level=employee["Fifth_Category_Level"],
                         employment_date=employee["Employment_Date"],
                         status=employee["Status"],
@@ -1226,10 +1272,18 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         company_id=Company.objects.get(id=company_id),
                         unique_code=comp_code,
                     )
-                if not Employee.objects.filter(
-                    code=employee["No"], company=company
-                ).exists() and Department.objects.filter(code=employee["Second_Category_Level"],company_id=company_id).exists():
-                    print(f"--creating-- {employee['No']}")
+                if (
+                    not Employee.objects.filter(
+                        code=employee["No"], company=company
+                    ).exists()
+                    and Department.objects.filter(
+                        code=employee["Second_Category_Level"], company_id=company_id
+                    ).exists()
+                ):
+                    logging.info(
+                        f"--creating-- {employee['No']} --- Department Code -- {employee['Third_Category_Level']} -- {comp_code}"
+                    )
+
                     Employee.objects.create(
                         code=employee["No"],
                         first_name=employee["First_Name"],
@@ -1254,9 +1308,14 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         alt_address_code=employee["Alt_Address_Code"],
                         alt_address_start_date=employee["Alt_Address_Start_Date"],
                         alt_address_end_date=employee["Alt_Address_End_Date"],
-                        department=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
-                        unit=employee["Third_Category_Level"],
-                        branch=employee["Fourth_Category_Level"],
+                        department=depart
+                        if employee["Second_Category_Level"].strip() != ""
+                        else None,
+                        unit=unit
+                        if employee["Third_Category_Level"].strip() != ""
+                        else None,
+                        branch=branch if employee["Fourth_Category_Level"].strip() != ""
+                        else None,
                         fifth_category_level=employee["Fifth_Category_Level"],
                         employment_date=employee["Employment_Date"],
                         status=employee["Status"],
@@ -1293,15 +1352,13 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         iban=employee["IBAN"],
                         swift_code=employee["SWIFT_Code"],
                         grounds_for_term=employee["Grounds_for_Term_Code"],
-                        # days_left = staff_category.max_number_of_days,
                         company=company,
                         company_id=Company.objects.get(id=company_id),
                         unique_code=comp_code,
                     )
                 print(f"Ending -- Employee {employee['No']}")
             except Employee.DoesNotExist:
-                # elif not Employee.objects.filter(code=employee['No']).exists:
-                print(f"--creating-- {employee['No']}")
+                logging.info(f"--creating-- {employee['No']}")
                 Employee.objects.create(
                     code=employee["No"],
                     first_name=employee["First_Name"],
@@ -1326,7 +1383,9 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     alt_address_code=employee["Alt_Address_Code"],
                     alt_address_start_date=employee["Alt_Address_Start_Date"],
                     alt_address_end_date=employee["Alt_Address_End_Date"],
-                    department=Department.objects.get(code=employee["Second_Category_Level"],company_id=company_id),
+                    department=Department.objects.get(
+                        code=employee["Second_Category_Level"], company_id=company_id
+                    ),
                     unit=employee["Third_Category_Level"],
                     branch=employee["Fourth_Category_Level"],
                     fifth_category_level=employee["Fifth_Category_Level"],
@@ -1365,7 +1424,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     company_id=Company.objects.get(id=company_id),
                     unique_code=comp_code,
                 )
-                print(f"Ending -- Employee {employee['No']}")
+                logging.info(f"Ending -- Employee {employee['No']}")
 
 
 def load_paygroup(url, auth, company, comp_id):
@@ -1445,7 +1504,7 @@ def load_department(url, auth, company, comp_id):
                 first_category_code=dep["First_Category_Code"].strip(),
                 company=company.strip(),
                 company_id=comp_id,
-                comp_id=Company.objects.get(id=comp_id)
+                comp_id=Company.objects.get(id=comp_id),
             )
         elif not Department.objects.filter(code=dep["Code"], company=company).exists():
             print("------Creating New Department------")
@@ -1456,7 +1515,7 @@ def load_department(url, auth, company, comp_id):
                     first_category_code=dep["First_Category_Code"].strip(),
                     company=company.strip(),
                     company_id=comp_id,
-                    comp_id=Company.objects.get(id=comp_id)
+                    comp_id=Company.objects.get(id=comp_id),
                 )
 
 
@@ -1465,52 +1524,92 @@ def load_units(url, auth, company, comp_id):
     data = res.json()
 
     for unit in data["value"]:
-        if Unit.objects.filter(code=unit["Code"],company=company).exists():
-            unit_id = Unit.objects.get(code=unit["Code"], company=company)
-            print("Updating Existing Unit")
-            Unit.objects.filter(code=unit_id).update(
-                code=unit["Code"].strip(),
-                name=unit["Name"].strip(),
-                department=Department.objects.get(code=unit["Second_Category_Code"],company=company),
-                comp_id=Company.objects.get(id=comp_id),
-                company=company.strip()
-            )
-        elif not Unit.objects.filter(code=unit["Code"],company=company).exists():
-            print(f"--Creating New Unit--- Unit -- {unit['Code']} -- Company {company}")
-            depart = Department.objects.filter(code=unit["Second_Category_Code"],company=company)
-            if depart.exists():
-                Unit.objects.create(
+        try:
+            try:
+                depart = Department.objects.get(
+                    code=unit["Second_Category_Code"],
+                    company_id=comp_id,
+                )
+            except Department.DoesNotExist:
+                depart = None
+            if Unit.objects.filter(code=unit["Code"], company=company).exists():
+                unit_id = Unit.objects.get(code=unit["Code"], company=company)
+                print("Updating Existing Unit")
+                Unit.objects.filter(code=unit_id).update(
                     code=unit["Code"].strip(),
                     name=unit["Name"].strip(),
-                    department=Department.objects.get(code=unit["Second_Category_Code"],company=company),
+                    department=depart
+                    if unit["Second_Category_Code"].strip() != ""
+                    else None,
                     comp_id=Company.objects.get(id=comp_id),
-                    company=company.strip()
-                )  
+                    company=company.strip(),
+                    company_id=comp_id,
+                )
+            elif not Unit.objects.filter(code=unit["Code"], company=company).exists():
+                logging.info(
+                    f"--Creating New Unit--- Unit -- {unit['Code']} -- Company {company}"
+                )
+                # depart = Department.objects.filter(
+                #     code=unit["Second_Category_Code"], company=company
+                # )
+                if depart:
+                    Unit.objects.create(
+                        code=unit["Code"].strip(),
+                        name=unit["Name"].strip(),
+                        department=depart
+                        if unit["Second_Category_Code"].strip() != ""
+                        else None,
+                        comp_id=Company.objects.get(id=comp_id),
+                        company=company.strip(),
+                        company_id=comp_id,
+                    )
+                else:
+                    logging.info(
+                        f"{unit['Second_Category_Code']} -- {company} Not Found"
+                    )
+        except Unit.DoesNotExist:
+            logging.info(f"Unit {unit['Second_Category_Code']} -- {company} Not Found")
+
 
 def load_branches(url, auth, company, comp_id):
     res = requests.get(url=url, auth=auth, timeout=60)
     data = res.json()
 
-    for unit in data["value"]:
-        if Branch.objects.filter(code=unit["Code"],company=company).exists():
-            unit_id = Branch.objects.get(code=unit["Code"], company=company)
-            print("Updating Existing Unit")
-            Branch.objects.filter(code=unit_id).update(
-                code=unit["Code"].strip(),
-                name=unit["Name"].strip(),
-                unit=Unit.objects.get(code=unit["Second_Category_Code"],company=company),
-                comp_id=Company.objects.get(id=comp_id),
-                company=company.strip()
-            )
-        elif not Unit.objects.filter(code=unit["Code"],company=company).exists():
-            print("--Creating New Unit---")
-            Branch.objects.create(
-                code=unit["Code"].strip(),
-                name=unit["Name"].strip(),
-                unit=Unit.objects.get(code=unit["Second_Category_Code"],company=company),
-                comp_id=Company.objects.get(id=comp_id),
-                company=company.strip()
-            )   
+    for branch in data["value"]:
+        try:
+            try:
+                unit = Unit.objects.get(
+                    code=branch["Third_Category_Code"],
+                    company_id=comp_id,
+                )
+            except Unit.DoesNotExist:
+                unit = None
+            if Branch.objects.filter(code=branch["Code"], company=company).exists():
+                unit_id = Branch.objects.get(code=branch["Code"], company=company)
+                print("Updating Existing Unit")
+                Branch.objects.filter(code=unit_id).update(
+                    code=branch["Code"].strip(),
+                    name=branch["Name"].strip(),
+                    unit=unit if branch["Third_Category_Code"].strip() != "" else None,
+                    comp_id=Company.objects.get(id=comp_id),
+                    company=company.strip(),
+                    company_id=comp_id,
+                )
+            elif not Branch.objects.filter(
+                code=branch["Code"], company=company
+            ).exists():
+                print("--Creating New Unit---")
+                Branch.objects.create(
+                    code=branch["Code"].strip(),
+                    name=branch["Name"].strip(),
+                    unit=unit if branch["Third_Category_Code"].strip() != "" else None,
+                    comp_id=Company.objects.get(id=comp_id),
+                    company=company.strip(),
+                    company_id=comp_id,
+                )
+        except Branch.DoesNotExist:
+            logging.info(f"Branch {branch['Third_Category_Code']} -- Does not exist")
+
 
 def load_jobtitles(url, auth, company, comp_id):
     res = requests.get(url=url, auth=auth, timeout=60)
@@ -1546,16 +1645,17 @@ def load_jobtitles(url, auth, company, comp_id):
 
 
 def update_employee_record():
-    
     # Send email report
     try:
         print("---------------Sending -----------------------")
         # send_mail(subject, message, from_email, recipient_list)
         # print("---------------Sent -----------------------")
-        subject = 'Report'
-        message = 'The task has been completed successfully.'
+        subject = "Report"
+        message = "The task has been completed successfully."
         from_email = "justiceduodu14@gmail.com"
-        recipient_list = ['justicemclean@proton.me',]
+        recipient_list = [
+            "justicemclean@proton.me",
+        ]
 
         send_mail(subject, message, from_email, recipient_list)
         print("---------------Sent -----------------------")
