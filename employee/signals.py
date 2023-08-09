@@ -237,27 +237,6 @@ def update_medical_claim(sender, instance, created, **kwargs):
     post_save.connect(update_medical_claim, sender=EmployeeMedicalClaim)
 
 
-@receiver(post_save, sender=PayGroup)
-def update_employee_leave_days(sender, instance, created, **kwargs):
-    post_save.disconnect(update_employee_leave_days, sender=PayGroup)
-
-    if created:
-        employees = Employee.objects.filter(
-            pay_group_code=instance.no, company=instance.company
-        )
-        employees.update_or_create(
-            total_number_of_leave_days=instance.total_number_of_leave_days
-        )
-
-        # for employee in employees:
-        #     # employees.update(total_number_of_leave_days=instance.total_number_of_leave_days)
-        #     employees.update_or_create(total_number_of_leave_days=instance.total_number_of_leave_days)
-        #     # employee.total_number_of_leave_days = instance.total_number_of_leave_days
-        #     employee.save()
-
-        post_save.connect(update_employee_leave_days, sender=PayGroup)
-
-
 @receiver(post_save, sender=PropertyAssignment)
 def update_property_assignment(sender, instance, created, **kwargs):
     post_save.disconnect(update_property_assignment, sender=PropertyAssignment)
