@@ -61,12 +61,8 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    unit = models.CharField(
-        _("Unit"), max_length=250, blank=True, null=True
-    )
-    branch = models.CharField(
-        _("Branch"), max_length=250, blank=True, null=True
-    )
+    unit = models.ForeignKey("employee.Unit", verbose_name=_("Unit"), on_delete=models.DO_NOTHING, null=True, blank=True)
+    branch = models.ForeignKey("employee.Branch", verbose_name=_("Branch"), on_delete=models.SET_NULL, blank=True, null=True)
     fifth_category_level = models.CharField(
         _("Fifth Category Level"), max_length=250, blank=True, null=True
     )
@@ -757,6 +753,7 @@ class Unit(Base):
     class Meta:
         verbose_name = "Unit"
         verbose_name_plural = "Units"
+        unique_together=("code","comp_id","department")
 
     def __str__(self):
         return f"{self.code} - {self.department}"
@@ -891,9 +888,9 @@ class PayGroup(models.Model):
         # employees.bulk_update(total_number_of_leave_days=self.total_number_of_leave_days)
         # Update the total_number_of_leave_days for each employee
         for employee in employees:
-            employee.total_number_of_leave_days = self.total_number_of_leave_days
-            employee.total_medical_claim_amount = self.total_medical_claim_amount
-            employee.save()
+            if employee.total_medical_claim_amount:
+                employee.total_medical_claim_amount = self.total_medical_claim_amount
+                employee.save()
 
         super().save(*args, **kwargs)
 
