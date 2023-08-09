@@ -12,6 +12,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         "company",
         "pay_group_code",
         "department",
+        "branch",
         "is_hr",
         "company_email"
     ]
