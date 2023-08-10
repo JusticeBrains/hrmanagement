@@ -286,3 +286,16 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             instance.computed_score = round(
                 (instance.final_score / 100) * instance.score_on_target, ndigits=2
             )
+
+
+@receiver(post_save, sender=Employee)
+def populate_emp_fields(sender, instance, created, **kwargs):
+    post_save.disconnect(populate_emp_fields, sender=Employee)
+    if created:
+        instance.pay_group_name = instance.pay_group_code.no
+        instance.unit_name = instance.unit.name
+        instance.branch_name = instance.branch.name
+        instance.department_name = instance.department.name
+        instance.save()
+    post_save.connect(populate_emp_fields, sender=Employee)
+    
