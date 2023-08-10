@@ -286,17 +286,3 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             instance.computed_score = round(
                 (instance.final_score / 100) * instance.score_on_target, ndigits=2
             )
-
-
-@receiver(pre_save, sender=Employee)
-def populate_emp_fields(sender, instance, **kwargs):
-    if instance:
-        if instance.pay_group_code is not None:
-            instance.pay_group_name = instance.pay_group_code.no
-        if instance.unit is not None:
-            instance.unit_name = instance.unit.name
-        if instance.branch is not None:
-            instance.branch_name = instance.branch.name
-        if instance.department is not None:
-            instance.department_name = instance.department.name
-    
