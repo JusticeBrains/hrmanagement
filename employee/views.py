@@ -161,7 +161,7 @@ class AppraisalGradingViewSet(viewsets.ModelViewSet):
 class PayGroupViewSet(viewsets.ModelViewSet):
     queryset = employee_model.PayGroup.objects.all()
     serializer_class = serializers.PayGroupSerializer
-    filterset_fields = ["id", "no", "company", "total_number_of_leave_days", "comp_id"]
+    filterset_fields = ["id", "no", "company", "total_medical_claim_amount", "comp_id"]
 
 
 class EmployeeDeductionViewSet(viewsets.ModelViewSet):
