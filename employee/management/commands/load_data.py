@@ -39,12 +39,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("intercity_sen_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("intercity_sen_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
 
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -53,12 +55,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("intercity_jun_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("intercity_jun_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -66,12 +70,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("intercity_driver_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("intercity_driver_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -80,12 +86,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("rch_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("rch_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -94,12 +102,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("baf_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("baf_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -108,12 +118,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("emery_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("emery_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -122,12 +134,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("faab_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("faab_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -136,12 +150,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("rch_hod_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("rch_hod_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -150,12 +166,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("repub_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("repub_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -164,12 +182,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("intuprof_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("intuprof_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -178,12 +198,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("inut_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("inut_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -192,12 +214,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("rch_prof_allowance_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("rch_prof_allowance_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -205,12 +229,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("nla_exc_man_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("nla_exc_man_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -218,12 +244,14 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                asyncio.run(load_department(
-                    url=env.str("nla_jun_sen_dep"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                ))
+                asyncio.run(
+                    load_department(
+                        url=env.str("nla_jun_sen_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -1067,7 +1095,7 @@ class Command(BaseCommand):
                     company=comp.name,
                     comp_id=comp.id,
                 )
-                
+
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1164,10 +1192,12 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("--------Ended Loading PayGroups-------"))
 
+
 def load_sync(url, auth):
     res = requests.get(url=url, auth=auth, timeout=60)
     data = res.json()
     return data["value"]
+
 
 def get_user_data(url, auth, company, company_id, comp_code):
     data = load_sync(url, auth)
@@ -1197,6 +1227,16 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     unit = None
 
                 try:
+                    job_title = None
+                    if employee["Job_Titles"].strip():
+                        job_title = JobTitles.objects.get(
+                            code=employee["Job_Titles"],
+                            company=company,
+                        )
+                except JobTitles.DoesNotExist:
+                    job_title = None
+
+                try:
                     branch_code = employee["Fourth_Category_Level"].strip()
                     if branch_code:
                         branch = Branch.objects.get(code=branch_code, company=company)
@@ -1222,7 +1262,9 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         gender=employee["Gender"],
                         phone_no2=employee["Phone_No_2"],
                         company_email=employee["Company_E_Mail"],
-                        job_titles=employee["Job_Titles"],
+                        job_titles=job_title
+                        if employee["Job_Titles"].strip() != ""
+                        else None,
                         job_title_description=employee["Job_Title_Description"],
                         privacy_blocked=employee["Privacy_Blocked"],
                         address=employee["Address"],
@@ -1307,7 +1349,9 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         gender=employee["Gender"],
                         phone_no2=employee["Phone_No_2"],
                         company_email=employee["Company_E_Mail"],
-                        job_titles=employee["Job_Titles"],
+                        job_titles=job_title
+                        if employee["Job_Titles"].strip() != ""
+                        else None,
                         job_title_description=employee["Job_Title_Description"],
                         privacy_blocked=employee["Privacy_Blocked"],
                         address=employee["Address"],
@@ -1377,8 +1421,6 @@ def get_user_data(url, auth, company, company_id, comp_code):
                 logging.info(f"--Doesn't-- {employee['No']}")
 
 
-
-
 # async def load_paygroup(url, auth, company, comp_id):
 #     data = load_sync(url, auth)
 
@@ -1432,6 +1474,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
 #             pg.comp_id = company_instance
 #             await sync_to_async(pg.save)()
 
+
 def load_paygroup(url, auth, company, comp_id):
     data = load_sync(url, auth)
 
@@ -1478,7 +1521,6 @@ def load_paygroup(url, auth, company, comp_id):
                 )
         except PayGroup.DoesNotExist:
             logging.info("Paygroup doesnot exist")
-            
 
 
 async def load_department(url, auth, company, comp_id):

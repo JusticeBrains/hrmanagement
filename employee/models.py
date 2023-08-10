@@ -26,7 +26,13 @@ class Employee(models.Model):
     company_email = models.EmailField(
         _("Company Email"), max_length=254, blank=True, null=True
     )
-    job_titles = models.CharField(_("Job Titles"), max_length=50, blank=True, null=True)
+    job_titles = models.ForeignKey(
+        "company.JobTitles",
+        verbose_name=_("Job Titles"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     job_title_description = models.CharField(
         _("Job Title Description"), max_length=250, null=True, blank=True
     )
