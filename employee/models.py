@@ -67,6 +67,7 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
+    department_name = models.CharField(_("Department Name"), max_length=250, blank=True, null=True)
     unit = models.ForeignKey(
         "employee.Unit",
         verbose_name=_("Unit"),
@@ -74,6 +75,7 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
+    unit_name = models.CharField(_("Unit Name"), max_length=250, blank=True, null=True)
     branch = models.ForeignKey(
         "employee.Branch",
         verbose_name=_("Branch"),
@@ -81,6 +83,7 @@ class Employee(models.Model):
         blank=True,
         null=True,
     )
+    branch_name = models.CharField(_("Branch Name"), max_length=250, blank=True, null=True)
     fifth_category_level = models.CharField(
         _("Fifth Category Level"), max_length=250, blank=True, null=True
     )
@@ -123,6 +126,7 @@ class Employee(models.Model):
         _("Application Method"), max_length=50, null=True, blank=True
     )
     pay_group_code = models.ForeignKey("employee.PayGroup", verbose_name=_("Pay Group Code"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    pay_group_name = models.CharField(_("Pay Group Name"), max_length=250, blank=True, null=True)
     salary_grade = models.CharField(
         _("Salary Grade"), max_length=50, blank=True, null=True
     )
@@ -198,6 +202,13 @@ class Employee(models.Model):
         verbose_name_plural = "Employees"
 
     def __str__(self):
+        if self.middle_name:
+            return (
+                f"{self.last_name}, {self.first_name} {self.middle_name} - {self.code}"
+            )
+        return f"{self.last_name} {self.first_name} {self.code}"
+
+    def __repr__(self):
         if self.middle_name:
             return (
                 f"{self.last_name}, {self.first_name} {self.middle_name} - {self.code}"
@@ -855,12 +866,6 @@ class PayGroup(models.Model):
         Employee.objects.filter(
             pay_group_code=self, company=self.company
         ).update(total_medical_claim_amount=self.total_medical_claim_amount)
-        # # Update the total_claim_amount for each employee
-        # # employees.bulk_update(total_medical_claim_amount=self.total_medical_claim_amount)
-        # for employee in employees:
-        #     if employee.total_medical_claim_amount:
-        #         employee.total_medical_claim_amount = self.total_medical_claim_amount
-        #         employee.save()
 
         super().save(*args, **kwargs)
 
