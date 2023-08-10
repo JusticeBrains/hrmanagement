@@ -9,11 +9,12 @@ from employee.models import (
     Unit,
 )
 import logging
-
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-
+from asgiref.sync import sync_to_async
 import requests
+import asyncio
+import aiohttp
 from requests_ntlm import HttpNtlmAuth
 from django.conf import settings
 from environs import Env
@@ -38,12 +39,13 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("intercity_sen_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
+
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -51,12 +53,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("intercity_jun_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -64,12 +66,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("intercity_driver_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -78,12 +80,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("rch_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -92,12 +94,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("baf_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -106,12 +108,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("emery_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -120,12 +122,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("faab_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -134,12 +136,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("rch_hod_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -148,12 +150,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("repub_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -162,12 +164,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("intuprof_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -176,12 +178,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("inut_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -190,12 +192,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("rch_prof_allowance_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -203,12 +205,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("nla_exc_man_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -216,12 +218,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_department(
+                asyncio.run(load_department(
                     url=env.str("nla_jun_sen_dep"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
+                ))
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -238,11 +240,13 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
-                load_jobtitles(
-                    url=env.str("rch_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("rch_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -254,11 +258,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("baf_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("baf_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -270,11 +276,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("emery_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("emery_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -286,11 +294,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("faab_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("faab_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -301,11 +311,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("rch_hod_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("rch_hod_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -317,11 +329,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("intercity_jun_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("intercity_jun_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -332,11 +346,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("intercity_driver_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("intercity_driver_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -347,11 +363,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("intercity_sen_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("intercity_sen_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -363,11 +381,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("intuprof_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("intuprof_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -378,11 +398,13 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("nla_man_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("nla_man_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -393,39 +415,39 @@ class Command(BaseCommand):
                         f"Starting load data to database {comp.id} -- {comp.name}"
                     )
                 )
-                load_jobtitles(
-                    url=env.str("nla_jun_sen_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("nla_jun_sen_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
             if comp.name == "Republic Media Limited":
-                load_jobtitles(
-                    url=env.str("repub_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("repub_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
             if comp.name == "Rock City Professional Allowance":
-                load_jobtitles(
-                    url=env.str("rch_prof_jobs"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("rch_prof_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -435,11 +457,13 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-                load_jobtitles(
-                    url=env.str("intu_ghana_jobtitles"),
-                    auth=auth,
-                    company=comp.name,
-                    comp_id=comp.id,
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("intu_ghana_jobtitles"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -1043,10 +1067,7 @@ class Command(BaseCommand):
                     company=comp.name,
                     comp_id=comp.id,
                 )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
+                
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1117,9 +1138,6 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
 
             if comp.name == "Rock City Professional Allowance":
                 load_paygroup(
@@ -1127,9 +1145,6 @@ class Command(BaseCommand):
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
-                )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
                 )
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
@@ -1145,19 +1160,19 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-                update_employee_record()
+            update_employee_record()
 
         self.stdout.write(self.style.SUCCESS("--------Ended Loading PayGroups-------"))
 
-
-def get_user_data(url, auth, company, company_id, comp_code):
+def load_sync(url, auth):
     res = requests.get(url=url, auth=auth, timeout=60)
     data = res.json()
+    return data["value"]
 
-    for employee in data["value"]:
+def get_user_data(url, auth, company, company_id, comp_code):
+    data = load_sync(url, auth)
+
+    for employee in data:
         if employee["Status"] == "Active":
             print(f"{employee['No'] }- {employee['Status']}")
             logging.info(f"{employee['No']} - {employee['Status']}")
@@ -1314,7 +1329,8 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         unit=unit
                         if employee["Third_Category_Level"].strip() != ""
                         else None,
-                        branch=branch if employee["Fourth_Category_Level"].strip() != ""
+                        branch=branch
+                        if employee["Fourth_Category_Level"].strip() != ""
                         else None,
                         fifth_category_level=employee["Fifth_Category_Level"],
                         employment_date=employee["Employment_Date"],
@@ -1358,79 +1374,68 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     )
                 print(f"Ending -- Employee {employee['No']}")
             except Employee.DoesNotExist:
-                logging.info(f"--creating-- {employee['No']}")
-                Employee.objects.create(
-                    code=employee["No"],
-                    first_name=employee["First_Name"],
-                    middle_name=employee["Middle_Name"],
-                    last_name=employee["Last_Name"],
-                    gender=employee["Gender"],
-                    phone_no2=employee["Phone_No_2"],
-                    company_email=employee["Company_E_Mail"],
-                    job_titles=employee["Job_Titles"],
-                    job_title_description=employee["Job_Title_Description"],
-                    privacy_blocked=employee["Privacy_Blocked"],
-                    address=employee["Address"],
-                    address_2=employee["Address_2"],
-                    post_code=employee["Post_Code"],
-                    city=employee["City"],
-                    country_region_code=employee["Country_Region_Code"],
-                    showmap=employee["ShowMap"],
-                    mobile_no=employee["Mobile_Phone_No"],
-                    pager=employee["Pager"],
-                    extension=employee["Extension"],
-                    email=employee["E_Mail"],
-                    alt_address_code=employee["Alt_Address_Code"],
-                    alt_address_start_date=employee["Alt_Address_Start_Date"],
-                    alt_address_end_date=employee["Alt_Address_End_Date"],
-                    department=Department.objects.get(
-                        code=employee["Second_Category_Level"], company_id=company_id
-                    ),
-                    unit=employee["Third_Category_Level"],
-                    branch=employee["Fourth_Category_Level"],
-                    fifth_category_level=employee["Fifth_Category_Level"],
-                    employment_date=employee["Employment_Date"],
-                    status=employee["Status"],
-                    inactive_date=employee["Inactive_Date"],
-                    cause_of_inactivity_code=employee["Cause_of_Inactivity_Code"],
-                    termination_date=employee["Termination_Date"],
-                    employement_contract_code=employee["Emplymt_Contract_Code"],
-                    resource_no=employee["Resource_No"],
-                    salesperson_purch_code=employee["Salespers_Purch_Code"],
-                    birth_date=employee["Birth_Date"],
-                    ssno=employee["Social_Security_No"],
-                    union_code=employee["Union_Code"],
-                    union_membership_number=["Union_Membership_No"],
-                    employee_posting_group=employee["Employee_Posting_Group"],
-                    application_method=employee["Application_Method"],
-                    pay_group_code=employee["Pay_Group_Code"],
-                    salary_grade=employee["Salary_Grade_Code"],
-                    notch=employee["Notch"],
-                    annual_basic=employee["Annual_Basic"],
-                    contribute_to_ssf_employee=employee["Contribute_to_SSF_Employee"],
-                    contribute_to_ssf_employer=employee["Contribute_to_SSF_Employer"],
-                    payment_mode=employee["Payment_Mode"],
-                    payment_method=employee["Payment_Method"],
-                    bank_code=employee["Bank_Code"],
-                    bank_name=employee["Bank_Name"],
-                    bank_branch_code=employee["Branch_Code"],
-                    bank_branch_name=employee["Branch_Name"],
-                    bank_account_no=employee["Account_No"],
-                    currency=employee["Currency"],
-                    iban=employee["IBAN"],
-                    swift_code=employee["SWIFT_Code"],
-                    grounds_for_term=employee["Grounds_for_Term_Code"],
-                    company=company,
-                    company_id=Company.objects.get(id=company_id),
-                    unique_code=comp_code,
-                )
-                logging.info(f"Ending -- Employee {employee['No']}")
+                logging.info(f"--Doesn't-- {employee['No']}")
 
+
+
+
+# async def load_paygroup(url, auth, company, comp_id):
+#     data = load_sync(url, auth)
+
+#     for paygroup in data:
+#         no = paygroup["No"].strip()
+#         description = paygroup["Description"].strip()
+#         taxable_income_code = paygroup["Taxable_Income_Code"].strip()
+#         taxable_income_description = paygroup["Taxable_Income_Description"].strip()
+#         tax_code = paygroup["Tax_Code"].strip()
+#         tax_description = paygroup["Tax_Description"].strip()
+#         gross_income_code = paygroup["Gross_Income_Code"].strip()
+#         gross_income_description = paygroup["Gross_Income_Description"].strip()
+#         currency_code = paygroup["Currency_Code"].strip()
+#         bonus_tax_code = paygroup["Bonus_Tax_Code"].strip()
+#         bonus_tax_description = paygroup["Bonus_Tax_Description"].strip()
+#         gross_up = paygroup["Gross_Up"].strip()
+
+#         company_instance = await sync_to_async(Company.objects.get)(id=comp_id)
+
+#         pg, created = await sync_to_async(PayGroup.objects.get_or_create)(
+#             no=no,
+#             company=company,
+#             defaults={
+#                 "description": description,
+#                 "taxable_income_code": taxable_income_code,
+#                 "taxable_income_description": taxable_income_description,
+#                 "tax_code": tax_code,
+#                 "tax_description": tax_description,
+#                 "gross_income_code": gross_income_code,
+#                 "gross_income_description": gross_income_description,
+#                 "currency_code": currency_code,
+#                 "bonus_tax_code": bonus_tax_code,
+#                 "bonus_tax_description": bonus_tax_description,
+#                 "gross_up": gross_up,
+#                 "comp_id": company_instance,
+#             },
+#         )
+
+#         if not created:
+#             pg.description = description
+#             pg.taxable_income_code = taxable_income_code
+#             pg.taxable_income_description = taxable_income_description
+#             pg.tax_code = tax_code
+#             pg.tax_description = tax_description
+#             pg.gross_income_code = gross_income_code
+#             pg.gross_income_description = gross_income_description
+#             pg.currency_code = currency_code
+#             pg.bonus_tax_code = bonus_tax_code
+#             pg.bonus_tax_description = bonus_tax_description
+#             pg.gross_up = gross_up
+#             pg.comp_id = company_instance
+#             await sync_to_async(pg.save)()
 
 def load_paygroup(url, auth, company, comp_id):
-    res = requests.get(url=url, auth=auth, timeout=60)
-    data = res.json()
-    for paygroup in data["value"]:
+    data = load_sync(url, auth)
+
+    for paygroup in data:
         try:
             if PayGroup.objects.filter(no=paygroup["No"], company=company).exists():
                 paygroup_id = PayGroup.objects.get(no=paygroup["No"], company=company)
@@ -1491,39 +1496,38 @@ def load_paygroup(url, auth, company, comp_id):
             )
 
 
-def load_department(url, auth, company, comp_id):
-    res = requests.get(url=url, auth=auth, timeout=60)
-    data = res.json()
-    for dep in data["value"]:
-        if Department.objects.filter(code=dep["Code"], company=company).exists():
-            dep_id = Department.objects.get(code=dep["Code"], company=company)
-            print("Updating Existing Departments")
-            Department.objects.filter(code=dep_id).update(
-                code=dep["Code"].strip(),
-                name=dep["Name"].strip(),
-                first_category_code=dep["First_Category_Code"].strip(),
-                company=company.strip(),
-                company_id=comp_id,
-                comp_id=Company.objects.get(id=comp_id),
-            )
-        elif not Department.objects.filter(code=dep["Code"], company=company).exists():
-            print("------Creating New Department------")
-            if dep["Code"] is not None or dep["Name"] is not None:
-                Department.objects.create(
-                    code=dep["Code"].strip(),
-                    name=dep["Name"].strip(),
-                    first_category_code=dep["First_Category_Code"].strip(),
-                    company=company.strip(),
-                    company_id=comp_id,
-                    comp_id=Company.objects.get(id=comp_id),
-                )
+async def load_department(url, auth, company, comp_id):
+    data = load_sync(url, auth)
+
+    for dep in data:
+        code = dep["Code"].strip()
+        name = dep["Name"].strip()
+        first_category_code = dep["First_Category_Code"].strip()
+
+        company_instance = await sync_to_async(Company.objects.get)(id=comp_id)
+        department, created = await sync_to_async(Department.objects.get_or_create)(
+            code=code,
+            company=company,
+            defaults={
+                "name": name,
+                "first_category_code": first_category_code,
+                "company_id": comp_id,
+                "comp_id": company_instance,
+            },
+        )
+
+        if not created:
+            department.name = name
+            department.first_category_code = first_category_code
+            department.company_id = comp_id
+            department.comp_id = company_instance
+            await sync_to_async(department.save)()
 
 
 def load_units(url, auth, company, comp_id):
-    res = requests.get(url=url, auth=auth, timeout=60)
-    data = res.json()
+    data = load_sync(url, auth)
 
-    for unit in data["value"]:
+    for unit in data:
         try:
             try:
                 depart = Department.objects.get(
@@ -1549,9 +1553,6 @@ def load_units(url, auth, company, comp_id):
                 logging.info(
                     f"--Creating New Unit--- Unit -- {unit['Code']} -- Company {company}"
                 )
-                # depart = Department.objects.filter(
-                #     code=unit["Second_Category_Code"], company=company
-                # )
                 if depart:
                     Unit.objects.create(
                         code=unit["Code"].strip(),
@@ -1572,14 +1573,13 @@ def load_units(url, auth, company, comp_id):
 
 
 def load_branches(url, auth, company, comp_id):
-    res = requests.get(url=url, auth=auth, timeout=60)
-    data = res.json()
+    data = load_sync(url, auth)
 
-    for branch in data["value"]:
+    for branch in data:
         try:
             try:
                 unit = Unit.objects.get(
-                    code=branch["Third_Category_Code"],
+                    code=branch["Third_Category_Code"].strip(),
                     company_id=comp_id,
                 )
             except Unit.DoesNotExist:
@@ -1611,37 +1611,28 @@ def load_branches(url, auth, company, comp_id):
             logging.info(f"Branch {branch['Third_Category_Code']} -- Does not exist")
 
 
-def load_jobtitles(url, auth, company, comp_id):
-    res = requests.get(url=url, auth=auth, timeout=60)
-    data = res.json()
+async def load_jobtitles(url, auth, company, comp_id):
+    data = load_sync(url=url, auth=auth)
 
-    for val in data["value"]:
-        if val["Code"] != "CODE":
-            try:
-                print(f"--Startng--{val['Code']} ")
-                if JobTitles.objects.filter(code=val["Code"], company=company).exists():
-                    job_id = JobTitles.objects.get(code=val["Code"], company=company)
-                    print("Updating")
-                    JobTitles.objects.filter(code=job_id).update(
-                        code=val["Code"],
-                        description=val["Description"],
-                        company=company,
-                        company_id=Company.objects.get(id=comp_id),
-                    )
+    for val in data:
+        code = val["Code"].strip()
+        description = val["Description"].strip()
+        if code != "CODE":
+            company_instance = await sync_to_async(Company.objects.get)(id=comp_id)
 
-                elif not JobTitles.objects.filter(
-                    code=val["Code"], company=company
-                ).exists():
-                    JobTitles.objects.create(
-                        code=val["Code"],
-                        description=val["Description"],
-                        company=company,
-                        company_id=Company.objects.get(id=comp_id),
-                    )
-                print(f"--End-- {val['Description']}")
-            except JobTitles.DoesNotExist:
-                pass
-    print(f"Done -- Unit -- {JobTitles.objects.all().count()}")
+            job, created = await sync_to_async(JobTitles.objects.get_or_create)(
+                code=code,
+                company=company,
+                defaults={
+                    "description": description,
+                    "company_id": company_instance,
+                },
+            )
+
+            if not created:
+                job.description = description
+                job.company_id = company_instance
+                await sync_to_async(job.save)()
 
 
 def update_employee_record():
