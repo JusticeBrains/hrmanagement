@@ -14,7 +14,8 @@ class EmployeeAdmin(admin.ModelAdmin):
         "department",
         "branch",
         "is_hr",
-        "company_email"
+        "company_email",
+        "total_medical_claim_amount"
     ]
 
 

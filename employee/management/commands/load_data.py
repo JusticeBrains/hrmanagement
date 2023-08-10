@@ -1676,8 +1676,6 @@ def update_employee_record():
     # Send email report
     try:
         print("---------------Sending -----------------------")
-        # send_mail(subject, message, from_email, recipient_list)
-        # print("---------------Sent -----------------------")
         subject = "Report"
         message = "The task has been completed successfully."
         from_email = "justiceduodu14@gmail.com"

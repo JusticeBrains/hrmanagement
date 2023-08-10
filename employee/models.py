@@ -831,9 +831,6 @@ class PayGroup(models.Model):
         _("Bonus Tax Description"), max_length=150, null=True, blank=True
     )
     gross_up = models.BooleanField(_("Gross Up"), null=True, blank=True)
-    total_number_of_leave_days = models.PositiveIntegerField(
-        _("Total Number Of Leave Days"), blank=True, null=True
-    )
     total_medical_claim_amount = models.PositiveIntegerField(
         _("Medical Claim Amount"), null=True, blank=True
     )
@@ -855,15 +852,15 @@ class PayGroup(models.Model):
 
     def save(self, *args, **kwargs):
         # Get the employees with the same paygroup and company
-        employees = Employee.objects.filter(
-            pay_group_code=self.no, company=self.company
-        )
-        # employees.bulk_update(total_number_of_leave_days=self.total_number_of_leave_days)
-        # Update the total_number_of_leave_days for each employee
-        for employee in employees:
-            if employee.total_medical_claim_amount:
-                employee.total_medical_claim_amount = self.total_medical_claim_amount
-                employee.save()
+        Employee.objects.filter(
+            pay_group_code=self, company=self.company
+        ).update(total_medical_claim_amount=self.total_medical_claim_amount)
+        # # Update the total_claim_amount for each employee
+        # # employees.bulk_update(total_medical_claim_amount=self.total_medical_claim_amount)
+        # for employee in employees:
+        #     if employee.total_medical_claim_amount:
+        #         employee.total_medical_claim_amount = self.total_medical_claim_amount
+        #         employee.save()
 
         super().save(*args, **kwargs)
 
