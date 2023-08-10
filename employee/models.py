@@ -61,8 +61,20 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    unit = models.ForeignKey("employee.Unit", verbose_name=_("Unit"), on_delete=models.DO_NOTHING, null=True, blank=True)
-    branch = models.ForeignKey("employee.Branch", verbose_name=_("Branch"), on_delete=models.SET_NULL, blank=True, null=True)
+    unit = models.ForeignKey(
+        "employee.Unit",
+        verbose_name=_("Unit"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    branch = models.ForeignKey(
+        "employee.Branch",
+        verbose_name=_("Branch"),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     fifth_category_level = models.CharField(
         _("Fifth Category Level"), max_length=250, blank=True, null=True
     )
@@ -257,7 +269,9 @@ class EmployeeAppraisal(models.Model):
         null=True,
     )
     grade = models.CharField(_("Grade"), max_length=150, null=True, blank=True)
-    performance_score = models.DecimalField(_("Performance Score"), max_digits=5, decimal_places=2, blank=True, null=True)
+    performance_score = models.DecimalField(
+        _("Performance Score"), max_digits=5, decimal_places=2, blank=True, null=True
+    )
     appraisal_score = models.DecimalField(
         _("Appraisal Score"), max_digits=5, decimal_places=2, null=True, blank=True
     )
@@ -322,10 +336,11 @@ class AppraisalGrading(models.Model):
     @staticmethod
     def get_grading_for_score(score):
         if score is not None:
-            grading = AppraisalGrading.objects.filter(score_range__contains=score).first()
+            grading = AppraisalGrading.objects.filter(
+                score_range__contains=score
+            ).first()
             return grading
         return None
-
 
     def __str__(self) -> str:
         return f"{self.grade} - {self.recommendation}"
@@ -497,69 +512,6 @@ class EmployeeKRA(models.Model):
     #         kpi_score=kpi_score,
     #     )
     #     return kpi_item
-
-
-# class EmployeePromotion(models.Model):
-#     no = models.CharField(_("No."), max_length=50)
-#     department_code = models.ForeignKey(
-#         "company.SecondCategoryLevel",
-#         verbose_name=_("Department Name"),
-#         on_delete=models.CASCADE,
-#     )
-#     department_name = models.CharField(_("Department Name"), max_length=150)
-#     emp_code = models.CharField(_("Employee Code"), max_length=50)
-#     emp_name = models.ForeignKey(
-#         "Employee", verbose_name=_("Employee Name"), on_delete=models.CASCADE
-#     )
-#     paygroup = models.ForeignKey(
-#         "paygroup.PayGroup", verbose_name=_("Pay Group"), on_delete=models.CASCADE
-#     )
-#     current_job_title_code = models.ForeignKey(
-#         "company.JobTitles", verbose_name=_("Current Job"), on_delete=models.CASCADE
-#     )
-#     current_job_title = models.CharField(
-#         _("Current Job Title"), max_length=50, blank=True, null=True
-#     )
-#     new_job_title_code = models.ForeignKey(
-#         "company.JobTitles",
-#         verbose_name=_("New Job Title Code"),
-#         on_delete=models.CASCADE,
-#         related_name="new_job_title_code",
-#     )
-#     new_job_title = models.CharField(_("New Job Title"), max_length=50)
-#     current_salary_grade = models.ForeignKey(
-#         "company.SalaryGrade",
-#         verbose_name=_("Current Salary Grade"),
-#         on_delete=models.CASCADE,
-#         related_name="current_salary_grade",
-#     )
-#     new_salary_grade = models.ForeignKey(
-#         "company.SalaryGrade",
-#         verbose_name=_("New Salary Grade"),
-#         on_delete=models.CASCADE,
-#         related_name="new_salary_grade",
-#     )
-#     current_notch = models.PositiveIntegerField(_("Current Notch"))
-#     new_notch = models.PositiveIntegerField(_("New Notch"))
-#     current_basic_salary = models.DecimalField(
-#         _("Current Basic Salary"), max_digits=5, decimal_places=2
-#     )
-#     new_basic_salary = models.DecimalField(
-#         _("New Basic Salary"), max_digits=5, decimal_places=2
-#     )
-#     comment = models.CharField(_("Comment"), max_length=250)
-#     transaction_date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-#     posted = models.BooleanField(_("Posted"))
-#     effective_date = models.DateField(
-#         _("Effective Date"), auto_now=False, auto_now_add=False
-#     )
-
-#     class Meta:
-#         verbose_name = "Employee Promotion"
-#         verbose_name_plural = "Employee Promotions"
-
-#     def __str__(self) -> str:
-#         return f"{self.emp_name}, {self.current_job_title}, {self.new_job_title}"
 
 
 class EmployeeMedicalClaim(models.Model):
@@ -748,12 +700,18 @@ class Department(Base):
 
 
 class Unit(Base):
-    department = models.ForeignKey("employee.Department", verbose_name=_("Department"), on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Unit"
         verbose_name_plural = "Units"
-        unique_together=("code","comp_id","department")
+        unique_together = ("code", "comp_id", "department")
 
     def __str__(self):
         return f"{self.code} - {self.department}"
@@ -777,7 +735,13 @@ class Unit(Base):
 
 
 class Branch(Base):
-    unit = models.ForeignKey("employee.Unit", verbose_name=_("Unit"), on_delete=models.CASCADE, blank=True, null=True)
+    unit = models.ForeignKey(
+        "employee.Unit",
+        verbose_name=_("Unit"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Branch"
@@ -807,13 +771,18 @@ class Branch(Base):
 
 class Notch(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    payroll_structure_code = models.CharField(
-        _("Payroll Structure Code"), max_length=50, blank=True, null=True
+    payroll_structure_code = models.ForeignKey(
+        "company.PayrollStructure",
+        verbose_name=_("Payroll Structure"),
+        on_delete=models.CASCADE,
     )
-    salary_grade = models.CharField(
-        _("Salary Grade"), max_length=50, null=True, blank=True
+    salary_grade = models.ForeignKey(
+        "company.SalaryGrade",
+        verbose_name=_("Salary Grade"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
-    no = models.CharField(_("No"), max_length=50, blank=True, null=True)
     amount = models.DecimalField(
         _("Amount"), max_digits=8, decimal_places=2, null=True, blank=True
     )
@@ -828,7 +797,7 @@ class Notch(models.Model):
 
 class PayGroup(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
-    no = models.CharField(_("No."), max_length=50, null=True, blank=True)
+    no = models.CharField(_("No"), max_length=150, blank=True, null=True)
     description = models.CharField(
         _("Description"), max_length=100, null=True, blank=True
     )
