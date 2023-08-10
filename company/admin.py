@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Company, CompanyType, Job, JobTitles, SalaryGrade
+from .models import Company, CompanyType, JobTitles, SalaryGrade
 
 
 @admin.register(Company)
@@ -11,11 +11,6 @@ class CompanyModelAdmin(admin.ModelAdmin):
 @admin.register(CompanyType)
 class CompanyTypeAdmin(admin.ModelAdmin):
     list_display = ('type',)
-
-
-@admin.register(Job)
-class JobAdmin(admin.ModelAdmin):
-    list_display = ('comp_code', 'job_code','job_title',)
 
 
 @admin.register(JobTitles)
