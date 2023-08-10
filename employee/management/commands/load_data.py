@@ -1293,12 +1293,15 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         department=depart
                         if employee["Second_Category_Level"].strip() != ""
                         else None,
+                        department_name = depart.name if depart is not None else None,
                         unit=unit
                         if employee["Third_Category_Level"].strip() != ""
                         else None,
+                        unit_name = unit.name if unit is not None else None,
                         branch=branch
                         if employee["Fourth_Category_Level"].strip() != ""
                         else None,
+                        branch_name = branch.name if branch is not None else None,
                         fifth_category_level=employee["Fifth_Category_Level"],
                         employment_date=employee["Employment_Date"],
                         status=employee["Status"],
@@ -1315,6 +1318,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         employee_posting_group=employee["Employee_Posting_Group"],
                         application_method=employee["Application_Method"],
                         pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
+                        pay_group_name= pay_group.no if pay_group is not None else None,
                         salary_grade=employee["Salary_Grade_Code"],
                         notch=employee["Notch"],
                         annual_basic=employee["Annual_Basic"],
@@ -1380,12 +1384,15 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         department=depart
                         if employee["Second_Category_Level"].strip() != ""
                         else None,
+                        department_name = depart.name if depart is not None else None,
                         unit=unit
                         if employee["Third_Category_Level"].strip() != ""
                         else None,
+                        unit_name = unit.name if unit is not None else None,
                         branch=branch
                         if employee["Fourth_Category_Level"].strip() != ""
                         else None,
+                        branch_name = branch.name if branch is not None else None,
                         fifth_category_level=employee["Fifth_Category_Level"],
                         employment_date=employee["Employment_Date"],
                         status=employee["Status"],
@@ -1402,6 +1409,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         employee_posting_group=employee["Employee_Posting_Group"],
                         application_method=employee["Application_Method"],
                         pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
+                        pay_group_name= pay_group.no if pay_group is not None else None,
                         salary_grade=employee["Salary_Grade_Code"],
                         notch=employee["Notch"],
                         annual_basic=employee["Annual_Basic"],
