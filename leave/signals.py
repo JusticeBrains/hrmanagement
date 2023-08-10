@@ -1,4 +1,5 @@
 import re
+import logging
 import traceback
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
@@ -14,10 +15,13 @@ from django.utils import timezone
 from django.core.validators import validate_email
 from django.db.models import Q
 
+
 from environs import Env
 
 env = Env()
 env.read_env()
+
+logging.basicConfig(level=logging.DEBUG)
 
 send_leave_reminder = Signal()
 
@@ -389,48 +393,91 @@ def update_employee_plan_days_left(sender, instance, **kwargs):
                 employee_limits.number_of_days_exhausted
             )
             employee_limits.save()
-
-
 @receiver(pre_save, sender=LeaveLimits)
 def create_employee_leave_limits(sender, instance, **kwargs):
-    employee = Employee.objects.all()
-    if instance:
+    employee = Employee.objects.filter(
+        pay_group_code=instance.paygroup,
+        company=instance.paygroup.company,
+    )
+    
+    if instance.leave_type:
         instance.leave_name = instance.leave_type.name
         instance.leave_type_id = instance.leave_type.code
         instance.company_id = instance.leave_type.company.id
         instance.paygroup_name = instance.paygroup.no
-        print("------------------Starting--------------------------")
-        for emp in employee:
-            if (
-                emp.pay_group_code == instance.paygroup.no
-                and emp.company == instance.paygroup.company
-            ):
-                print(f"{emp.company_id}")
-                if not EmployeeLeaveLimits.objects.filter(
-                    leave_type=instance.leave_type,
-                    employee=emp,
-                    paygroup=instance.paygroup,
-                ).exists():
-                    EmployeeLeaveLimits.objects.create(
-                        leave_type=instance.leave_type,
-                        employee=emp,
-                        leave_type_id=instance.leave_type.code,
-                        max_number_of_days=instance.max_number_of_days,
-                        number_of_days_left=instance.max_number_of_days,
-                        number_of_plan_days_left=instance.max_number_of_days,
-                        paygroup=instance.paygroup,
-                        company=Company.objects.get(id=instance.leave_type.company.id),
-                    )
-                elif EmployeeLeaveLimits.objects.filter(
-                    leave_type=instance.leave_type,
-                    employee=emp,
-                    paygroup=instance.paygroup,
-                ).exists():
-                    EmployeeLeaveLimits.objects.update(
-                        max_number_of_days=instance.max_number_of_days,
-                        leave_type_id=instance.leave_type.code,
-                    )
 
+        logging.info("------------------Starting--------------------------")
+
+        for emp in employee:
+            if not EmployeeLeaveLimits.objects.filter(
+                leave_type=instance.leave_type,
+                employee=emp,
+                paygroup=instance.paygroup,
+            ).exists():
+                EmployeeLeaveLimits.objects.create(
+                    leave_type=instance.leave_type,
+                    employee=emp,
+                    leave_type_id=instance.leave_type.code,
+                    max_number_of_days=instance.max_number_of_days,
+                    number_of_days_left=instance.max_number_of_days,
+                    number_of_plan_days_left=instance.max_number_of_days,
+                    paygroup=instance.paygroup,
+                    company=Company.objects.get(id=instance.leave_type.company.id),
+                )
+            else:
+                emp_leave_limit = EmployeeLeaveLimits.objects.get(
+                    leave_type=instance.leave_type,
+                    employee=emp,
+                    paygroup=instance.paygroup,
+                )
+                emp_leave_limit.max_number_of_days = instance.max_number_of_days
+                emp_leave_limit.leave_type_id = instance.leave_type.code
+                emp_leave_limit.save()
+
+        logging.info("------------------Completed--------------------------")
+        
+
+# @receiver(pre_save, sender=LeaveLimits)
+# def create_employee_leave_limits(sender, instance, **kwargs):
+#     employee = Employee.objects.all()
+#     if instance:
+#         instance.leave_name = instance.leave_type.name
+#         instance.leave_type_id = instance.leave_type.code
+#         instance.company_id = instance.leave_type.company.id
+#         instance.paygroup_name = instance.paygroup.no
+#         logging.info("------------------Starting--------------------------")
+#         print(instance.paygroup)
+#         for emp in employee:
+#             if (
+#                 emp.pay_group_code == instance.paygroup.no
+#                 and emp.company == instance.paygroup.company
+#             ):
+#                 print(f"{emp.company_id}")
+#                 if not EmployeeLeaveLimits.objects.filter(
+#                     leave_type=instance.leave_type,
+#                     employee=emp,
+#                     paygroup=instance.paygroup,
+#                 ).exists():
+#                     EmployeeLeaveLimits.objects.create(
+#                         leave_type=instance.leave_type,
+#                         employee=emp,
+#                         leave_type_id=instance.leave_type.code,
+#                         max_number_of_days=instance.max_number_of_days,
+#                         number_of_days_left=instance.max_number_of_days,
+#                         number_of_plan_days_left=instance.max_number_of_days,
+#                         paygroup=instance.paygroup,
+#                         company=Company.objects.get(id=instance.leave_type.company.id),
+#                     )
+#                 elif EmployeeLeaveLimits.objects.filter(
+#                     leave_type=instance.leave_type,
+#                     employee=emp,
+#                     paygroup=instance.paygroup,
+#                 ).exists():
+#                     EmployeeLeaveLimits.objects.update(
+#                         max_number_of_days=instance.max_number_of_days,
+#                         leave_type_id=instance.leave_type.code,
+#                     )
+#         logging.info("----------------------Completed-----------")
 
 @receiver(pre_save, sender=LeavePlan)
 @receiver(pre_save, sender=LeaveRequest)
