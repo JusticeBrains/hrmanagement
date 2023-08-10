@@ -288,14 +288,15 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             )
 
 
-@receiver(post_save, sender=Employee)
-def populate_emp_fields(sender, instance, created, **kwargs):
-    post_save.disconnect(populate_emp_fields, sender=Employee)
-    if created:
-        instance.pay_group_name = instance.pay_group_code.no
-        instance.unit_name = instance.unit.name
-        instance.branch_name = instance.branch.name
-        instance.department_name = instance.department.name
-        instance.save()
-    post_save.connect(populate_emp_fields, sender=Employee)
+@receiver(pre_save, sender=Employee)
+def populate_emp_fields(sender, instance, **kwargs):
+    if instance:
+        if instance.pay_group_code is not None:
+            instance.pay_group_name = instance.pay_group_code.no
+        if instance.unit is not None:
+            instance.unit_name = instance.unit.name
+        if instance.branch is not None:
+            instance.branch_name = instance.branch.name
+        if instance.department is not None:
+            instance.department_name = instance.department.name
     
