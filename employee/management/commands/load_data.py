@@ -1160,7 +1160,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-            update_employee_record()
+        update_employee_record()
 
         self.stdout.write(self.style.SUCCESS("--------Ended Loading PayGroups-------"))
 
