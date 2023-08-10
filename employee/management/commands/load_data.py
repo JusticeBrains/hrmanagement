@@ -1235,6 +1235,16 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         )
                 except JobTitles.DoesNotExist:
                     job_title = None
+                
+                try:
+                    pay_group = None
+                    if employee["Pay_Group_Code"].strip():
+                        pay_group = PayGroup.objects.get(
+                            no=employee["Pay_Group_Code"],
+                            company=company,
+                        )
+                except PayGroup.DoesNotExist:
+                    pay_group = None
 
                 try:
                     branch_code = employee["Fourth_Category_Level"].strip()
@@ -1304,7 +1314,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         union_membership_number=["Union_Membership_No"],
                         employee_posting_group=employee["Employee_Posting_Group"],
                         application_method=employee["Application_Method"],
-                        pay_group_code=employee["Pay_Group_Code"],
+                        pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
                         salary_grade=employee["Salary_Grade_Code"],
                         notch=employee["Notch"],
                         annual_basic=employee["Annual_Basic"],
@@ -1391,7 +1401,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         union_membership_number=["Union_Membership_No"],
                         employee_posting_group=employee["Employee_Posting_Group"],
                         application_method=employee["Application_Method"],
-                        pay_group_code=employee["Pay_Group_Code"],
+                        pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
                         salary_grade=employee["Salary_Grade_Code"],
                         notch=employee["Notch"],
                         annual_basic=employee["Annual_Basic"],

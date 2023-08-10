@@ -122,9 +122,7 @@ class Employee(models.Model):
     application_method = models.CharField(
         _("Application Method"), max_length=50, null=True, blank=True
     )
-    pay_group_code = models.CharField(
-        _("Pay Group Code"), max_length=50, blank=True, null=True
-    )
+    pay_group_code = models.ForeignKey("employee.PayGroup", verbose_name=_("Pay Group Code"), on_delete=models.DO_NOTHING, blank=True, null=True)
     salary_grade = models.CharField(
         _("Salary Grade"), max_length=50, blank=True, null=True
     )
