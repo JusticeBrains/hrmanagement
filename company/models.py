@@ -5,13 +5,14 @@ import random
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model  # get current active user
 from django.conf import settings  # get a user
-
+from django.utils import timezone
 from options import text_options
 
 User = get_user_model()
 
 
 class CompanyAdmin(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     first_name = models.CharField(
         _("First Name"), max_length=150, null=True, blank=True
     )
@@ -65,6 +66,7 @@ class CompanyType(models.Model):
 
 
 class Holidays(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
     holiday = models.CharField(_("Holiday"), max_length=50)
 
@@ -76,9 +78,8 @@ class Holidays(models.Model):
         return f"{self.holiday}, {self.date}"
 
 
-
 class PayrollStructure(models.Model):
-    no = models.PositiveIntegerField(_("No."))
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     year = models.PositiveIntegerField(_("Year"))
     name = models.CharField(_("Name"), max_length=150)
     start_date = models.DateField(
@@ -91,48 +92,23 @@ class PayrollStructure(models.Model):
 class BaseCom(models.Model):
     id = models.UUIDField(_("ID"), default=uuid.uuid4, primary_key=True, editable=False)
     code = models.CharField(_("Code"), max_length=150, blank=True, null=True)
-    payroll_structure = models.CharField(
-        verbose_name=_("Payroll Structure"), blank=True, null=True, max_length=50
-    )
+    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure"), on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         abstract = True
 
 
-class SalaryGrade(BaseCom):
-    job_titles = models.CharField(_("Job Titles"), max_length=150)
-    transport_rate = models.DecimalField(
-        _("Transport Rate"), max_digits=5, decimal_places=2
-    )
-
-    class Meta:
-        verbose_name = "Salary Grade"
-        verbose_name_plural = "Salary Grades"
-
-    def __str__(self) -> str:
-        return f"{self.code} - {self.payroll_structure}"
-
-
-# if connection.vendor == 'postgresql':
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT EXISTS(
-#                 SELECT * FROM information_schema.columns
-#                 WHERE table_name = 'company_salarygrade' AND column_name = 'code'
-#             )
-#         """)
-#         column_exists = cursor.fetchone()[0]
-#         if column_exists:
-#             cursor.execute("ALTER TABLE company_salarygrade ALTER COLUMN code TYPE VARCHAR(50)")
-
-
 class JobTitles(BaseCom):
-    salary_grade = models.CharField(
-        verbose_name=_("Salary Grade"), blank=True, null=True, max_length=50
-    )
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     description = models.CharField(_("Description"), max_length=80)
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
-    company_id = models.ForeignKey("company.Company", verbose_name=_("Company ID"), on_delete=models.DO_NOTHING, null=True, blank=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Job Titles"
@@ -155,49 +131,84 @@ class JobTitles(BaseCom):
 #             cursor.execute("ALTER TABLE company_jobtitles ALTER COLUMN code TYPE VARCHAR(50)")
 
 
-class Job(models.Model):
-    comp_code = models.ForeignKey(
-        "Company", verbose_name=_("Company Code"), on_delete=models.CASCADE
-    )
-    job_code = models.CharField(_("Job Code"), max_length=50)
-    job_title = models.CharField(_("Job Title"), max_length=50)
-    job_duties = models.CharField(_("Job Duties"), max_length=50)
-    academic_qualification = models.CharField(
-        _("Academic Qualification"), max_length=50
-    )
-    prof_tech_qualification = models.CharField(
-        _("Prof/Technical Qualification"), max_length=50
-    )
-    key_competencies = models.CharField(_("Key Comptencies"), max_length=50)
-    relevant_work_experience = models.CharField(
-        _("Relevant Work Experience"), max_length=50
+class SalaryGrade(BaseCom):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    job_titles = models.ForeignKey("company.JobTitles", verbose_name=_("Job Titles"), on_delete=models.CASCADE, blank=True, null=True)
+    transport_rate = models.DecimalField(
+        _("Transport Rate"), max_digits=5, decimal_places=2
     )
 
     class Meta:
-        verbose_name = "Job"
-        verbose_name_plural = "Jobs"
+        verbose_name = "Salary Grade"
+        verbose_name_plural = "Salary Grades"
 
-    def __str__(self):
-        return f"{self.job_code}"
+    def __str__(self) -> str:
+        return f"{self.code} - {self.payroll_structure}"
+
+# if connection.vendor == 'postgresql':
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#             SELECT EXISTS(
+#                 SELECT * FROM information_schema.columns
+#                 WHERE table_name = 'company_salarygrade' AND column_name = 'code'
+#             )
+#         """)
+#         column_exists = cursor.fetchone()[0]
+#         if column_exists:
+#             cursor.execute("ALTER TABLE company_salarygrade ALTER COLUMN code TYPE VARCHAR(50)")
 
 
-class FirstCategoryLevel(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    first_level = models.CharField(_("First Level"), max_length=50)
+class Policy(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    heading = models.CharField(_("Heading"), max_length=250, blank=True, null=True)
+    details = models.TextField(_("Details"), blank=True, null=True)
+    company = models.ForeignKey(
+        "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE
+    )
+    date = models.DateField(_("Date"), default=timezone.now)
+    published = models.BooleanField(_("Published"), default=False)
 
     class Meta:
-        verbose_name = "First Category Level"
-        verbose_name_plural = "First Category Level"
+        verbose_name = "Policy"
+        verbose_name_plural = "Policies"
 
     def __str__(self) -> str:
-        return self.code
+        return f"{self.heading}"
 
 
-class SecondCategoryLevel(models.Model):
-    code = models.CharField(_("Code"), max_length=50)
-    first_category_code = models.CharField(_("First"), max_length=50)
-    name = models.CharField(_("Name"), max_length=150)
-    level_no = models.PositiveIntegerField(_("Level No."))
+class EmployeePolicy(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    employee = models.ForeignKey(
+        "employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, blank=True, null=True
+    )
+    policy = models.ForeignKey(
+        "company.Policy", verbose_name=_("Policy"), on_delete=models.CASCADE, blank=True
+    )
+    date = models.DateField(_("Date"), default=timezone.now)
+    accepted = models.BooleanField(_("Accepted"), default=False)
+
+    class Meta:
+        verbose_name = "Employee Policy"
+        verbose_name_plural = "Employee Policies"
 
     def __str__(self) -> str:
-        return self.code
+        return f"{self.employee}"
+
+
+class DepartmentPolicy(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    department = models.ForeignKey(
+        "employee.Department", verbose_name=_("Department"), on_delete=models.CASCADE, blank=True, null=True
+    )
+    policy = models.ForeignKey(
+        "company.Policy", verbose_name=_("Policy"), on_delete=models.CASCADE, null=True, blank=True
+    )
+    date = models.DateField(_("Date"), default=timezone.now)
+    accepted = models.BooleanField(_("Accepted"), default=False)
+
+    class Meta:
+        verbose_name = "Department Policy"
+        verbose_name_plural = "Department Policies"
+
+    def __str__(self) -> str:
+        return f"{self.department}"

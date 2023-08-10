@@ -39,9 +39,3 @@ class HolidayViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Holidays.objects.all()
     serializer_class = serializers.HolidaySerializer
     filterset_fields = "__all__"
-
-
-class JobViewSet(viewsets.ModelViewSet):
-    queryset = comp_models.Job.objects.all()
-    serializer_class = serializers.JobSerializer
-    filterset_fields = "__all__"

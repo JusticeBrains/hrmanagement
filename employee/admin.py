@@ -20,8 +20,8 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 @admin.register(emodels.PayGroup)
 class PaygroupAdmin(admin.ModelAdmin):
-    search_fields = ["no", "description", "company"]
-    list_display = ["no", "company"]
+    search_fields = ["description", "company"]
+    list_display = ["company"]
 
 
 @admin.register(emodels.EmployeeDeduction)

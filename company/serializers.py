@@ -38,10 +38,4 @@ class HolidaySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class JobSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.Job
-        fields = "__all__"
-
-
 
