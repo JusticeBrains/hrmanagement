@@ -37,16 +37,16 @@ class HolidaySerializer(serializers.ModelSerializer):
         model = comp_models.Holidays
         fields = "__all__"
 
-
-class BankSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = comp_models.Bank
-        fields = "__all__"
-
-
 class BankBranchSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = comp_models.BankBranch
         fields = "__all__"
 
 
+class BankSerializer(serializers.ModelSerializer):
+    branches = BankBranchSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = comp_models.Bank
+        fields = "__all__"
