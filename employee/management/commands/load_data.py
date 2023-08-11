@@ -1,6 +1,6 @@
 from typing import Any
 from django.core.management.base import BaseCommand
-from company.models import JobTitles, Company
+from company.models import Bank, BankBranch, JobTitles, Company
 from employee.models import (
     Branch,
     Department,
@@ -9,6 +9,7 @@ from employee.models import (
     Unit,
 )
 import logging
+import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from asgiref.sync import sync_to_async
@@ -17,6 +18,8 @@ import asyncio
 import aiohttp
 from requests_ntlm import HttpNtlmAuth
 from django.conf import settings
+from django.db.models import Q
+
 from environs import Env
 
 env = Env()
@@ -1254,6 +1257,26 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         branch = None
                 except ObjectDoesNotExist:
                     branch = None
+                
+                try:
+                    b_name = employee["Bank_Name"].strip()
+
+                    if b_name:
+                        bank = Bank.objects.get(Q(name__icontains=b_name))
+                    
+                except ObjectDoesNotExist:
+                    bank = None
+
+
+                try:
+                    bbranch_name = employee["Branch_Name"].strip()
+                    b_name = employee["Bank_Name"].strip()
+                    
+
+                    if bbranch_name:
+                        bank_branch = BankBranch.objects.filter(Q(name__icontains=bb)).first()
+                except ObjectDoesNotExist:
+                    bank_branch = None
 
                 if Employee.objects.filter(
                     code=employee["No"], company=company
@@ -1330,10 +1353,10 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         ],
                         payment_mode=employee["Payment_Mode"],
                         payment_method=employee["Payment_Method"],
-                        bank_code=employee["Bank_Code"],
-                        bank_name=employee["Bank_Name"],
-                        bank_branch_code=employee["Branch_Code"],
-                        bank_branch_name=employee["Branch_Name"],
+                        bank_id=bank if employee["Bank_Name"].strip() !="" else None,
+                        bank_name=employee["Bank_Name"].strip(),
+                        bank_branch_id=bank_branch if employee["Branch_Name"].strip() !="" else None,
+                        bank_branch_name=employee["Branch_Name"].strip(),
                         bank_account_no=employee["Account_No"],
                         currency=employee["Currency"],
                         iban=employee["IBAN"],
@@ -1421,10 +1444,10 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         ],
                         payment_mode=employee["Payment_Mode"],
                         payment_method=employee["Payment_Method"],
-                        bank_code=employee["Bank_Code"],
-                        bank_name=employee["Bank_Name"],
-                        bank_branch_code=employee["Branch_Code"],
-                        bank_branch_name=employee["Branch_Name"],
+                        bank_id=bank if employee["Bank_Name"].strip() !="" else None,
+                        bank_name=employee["Bank_Name"].strip(),
+                        bank_branch_id=bank_branch if employee["Branch_Name"].strip() !="" else None,
+                        bank_branch_name=employee["Branch_Name"].strip(),
                         bank_account_no=employee["Account_No"],
                         currency=employee["Currency"],
                         iban=employee["IBAN"],
@@ -1695,3 +1718,17 @@ def update_employee_record():
         print("---------------Sent -----------------------")
     except:
         print("-----------------Couldn't send------------------------")
+
+
+def load_bank_branches():
+    with open("branches.json",'r') as file:
+        branches = json.load(file)
+
+    for branch in branches:
+        if not BankBranch.objects.filter(name=branch["BRANCH NAME"]).exists():
+            logging.info(f"{branch['BRANCH NAME']}, {branch['BANK ID']} ")
+            logging.info(f"{Bank.objects.get(id=branch['BANK ID'])}")
+            BankBranch.objects.create(
+                name=branch["BRANCH NAME"],
+                bank = Bank.objects.get(id=branch["BANK ID"])
+            )
