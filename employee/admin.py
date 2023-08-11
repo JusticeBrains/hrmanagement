@@ -13,6 +13,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         "pay_group_code",
         "department",
         "branch",
+        "bank_id",
         "is_hr",
         "company_email",
         "total_medical_claim_amount"

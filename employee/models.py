@@ -146,14 +146,10 @@ class Employee(models.Model):
     payment_method = models.CharField(
         _("Payment Method"), max_length=50, blank=True, null=True
     )
-    bank_code = models.CharField(_("Bank Code"), max_length=50, blank=True, null=True)
-    bank_name = models.CharField(_("Bank Name"), max_length=50, blank=True, null=True)
-    bank_branch_code = models.CharField(
-        _("Bank Branch Code"), max_length=50, blank=True, null=True
-    )
-    bank_branch_name = models.CharField(
-        _("Bank Branch Name"), max_length=50, blank=True, null=True
-    )
+    bank_id = models.ForeignKey("company.Bank", verbose_name=_("Bank"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    bank_name = models.CharField(_("Bank Name"), max_length=150, blank=True, null=True)
+    bank_branch_id = models.ForeignKey("company.BankBranch", verbose_name=_("Bank Branch"), on_delete=models.DO_NOTHING, blank=True,null=True)
+    bank_branch_name = models.CharField(_("Bank Branch Name"), max_length=150, blank=True, null=True)
     bank_account_no = models.CharField(
         _("Bank Account No"), max_length=50, blank=True, null=True
     )
