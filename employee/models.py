@@ -67,7 +67,9 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    department_name = models.CharField(_("Department Name"), max_length=250, blank=True, null=True)
+    department_name = models.CharField(
+        _("Department Name"), max_length=250, blank=True, null=True
+    )
     unit = models.ForeignKey(
         "employee.Unit",
         verbose_name=_("Unit"),
@@ -83,7 +85,9 @@ class Employee(models.Model):
         blank=True,
         null=True,
     )
-    branch_name = models.CharField(_("Branch Name"), max_length=250, blank=True, null=True)
+    branch_name = models.CharField(
+        _("Branch Name"), max_length=250, blank=True, null=True
+    )
     fifth_category_level = models.CharField(
         _("Fifth Category Level"), max_length=250, blank=True, null=True
     )
@@ -125,8 +129,16 @@ class Employee(models.Model):
     application_method = models.CharField(
         _("Application Method"), max_length=50, null=True, blank=True
     )
-    pay_group_code = models.ForeignKey("employee.PayGroup", verbose_name=_("Pay Group Code"), on_delete=models.DO_NOTHING, blank=True, null=True)
-    pay_group_name = models.CharField(_("Pay Group Name"), max_length=250, blank=True, null=True)
+    pay_group_code = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("Pay Group Code"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    pay_group_name = models.CharField(
+        _("Pay Group Name"), max_length=250, blank=True, null=True
+    )
     salary_grade = models.CharField(
         _("Salary Grade"), max_length=50, blank=True, null=True
     )
@@ -146,10 +158,24 @@ class Employee(models.Model):
     payment_method = models.CharField(
         _("Payment Method"), max_length=50, blank=True, null=True
     )
-    bank_id = models.ForeignKey("company.Bank", verbose_name=_("Bank"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    bank_id = models.ForeignKey(
+        "company.Bank",
+        verbose_name=_("Bank"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     bank_name = models.CharField(_("Bank Name"), max_length=150, blank=True, null=True)
-    bank_branch_id = models.ForeignKey("company.BankBranch", verbose_name=_("Bank Branch"), on_delete=models.DO_NOTHING, blank=True,null=True)
-    bank_branch_name = models.CharField(_("Bank Branch Name"), max_length=150, blank=True, null=True)
+    bank_branch_id = models.ForeignKey(
+        "company.BankBranch",
+        verbose_name=_("Bank Branch"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    bank_branch_name = models.CharField(
+        _("Bank Branch Name"), max_length=150, blank=True, null=True
+    )
     bank_account_no = models.CharField(
         _("Bank Account No"), max_length=50, blank=True, null=True
     )
@@ -718,12 +744,19 @@ class Unit(Base):
         null=True,
         blank=True,
     )
-    department_name = models.CharField(_("Department Name"), max_length=150, blank=True, null=True)
+    department_name = models.CharField(
+        _("Department Name"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Unit"
         verbose_name_plural = "Units"
         unique_together = ("code", "comp_id", "department")
+
+    def save(self, *args, **kwargs):
+        if self.department is not None:
+            self.department_name = str(self.department.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.code} - {self.department}"
@@ -759,6 +792,11 @@ class Branch(Base):
     class Meta:
         verbose_name = "Branch"
         verbose_name_plural = "Branches"
+
+    def save(self, *args, **kwargs):
+        if self.unit is not None:
+            self.unit_name = str(self.unit.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.code} - {self.unit}"
@@ -861,9 +899,9 @@ class PayGroup(models.Model):
 
     def save(self, *args, **kwargs):
         # Get the employees with the same paygroup and company
-        Employee.objects.filter(
-            pay_group_code=self, company=self.company
-        ).update(total_medical_claim_amount=self.total_medical_claim_amount)
+        Employee.objects.filter(pay_group_code=self, company=self.company).update(
+            total_medical_claim_amount=self.total_medical_claim_amount
+        )
 
         super().save(*args, **kwargs)
 
