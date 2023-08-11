@@ -302,7 +302,7 @@ def updated_fields_branch(sender, instance,created, **kwargs):
 def updated_fields_unit(sender, instance,created, **kwargs):
     post_save.disconnect(updated_fields_unit, sender=Unit)
 
-    if instance:
+    if created:
         instance.department_name = instance.department.name
-
+        instance,save()
     post_save.connect(updated_fields_unit, sender=Unit)
