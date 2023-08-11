@@ -38,4 +38,15 @@ class HolidaySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class BankSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = comp_models.Bank
+        fields = "__all__"
+
+
+class BankBranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = comp_models.BankBranch
+        fields = "__all__"
+
 

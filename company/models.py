@@ -212,3 +212,33 @@ class DepartmentPolicy(models.Model):
 
     def __str__(self) -> str:
         return f"{self.department}"
+
+
+class Bank(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = "Bank"
+        verbose_name_plural = "Banks"
+
+
+class BankBranch(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(_("Branch Name"), max_length=150, blank=True, null=True)
+    bank = models.ForeignKey(
+        "company.Bank",
+        verbose_name=_("Bank"),
+        on_delete=models.CASCADE,
+        related_name="branches",
+    )
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = "Bank Branch"
+        verbose_name_plural = "Bank Branches"

@@ -39,3 +39,15 @@ class HolidayViewSet(viewsets.ModelViewSet):
     queryset = comp_models.Holidays.objects.all()
     serializer_class = serializers.HolidaySerializer
     filterset_fields = "__all__"
+
+
+class BankViewSet(viewsets.ModelViewSet):
+    queryset = comp_models.Bank.objects.all()
+    serializer_class = serializers.BankSerializer
+    filterset_fields = "__all__"
+
+
+class BankBranchViewSet(viewsets.ModelViewSet):
+    queryset = comp_models.BankBranch.objects.all()
+    serializer_class = serializers.BankBranchSerializer
+    filterset_fields = "__all__"

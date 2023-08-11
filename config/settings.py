@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "django_filters",
     "django_apscheduler",
+    "import_export",
 ]
 
 LOCAL_APPS = [
@@ -155,7 +156,7 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 100,
-} 
+}
 
 
 SITE_ID = 1
@@ -199,7 +200,7 @@ DJOSER = {
     },
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env.str("EMAIL_USER")
