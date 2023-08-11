@@ -304,5 +304,5 @@ def updated_fields_unit(sender, instance,created, **kwargs):
 
     if created:
         instance.department_name = instance.department.name
-        instance,save()
+        instance.save()
     post_save.connect(updated_fields_unit, sender=Unit)
