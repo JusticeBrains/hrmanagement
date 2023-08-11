@@ -289,12 +289,20 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
                 (instance.final_score / 100) * instance.score_on_target, ndigits=2
             )
 
-@receiver(pre_save, sender=Branch)
-def updated_fields_branch(sender, instance, **kwargs):
-    if instance:
+@receiver(post_save, sender=Branch)
+def updated_fields_branch(sender, instance,created, **kwargs):
+    post_save.disconnect(updated_fields_branch, sender=Branch)
+    if created:
         instance.unit_name = instance.unit.name
+        instance.save()
+    post_save.connect(updated_fields_branch, sender=Branch)
 
-@receiver(pre_save, sender=Unit)
-def updated_fields_unit(sender, instance, **kwargs):
+
+@receiver(post_save, sender=Unit)
+def updated_fields_unit(sender, instance,created, **kwargs):
+    post_save.disconnect(updated_fields_unit, sender=Unit)
+
     if instance:
         instance.department_name = instance.department.name
+
+    post_save.connect(updated_fields_unit, sender=Unit)
