@@ -1273,7 +1273,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
 
                     if bbranch_name:
                         bank_branch = BankBranch.objects.filter(Q(name__icontains=bbranch_name)).first()
-                        
+
                 except ObjectDoesNotExist:
                     bank_branch = None
 
@@ -1612,6 +1612,7 @@ def load_units(url, auth, company, comp_id):
                     department=depart
                     if unit["Second_Category_Code"].strip() != ""
                     else None,
+                    department_name=depart.name,
                     comp_id=Company.objects.get(id=comp_id),
                     company=company.strip(),
                     company_id=comp_id,
@@ -1627,6 +1628,7 @@ def load_units(url, auth, company, comp_id):
                         department=depart
                         if unit["Second_Category_Code"].strip() != ""
                         else None,
+                        department_name=depart.name,
                         comp_id=Company.objects.get(id=comp_id),
                         company=company.strip(),
                         company_id=comp_id,
@@ -1658,6 +1660,7 @@ def load_branches(url, auth, company, comp_id):
                     code=branch["Code"].strip(),
                     name=branch["Name"].strip(),
                     unit=unit if branch["Third_Category_Code"].strip() != "" else None,
+                    unit_name=unit.name,
                     comp_id=Company.objects.get(id=comp_id),
                     company=company.strip(),
                     company_id=comp_id,
@@ -1670,6 +1673,7 @@ def load_branches(url, auth, company, comp_id):
                     code=branch["Code"].strip(),
                     name=branch["Name"].strip(),
                     unit=unit if branch["Third_Category_Code"].strip() != "" else None,
+                    unit_name=unit.name,
                     comp_id=Company.objects.get(id=comp_id),
                     company=company.strip(),
                     company_id=comp_id,

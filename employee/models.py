@@ -718,6 +718,7 @@ class Unit(Base):
         null=True,
         blank=True,
     )
+    department_name = models.CharField(_("Department Name"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Unit"
@@ -753,6 +754,7 @@ class Branch(Base):
         blank=True,
         null=True,
     )
+    unit_name = models.CharField(_("Unit Name"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Branch"
