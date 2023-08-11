@@ -5,6 +5,7 @@ from employee.models import (
     KPI,
     AppraisalGrading,
     BehaviouralCompetencies,
+    Branch,
     Department,
     EmployeeAppraisal,
     Employee,
@@ -15,6 +16,7 @@ from employee.models import (
     PayGroup,
     PropertyAssignment,
     PropertyRequest,
+    Unit,
 )
 from django.core.exceptions import ValidationError
 from company.models import Company
@@ -286,3 +288,13 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
             instance.computed_score = round(
                 (instance.final_score / 100) * instance.score_on_target, ndigits=2
             )
+
+@receiver(pre_save, sender=Branch)
+def updated_fields_branch(sender, instance, **kwargs):
+    if instance:
+        instance.unit_name = instance.unit.name
+
+@receiver(pre_save, sender=Unit)
+def updated_fields_unit(sender, instance, **kwargs):
+    if instance:
+        instance.department_name = instance.department.name
