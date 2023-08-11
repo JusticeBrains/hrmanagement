@@ -1270,11 +1270,10 @@ def get_user_data(url, auth, company, company_id, comp_code):
 
                 try:
                     bbranch_name = employee["Branch_Name"].strip()
-                    b_name = employee["Bank_Name"].strip()
-                    
 
                     if bbranch_name:
-                        bank_branch = BankBranch.objects.filter(Q(name__icontains=bb)).first()
+                        bank_branch = BankBranch.objects.filter(Q(name__icontains=bbranch_name)).first()
+                        
                 except ObjectDoesNotExist:
                     bank_branch = None
 
