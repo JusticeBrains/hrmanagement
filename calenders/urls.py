@@ -1,8 +1,8 @@
-# from rest_framework.routers import SimpleRouter
-# from .views import PeriodViewSet
+from rest_framework.routers import SimpleRouter
+from .views import PeriodViewSet
 
-# router = SimpleRouter()
+router = SimpleRouter()
 
-# router.register('period', PeriodViewSet, basename='period')
+router.register('period', PeriodViewSet, basename='period')
 
-# urlpatterns = router.urls
+urlpatterns = router.urls
