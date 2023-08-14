@@ -26,6 +26,7 @@ urlpatterns = [
     path('leave/', include('leave.urls')),
     path('employee/', include('employee.urls')),
     path('company/', include('company.urls')),
+    path('calender/', include('calenders.urls')),
     path('recruitment/', include('recruitment.urls')),
 
     path('auth/',include('dj_rest_auth.urls')),
