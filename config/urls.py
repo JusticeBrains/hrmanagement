@@ -28,6 +28,7 @@ urlpatterns = [
     path('company/', include('company.urls')),
     path('calender/', include('calenders.urls')),
     path('recruitment/', include('recruitment.urls')),
+    path('payroll/', include('payroll.urls')),
 
     path('auth/',include('dj_rest_auth.urls')),
     path('auth/registration/',include('dj_rest_auth.registration.urls')),
