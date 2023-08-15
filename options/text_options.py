@@ -307,3 +307,21 @@ class DimensionValueType(models.TextChoices):
 class ReviewType(models.TextChoices):
     ANNUAL_REVIEW = "ANNUAL REVIEW", _("Annual Review")
     MERIT_INCREASE = "MERIT INCREASE", _("Merit Review") 
+
+
+class PaymentFrequency(models.TextChoices):
+    MONTHLY = "Monthly",_("Monthly")
+    QUARTERLY = "Quarterly", _("Quarterly")
+    HALF_YEARLY = "Half Yearly", _("Half Yearly")
+    YEARLY = "Yearly", _("Yearly")
+    ANNIVERSARY = "Anniversary", _("Anniversary")
+
+class AllowanceType(models.TextChoices):
+    ALLOWANCE = "Allowance", _("Allowance")
+    BONUS = "Bonus", _("Bonus")
+    BENEFIT_IN_KIND = "Benefit", _("Benefit")
+
+
+class DeductionFrequency(models.TextChoices):
+    MONTHLY = "Monthly",_("Monthly")
+    ANNUALLY = "Annually", _("Annually")
