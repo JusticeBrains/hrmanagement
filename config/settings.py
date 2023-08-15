@@ -55,6 +55,7 @@ LOCAL_APPS = [
     "leave.apps.LeaveConfig",
     "calenders.apps.CalendersConfig",
     "recruitment.apps.RecruitmentConfig",
+    "payroll.apps.PayrollConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
