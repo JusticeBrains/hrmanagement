@@ -7,7 +7,7 @@ from options.text_options import PaymentFrequency, AllowanceType, DeductionFrequ
 
 
 class Transactions(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=True, default=uuid.uuid4)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
@@ -51,6 +51,27 @@ class Transactions(models.Model):
         _("Account Code"), max_length=50, null=True, blank=True
     )
     currency = models.CharField(_("Currenct"), max_length=50, blank=True, null=True)
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee ID"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    department = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Transactions"
@@ -64,7 +85,7 @@ class Transactions(models.Model):
 
 
 class SavingScheme(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=True, default=uuid.uuid4)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
@@ -128,6 +149,27 @@ class SavingScheme(models.Model):
     )
     tier_2 = models.DecimalField(
         _("Tier 2"), max_digits=10, decimal_places=2, default=0.0
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee ID"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    department = models.ForeignKey(
+        "employee.Department",
+        verbose_name=_("Department"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
 
     class Meta:
