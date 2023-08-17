@@ -8,7 +8,6 @@ import calendar
 
 
 class PeriodYear(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     year = models.PositiveIntegerField(_("Year"), blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True)
     class Meta:
