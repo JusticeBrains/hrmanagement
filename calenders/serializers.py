@@ -6,7 +6,7 @@ from .models import Period, PeriodYear
 class PeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Period
-        fields = "__all__"
+        exclude = ["month_calendar"]
 
 class PeriodYearSerializer(serializers.ModelSerializer):
     class Meta:
