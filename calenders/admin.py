@@ -1,9 +1,9 @@
-from django.contrib import admin
+# from django.contrib import admin
 
-from .models import Period, PeriodYear
+# from .models import Period, PeriodYear
 
-@admin.register(Period)
-class PeriodAdmin(admin.ModelAdmin):
-    ...
+# @admin.register(Period)
+# class PeriodAdmin(admin.ModelAdmin):
+#     ...
 
-admin.site.register(PeriodYear)
+# admin.site.register(PeriodYear)

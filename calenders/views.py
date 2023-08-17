@@ -6,19 +6,19 @@ from .models import Period, PeriodYear
 
 
 class PeriodViewSet(viewsets.ModelViewSet):
-    queryset = Period.objects.all().order_by("period_year__year", "month")
+    queryset = Period.objects.all()
     serializer_class = PeriodSerializer
-    filterset_fields = [
-        "id",
-        "period_year",
-        "total_working_days",
-        "total_working_hours",
-        "start_date",
-        "end_date",
-        "no_of_days",
-        "period_name",
-        "period_code",
-    ]
+    # filterset_fields = [
+    #     "id",
+    #     "period_year",
+    #     "total_working_days",
+    #     "total_working_hours",
+    #     "start_date",
+    #     "end_date",
+    #     "no_of_days",
+    #     "period_name",
+    #     "period_code",
+    # ]
 
 
 class PeriodYearViewSet(viewsets.ModelViewSet):
