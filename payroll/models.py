@@ -17,9 +17,9 @@ class Transactions(models.Model):
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
     )
-    start_period = models.ForeignKey(
-        "calenders.Period", verbose_name=_("Start Period"), on_delete=models.CASCADE
-    )
+    # start_period = models.ForeignKey(
+    #     "calenders.Period", verbose_name=_("Start Period"), on_delete=models.CASCADE
+    # )
     payment_frequency = models.CharField(
         _("Payment Frequency"),
         max_length=150,
@@ -95,9 +95,9 @@ class SavingScheme(models.Model):
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
     )
-    start_period = models.ForeignKey(
-        "calenders.Period", verbose_name=_("Start Period"), on_delete=models.CASCADE
-    )
+    # start_period = models.ForeignKey(
+    #     "calenders.Period", verbose_name=_("Start Period"), on_delete=models.CASCADE
+    # )
     deduction_frequency = models.CharField(
         _("Deduction Frequency"),
         max_length=150,
@@ -210,22 +210,22 @@ class TransactionEntries(models.Model):
     )
     type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
     recurrenct = models.BooleanField(_("Recurrent"), default=False)
-    start_period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("Start Period"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="start_per_entries",
-    )
-    end_period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("End Period"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="end_per_entries",
-    )
+    # start_period = models.ForeignKey(
+    #     "calenders.Period",
+    #     verbose_name=_("Start Period"),
+    #     on_delete=models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     related_name="start_per_entries",
+    # )
+    # end_period = models.ForeignKey(
+    #     "calenders.Period",
+    #     verbose_name=_("End Period"),
+    #     on_delete=models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     related_name="end_per_entries",
+    # )
     amount = models.DecimalField(
         _("Amount"), max_digits=8, decimal_places=2, default=0.0
     )
@@ -272,23 +272,23 @@ class SavingSchemeEntries(models.Model):
         _("Saving Scheme Name"), max_length=150, blank=True, null=True
     )
     recurrent = models.BooleanField(_("Recurrent"), default=True)
-    start_period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("Start Period"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="saving_start_period",
-    )
-    end_period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("End Period"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="saving_end_period",
+    # start_period = models.ForeignKey(
+    #     "calenders.Period",
+    #     verbose_name=_("Start Period"),
+    #     on_delete=models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     related_name="saving_start_period",
+    # )
+    # end_period = models.ForeignKey(
+    #     "calenders.Period",
+    #     verbose_name=_("End Period"),
+    #     on_delete=models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     related_name="saving_end_period",
 
-    )
+    # )
     employee_contribution = models.DecimalField(
         _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
     )
