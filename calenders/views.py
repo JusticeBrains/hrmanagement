@@ -9,6 +9,7 @@ class PeriodViewSet(viewsets.ModelViewSet):
     queryset = Period.objects.all().order_by("period_year__year", "month")
     serializer_class = PeriodSerializer
     filterset_fields = [
+        "id",
         "period_year",
         "total_working_days",
         "total_working_hours",
