@@ -3,7 +3,12 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from options.text_options import PaymentFrequency, AllowanceType, DeductionFrequency
+from options.text_options import (
+    DisbursementType,
+    PaymentFrequency,
+    AllowanceType,
+    DeductionFrequency,
+)
 
 
 class Transactions(models.Model):
@@ -150,6 +155,38 @@ class SavingScheme(models.Model):
     tier_2 = models.DecimalField(
         _("Tier 2"), max_digits=10, decimal_places=2, default=0.0
     )
+
+    class Meta:
+        verbose_name = "Saving Scheme"
+        verbose_name_plural = "Saving Schemes"
+
+    def __str__(self) -> str:
+        return f"{self.code}"
+
+    def __repr__(self):
+        return f"{self.code}"
+
+
+class TransactionEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=True)
+    disbursement_type = models.CharField(
+        _("Disbursement Type"),
+        choices=DisbursementType.choices,
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    transaction_code = models.ForeignKey(
+        "payroll.Transactions",
+        verbose_name=_("Transaction Code"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="trans_code"
+    )
+    transaction_name = models.CharField(
+        _("Transaction Name"), max_length=50, blank=True, null=True
+    )
     employee = models.ForeignKey(
         "employee.Employee",
         verbose_name=_("Employee ID"),
@@ -171,13 +208,113 @@ class SavingScheme(models.Model):
         null=True,
         blank=True,
     )
+    type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
+    recurrenct = models.BooleanField(_("Recurrent"), default=False)
+    start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Start Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="start_per_entries",
+    )
+    end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="end_per_entries",
+    )
+    amount = models.DecimalField(
+        _("Amount"), max_digits=8, decimal_places=2, default=0.0
+    )
+    percentage_of_basic = models.DecimalField(
+        _("Percentage Of Basic"), max_digits=3, decimal_places=2, null=True, blank=True
+    )
+    taxable = models.BooleanField(_("Taxable"), default=False)
+    contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
 
     class Meta:
-        verbose_name = "Saving Scheme"
-        verbose_name_plural = "Saving Schemes"
+        verbose_name = "Transaction Entries"
+        verbose_name_plural = "Transaction Entries"
 
     def __str__(self) -> str:
-        return f"{self.code}"
+        return f"{self.disbursement_type}"
 
     def __repr__(self):
-        return f"{self.code}"
+        return f"{self.disbursement_type}"
+
+
+class SavingSchemeEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=True)
+    disbursement_type = models.CharField(
+        _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    savingscheme_code = models.ForeignKey(
+        "payroll.SavingScheme",
+        verbose_name=_("Saving Scheme Code"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    saving_scheme_name = models.CharField(
+        _("Saving Scheme Name"), max_length=150, blank=True, null=True
+    )
+    recurrent = models.BooleanField(_("Recurrent"), default=True)
+    start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Start Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="saving_start_period",
+    )
+    end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="saving_end_period",
+
+    )
+    employee_contribution = models.DecimalField(
+        _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
+    )
+    employer_contribution = models.DecimalField(
+        _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
+    )
+    percentage_of_employee_basic = models.DecimalField(
+        _("Percentage Of Employee Basic"), max_digits=3, decimal_places=2, default=0.0
+    )
+    percentage_of_employer_basic = models.DecimalField(
+        _("Percentage Of Employer Basic"), max_digits=3, decimal_places=2, default=0.0
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Saving Scheme Entries"
+        verbose_name_plural = "Saving Scheme Entries"
+
+    def __str__(self) -> str:
+        return f"{self.savingscheme_code}"
+
+    def __repr__(self) -> str:
+        return f"{self.savingscheme_code}"

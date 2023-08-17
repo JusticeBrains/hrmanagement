@@ -325,3 +325,11 @@ class AllowanceType(models.TextChoices):
 class DeductionFrequency(models.TextChoices):
     MONTHLY = "Monthly",_("Monthly")
     ANNUALLY = "Annually", _("Annually")
+
+
+class DisbursementType(models.TextChoices):
+    INDIVIDUAL = "Individual", _("Individual")
+    ALL_STAFF = "All Staff", _("All Staff")
+    JOB_TITLE = "JOb Title", _("Job Title")
+    PAY_GROUP = "Pay Group", _("Pay Group")
+    
