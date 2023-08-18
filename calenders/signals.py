@@ -13,6 +13,7 @@ def populate_date(sender, instance, **kwargs):
         first_day = instance.month_calendar[0][0]
         last_week = instance.month_calendar[-1]
         last_day = last_week[-1] if last_week[-1] != 0 else last_week[-2]
+        instance.period_year_value = instance.period_year.year
 
         if 1 <= first_day <= 31 and 1 <= last_day <= 31:
             instance.start_date = date(
