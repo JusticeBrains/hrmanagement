@@ -169,10 +169,16 @@ class SavingScheme(models.Model):
         decimal_places=2,
         default=0.0,
     )
+    old_percentage_of_employee_basic = models.DecimalField(
+        _("Old Percentage Of Employee Basic"),
+        max_digits=3,
+        decimal_places=2,
+        default=0.0,
+    )
     recurring = models.BooleanField(_("Recurring"), default=False)
     base = models.DecimalField(_("Base"), max_digits=10, decimal_places=2, default=0.0)
     ssnit_percentage = models.DecimalField(
-        _("SSNIT Percentage"), max_digits=10, decimal_places=2, default=0.0
+        _("SSNIT Percentage"), max_digits=3, decimal_places=2, default=0.0
     )
     tier_2 = models.DecimalField(
         _("Tier 2"), max_digits=10, decimal_places=2, default=0.0
@@ -284,7 +290,7 @@ class TransactionEntries(models.Model):
         related_name="end_per_entries",
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=8, decimal_places=2, default=0.0
+        _("Amount"), max_digits=10, decimal_places=2, default=0.0
     )
     percentage_of_basic = models.DecimalField(
         _("Percentage Of Basic"), max_digits=3, decimal_places=2, null=True, blank=True
