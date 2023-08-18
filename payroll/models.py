@@ -34,7 +34,7 @@ class Transactions(models.Model):
         max_length=50,
         default=TransactionType.ALLOWANCE,
     )
-    allowance_payment_frequency = models.CharField(
+    payment_frequency = models.CharField(
         _("Payment Frequency"),
         max_length=150,
         choices=PaymentFrequency.choices,
