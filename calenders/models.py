@@ -72,6 +72,7 @@ class Period(models.Model):
     period_name = models.CharField(_("Period Name"), max_length=50, blank=True, null=True)
     period_code = models.CharField(_("Period Code"), max_length=50, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True)
+    status =models.PositiveIntegerField(_("Status"), default=0)
 
     MONTH_NAMES = {
         1: "January",
@@ -87,6 +88,11 @@ class Period(models.Model):
         11: "November",
         12: "December",
     }
+
+    class Meta:
+        verbose_name =_("Period")
+        verbose_name_plural =_("Periods")
+        unique_together = ("period_year","start_date","end_date","company")
 
     def get_month_name(self):
         return self.MONTH_NAMES.get(self.month, "")

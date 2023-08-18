@@ -1,3 +1,5 @@
+from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models.functions import Cast
 from django_property_filter import (
     PropertyFilterSet,
     PropertyNumberFilter,
