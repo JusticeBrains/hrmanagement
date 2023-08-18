@@ -80,6 +80,7 @@ class Transactions(models.Model):
         null=True,
         blank=True,
     )
+    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
     recurring = models.BooleanField(_("Recurring"), default=False)
 
     class Meta:
@@ -89,6 +90,8 @@ class Transactions(models.Model):
     def populates_period_code(self):
         if self.start_period:
             self.start_period_code = self.start_period.period_code
+        if self.company:
+            self.company_name = self.company.name
 
     def save(self, *args, **kwargs):
         self.populates_period_code()
@@ -113,6 +116,9 @@ class SavingScheme(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+    )
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
     )
     deduction_frequency = models.CharField(
         _("Deduction Frequency"),
@@ -171,7 +177,14 @@ class SavingScheme(models.Model):
     tier_2 = models.DecimalField(
         _("Tier 2"), max_digits=10, decimal_places=2, default=0.0
     )
-
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
     class Meta:
         verbose_name = "Saving Scheme"
         verbose_name_plural = "Saving Schemes"
@@ -181,6 +194,16 @@ class SavingScheme(models.Model):
 
     def __repr__(self):
         return f"{self.code}"
+
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+        if self.start_period:
+            self.start_period_code = self.start_period.description
+    
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
 
 
 class TransactionEntries(models.Model):
