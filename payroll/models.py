@@ -28,6 +28,9 @@ class Transactions(models.Model):
         null=True,
         blank=True,
     )
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
+    )
     transaction_type = models.CharField(
         _("Transaction Type"),
         choices=TransactionType.choices,
@@ -92,9 +95,18 @@ class Transactions(models.Model):
         blank=True,
     )
     recurring = models.BooleanField(_("Recurring"), default=False)
+
     class Meta:
         verbose_name = "Transactions"
         verbose_name_plural = "Transactions"
+
+    def populates_period_code(self):
+        if self.start_period:
+            self.start_period_code = self.start_period.period_code
+
+    def save(self, *args, **kwargs):
+        self.populates_period_code()
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"{self.code}"

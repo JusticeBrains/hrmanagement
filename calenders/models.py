@@ -165,5 +165,4 @@ class Period(models.Model):
 
     def save(self, *args, **kwargs):
         self.populate_dates()
-
         super().save(*args, **kwargs)
