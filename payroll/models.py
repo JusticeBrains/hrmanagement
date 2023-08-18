@@ -250,15 +250,15 @@ class TransactionEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
-    department = models.ForeignKey(
-        "employee.Department",
-        verbose_name=_("Department"),
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("PayGroup"),
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True,
     )
-    department_name = models.CharField(
-        _("Department Name"), max_length=150, blank=True, null=True
+    paygroup_name = models.CharField(
+        _("Paygroup Name"), max_length=150, blank=True, null=True
     )
     company = models.ForeignKey(
         "company.Company",
@@ -312,7 +312,7 @@ class TransactionEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-
+    global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     class Meta:
         verbose_name = "Transaction Entries"
         verbose_name_plural = "Transaction Entries"
@@ -322,8 +322,8 @@ class TransactionEntries(models.Model):
             self.transaction_name = self.transaction_code.description
         if self.company:
             self.company_name = self.company.name
-        if self.department:
-            self.department_name = self.department.name
+        if self.paygroup:
+            self.paygroup_name = self.paygroup.description
         if self.employee:
             self.employee_name = (
                 f"{self.employee.last_name}, {self.employee.first_name}"
@@ -380,13 +380,19 @@ class SavingSchemeEntries(models.Model):
         null=True,
         related_name="saving_start_period",
     )
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period_code = models.CharField(
+        _("End Period Code"), max_length=50, blank=True, null=True
+    )
     end_period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("End Period"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-        related_name="saving_end_period",
+        related_name="saving_end_per_entries",
     )
     employee_contribution = models.DecimalField(
         _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
@@ -417,6 +423,17 @@ class SavingSchemeEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("PayGroup"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    paygroup_name = models.CharField(
+        _("Paygroup Name"), max_length=150, blank=True, null=True
+    )
+    global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
 
     class Meta:
         verbose_name = "Saving Scheme Entries"
@@ -437,6 +454,14 @@ class SavingSchemeEntries(models.Model):
             )
         if self.company:
             self.company_name = self.company.name
+
+        if self.start_period:
+            self.start_period_code = self.start_period.period_code
+        if self.end_period:
+            self.end_period_code = self.end_period.period_code
+
+        if self.paygroup:
+            self.paygroup_name = self.paygroup.description
 
     def save(self, *args, **kwargs):
         self.populate_fields()
