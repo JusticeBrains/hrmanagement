@@ -73,20 +73,6 @@ class Transactions(models.Model):
         _("Account Code"), max_length=50, null=True, blank=True
     )
     currency = models.CharField(_("Currenct"), max_length=50, blank=True, null=True)
-    employee = models.ForeignKey(
-        "employee.Employee",
-        verbose_name=_("Employee ID"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
-    department = models.ForeignKey(
-        "employee.Department",
-        verbose_name=_("Department"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
