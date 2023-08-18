@@ -12,6 +12,10 @@ from options.text_options import (
 
 
 class Transactions(models.Model):
+    class TransactionType(models.TextChoices):
+        ALLOWANCE = "Allowance", _("Allowance")
+        DEDUCTION = "Deduction", _("Deduction")
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
@@ -24,7 +28,13 @@ class Transactions(models.Model):
         null=True,
         blank=True,
     )
-    payment_frequency = models.CharField(
+    transaction_type = models.CharField(
+        _("Transaction Type"),
+        choices=TransactionType.choices,
+        max_length=50,
+        default=TransactionType.ALLOWANCE,
+    )
+    allowance_payment_frequency = models.CharField(
         _("Payment Frequency"),
         max_length=150,
         choices=PaymentFrequency.choices,
