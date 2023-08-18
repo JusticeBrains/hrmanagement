@@ -291,6 +291,16 @@ class TransactionEntries(models.Model):
     )
     taxable = models.BooleanField(_("Taxable"), default=False)
     contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Transaction Entries"
@@ -307,6 +317,8 @@ class TransactionEntries(models.Model):
             self.employee_name = (
                 f"{self.employee.last_name}, {self.employee.first_name}"
             )
+        if self.company:
+            self.company_name = self.company.name
 
     def __str__(self) -> str:
         return f"{self.disbursement_type}"
@@ -380,6 +392,16 @@ class SavingSchemeEntries(models.Model):
         blank=True,
         null=True,
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Saving Scheme Entries"
@@ -398,6 +420,8 @@ class SavingSchemeEntries(models.Model):
             self.employee_name = (
                 f"{self.employee.last_name}, {self.employee.first_name}"
             )
+        if self.company:
+            self.company_name = self.company.name
 
     def save(self, *args, **kwargs):
         self.populate_fields()
