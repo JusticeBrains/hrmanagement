@@ -47,7 +47,7 @@ class Transactions(models.Model):
         _("Allowance Type"),
         max_length=50,
         choices=AllowanceType.choices,
-        default=AllowanceType.ALLOWANCE,
+        null=True, blank=True
     )
     interval = models.PositiveIntegerField(_("Interval"), default=1)
     prorate_new_staff = models.BooleanField(_("Prorate New Staff"), default=False)
