@@ -12,12 +12,14 @@ class PeriodViewSet(viewsets.ModelViewSet):
         "id",
         "period_year",
         "total_working_days",
+        "period_year_value",
         "total_working_hours",
         "start_date",
         "end_date",
         "no_of_days",
         "period_name",
         "period_code",
+        "status",
     ]
 
 
