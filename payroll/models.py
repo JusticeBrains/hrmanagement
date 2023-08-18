@@ -8,14 +8,11 @@ from options.text_options import (
     PaymentFrequency,
     AllowanceType,
     DeductionFrequency,
+    TransactionType,
 )
 
 
 class Transactions(models.Model):
-    class TransactionType(models.TextChoices):
-        ALLOWANCE = "Allowance", _("Allowance")
-        DEDUCTION = "Deduction", _("Deduction")
-
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
@@ -47,7 +44,8 @@ class Transactions(models.Model):
         _("Allowance Type"),
         max_length=50,
         choices=AllowanceType.choices,
-        null=True, blank=True
+        null=True,
+        blank=True,
     )
     interval = models.PositiveIntegerField(_("Interval"), default=1)
     prorate_new_staff = models.BooleanField(_("Prorate New Staff"), default=False)
@@ -80,7 +78,9 @@ class Transactions(models.Model):
         null=True,
         blank=True,
     )
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     recurring = models.BooleanField(_("Recurring"), default=False)
 
     class Meta:
@@ -184,7 +184,10 @@ class SavingScheme(models.Model):
         null=True,
         blank=True,
     )
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+
     class Meta:
         verbose_name = "Saving Scheme"
         verbose_name_plural = "Saving Schemes"
@@ -200,7 +203,7 @@ class SavingScheme(models.Model):
             self.company_name = self.company.name
         if self.start_period:
             self.start_period_code = self.start_period.description
-    
+
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
@@ -222,6 +225,12 @@ class TransactionEntries(models.Model):
         blank=True,
         null=True,
         related_name="trans_code",
+    )
+    transaction_type = models.CharField(
+        _("Transaction Type"),
+        choices=TransactionType.choices,
+        max_length=50,
+        default=TransactionType.ALLOWANCE,
     )
     transaction_name = models.CharField(
         _("Transaction Name"), max_length=50, blank=True, null=True

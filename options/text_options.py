@@ -333,3 +333,7 @@ class DisbursementType(models.TextChoices):
     JOB_TITLE = "JOb Title", _("Job Title")
     PAY_GROUP = "Pay Group", _("Pay Group")
     
+
+class TransactionType(models.TextChoices):
+    ALLOWANCE = "Allowance", _("Allowance")
+    DEDUCTION = "Deduction", _("Deduction")
