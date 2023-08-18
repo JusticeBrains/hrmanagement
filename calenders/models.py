@@ -116,11 +116,19 @@ class Period(models.Model):
             if 1 <= first_day <= 31 and 1 <= last_day <= 31:
                 self.start_date = date(self.period_year.year, self.month, first_day)
                 self.end_date = date(self.period_year.year, self.month, last_day)
-                self.total_working_days = self.count_working_days(self.start_date, self.end_date)
-                self.total_working_hours = self.total_working_days * 8
                 self.period_code = f"{self.MONTH_NAMES.get(self.month)[:3].upper()}{self.period_year.year}"
                 self.period_name = f"{self.MONTH_NAMES.get(self.month)} {self.period_year.year}"
                 self.company = self.period_year.company
+                if self.total_working_days is None:
+                    self.total_working_days = self.count_working_days(self.start_date, self.end_date)
+                    self.total_working_hours = self.total_working_days * 8
+                elif self.total_working_days is not None:
+                    self.total_working_days = self.total_working_days
+                    self.total_working_hours = self.total_working_days * 8
+
+
+
+
 
     def save(self, *args, **kwargs):
         self.populate_dates()

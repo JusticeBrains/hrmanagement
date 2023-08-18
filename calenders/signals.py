@@ -21,13 +21,21 @@ def populate_date(sender, instance, **kwargs):
             instance.end_date = date(
                 instance.period_year.year, instance.month, last_day
             )
-            instance.total_working_days = instance.count_working_days(
-                instance.start_date, instance.end_date
-            )
-            instance.total_working_hours = instance.total_working_days * 8
             instance.period_name = f"{instance.MONTH_NAMES.get(instance.month)} {instance.period_year.year}"
             instance.period_code = f"{instance.MONTH_NAMES.get(instance.month)[:3].upper()}{instance.period_year.year}"
             instance.company = instance.period_year.company
+
+            if instance.total_working_days is None:
+                instance.total_working_days = instance.count_working_days(
+                instance.start_date, instance.end_date
+            )
+                instance.total_working_hours = instance.total_working_days * 8
+                
+            elif instance.total_working_days is not None:
+                instance.total_working_days = instance.total_working_days
+                instance.total_working_hours = instance.total_working_days * 8
+
+
             instance.save()
             print(f"Start Date: {instance.start_date}")
             print(f"End Date: {instance.end_date}")
