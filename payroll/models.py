@@ -91,7 +91,7 @@ class Transactions(models.Model):
         null=True,
         blank=True,
     )
-
+    recurring = models.BooleanField(_("Recurring"), default=False)
     class Meta:
         verbose_name = "Transactions"
         verbose_name_plural = "Transactions"
