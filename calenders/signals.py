@@ -28,14 +28,13 @@ def populate_date(sender, instance, **kwargs):
 
             if instance.total_working_days is None:
                 instance.total_working_days = instance.count_working_days(
-                instance.start_date, instance.end_date
-            )
+                    instance.start_date, instance.end_date
+                )
                 instance.total_working_hours = instance.total_working_days * 8
-                
+
             elif instance.total_working_days is not None:
                 instance.total_working_days = instance.total_working_days
                 instance.total_working_hours = instance.total_working_days * 8
-
 
             instance.save()
             print(f"Start Date: {instance.start_date}")
