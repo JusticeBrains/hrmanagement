@@ -165,13 +165,13 @@ class SavingScheme(models.Model):
         _("Old Percentage Of Employer Basic"),
         max_digits=4,
         decimal_places=2,
-        default=0.0
+        default=0.0,
     )
     old_percentage_of_employee_basic = models.DecimalField(
         _("Old Percentage Of Employee Basic"),
         max_digits=4,
         decimal_places=2,
-        default=0.0
+        default=0.0,
     )
     recurring = models.BooleanField(_("Recurring"), default=False)
     base = models.DecimalField(_("Base"), max_digits=10, decimal_places=2, default=0.0)
@@ -234,7 +234,8 @@ class TransactionEntries(models.Model):
         _("Transaction Type"),
         choices=TransactionType.choices,
         max_length=50,
-        null=True, blank=True
+        null=True,
+        blank=True,
     )
     transaction_name = models.CharField(
         _("Transaction Name"), max_length=50, blank=True, null=True
@@ -278,6 +279,12 @@ class TransactionEntries(models.Model):
         blank=True,
         null=True,
         related_name="start_per_entries",
+    )
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period_code = models.CharField(
+        _("End Period Code"), max_length=50, blank=True, null=True
     )
     end_period = models.ForeignKey(
         "calenders.Period",
@@ -323,6 +330,10 @@ class TransactionEntries(models.Model):
             )
         if self.company:
             self.company_name = self.company.name
+        if self.start_period:
+            self.start_period_code = self.start_period.period_code
+        if self.end_period:
+            self.end_period_code = self.end_period.period_code
 
     def __str__(self) -> str:
         return f"{self.disbursement_type}"
