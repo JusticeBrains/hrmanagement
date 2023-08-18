@@ -14,7 +14,6 @@ from options.text_options import (
 
 class Transactions(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
     )
@@ -106,7 +105,6 @@ class Transactions(models.Model):
 
 class SavingScheme(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    code = models.CharField(_("Code"), max_length=50, blank=True, null=True)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
     )
