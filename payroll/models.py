@@ -210,6 +210,9 @@ class TransactionEntries(models.Model):
         null=True,
         blank=True,
     )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
     department = models.ForeignKey(
         "employee.Department",
         verbose_name=_("Department"),
@@ -217,12 +220,18 @@ class TransactionEntries(models.Model):
         null=True,
         blank=True,
     )
+    department_name = models.CharField(
+        _("Department Name"), max_length=150, blank=True, null=True
+    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
     )
     type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
     recurrenct = models.BooleanField(_("Recurrent"), default=False)
@@ -255,11 +264,27 @@ class TransactionEntries(models.Model):
         verbose_name = "Transaction Entries"
         verbose_name_plural = "Transaction Entries"
 
+    def populate_fields(self):
+        if self.transaction_code:
+            self.transaction_name = self.transaction_code.description
+        if self.company:
+            self.company_name = self.company.name
+        if self.department:
+            self.department_name = self.department.name
+        if self.employee:
+            self.employee_name = (
+                f"{self.employee.last_name}, {self.employee.first_name}"
+            )
+
     def __str__(self) -> str:
         return f"{self.disbursement_type}"
 
     def __repr__(self):
         return f"{self.disbursement_type}"
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
 
 
 class SavingSchemeEntries(models.Model):
@@ -333,3 +358,15 @@ class SavingSchemeEntries(models.Model):
 
     def __repr__(self) -> str:
         return f"{self.savingscheme_code}"
+
+    def populate_fields(self):
+        if self.savingscheme_code:
+            self.saving_scheme_name = self.savingscheme_code.description
+        if self.employee:
+            self.employee_name = (
+                f"{self.employee.last_name}, {self.employee.first_name}"
+            )
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
