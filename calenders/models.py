@@ -62,6 +62,7 @@ class PeriodYear(models.Model):
 class Period(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     period_year = models.ForeignKey(PeriodYear, on_delete=models.CASCADE, blank=True, null=True)
+    period_year_value = models.PositiveIntegerField(_("Period Year Value"), default=1990)
     month = models.PositiveIntegerField(_("Month"), blank=True, null=True)
     month_calendar = models.JSONField(_("Month Calendar"), blank=True, null=True)
     total_working_days = models.PositiveIntegerField(_("Total Working Days"), blank=True, null=True)
@@ -118,6 +119,7 @@ class Period(models.Model):
             last_day = last_week[-1] if last_week[-1] != 0 else last_week[-2]
             days_in_month = self.period_year.get_days_in_month(self.month)
             self.no_of_days = days_in_month
+            self.period_year_value = self.period_year.year
 
             if 1 <= first_day <= 31 and 1 <= last_day <= 31:
                 self.start_date = date(self.period_year.year, self.month, first_day)
