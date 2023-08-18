@@ -184,7 +184,7 @@ class SavingScheme(models.Model):
 
 
 class TransactionEntries(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=True)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     disbursement_type = models.CharField(
         _("Disbursement Type"),
         choices=DisbursementType.choices,
@@ -288,7 +288,7 @@ class TransactionEntries(models.Model):
 
 
 class SavingSchemeEntries(models.Model):
-    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=True)
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     disbursement_type = models.CharField(
         _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True
     )
