@@ -202,7 +202,7 @@ class SavingScheme(models.Model):
         if self.company:
             self.company_name = self.company.name
         if self.start_period:
-            self.start_period_code = self.start_period.description
+            self.start_period_code = self.start_period.period_code
 
     def save(self, *args, **kwargs):
         self.populate_fields()
