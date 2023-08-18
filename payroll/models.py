@@ -230,7 +230,7 @@ class TransactionEntries(models.Model):
         _("Transaction Type"),
         choices=TransactionType.choices,
         max_length=50,
-        default=TransactionType.ALLOWANCE,
+        null=True, blank=True
     )
     transaction_name = models.CharField(
         _("Transaction Name"), max_length=50, blank=True, null=True
