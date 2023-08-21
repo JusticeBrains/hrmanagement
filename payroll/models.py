@@ -278,10 +278,10 @@ class TransactionEntries(models.Model):
         null=True,
     )
     job_title_description = models.CharField(
-        _("Jobt Title Description"), max_length=150, blank=True, null=True
+        _("Job Title Description"), max_length=150, blank=True, null=True
     )
     type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
-    recurrenct = models.BooleanField(_("Recurrent"), default=False)
+    recurrent = models.BooleanField(_("Recurrent"), default=False)
     start_period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Start Period"),
@@ -446,6 +446,16 @@ class SavingSchemeEntries(models.Model):
     paygroup_name = models.CharField(
         _("Paygroup Name"), max_length=150, blank=True, null=True
     )
+    job_title = models.ForeignKey(
+        "company.JobTitles",
+        verbose_name=_("Job Titles"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    job_title_description = models.CharField(
+        _("Job Title Description"), max_length=150, blank=True, null=True
+    )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
 
     class Meta:
@@ -475,6 +485,9 @@ class SavingSchemeEntries(models.Model):
 
         if self.paygroup:
             self.paygroup_name = self.paygroup.description
+
+        if self.job_title:
+            self.job_title_description = self.job_title.description
 
     def save(self, *args, **kwargs):
         self.populate_fields()
