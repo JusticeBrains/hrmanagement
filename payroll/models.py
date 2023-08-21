@@ -641,13 +641,6 @@ class OvertimeEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
-    paygroup = models.ForeignKey(
-        "employee.PayGroup",
-        verbose_name=_("Paygroup"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-    )
     paygroup_no = models.CharField(
         _("PayGroup No"), max_length=50, blank=True, null=True
     )
@@ -680,6 +673,10 @@ class OvertimeEntries(models.Model):
         blank=True,
         null=True,
     )
+    period = models.ForeignKey("calenders.Period", verbose_name=_("Period"), on_delete=models.DO_NOTHING,blank=True, null=True)
+    period_code = models.CharField(_("Period Code"), max_length=50)
+    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
+    overtime_amount = models.DecimalField(_("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0)
     created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
@@ -696,10 +693,11 @@ class OvertimeEntries(models.Model):
         if self.employee:
             self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
             self.employee_code = self.employee.code
-        if self.paygroup:
-            self.paygroup_no = self.paygroup.no
+            self.paygroup_no = self.employee.pay_group_name
         if self.company:
             self.company_name = self.company.name
+        if self.period:
+            self.period_code = self.period.period_code
 
     def save(self, *args, **kwargs):
         self.populate_fields()
