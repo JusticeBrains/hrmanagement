@@ -81,6 +81,13 @@ class Transactions(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     recurring = models.BooleanField(_("Recurring"), default=False)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Transactions"
@@ -190,6 +197,13 @@ class SavingScheme(models.Model):
     )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
     )
 
     class Meta:
@@ -323,6 +337,13 @@ class TransactionEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Transaction Entries"
@@ -492,3 +513,54 @@ class SavingSchemeEntries(models.Model):
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
+
+
+class PayrollFormular(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    description = models.CharField(
+        _("Description"), max_length=150, blank=True, null=True
+    )
+    shortname = models.CharField(_("Short Name"), max_length=150, blank=True, null=True)
+    inactive = models.BooleanField(_("Inactive"), default=True)
+    hourly_rate = models.DecimalField(
+        _("Hourly Rate"), max_digits=5, decimal_places=2, default=0.0
+    )
+    overtime_hours = models.DecimalField(
+        _("Overtime Hours"), max_digits=5, decimal_places=2, default=0.0
+    )
+
+    class Meta:
+        verbose_name = "Payroll Formular"
+        verbose_name_plural = "Payroll Formular"
+
+    def __str__(self):
+        return "%s - %s" % (
+            self.shortname,
+            self.hourly_rate,
+        )
+
+    def __repr__(self):
+        return "%s - %s" % (
+            self.shortname,
+            self.hourly_rate,
+        )
+
+
+class OvertimeSetup(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    description = models.CharField(
+        _("Description"), max_length=150, blank=True, null=True
+    )
+    payrollformular = models.ForeignKey(
+        "PayrollFormular", on_delete=models.PROTECT, related_name="overtimes"
+    )
+
+    class Meta:
+        verbose_name = "Overtime SetUp"
+        verbose_name_plural = "Overtime SetUp"
+
+    def __str__(self):
+        return str(self.id) + " : " + (self.description or "")
+
+    def __repr__(self):
+        return str(self.id) + " : " + (self.description or "")

@@ -1,11 +1,20 @@
 from rest_framework import viewsets
 
-from .models import Transactions, SavingScheme, SavingSchemeEntries, TransactionEntries
+from .models import (
+    Transactions,
+    SavingScheme,
+    SavingSchemeEntries,
+    TransactionEntries,
+    PayrollFormular,
+    OvertimeSetup,
+)
 from .serializers import (
     TransactionSerializer,
     SavingSchemeSerializer,
     SavingSchemeEntriesSerializer,
     TransactionEntriesSerializer,
+    PayrollFormularSerializer,
+    OvertimeSerializer,
 )
 
 
@@ -30,4 +39,16 @@ class SavingSchemeEntriesViewSet(viewsets.ModelViewSet):
 class TransactionEntriesViewSet(viewsets.ModelViewSet):
     queryset = TransactionEntries.objects.all()
     serializer_class = TransactionEntriesSerializer
+    filterset_fields = "__all__"
+
+
+class PayrollFormularViewSet(viewsets.ModelViewSet):
+    queryset = PayrollFormular.objects.all()
+    serializer_class = PayrollFormularSerializer
+    filterset_fields = "__all__"
+
+
+class OvertimeSetupViewSet(viewsets.ModelViewSet):
+    queryset = OvertimeSetup.objects.all()
+    serializer_class = OvertimeSerializer
     filterset_fields = "__all__"

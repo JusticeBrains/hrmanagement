@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
-from .models import Transactions, SavingScheme, SavingSchemeEntries, TransactionEntries
+from .models import (
+    Transactions,
+    SavingScheme,
+    SavingSchemeEntries,
+    TransactionEntries,
+    PayrollFormular,
+    OvertimeSetup,
+)
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -24,4 +31,16 @@ class SavingSchemeEntriesSerializer(serializers.ModelSerializer):
 class TransactionEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionEntries
+        fields = "__all__"
+
+
+class PayrollFormularSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayrollFormular
+        fields = "__all__"
+
+
+class OvertimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OvertimeSetup
         fields = "__all__"
