@@ -160,6 +160,7 @@ class Period(models.Model):
             days_in_month = self.period_year.get_days_in_month(self.month)
             self.no_of_days = days_in_month
             self.period_year_value = self.period_year.year
+            self.user_id = self.period_year.user_id
 
             if 1 <= first_day <= 31 and 1 <= last_day <= 31:
                 self.start_date = date(self.period_year.year, self.month, first_day)
