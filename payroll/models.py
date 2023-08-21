@@ -700,7 +700,7 @@ class OvertimeEntries(models.Model):
             self.company_name = self.company.name
         if self.period:
             self.period_code = self.period.period_code
-            self.year = self.period.period_year
+            self.year = self.period.period_year.year
         if self.overtime:
             self.overtime_name = self.overtime.description
             if self.employee.annual_basic is not None:
