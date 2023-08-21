@@ -78,6 +78,9 @@ class Period(models.Model):
     total_working_hours = models.PositiveIntegerField(
         _("Total Working Hours"), blank=True, null=True
     )
+    total_hours_per_day = models.DecimalField(
+        _("Total Hours Per Day"), max_digits=5, decimal_places=2, default=0.0
+    )
     start_date = models.DateField(_("Start Date"), blank=True, null=True)
     end_date = models.DateField(_("End Date"), blank=True, null=True)
     no_of_days = models.PositiveIntegerField(_("No Of Days"), blank=True, null=True)
@@ -154,14 +157,23 @@ class Period(models.Model):
                     f"{self.MONTH_NAMES.get(self.month)} {self.period_year.year}"
                 )
                 self.company = self.period_year.company
-                if self.total_working_days is None:
+                if self.total_working_days is None and self.total_hours_per_day == 0.0:
                     self.total_working_days = self.count_working_days(
                         self.start_date, self.end_date
                     )
                     self.total_working_hours = self.total_working_days * 8
-                elif self.total_working_days is not None:
-                    self.total_working_days = self.total_working_days
+                elif (
+                    self.total_working_days is not None
+                    and self.total_hours_per_day == 0.0
+                ):
                     self.total_working_hours = self.total_working_days * 8
+                elif (
+                    self.total_working_days is not None
+                    and self.total_hours_per_day > 0.0
+                ):
+                    self.total_working_hours = (
+                        self.total_working_days * self.total_hours_per_day
+                    )
 
     def save(self, *args, **kwargs):
         self.populate_dates()
