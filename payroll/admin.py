@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Transactions, SavingScheme, TransactionEntries, SavingSchemeEntries
+from .models import Transactions, SavingScheme, TransactionEntries, SavingSchemeEntries, OvertimeEntries
 
 
 @admin.register(Transactions)
@@ -25,3 +25,8 @@ class SavingSchemeEntriesAdmin(admin.ModelAdmin):
 class TransactionEntriesAdmin(admin.ModelAdmin):
     list_display = ["id", "disbursement_type"]
     list_filter = ["id", "transaction_code"]
+
+
+@admin.register(OvertimeEntries)
+class OverTimeEntriesAdmin(admin.ModelAdmin):
+    ...
