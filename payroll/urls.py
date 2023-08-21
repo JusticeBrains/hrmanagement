@@ -7,6 +7,7 @@ from .views import (
     SavingSchemeEntriesViewSet,
     PayrollFormularViewSet,
     OvertimeSetupViewSet,
+    OvertimeEntriesViewSet
 )
 
 
@@ -24,4 +25,6 @@ router.register(
 )
 router.register("payroll-formular", PayrollFormularViewSet, basename="payroll-formular")
 router.register("overtime-setup", OvertimeSetupViewSet, basename="overtime-setup")
+router.register('overtime-entries', OvertimeEntriesViewSet, basename="overtime-entries")
 urlpatterns = router.urls
+OvertimeEntriesViewSet

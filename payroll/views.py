@@ -7,6 +7,7 @@ from .models import (
     TransactionEntries,
     PayrollFormular,
     OvertimeSetup,
+    OvertimeEntries
 )
 from .serializers import (
     TransactionSerializer,
@@ -15,6 +16,7 @@ from .serializers import (
     TransactionEntriesSerializer,
     PayrollFormularSerializer,
     OvertimeSerializer,
+    OvertimeEntriesSerializer
 )
 
 
@@ -51,4 +53,9 @@ class PayrollFormularViewSet(viewsets.ModelViewSet):
 class OvertimeSetupViewSet(viewsets.ModelViewSet):
     queryset = OvertimeSetup.objects.all()
     serializer_class = OvertimeSerializer
+    filterset_fields = "__all__"
+
+class OvertimeEntriesViewSet(viewsets.ModelViewSet):
+    queryset = OvertimeEntries.objects.all()
+    serializer_class = OvertimeEntriesSerializer
     filterset_fields = "__all__"

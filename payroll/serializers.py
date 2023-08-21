@@ -7,6 +7,7 @@ from .models import (
     TransactionEntries,
     PayrollFormular,
     OvertimeSetup,
+    OvertimeEntries
 )
 
 
@@ -43,4 +44,10 @@ class PayrollFormularSerializer(serializers.ModelSerializer):
 class OvertimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = OvertimeSetup
+        fields = "__all__"
+
+
+class OvertimeEntriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OvertimeEntries
         fields = "__all__"

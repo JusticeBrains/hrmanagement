@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.utils import timezone
 from options.text_options import (
     DisbursementType,
     PaymentFrequency,
@@ -88,6 +88,7 @@ class Transactions(models.Model):
         blank=True,
         null=True,
     )
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Transactions"
@@ -205,6 +206,7 @@ class SavingScheme(models.Model):
         blank=True,
         null=True,
     )
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Saving Scheme"
@@ -344,6 +346,8 @@ class TransactionEntries(models.Model):
         blank=True,
         null=True,
     )
+    status = models.BooleanField(_("Status"), default=False)
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Transaction Entries"
@@ -478,6 +482,8 @@ class SavingSchemeEntries(models.Model):
         _("Job Title Description"), max_length=150, blank=True, null=True
     )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
+    status = models.BooleanField(_("Status"), default=False)
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Saving Scheme Entries"
@@ -528,6 +534,25 @@ class PayrollFormular(models.Model):
     overtime_hours = models.DecimalField(
         _("Overtime Hours"), max_digits=5, decimal_places=2, default=0.0
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    date = models.DateField(_("Start Date"), default=timezone.now)
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Payroll Formular"
@@ -545,6 +570,14 @@ class PayrollFormular(models.Model):
             self.hourly_rate,
         )
 
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
+
 
 class OvertimeSetup(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
@@ -554,6 +587,25 @@ class OvertimeSetup(models.Model):
     payrollformular = models.ForeignKey(
         "PayrollFormular", on_delete=models.PROTECT, related_name="overtimes"
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    date = models.DateField(_("Start Date"), default=timezone.now)
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Overtime SetUp"
@@ -564,3 +616,91 @@ class OvertimeSetup(models.Model):
 
     def __repr__(self):
         return str(self.id) + " : " + (self.description or "")
+
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
+
+
+class OvertimeEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=150, blank=True, null=True
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("Paygroup"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    paygroup_no = models.CharField(
+        _("PayGroup No"), max_length=50, blank=True, null=True
+    )
+    overtime = models.ForeignKey(
+        "payroll.OvertimeSetup",
+        verbose_name=_("Overtime"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    overtime_name = models.CharField(
+        _("Ovetime Name"), max_length=150, blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    date = models.DateField(_("Start Date"), default=timezone.now)
+    status = models.BooleanField(_("Status"), default=False)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateField(_("Created At"), auto_now=True)
+
+    class Meta:
+        verbose_name = "Ovetime Entries"
+        verbose_name_plural = "Ovetime Entries"
+
+    def __str__(self):
+        return f"{self.employee_code} {self.date}"
+
+    def __repr__(self):
+        return f"{self.employee_code} {self.date}"
+
+    def populate_fields(self):
+        if self.employee:
+            self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
+            self.employee_code = self.employee.code
+        if self.paygroup:
+            self.paygroup_no = self.paygroup.no
+        if self.company:
+            self.company_name = self.company.name
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
