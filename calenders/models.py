@@ -16,7 +16,13 @@ class PeriodYear(models.Model):
         blank=True,
         null=True,
     )
-
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     class Meta:
         verbose_name = "Period Year"
         verbose_name_plural = "Period Years"
@@ -113,7 +119,13 @@ class Period(models.Model):
         11: "November",
         12: "December",
     }
-
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     class Meta:
         verbose_name = _("Period")
         verbose_name_plural = _("Periods")
