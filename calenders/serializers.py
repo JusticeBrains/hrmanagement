@@ -12,3 +12,4 @@ class PeriodYearSerializer(serializers.ModelSerializer):
     class Meta:
         model = PeriodYear
         fields = "__all__"
+    
