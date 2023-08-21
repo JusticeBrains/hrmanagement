@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from calenders.models import GlobalInputs
 from options.text_options import (
     DisbursementType,
     PaymentFrequency,
@@ -702,6 +703,10 @@ class OvertimeEntries(models.Model):
             self.year = self.period.period_year
         if self.overtime:
             self.overtime_name = self.overtime.description
+            amount = self.employee.annual_basic * 12 if self.employee.annual_basic is not None else 0
+            total_working_hours = GlobalInputs.objects.get(company=self.company)
+            if total_working_hours:
+                self.overtime_amount = float((amount / total_working_hours.annual_working_hours) * self.no_of_hours)
         
 
 
