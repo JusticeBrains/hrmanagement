@@ -218,5 +218,6 @@ class GlobalInputs(models.Model):
         return f"{self.current_year}"
 
     def save(self, *args, **kwargs):
-        GlobalInputs.objects.exclude(id=self.id).delete()
+        if self._state.adding:
+            GlobalInputs.objects.filter(company=self.company).delete()
         super().save(*args, **kwargs)
