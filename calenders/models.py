@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from datetime import date, timedelta
 from django.utils.translation import gettext_lazy as _
-
+from options.text_options import BonusRunType, BonusRun
 
 import calendar
 
@@ -178,3 +178,28 @@ class Period(models.Model):
     def save(self, *args, **kwargs):
         self.populate_dates()
         super().save(*args, **kwargs)
+
+
+class GlobalInputs(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    current_period = models.ForeignKey("calenders.Period", verbose_name=_("Current Period"), on_delete=models.DO_NOTHING)
+    current_year = models.PositiveIntegerField(_("Current Year"), blank=True, null=True)
+    country_code = models.CharField(_("Country Code"), max_length=150, blank=True, null=True)
+    payroll_rounding = models.DecimalField(_("Payroll Rounding"), max_digits=5, decimal_places=4, default=0.0001)
+    maximum_no_of_dependant_benefit = models.PositiveIntegerField(_("Maximum Number Of Dependant Benfit"), default=3)
+    annual_working_hours = models.DecimalField(_("Annual Working Hours"), max_digits=6, decimal_places=2, default=0.0)
+    bonus_run_type = models.CharField(_("Bonus Run Type"),choices=BonusRunType.choices, max_length=50,default=BonusRunType.MONTHLY)
+    bonus_run = models.CharField(_("Bonus Run"), choices=BonusRun.choices,max_length=50, default=BonusRun.SEPERATE)
+    minimum_net_pay = models.DecimalField(_("Minimum Net Pay"), max_digits=5, decimal_places=2, default=0.00)
+    backpay_period = models.ForeignKey("calenders.Period", verbose_name=_("Back Pay Period"), on_delete=models.DO_NOTHING, related_name="backpay")
+    company = models.ForeignKey("company.Company",verbose_name="Company", on_delete=models.CASCADE,)
+
+    class Meta:
+        verbose_name = "Global Inputs"
+        verbose_name_plural = "Global Inputs"
+
+    def __str__(self):
+        return f"{self.current_year}"
+
+    def __repr__(self):
+        return f"{self.current_year}"

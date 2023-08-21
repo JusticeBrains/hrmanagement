@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from django_property_filter import PropertyNumberFilter, PropertyFilterSet
 
-from .serializers import PeriodSerializer, PeriodYearSerializer
-from .models import Period, PeriodYear
+from .serializers import PeriodSerializer, PeriodYearSerializer, GlobalInputsSerializer
+from .models import Period, PeriodYear, GlobalInputs
 
 
 class PeriodViewSet(viewsets.ModelViewSet):
@@ -26,4 +26,10 @@ class PeriodViewSet(viewsets.ModelViewSet):
 class PeriodYearViewSet(viewsets.ModelViewSet):
     queryset = PeriodYear.objects.all()
     serializer_class = PeriodYearSerializer
+    filterset_fields = "__all__"
+
+
+class GlobalInputViewSet(viewsets.ModelViewSet):
+    queryset = GlobalInputs.objects.all()
+    serializer_class = GlobalInputsSerializer
     filterset_fields = "__all__"

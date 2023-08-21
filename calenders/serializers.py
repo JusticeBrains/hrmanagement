@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Period, PeriodYear
+from .models import Period, PeriodYear, GlobalInputs
 
 
 class PeriodSerializer(serializers.ModelSerializer):
@@ -11,5 +11,10 @@ class PeriodSerializer(serializers.ModelSerializer):
 class PeriodYearSerializer(serializers.ModelSerializer):
     class Meta:
         model = PeriodYear
+        fields = "__all__"
+
+class GlobalInputsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GlobalInputs
         fields = "__all__"
     

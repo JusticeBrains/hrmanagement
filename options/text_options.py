@@ -337,3 +337,12 @@ class DisbursementType(models.TextChoices):
 class TransactionType(models.TextChoices):
     ALLOWANCE = "Allowance", _("Allowance")
     DEDUCTION = "Deduction", _("Deduction")
+
+class BonusRunType(models.TextChoices):
+    MONTHLY = "Monthly",_("Monthly")
+    QUARTERLY = "Quarterly", _("Quarterly")
+    YEARLY = "Yearly", _("Yearly")
+
+class BonusRun(models.TextChoices):
+    SEPERATE = "Seperate", _("Seperate")
+    WITH_PAYROLL = "With Payroll", _("With Payroll")
