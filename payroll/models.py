@@ -674,7 +674,7 @@ class OvertimeEntries(models.Model):
         null=True,
     )
     period = models.ForeignKey("calenders.Period", verbose_name=_("Period"), on_delete=models.DO_NOTHING,blank=True, null=True)
-    period_code = models.CharField(_("Period Code"), max_length=50)
+    period_code = models.CharField(_("Period Code"), max_length=50, blank=True, null=True)
     no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
     overtime_amount = models.DecimalField(_("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0)
     created_at = models.DateField(_("Created At"), auto_now=True)
