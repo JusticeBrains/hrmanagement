@@ -677,6 +677,7 @@ class OvertimeEntries(models.Model):
     period_code = models.CharField(_("Period Code"), max_length=50, blank=True, null=True)
     no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
     overtime_amount = models.DecimalField(_("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0)
+    year = models.PositiveIntegerField(_("Year"), blank=True, null=True)
     created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
@@ -698,6 +699,11 @@ class OvertimeEntries(models.Model):
             self.company_name = self.company.name
         if self.period:
             self.period_code = self.period.period_code
+            self.year = self.period.period_year
+        if self.overtime:
+            self.overtime_name = self.overtime.description
+        
+
 
     def save(self, *args, **kwargs):
         self.populate_fields()
