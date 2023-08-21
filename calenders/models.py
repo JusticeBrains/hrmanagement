@@ -204,7 +204,7 @@ class GlobalInputs(models.Model):
     bonus_run_type = models.CharField(_("Bonus Run Type"),choices=BonusRunType.choices, max_length=50,default=BonusRunType.MONTHLY)
     bonus_run = models.CharField(_("Bonus Run"), choices=BonusRun.choices,max_length=50, default=BonusRun.SEPERATE)
     minimum_net_pay = models.DecimalField(_("Minimum Net Pay"), max_digits=5, decimal_places=2, default=0.00)
-    backpay_period = models.ForeignKey("calenders.Period", verbose_name=_("Back Pay Period"), on_delete=models.DO_NOTHING, related_name="backpay")
+    backpay_period = models.ForeignKey("calenders.Period", verbose_name=_("Back Pay Period"), on_delete=models.DO_NOTHING, related_name="backpay", blank=True, null=True)
     company = models.ForeignKey("company.Company",verbose_name="Company", on_delete=models.CASCADE,)
 
     class Meta:
@@ -216,3 +216,7 @@ class GlobalInputs(models.Model):
 
     def __repr__(self):
         return f"{self.current_year}"
+
+    def save(self, *args, **kwargs):
+        GlobalInputs.objects.exclude(id=self.id).delete()
+        super().save(*args, **kwargs)

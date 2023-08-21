@@ -1,42 +1,23 @@
 import calendar
 from datetime import date
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.db.models import Sum, Count
 
-from .models import Period
+from .models import Period, GlobalInputs
 
 
-# @receiver(post_save, sender=Period)
-# def populate_date(sender, instance, **kwargs):
-#     post_save.disconnect(populate_date, sender=Period)
-#     if instance and instance.month_calendar:
-#         first_day = instance.month_calendar[0][0]
-#         last_week = instance.month_calendar[-1]
-#         last_day = last_week[-1] if last_week[-1] != 0 else last_week[-2]
-#         instance.period_year_value = instance.period_year.year
+@receiver(pre_save, sender=Period)
+def populate_date(sender, instance, **kwargs):
+    if instance and instance.status == 1:
+        cuurent_period = instance
+        current_year = instance.period_year.year
+        total_working_hours = Period.objects.filter(period_year=instance.period_year, company=instance.company).aggregate(total_working_hours=Sum("total_working_hours"))["total_working_hours"]
 
-#         if 1 <= first_day <= 31 and 1 <= last_day <= 31:
-#             instance.start_date = date(
-#                 instance.period_year.year, instance.month, first_day
-#             )
-#             instance.end_date = date(
-#                 instance.period_year.year, instance.month, last_day
-#             )
-#             instance.period_name = f"{instance.MONTH_NAMES.get(instance.month)} {instance.period_year.year}"
-#             instance.period_code = f"{instance.MONTH_NAMES.get(instance.month)[:3].upper()}{instance.period_year.year}"
-#             instance.company = instance.period_year.company
-
-#             if instance.total_working_days is None:
-#                 instance.total_working_days = instance.count_working_days(
-#                     instance.start_date, instance.end_date
-#                 )
-#                 instance.total_working_hours = instance.total_working_days * 8
-
-#             elif instance.total_working_days is not None:
-#                 instance.total_working_days = instance.total_working_days
-#                 instance.total_working_hours = instance.total_working_days * 8
-
-#             instance.save()
-#             print(f"Start Date: {instance.start_date}")
-#             print(f"End Date: {instance.end_date}")
-#     post_save.connect(populate_date, sender=Period)
+        global_input,_ = GlobalInputs.objects.get_or_create(
+            current_period=cuurent_period,
+            current_year=current_year,
+            annual_working_hours=total_working_hours,
+            company=instance.period_year.company,
+        )
+        global_input.save()
