@@ -97,10 +97,10 @@ class Transactions(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return f"{self.code}"
+        return f"{self.description}"
 
     def __repr__(self):
-        return f"{self.code}"
+        return f"{self.description}"
 
 
 class SavingScheme(models.Model):
@@ -197,10 +197,10 @@ class SavingScheme(models.Model):
         verbose_name_plural = "Saving Schemes"
 
     def __str__(self) -> str:
-        return f"{self.code}"
+        return f"{self.description}"
 
     def __repr__(self):
-        return f"{self.code}"
+        return f"{self.description}"
 
     def populate_fields(self):
         if self.company:
