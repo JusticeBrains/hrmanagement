@@ -40,6 +40,7 @@ class Company(models.Model):
     unique_code = models.CharField(
         _("Unique Code"), max_length=50, null=True, blank=True
     )
+    logo = models.TextField(_("Logo"), blank=True, null=True)
 
     class Meta:
         verbose_name = "Company"
