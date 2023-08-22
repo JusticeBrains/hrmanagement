@@ -676,10 +676,22 @@ class OvertimeEntries(models.Model):
         blank=True,
         null=True,
     )
-    period = models.ForeignKey("calenders.Period", verbose_name=_("Period"), on_delete=models.DO_NOTHING,blank=True, null=True)
-    period_code = models.CharField(_("Period Code"), max_length=50, blank=True, null=True)
-    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
-    overtime_amount = models.DecimalField(_("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0)
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    period_code = models.CharField(
+        _("Period Code"), max_length=50, blank=True, null=True
+    )
+    no_of_hours = models.DecimalField(
+        _("No Of Hours"), max_digits=5, decimal_places=2, default=0.0
+    )
+    overtime_amount = models.DecimalField(
+        _("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0
+    )
     year = models.PositiveIntegerField(_("Year"), blank=True, null=True)
     created_at = models.DateField(_("Created At"), auto_now=True)
 
@@ -708,32 +720,68 @@ class OvertimeEntries(models.Model):
             if self.employee.annual_basic is not None:
                 annual_basic = Decimal(self.employee.annual_basic)
             else:
-                annual_basic = Decimal('0')
+                annual_basic = Decimal("0")
 
             amount = annual_basic * 12
             total_working_hours = GlobalInputs.objects.get(company=self.company)
 
             if total_working_hours:
-                self.overtime_amount = float((amount / total_working_hours.annual_working_hours) * self.no_of_hours)
-        
-
+                self.overtime_amount = float(
+                    (amount / total_working_hours.annual_working_hours)
+                    * self.no_of_hours
+                )
 
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
 
+
 class Loans(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    min_loan_amount = models.DecimalField(_("Minimum Amount"), max_digits=8, decimal_places=2, default=0.0)
-    max_loan_amount = models.DecimalField(_("Maximum Amount"), max_digits=10, decimal_places=2, default=0.0)
+    min_loan_amount = models.DecimalField(
+        _("Minimum Amount"), max_digits=8, decimal_places=2, default=0.0
+    )
+    max_loan_amount = models.DecimalField(
+        _("Maximum Amount"), max_digits=10, decimal_places=2, default=0.0
+    )
     max_loan_term = models.PositiveIntegerField(_("Max Loan Term"), default=0)
-    max_percentage_of_basic = models.DecimalField(_("Max Percentage Of Basic"), max_digits=5, decimal_places=2, default=0.0)
-    interest_rate = models.DecimalField(_("Interest Rate"), max_digits=5, decimal_places=2, default=0.0)
-    interest_calculation_type = models.CharField(_("Interest Calculation Type"), choices=InterestCalculationType.choices,max_length=50)
-    interest_basic = models.CharField(_("Interest Basic"), choices=InterestBasic.choices,max_length=50)
+    max_percentage_of_basic = models.DecimalField(
+        _("Max Percentage Of Basic"), max_digits=5, decimal_places=2, default=0.0
+    )
+    interest_rate = models.DecimalField(
+        _("Interest Rate"), max_digits=5, decimal_places=2, default=0.0
+    )
+    interest_calculation_type = models.CharField(
+        _("Interest Calculation Type"),
+        choices=InterestCalculationType.choices,
+        max_length=50,
+    )
+    interest_basic = models.CharField(
+        _("Interest Basic"), choices=InterestBasic.choices, max_length=50
+    )
     grace_periods = models.PositiveIntegerField(_("Grace Periods"), default=0)
-    percentage = models.DecimalField(_("Percentage"), max_digits=5, decimal_places=2, default=0.0)
+    percentage = models.DecimalField(
+        _("Percentage"), max_digits=5, decimal_places=2, default=0.0
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
         verbose_name = "Loans"
@@ -744,3 +792,11 @@ class Loans(models.Model):
 
     def __repr__(self):
         return f"{self.name}"
+
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
