@@ -818,6 +818,7 @@ class LoanEntries(models.Model):
         "payroll.Loans", verbose_name="Loan ID", related_name="loanentries", on_delete=models.DO_NOTHING
     )
     loan_name = models.CharField(_("Loan Name"), max_length=150, blank=True, null=True)
+    description = models.CharField(_("Description"), max_length=150, blank=True, null=True)
     amount = models.DecimalField(
         _("Amount"), max_digits=10, decimal_places=2, default=0.0
     )
