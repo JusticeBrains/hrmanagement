@@ -33,4 +33,3 @@ router.register('loans', LoansViewSet, basename="loans")
 router.register('loan-entries', LoanEntriesViewSet, basename="loans-entries")
 router.register("audit-trails", AuditTrailViewSet, basename="audit-trails")
 urlpatterns = router.urls
-OvertimeEntriesViewSet
