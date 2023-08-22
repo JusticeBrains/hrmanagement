@@ -92,6 +92,7 @@ class Transactions(models.Model):
         null=True,
     )
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Transactions"
@@ -210,6 +211,7 @@ class SavingScheme(models.Model):
         null=True,
     )
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Saving Scheme"
@@ -351,6 +353,7 @@ class TransactionEntries(models.Model):
     )
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Transaction Entries"
@@ -487,6 +490,7 @@ class SavingSchemeEntries(models.Model):
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Saving Scheme Entries"
@@ -554,7 +558,7 @@ class PayrollFormular(models.Model):
         blank=True,
         null=True,
     )
-    date = models.DateField(_("Start Date"),auto_now=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
@@ -607,8 +611,8 @@ class OvertimeSetup(models.Model):
         blank=True,
         null=True,
     )
-    date = models.DateField(_("Start Date"), auto_now=True)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Overtime SetUp"
@@ -694,6 +698,7 @@ class OvertimeEntries(models.Model):
     )
     year = models.PositiveIntegerField(_("Year"), blank=True, null=True)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Ovetime Entries"
@@ -792,6 +797,7 @@ class Loans(models.Model):
     period_code = models.CharField(
         _("Period Code"), max_length=50, blank=True, null=True
     )
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Loans"
@@ -806,11 +812,12 @@ class Loans(models.Model):
     def populate_fields(self):
         if self.company:
             self.company_name = self.company.name
+        if self.period:
+            self.period_code = self.period.period_code
 
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
-
 
 class LoanEntries(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
@@ -870,8 +877,11 @@ class LoanEntries(models.Model):
         blank=True,
         null=True,
     )
+    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Loan Entries"
@@ -882,3 +892,41 @@ class LoanEntries(models.Model):
 
     def __repr__(self):
         return f"{self.loan_name}"
+
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+        if self.transaction_period:
+            self.transaction_period_code = self.transaction_period.period_code
+        if self.deduction_start_period:
+            self.deduction_start_period_code = self.deduction_start_period.period_code
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
+
+
+class AuditTrail(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING)
+    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
+    created_at = models.DateTimeField(_("Created At"),auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
+
+    class Meta:
+        verbose_name = "Audit Trails"
+        verbose_name_plural = "Audit Trails"
+    def populate_fields(self):
+        if self.company:
+            self.company_name = self.company.name
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)

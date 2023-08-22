@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import (
+    AuditTrail,
     LoanEntries,
     Loans,
     Transactions,
@@ -63,4 +64,10 @@ class LoansSerializer(serializers.ModelSerializer):
 class LoanEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanEntries
+        fields = "__all__"
+
+
+class AuditTrailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuditTrail
         fields = "__all__"
