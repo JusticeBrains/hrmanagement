@@ -920,10 +920,12 @@ class AuditTrail(models.Model):
         blank=True,
         null=True,
     )
+    process_id = models.TextField(_("Process ID"), blank=True, null=True)
+    ip_address = models.CharField(_("IP Address"), max_length=150, blank=True, null=True)
+    browser = models.CharField(_("Browser"), max_length=150, blank=True, null=True)
     company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING)
     company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
     created_at = models.DateTimeField(_("Created At"),auto_now_add=True)
-    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Audit Trails"
