@@ -869,6 +869,7 @@ class LoanEntries(models.Model):
         blank=True,
         null=True,
     )
+    status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
