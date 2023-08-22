@@ -900,6 +900,11 @@ class LoanEntries(models.Model):
             self.transaction_period_code = self.transaction_period.period_code
         if self.deduction_start_period:
             self.deduction_start_period_code = self.deduction_start_period.period_code
+        if self.loan:
+            self.loan_name = self.loan.name
+        if self.employee:
+            self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
+            self.employee_code = self.employee.code
 
     def save(self, *args, **kwargs):
         self.populate_fields()
