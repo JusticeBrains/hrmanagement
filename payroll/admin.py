@@ -1,18 +1,35 @@
 from django.contrib import admin
 
-from .models import Transactions, SavingScheme, TransactionEntries, SavingSchemeEntries, OvertimeEntries
+from .models import (
+    Transactions,
+    SavingScheme,
+    TransactionEntries,
+    SavingSchemeEntries,
+    OvertimeEntries,
+    LoanEntries,
+    Loans,
+    AuditTrail,
+)
 
 
 @admin.register(Transactions)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ["id", ]
-    list_filter = ["id",]
+    list_display = [
+        "id",
+    ]
+    list_filter = [
+        "id",
+    ]
 
 
 @admin.register(SavingScheme)
 class SavingSchemeAdmin(admin.ModelAdmin):
-    list_display = ["id",]
-    list_filter = ["id", ]
+    list_display = [
+        "id",
+    ]
+    list_filter = [
+        "id",
+    ]
 
 
 @admin.register(SavingSchemeEntries)
@@ -29,4 +46,19 @@ class TransactionEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(OvertimeEntries)
 class OverTimeEntriesAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(Loans)
+class LoansAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(LoanEntries)
+class LoanEntriesAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(AuditTrail)
+class AuditTrailAdmin(admin.ModelAdmin):
     ...
