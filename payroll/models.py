@@ -6,6 +6,8 @@ from django.utils import timezone
 from calenders.models import GlobalInputs
 from options.text_options import (
     DisbursementType,
+    InterestBasic,
+    InterestCalculationType,
     PaymentFrequency,
     AllowanceType,
     DeductionFrequency,
@@ -719,3 +721,26 @@ class OvertimeEntries(models.Model):
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
+
+class Loans(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+    min_loan_amount = models.DecimalField(_("Minimum Amount"), max_digits=8, decimal_places=2, default=0.0)
+    max_loan_amount = models.DecimalField(_("Maximum Amount"), max_digits=10, decimal_places=2, default=0.0)
+    max_loan_term = models.PositiveIntegerField(_("Max Loan Term"), default=0)
+    max_percentage_of_basic = models.DecimalField(_("Max Percentage Of Basic"), max_digits=5, decimal_places=2, default=0.0)
+    interest_rate = models.DecimalField(_("Interest Rate"), max_digits=5, decimal_places=2, default=0.0)
+    interest_calculation_type = models.CharField(_("Interest Calculation Type"), choices=InterestCalculationType.choices,max_length=50)
+    interest_basic = models.CharField(_("Interest Basic"), choices=InterestBasic.choices,max_length=50)
+    grace_periods = models.PositiveIntegerField(_("Grace Periods"), default=0)
+    percentage = models.DecimalField(_("Percentage"), max_digits=5, decimal_places=2, default=0.0)
+
+    class Meta:
+        verbose_name = "Loans"
+        verbose_name_plural = "Loans"
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+    def __repr__(self):
+        return f"{self.name}"

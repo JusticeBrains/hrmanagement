@@ -346,3 +346,15 @@ class BonusRunType(models.TextChoices):
 class BonusRun(models.TextChoices):
     SEPERATE = "Seperate", _("Seperate")
     WITH_PAYROLL = "With Payroll", _("With Payroll")
+
+
+class InterestCalculationType(models.TextChoices):
+    FLAT_RATE = 'Flat Rate', _('Flat Rate')
+    AMORTIZATION = "Amortization", _("Amortization") 
+    LOAN_TERM = "Loan Term", _("Loan Term")
+    REDUCING_BALANCE = "Reducing Balance", _("Reducing Balance")
+    REDUCING_BALANCE_EQUAL_REPAYMENT = "Reducing Balance (Equal Repayment)", _("Reducing Balance (Equal Repayment)")
+
+class InterestBasic(models.TextChoices):
+    PER_MONTH = "Per Month",_("Per Month")
+    PER_ANNUM = "Per Annum", _("Per Annum")

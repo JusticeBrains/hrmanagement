@@ -1,6 +1,7 @@
 from rest_framework.routers import SimpleRouter
 
 from .views import (
+    LoansViewSet,
     TransactionViewSet,
     SavingSchemeViewSet,
     TransactionEntriesViewSet,
@@ -26,5 +27,6 @@ router.register(
 router.register("payroll-formular", PayrollFormularViewSet, basename="payroll-formular")
 router.register("overtime-setup", OvertimeSetupViewSet, basename="overtime-setup")
 router.register('overtime-entries', OvertimeEntriesViewSet, basename="overtime-entries")
+router.register('loans', LoansViewSet, basename="loans")
 urlpatterns = router.urls
 OvertimeEntriesViewSet

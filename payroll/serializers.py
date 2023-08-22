@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import (
+    Loans,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
@@ -50,4 +51,10 @@ class OvertimeSerializer(serializers.ModelSerializer):
 class OvertimeEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = OvertimeEntries
+        fields = "__all__"
+
+
+class LoansSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Loans
         fields = "__all__"
