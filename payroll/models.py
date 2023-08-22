@@ -782,6 +782,16 @@ class Loans(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     created_at = models.DateField(_("Created At"), auto_now=True)
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    period_code = models.CharField(
+        _("Period Code"), max_length=50, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Loans"
@@ -800,3 +810,66 @@ class Loans(models.Model):
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
+
+
+class LoanEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    loan = models.ForeignKey(
+        "payroll.Loans", verbose_name="Loan ID", related_name="loanentries", on_delete=models.DO_NOTHING
+    )
+    loan_name = models.CharField(_("Loan Name"), max_length=150, blank=True, null=True)
+    amount = models.DecimalField(
+        _("Amount"), max_digits=10, decimal_places=2, default=0.0
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=150, blank=True, null=True
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    interest_rate = models.DecimalField(
+        _("Interest Rate"), max_digits=5, decimal_places=2, default=0.0
+    )
+    periodic_principal = models.DecimalField(
+        _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
+    )
+    no_of_repayments = models.PositiveIntegerField(_("No Of Repayments"), default=0)
+    transaction_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Transaction Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    transaction_period_code = models.CharField(
+        _("Transaction Period Code"), max_length=50, blank=True, null=True
+    )
+    deduction_start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="loan_entries_deduction",
+    )
+    deduction_start_period_code = models.CharField(
+        _("Period Code"), max_length=50, blank=True, null=True
+    )
+    created_at = models.DateField(_("Created At"), auto_now=True)
+
+    class Meta:
+        verbose_name = "Loan Entries"
+        verbose_name_plural = "Loan Entries"
+
+    def __str__(self) -> str:
+        return f"{self.loan_name}"
+
+    def __repr__(self):
+        return f"{self.loan_name}"

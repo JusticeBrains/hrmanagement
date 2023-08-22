@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 
 from .models import (
+    LoanEntries,
     Loans,
     Transactions,
     SavingScheme,
@@ -11,6 +12,7 @@ from .models import (
     OvertimeEntries
 )
 from .serializers import (
+    LoanEntriesSerializer,
     LoansSerializer,
     TransactionSerializer,
     SavingSchemeSerializer,
@@ -66,4 +68,10 @@ class OvertimeEntriesViewSet(viewsets.ModelViewSet):
 class LoansViewSet(viewsets.ModelViewSet):
     queryset = Loans.objects.all()
     serializer_class = LoansSerializer
+    filterset_fields = "__all__"
+
+
+class LoanEntriesViewSet(viewsets.ModelViewSet):
+    queryset = LoanEntries.objects.all()
+    serializer_class = LoanEntriesSerializer
     filterset_fields = "__all__"
