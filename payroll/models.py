@@ -91,7 +91,7 @@ class Transactions(models.Model):
         blank=True,
         null=True,
     )
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Transactions"
@@ -209,7 +209,7 @@ class SavingScheme(models.Model):
         blank=True,
         null=True,
     )
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Saving Scheme"
@@ -350,7 +350,7 @@ class TransactionEntries(models.Model):
         null=True,
     )
     status = models.BooleanField(_("Status"), default=False)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Transaction Entries"
@@ -486,7 +486,7 @@ class SavingSchemeEntries(models.Model):
     )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Saving Scheme Entries"
@@ -554,8 +554,8 @@ class PayrollFormular(models.Model):
         blank=True,
         null=True,
     )
-    date = models.DateField(_("Start Date"), default=timezone.now)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    date = models.DateField(_("Start Date"),auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Payroll Formular"
@@ -607,8 +607,8 @@ class OvertimeSetup(models.Model):
         blank=True,
         null=True,
     )
-    date = models.DateField(_("Start Date"), default=timezone.now)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    date = models.DateField(_("Start Date"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Overtime SetUp"
@@ -667,7 +667,7 @@ class OvertimeEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    date = models.DateField(_("Start Date"), default=timezone.now)
+    date = models.DateField(_("Start Date"),auto_now=True)
     status = models.BooleanField(_("Status"), default=False)
     user_id = models.ForeignKey(
         "users.CustomUser",
@@ -693,7 +693,7 @@ class OvertimeEntries(models.Model):
         _("Overtime Amount"), max_digits=8, decimal_places=2, default=0.0
     )
     year = models.PositiveIntegerField(_("Year"), blank=True, null=True)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Ovetime Entries"
@@ -781,7 +781,7 @@ class Loans(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
     period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Period"),
@@ -836,7 +836,7 @@ class LoanEntries(models.Model):
         _("Employee Name"), max_length=150, blank=True, null=True
     )
     interest_rate = models.DecimalField(
-        _("Interest Rate"), max_digits=5, decimal_places=2, default=0.0
+        _("Interest Rate"), max_digits=5, decimal_places=2, default=0.0, blank=True, null=True
     )
     periodic_principal = models.DecimalField(
         _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
@@ -871,7 +871,7 @@ class LoanEntries(models.Model):
         null=True,
     )
     status = models.BooleanField(_("Status"), default=False)
-    created_at = models.DateField(_("Created At"), auto_now=True)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
 
     class Meta:
         verbose_name = "Loan Entries"

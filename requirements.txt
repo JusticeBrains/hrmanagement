@@ -18,6 +18,7 @@ django-allauth==0.52.0
 django-anymail==10.0
 django-apscheduler==0.6.2
 django-cache-url==3.4.4
+django-debug-toolbar==3.6.0
 django-filter==22.1
 django-import-export==3.0.2
 django-property-filter==1.1.2
