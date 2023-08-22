@@ -862,6 +862,13 @@ class LoanEntries(models.Model):
     deduction_start_period_code = models.CharField(
         _("Period Code"), max_length=50, blank=True, null=True
     )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     created_at = models.DateField(_("Created At"), auto_now=True)
 
     class Meta:
