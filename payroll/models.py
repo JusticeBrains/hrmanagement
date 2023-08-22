@@ -391,6 +391,27 @@ class TransactionEntries(models.Model):
 
 
 class SavingSchemeEntries(models.Model):
+    """
+    Represents entries for a saving scheme.
+
+    Fields:
+    - id: Unique identifier for the saving scheme entry.
+    - disbursement_type: Type of disbursement for the saving scheme entry.
+    - employee: Foreign key to the related employee.
+    - employee_name: Name of the employee.
+    - savingscheme_code: Foreign key to the related saving scheme.
+    - saving_scheme_name: Name of the saving scheme.
+    - recurrent: Boolean field indicating if the saving scheme entry is recurrent.
+    - start_period: Foreign key to the related start period.
+    - start_period_code: Code for the start period.
+    - end_period_code: Code for the end period.
+    - end_period: Foreign key to the related end period.
+    - employee_contribution: Amount of employee contribution for the saving scheme.
+    - employer_contribution: Amount of employer contribution for the saving scheme.
+    - percentage_of_employee_basic: Percentage of employee's basic salary for the saving scheme.
+    - percentage_of_employer_basic: Percentage of employer's basic salary for the saving scheme.
+    """
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     disbursement_type = models.CharField(
         _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True
@@ -529,6 +550,29 @@ class SavingSchemeEntries(models.Model):
 
 
 class PayrollFormular(models.Model):
+    """
+    Represents a model for a payroll formula in a Django application.
+
+    Fields:
+    - id: Unique identifier for the payroll formula.
+    - description: Description of the payroll formula.
+    - shortname: Short name of the payroll formula.
+    - inactive: Boolean field indicating whether the payroll formula is inactive.
+    - hourly_rate: Hourly rate for the payroll formula.
+    - overtime_hours: Overtime hours for the payroll formula.
+    - company: Foreign key to the Company model representing the company associated with the payroll formula.
+    - company_name: Name of the company associated with the payroll formula.
+    - user_id: Foreign key to the CustomUser model representing the user associated with the payroll formula.
+    - updated_at: Date and time when the payroll formula was last updated.
+    - created_at: Date and time when the payroll formula was created.
+
+    Methods:
+    - __str__(): Returns a string representation of the payroll formula in the format "{shortname} - {hourly_rate}".
+    - __repr__(): Returns a string representation of the payroll formula in the format "{shortname} - {hourly_rate}".
+    - populate_fields(): Populates the company name field based on the related company model.
+    - save(): Overrides the default save method to automatically populate fields and save the payroll formula.
+    """
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
@@ -566,33 +610,53 @@ class PayrollFormular(models.Model):
         verbose_name_plural = "Payroll Formular"
 
     def __str__(self):
-        return "%s - %s" % (
-            self.shortname,
-            self.hourly_rate,
-        )
+        """
+        Returns a string representation of the payroll formula in the format "{shortname} - {hourly_rate}".
+        """
+        return f"{self.shortname} - {self.hourly_rate}"
 
     def __repr__(self):
-        return "%s - %s" % (
-            self.shortname,
-            self.hourly_rate,
-        )
+        """
+        Returns a string representation of the payroll formula in the format "{shortname} - {hourly_rate}".
+        """
+        return f"{self.shortname} - {self.hourly_rate}"
 
     def populate_fields(self):
+        """
+        Populates the company name field based on the related company model.
+        """
         if self.company:
             self.company_name = self.company.name
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the default save method to automatically populate fields and save the payroll formula.
+        """
         self.populate_fields()
         super().save(*args, **kwargs)
 
 
 class OvertimeSetup(models.Model):
+    """
+    Represents the setup for overtime work.
+
+    Fields:
+    - id: Unique identifier for the overtime setup.
+    - description: Description of the overtime setup.
+    - payroll_formular: Foreign key to the PayrollFormular model representing the payroll formula associated with the overtime setup.
+    - company: Foreign key to the Company model representing the company associated with the overtime setup.
+    - company_name: Name of the company associated with the overtime setup.
+    - user_id: Foreign key to the CustomUser model representing the user associated with the overtime setup.
+    - created_at: Date and time when the overtime setup was created.
+    - updated_at: Date and time when the overtime setup was last updated.
+    """
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     description = models.CharField(
         _("Description"), max_length=150, blank=True, null=True
     )
     payrollformular = models.ForeignKey(
-        "PayrollFormular", on_delete=models.PROTECT, related_name="overtimes"
+        "PayrollFormular", on_delete=models.DO_NOTHING, related_name="overtimes"
     )
     company = models.ForeignKey(
         "company.Company",
@@ -615,25 +679,83 @@ class OvertimeSetup(models.Model):
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
-        verbose_name = "Overtime SetUp"
-        verbose_name_plural = "Overtime SetUp"
+        verbose_name = "Overtime Setup"
+        verbose_name_plural = "Overtime Setups"
 
     def __str__(self):
-        return str(self.id) + " : " + (self.description or "")
+        """
+        Returns a string representation of the overtime setup.
 
-    def __repr__(self):
-        return str(self.id) + " : " + (self.description or "")
+        Returns:
+        - A string in the format "{id} : {description}".
+        """
+        return f"{self.id} : {self.description or ''}"
 
     def populate_fields(self):
+        """
+        Populates the company name field based on the related company model.
+        """
         if self.company:
             self.company_name = self.company.name
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the default save method to automatically populate fields and save the overtime setup.
+        """
         self.populate_fields()
         super().save(*args, **kwargs)
 
 
 class OvertimeEntries(models.Model):
+    """
+    The `OvertimeEntries` class is a Django model that represents entries for overtime work. It stores information about the employee, overtime setup, company, date, hours worked, and the calculated overtime amount.
+
+    Example Usage:
+        # Create a new overtime entry
+        entry = OvertimeEntries()
+        entry.employee = employee
+        entry.overtime = overtime_setup
+        entry.company = company
+        entry.date = date
+        entry.no_of_hours = hours_worked
+        entry.save()
+
+        # Retrieve all overtime entries for a specific employee
+        entries = OvertimeEntries.objects.filter(employee=employee)
+
+        # Calculate the total overtime amount for a specific period
+        total_amount = OvertimeEntries.objects.filter(period=period).aggregate(Sum('overtime_amount'))
+
+    Main functionalities:
+    - Store information about overtime work entries, including the employee, overtime setup, company, date, hours worked, and calculated overtime amount.
+    - Automatically populate fields such as employee name, employee code, paygroup number, company name, period code, and year based on related models and input data.
+    - Calculate the overtime amount based on the employee's annual basic salary, total working hours, and number of overtime hours worked.
+
+    Methods:
+    - `populate_fields()`: Populates fields such as employee name, employee code, paygroup number, company name, period code, and year based on related models and input data.
+    - `save()`: Overrides the default save method to automatically populate fields and save the overtime entry.
+
+    Fields:
+    - `id`: Unique identifier for the overtime entry.
+    - `employee`: Foreign key to the Employee model representing the employee associated with the overtime entry.
+    - `employee_code`: Code of the employee associated with the overtime entry.
+    - `employee_name`: Name of the employee associated with the overtime entry.
+    - `paygroup_no`: Paygroup number of the employee associated with the overtime entry.
+    - `overtime`: Foreign key to the OvertimeSetup model representing the overtime setup associated with the overtime entry.
+    - `overtime_name`: Name of the overtime setup associated with the overtime entry.
+    - `company`: Foreign key to the Company model representing the company associated with the overtime entry.
+    - `company_name`: Name of the company associated with the overtime entry.
+    - `date`: Start date of the overtime work.
+    - `status`: Boolean field indicating the status of the overtime entry.
+    - `user_id`: Foreign key to the CustomUser model representing the user associated with the overtime entry.
+    - `period`: Foreign key to the Period model representing the period associated with the overtime entry.
+    - `period_code`: Code of the period associated with the overtime entry.
+    - `no_of_hours`: Number of overtime hours worked.
+    - `overtime_amount`: Calculated overtime amount based on the employee's annual basic salary, total working hours, and number of overtime hours worked.
+    - `year`: Year of the period associated with the overtime entry.
+    - `created_at`: Date and time when the overtime entry was created.
+    - `updated_at`: Date and time when the overtime entry was last updated."""
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     employee = models.ForeignKey(
         "employee.Employee",
@@ -671,7 +793,7 @@ class OvertimeEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    date = models.DateField(_("Start Date"),auto_now=True)
+    date = models.DateField(_("Start Date"), auto_now=True)
     status = models.BooleanField(_("Status"), default=False)
     user_id = models.ForeignKey(
         "users.CustomUser",
@@ -720,21 +842,17 @@ class OvertimeEntries(models.Model):
         if self.period:
             self.period_code = self.period.period_code
             self.year = self.period.period_year.year
-        if self.overtime:
-            self.overtime_name = self.overtime.description
-            if self.employee.annual_basic is not None:
-                annual_basic = Decimal(self.employee.annual_basic)
-            else:
-                annual_basic = Decimal("0")
-
+        if self.overtime and self.employee.annual_basic is not None:
+            annual_basic = Decimal(self.employee.annual_basic)
             amount = annual_basic * 12
             total_working_hours = GlobalInputs.objects.get(company=self.company)
-
             if total_working_hours:
                 self.overtime_amount = float(
                     (amount / total_working_hours.annual_working_hours)
                     * self.no_of_hours
                 )
+        elif self.overtime:
+            self.overtime_name = self.overtime.description
 
     def save(self, *args, **kwargs):
         self.populate_fields()
@@ -742,6 +860,36 @@ class OvertimeEntries(models.Model):
 
 
 class Loans(models.Model):
+    """
+    Represents a model for loans in a payroll system.
+
+    Fields:
+    - id: Unique identifier for the loan object
+    - name: Name of the loan
+    - min_loan_amount: Minimum loan amount allowed
+    - max_loan_amount: Maximum loan amount allowed
+    - max_loan_term: Maximum loan term in months
+    - max_percentage_of_basic: Maximum percentage of basic salary that can be borrowed
+    - interest_rate: Interest rate for the loan
+    - interest_calculation_type: Type of interest calculation (e.g., Flat Rate, Amortization)
+    - interest_basic: Basic unit for interest calculation (e.g., Per Month, Per Annum)
+    - grace_periods: Number of grace periods before loan repayment starts
+    - percentage: Percentage of loan amount to be deducted from salary
+    - user_id: Foreign key to the associated user object
+    - company: Foreign key to the associated company object
+    - company_name: Name of the associated company
+    - created_at: Date and time of loan creation
+    - period: Foreign key to the associated period object
+    - period_code: Code of the associated period
+    - updated_at: Date and time of loan update
+
+    Methods:
+    - __str__(): Returns a string representation of the loan object
+    - __repr__(): Returns a string representation of the loan object
+    - populate_fields(): Populates the company_name and period_code fields based on the associated company and period objects, respectively
+    - save(): Overrides the default save() method to automatically populate the fields and save the loan object
+    """
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
     min_loan_amount = models.DecimalField(
@@ -804,28 +952,73 @@ class Loans(models.Model):
         verbose_name_plural = "Loans"
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the loan object.
+
+        Returns:
+        - str: The name of the loan
+        """
         return f"{self.name}"
 
     def __repr__(self):
+        """
+        Returns a string representation of the loan object.
+
+        Returns:
+        - str: The name of the loan
+        """
         return f"{self.name}"
 
     def populate_fields(self):
+        """
+        Populates the company_name and period_code fields based on the associated company and period objects, respectively.
+        """
         if self.company:
             self.company_name = self.company.name
         if self.period:
             self.period_code = self.period.period_code
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the default save() method to automatically populate the fields and save the loan object.
+        """
         self.populate_fields()
         super().save(*args, **kwargs)
 
+
 class LoanEntries(models.Model):
+    """
+    Represents entries for loans.
+
+    Fields:
+    - id: Unique identifier for the loan entry
+    - loan: Foreign key to the associated loan object
+    - loan_name: Name of the loan
+    - description: Description of the loan
+    - amount: Amount of the loan
+    - employee: Foreign key to the associated employee object
+    - employee_code: Code of the employee
+    - employee_name: Name of the employee
+    - interest_rate: Interest rate of the loan
+    - periodic_principal: Principal amount to be repaid periodically
+    - no_of_repayments: Number of repayments for the loan
+    - transaction_period: Foreign key to the associated transaction period object
+    - transaction_period_code: Code of the transaction period
+    - deduction_start_period: Foreign key to the associated deduction start period object
+    - deduction_start_period_code: Code of the deduction start period
+    """
+
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     loan = models.ForeignKey(
-        "payroll.Loans", verbose_name="Loan ID", related_name="loanentries", on_delete=models.DO_NOTHING
+        "payroll.Loans",
+        verbose_name=_("Loan ID"),
+        related_name="loanentries",
+        on_delete=models.DO_NOTHING,
     )
     loan_name = models.CharField(_("Loan Name"), max_length=150, blank=True, null=True)
-    description = models.CharField(_("Description"), max_length=150, blank=True, null=True)
+    description = models.CharField(
+        _("Description"), max_length=150, blank=True, null=True
+    )
     amount = models.DecimalField(
         _("Amount"), max_digits=10, decimal_places=2, default=0.0
     )
@@ -843,7 +1036,12 @@ class LoanEntries(models.Model):
         _("Employee Name"), max_length=150, blank=True, null=True
     )
     interest_rate = models.DecimalField(
-        _("Interest Rate"), max_digits=5, decimal_places=2, default=0.0, blank=True, null=True
+        _("Interest Rate"),
+        max_digits=5,
+        decimal_places=2,
+        default=0.0,
+        blank=True,
+        null=True,
     )
     periodic_principal = models.DecimalField(
         _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
@@ -868,7 +1066,7 @@ class LoanEntries(models.Model):
         related_name="loan_entries_deduction",
     )
     deduction_start_period_code = models.CharField(
-        _("Period Code"), max_length=50, blank=True, null=True
+        _("Deduction Start Period Code"), max_length=50, blank=True, null=True
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
@@ -877,8 +1075,16 @@ class LoanEntries(models.Model):
         blank=True,
         null=True,
     )
-    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING, blank=True, null=True)
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
@@ -894,14 +1100,16 @@ class LoanEntries(models.Model):
         return f"{self.loan_name}"
 
     def populate_fields(self):
-        if self.company:
-            self.company_name = self.company.name
-        if self.transaction_period:
-            self.transaction_period_code = self.transaction_period.period_code
-        if self.deduction_start_period:
-            self.deduction_start_period_code = self.deduction_start_period.period_code
-        if self.loan:
-            self.loan_name = self.loan.name
+        self.company_name = self.company.name if self.company else None
+        self.transaction_period_code = (
+            self.transaction_period.period_code if self.transaction_period else None
+        )
+        self.deduction_start_period_code = (
+            self.deduction_start_period.period_code
+            if self.deduction_start_period
+            else None
+        )
+        self.loan_name = self.loan.name if self.loan else None
         if self.employee:
             self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
             self.employee_code = self.employee.code
@@ -921,19 +1129,32 @@ class AuditTrail(models.Model):
         null=True,
     )
     process_id = models.TextField(_("Process ID"), blank=True, null=True)
-    ip_address = models.CharField(_("IP Address"), max_length=150, blank=True, null=True)
+    ip_address = models.CharField(
+        _("IP Address"), max_length=150, blank=True, null=True
+    )
     browser = models.CharField(_("Browser"), max_length=150, blank=True, null=True)
-    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING)
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
-    created_at = models.DateTimeField(_("Created At"),auto_now_add=True)
+    company = models.ForeignKey(
+        "company.Company", verbose_name=_("Company"), on_delete=models.DO_NOTHING
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
 
     class Meta:
-        verbose_name = "Audit Trails"
+        verbose_name = "Audit Trail"
         verbose_name_plural = "Audit Trails"
+
     def populate_fields(self):
+        """
+        Populates the company_name field with the name of the associated company.
+        """
         if self.company:
             self.company_name = self.company.name
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the save method to call populate_fields before saving the audit trail entry.
+        """
         self.populate_fields()
         super().save(*args, **kwargs)
