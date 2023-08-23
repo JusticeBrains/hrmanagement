@@ -21,8 +21,6 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
         company_name = instance.company_name
         company = instance.company
         status = instance.status
-        employee_contribution=instance.employee_contribution
-        employer_contribution=instance.employer_contribution
 
         def create_or_update_employee_saving_scheme_entry(employee, employee_name,employee_per,employer_per):
             """
@@ -54,8 +52,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 save_entry.employee = employee
                 save_entry.employee_name = employee_name
                 save_entry.status = status
-                save_entry.employee_contribution = employee_contribution
-                save_entry.employer_contribution = employer_contribution
+                save_entry.employee_contribution = employee_per
+                save_entry.employer_contribution = employer_per
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
