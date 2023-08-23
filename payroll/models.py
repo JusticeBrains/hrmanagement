@@ -393,8 +393,8 @@ class EmployeeTransactionEntries(models.Model):
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
-        verbose_name = "Employee Saving Scheme Entries"
-        verbose_name_plural = "Employee Saving Scheme Entries"
+        verbose_name = "Employee Transaction Entries"
+        verbose_name_plural = "Employee Transaction Entries"
     
     def __str__(self) -> str:
         return f"{self.employee_name} {self.transaction_entry_name}"
