@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     EmployeeSavingSchemeEntries,
+    EmployeeTransactionEntries,
     Transactions,
     SavingScheme,
     TransactionEntries,
@@ -66,4 +67,9 @@ class AuditTrailAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeSavingSchemeEntries)
 class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(EmployeeTransactionEntries)
+class EmployeeTransactionEntriesAdmin(admin.ModelAdmin):
     ...
