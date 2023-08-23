@@ -86,7 +86,7 @@ class Transactions(models.Model):
     recurring = models.BooleanField(_("Recurring"), default=False)
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -205,7 +205,7 @@ class SavingScheme(models.Model):
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -271,16 +271,6 @@ class TransactionEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
-    paygroup = models.ForeignKey(
-        "employee.PayGroup",
-        verbose_name=_("PayGroup"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
-    paygroup_name = models.CharField(
-        _("Paygroup Name"), max_length=150, blank=True, null=True
-    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
@@ -326,7 +316,7 @@ class TransactionEntries(models.Model):
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -344,8 +334,6 @@ class TransactionEntries(models.Model):
             self.transaction_name = self.transaction_code.description
         if self.company:
             self.company_name = self.company.name
-        if self.paygroup:
-            self.paygroup_name = self.paygroup.description
         if self.employee:
             self.employee_name = (
                 f"{self.employee.last_name}, {self.employee.first_name}"
@@ -356,8 +344,6 @@ class TransactionEntries(models.Model):
             self.start_period_code = self.start_period.period_code
         if self.end_period:
             self.end_period_code = self.end_period.period_code
-        if self.job_title:
-            self.job_title_description = self.job_title.description
 
     def __str__(self) -> str:
         return f"{self.disbursement_type}"
@@ -368,6 +354,59 @@ class TransactionEntries(models.Model):
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
+
+
+class EmployeeTransactionEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    employee = models.ForeignKey("employee.Employee", on_delete=models.CASCADE,related_name="employee_transaction")
+    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    transaction_entry = models.ForeignKey("payroll.TransactionEntries", verbose_name=_("Transaction Name"), on_delete=models.CASCADE, related_name="employee_transaction")
+    transaction_entry_name = models.CharField(_("Transaction Name"), max_length=150, blank=True, null=True)
+    transaction_type = models.CharField(
+        _("Transaction Type"),
+        choices=TransactionType.choices,
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+    recurrent = models.BooleanField(_("Recurrent"), default=True)
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period_code = models.CharField(
+        _("End Period Code"), max_length=50, blank=True, null=True
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    amount = models.DecimalField(
+        _("Amount"), max_digits=10, decimal_places=2, default=0.0
+    )
+    percentage_of_basic = models.DecimalField(
+        _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
+    )
+    taxable = models.BooleanField(_("Taxable"), default=False)
+    contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    status = models.BooleanField(_("Status"), default=False)
+    created_at = models.DateField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
+
+    class Meta:
+        verbose_name = "Employee Saving Scheme Entries"
+        verbose_name_plural = "Employee Saving Scheme Entries"
+    
+    def __str__(self) -> str:
+        return f"{self.employee_name} {self.transaction_entry_name}"
+
+    def __repr__(self):
+        return f"{self.employee_name} {self.transaction_entry_name}"
 
 
 class SavingSchemeEntries(models.Model):
@@ -453,7 +492,7 @@ class SavingSchemeEntries(models.Model):
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -534,12 +573,14 @@ class EmployeeSavingSchemeEntries(models.Model):
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
     )
     status = models.BooleanField(_("Status"), default=False)
+    # created_at = models.DateField(_("Created At"), auto_now_add=True, default=timezone.now)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         verbose_name = "Employee Saving Scheme Entries"
