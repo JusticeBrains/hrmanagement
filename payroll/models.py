@@ -140,17 +140,11 @@ class SavingScheme(models.Model):
     prorate_existing_staff = models.BooleanField(
         _("Prorate Existing Staff"), default=False
     )
-    employee_contribution = models.DecimalField(
-        _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
-    )
     percentage_of_employee_basic = models.DecimalField(
         _("Percentage Of Employee Contribution"),
         max_digits=10,
         decimal_places=2,
         default=0.0,
-    )
-    employer_contribution = models.DecimalField(
-        _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
     )
     percentage_of_employer_basic = models.DecimalField(
         _("Percentage Of Employer Basic"), max_digits=4, decimal_places=2, default=0.0
@@ -478,12 +472,6 @@ class SavingSchemeEntries(models.Model):
         null=True,
         related_name="saving_end_per_entries",
     )
-    employee_contribution = models.DecimalField(
-        _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
-    )
-    employer_contribution = models.DecimalField(
-        _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
-    )
     percentage_of_employee_basic = models.DecimalField(
         _("Percentage Of Employee Basic"), max_digits=4, decimal_places=2, default=0.0
     )
@@ -536,6 +524,8 @@ class SavingSchemeEntries(models.Model):
             self.start_period_code = self.start_period.period_code
         if self.end_period:
             self.end_period_code = self.end_period.period_code
+        self.percentage_of_employee_basic = self.savingscheme_code.percentage_of_employee_basic if self.savingscheme_code is not None else None
+        self.percentage_of_employer_basic = self.savingscheme_code.percentage_of_employer_basic if self.savingscheme_code is not None else None
 
 
     def save(self, *args, **kwargs):
@@ -564,12 +554,6 @@ class EmployeeSavingSchemeEntries(models.Model):
     )
     employer_contribution = models.DecimalField(
         _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
-    )
-    percentage_of_employee_basic = models.DecimalField(
-        _("Percentage Of Employee Basic"), max_digits=4, decimal_places=2, default=0.0
-    )
-    percentage_of_employer_basic = models.DecimalField(
-        _("Percentage Of Employer Basic"), max_digits=4, decimal_places=2, default=0.0
     )
     user_id = models.ForeignKey(
         "users.CustomUser",

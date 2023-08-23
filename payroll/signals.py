@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from employee.models import Employee, PayGroup
@@ -22,10 +23,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
         status = instance.status
         employee_contribution=instance.employee_contribution
         employer_contribution=instance.employer_contribution
-        percentage_of_employee_basic=instance.percentage_of_employee_basic
-        percentage_of_employer_basic=instance.percentage_of_employer_basic
 
-        def create_or_update_employee_saving_scheme_entry(employee, employee_name):
+        def create_or_update_employee_saving_scheme_entry(employee, employee_name,employee_per,employer_per):
             """
             Create or update EmployeeSavingSchemeEntries object for the given employee.
             """
@@ -40,10 +39,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 employee=employee,
                 employee_name=employee_name,
                 status = status,
-                employee_contribution = employee_contribution,
-                employer_contribution = employer_contribution,
-                percentage_of_employee_basic = percentage_of_employee_basic,
-                percentage_of_employer_basic = percentage_of_employer_basic
+                employee_contribution = employee_per,
+                employer_contribution = employer_per
             )
 
             if not created:
@@ -59,35 +56,46 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 save_entry.status = status
                 save_entry.employee_contribution = employee_contribution
                 save_entry.employer_contribution = employer_contribution
-                save_entry.percentage_of_employee_basic = percentage_of_employee_basic
-                save_entry.percentage_of_employer_basic = percentage_of_employer_basic
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
             employees = Employee.objects.filter(company_id=company)
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                create_or_update_employee_saving_scheme_entry(employee, employee_name)
+                employee_basic = Decimal(employee.annual_basic)
+                employee_per = float((instance.percentage_of_employee_basic / 100) * employee_basic)
+                employer_per = float((instance.percentage_of_employer_basic / 100) * employee_basic)
+                create_or_update_employee_saving_scheme_entry(employee, employee_name, employee_per, employer_per)
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
             pay_group = PayGroup.objects.get(id=instance.global_id)
             employees = Employee.objects.filter(company_id=company, pay_group_code=pay_group)
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                create_or_update_employee_saving_scheme_entry(employee, employee_name)
+                employee_basic = Decimal(employee.annual_basic)
+                employee_per = float((instance.percentage_of_employee_basic / 100) * employee_basic)
+                employer_per = float((instance.percentage_of_employer_basic / 100) * employee_basic)
+                create_or_update_employee_saving_scheme_entry(employee, employee_name, employee_per, employer_per)
 
         elif disbursement_type == DisbursementType.JOB_TITLE:
             job_title = JobTitles.objects.get(id=instance.global_id)
             employees = Employee.objects.filter(company_id=company, job_titles=job_title)
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                create_or_update_employee_saving_scheme_entry(employee, employee_name)
+                employee_basic = Decimal(employee.annual_basic)
+                employee_per = float((instance.percentage_of_employee_basic / 100) * employee_basic)
+                employer_per = float((instance.percentage_of_employer_basic / 100) * employee_basic)
+                create_or_update_employee_saving_scheme_entry(employee, employee_name, employee_per, employer_per)
 
         elif disbursement_type == DisbursementType.INDIVIDUAL:
             employee = Employee.objects.get(id=instance.global_id)
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                create_or_update_employee_saving_scheme_entry(employee, employee_name)
+                employee_basic = Decimal(employee.annual_basic)
+                employee_per = float((instance.percentage_of_employee_basic / 100) * employee_basic)
+                employer_per = float((instance.percentage_of_employer_basic / 100) * employee_basic)
+
+                create_or_update_employee_saving_scheme_entry(employee, employee_name, employee_per, employer_per)
 
 
 
@@ -130,7 +138,6 @@ def create_employee_transaction(sender, instance, **kwargs):
                 amount = amount,
                 contribute_to_ssf = contribute_to_ssf,
                 taxable = taxable,
-                percentage_of_basic = percentage_of_basic,
                 status = status
             )
 
@@ -149,7 +156,6 @@ def create_employee_transaction(sender, instance, **kwargs):
                 save_entry.amount = amount
                 save_entry.contribute_to_ssf = contribute_to_ssf
                 save_entry.taxable = taxable
-                save_entry.percentage_of_basic = percentage_of_basic
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
