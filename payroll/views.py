@@ -2,6 +2,8 @@ from rest_framework import viewsets
 
 from .models import (
     AuditTrail,
+    EmployeeSavingSchemeEntries,
+    EmployeeTransactionEntries,
     LoanEntries,
     Loans,
     Transactions,
@@ -14,6 +16,8 @@ from .models import (
 )
 from .serializers import (
     AuditTrailSerializer,
+    EmployeeSavingSchemeEntriesSerializer,
+    EmployeeTransactionEntriesSerializer,
     LoanEntriesSerializer,
     LoansSerializer,
     TransactionSerializer,
@@ -81,4 +85,15 @@ class LoanEntriesViewSet(viewsets.ModelViewSet):
 class AuditTrailViewSet(viewsets.ModelViewSet):
     queryset = AuditTrail.objects.all()
     serializer_class = AuditTrailSerializer
+    filterset_fields = "__all__"
+
+class EmployeeSavingSchemeEntriesViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeSavingSchemeEntries.objects.all()
+    serializer_class = EmployeeSavingSchemeEntriesSerializer
+    filterset_fields = "__all__"
+
+
+class EmployeeTransactionEntriesViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeTransactionEntries.objects.all()
+    serializer_class = EmployeeTransactionEntriesSerializer
     filterset_fields = "__all__"

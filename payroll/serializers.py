@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from .models import (
     AuditTrail,
+    EmployeeSavingSchemeEntries,
+    EmployeeTransactionEntries,
     LoanEntries,
     Loans,
     Transactions,
@@ -70,4 +72,15 @@ class LoanEntriesSerializer(serializers.ModelSerializer):
 class AuditTrailSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuditTrail
+        fields = "__all__"
+
+
+class EmployeeSavingSchemeEntriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeSavingSchemeEntries
+        fields = "__all__"
+
+class EmployeeTransactionEntriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeTransactionEntries
         fields = "__all__"

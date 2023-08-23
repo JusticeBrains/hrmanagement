@@ -2,6 +2,8 @@ from rest_framework.routers import SimpleRouter
 
 from .views import (
     AuditTrailViewSet,
+    EmployeeSavingSchemeEntriesViewSet,
+    EmployeeTransactionEntriesViewSet,
     LoanEntriesViewSet,
     LoansViewSet,
     TransactionViewSet,
@@ -10,7 +12,7 @@ from .views import (
     SavingSchemeEntriesViewSet,
     PayrollFormularViewSet,
     OvertimeSetupViewSet,
-    OvertimeEntriesViewSet
+    OvertimeEntriesViewSet,
 )
 
 
@@ -28,8 +30,18 @@ router.register(
 )
 router.register("payroll-formular", PayrollFormularViewSet, basename="payroll-formular")
 router.register("overtime-setup", OvertimeSetupViewSet, basename="overtime-setup")
-router.register('overtime-entries', OvertimeEntriesViewSet, basename="overtime-entries")
-router.register('loans', LoansViewSet, basename="loans")
-router.register('loan-entries', LoanEntriesViewSet, basename="loans-entries")
+router.register("overtime-entries", OvertimeEntriesViewSet, basename="overtime-entries")
+router.register("loans", LoansViewSet, basename="loans")
+router.register("loan-entries", LoanEntriesViewSet, basename="loans-entries")
+router.register(
+    "employee-transaction-entries",
+    EmployeeTransactionEntriesViewSet,
+    basename="employee-transaction-entries",
+)
+router.register(
+    "employee-saving-scheme-entries",
+    EmployeeSavingSchemeEntriesViewSet,
+    basename="employee-saving-scheme-entries",
+)
 router.register("audit-trails", AuditTrailViewSet, basename="audit-trails")
 urlpatterns = router.urls
