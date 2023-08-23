@@ -159,30 +159,28 @@ def create_employee_transaction(sender, instance, **kwargs):
             save_entry, created = EmployeeTransactionEntries.objects.get_or_create(
                 transaction_entry=instance,
                 transaction_entry_name=transaction_entry_name,
-                recurrent=recurrent,
-                start_period_code=start_period_code,
-                end_period_code=end_period_code,
-                user_id=user_id,
                 company_name=company_name,
                 employee=employee,
                 employee_name=employee_name,
-                transaction_type=transaction_type,
-                amount=amount,
-                contribute_to_ssf=contribute_to_ssf,
-                taxable=taxable,
-                status=status,
+
+                defaults={
+                "recurrent":recurrent,
+                "start_period_code":start_period_code,
+                "end_period_code":end_period_code,
+                "user_id":user_id,
+                "transaction_type":transaction_type,
+                "amount":amount,
+                "contribute_to_ssf":contribute_to_ssf,
+                "taxable":taxable,
+                "status":status,
+                }
             )
 
             if not created:
-                save_entry.transaction_entry = instance
-                save_entry.transaction_entry_name = transaction_entry_name
                 save_entry.recurrent = recurrent
                 save_entry.start_period_code = start_period_code
                 save_entry.end_period_code = end_period_code
                 save_entry.user_id = user_id
-                save_entry.company_name = company_name
-                save_entry.employee = employee
-                save_entry.employee_name = employee_name
                 save_entry.status = status
                 save_entry.transaction_type = transaction_type
                 save_entry.amount = amount
