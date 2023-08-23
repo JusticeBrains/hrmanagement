@@ -551,7 +551,7 @@ class SavingSchemeEntries(models.Model):
 
 class EmployeeSavingSchemeEntries(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    employee = models.ForeignKey("employees.Employee", on_delete=models.CASCADE,related_name="employee_saving_scheme")
+    employee = models.ForeignKey("employee.Employee", on_delete=models.CASCADE,related_name="employee_saving_scheme")
     employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
     saving_scheme = models.ForeignKey("payroll.SavingSchemeEntries", verbose_name=_("Saving Scheme"), on_delete=models.CASCADE, related_name="employee_entry")
     saving_scheme_name = models.CharField(_("Saving Scheme Name"), max_length=150, blank=True, null=True)
