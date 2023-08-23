@@ -271,16 +271,6 @@ class TransactionEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
-    paygroup = models.ForeignKey(
-        "employee.PayGroup",
-        verbose_name=_("PayGroup"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
-    paygroup_name = models.CharField(
-        _("Paygroup Name"), max_length=150, blank=True, null=True
-    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
@@ -290,16 +280,6 @@ class TransactionEntries(models.Model):
     )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
-    )
-    job_title = models.ForeignKey(
-        "company.JobTitles",
-        verbose_name=_("Job Titles"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-    )
-    job_title_description = models.CharField(
-        _("Job Title Description"), max_length=150, blank=True, null=True
     )
     type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
     recurrent = models.BooleanField(_("Recurrent"), default=False)
@@ -333,16 +313,6 @@ class TransactionEntries(models.Model):
     )
     taxable = models.BooleanField(_("Taxable"), default=False)
     contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
-    company = models.ForeignKey(
-        "company.Company",
-        verbose_name=_("Company"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
-    company_name = models.CharField(
-        _("Company Name"), max_length=150, blank=True, null=True
-    )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
@@ -488,26 +458,6 @@ class SavingSchemeEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    paygroup = models.ForeignKey(
-        "employee.PayGroup",
-        verbose_name=_("PayGroup"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
-    paygroup_name = models.CharField(
-        _("Paygroup Name"), max_length=150, blank=True, null=True
-    )
-    job_title = models.ForeignKey(
-        "company.JobTitles",
-        verbose_name=_("Job Titles"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-    )
-    job_title_description = models.CharField(
-        _("Job Title Description"), max_length=150, blank=True, null=True
-    )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
@@ -538,11 +488,6 @@ class SavingSchemeEntries(models.Model):
         if self.end_period:
             self.end_period_code = self.end_period.period_code
 
-        if self.paygroup:
-            self.paygroup_name = self.paygroup.description
-
-        if self.job_title:
-            self.job_title_description = self.job_title.description
 
     def save(self, *args, **kwargs):
         self.populate_fields()
