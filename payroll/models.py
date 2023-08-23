@@ -539,6 +539,8 @@ class EmployeeSavingSchemeEntries(models.Model):
         blank=True,
         null=True,
     )
+    status = models.BooleanField(_("Status"), default=False)
+
     class Meta:
         verbose_name = "Employee Saving Scheme Entries"
         verbose_name_plural = "Employee Saving Scheme Entries"

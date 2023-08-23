@@ -5,7 +5,7 @@ from company.models import JobTitles
 from .models import EmployeeSavingSchemeEntries, SavingSchemeEntries
 from options.text_options import DisbursementType
 
-@receiver(pre_save, sender=SavingSchemeEntries)
+@receiver(post_save, sender=SavingSchemeEntries)
 def create_employee_saving_scheme(sender, instance, **kwargs):
     """
     Create or update EmployeeSavingSchemeEntries objects based on the disbursement_type of the SavingSchemeEntries instance.
@@ -19,6 +19,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
         user_id = instance.user_id
         company_name = instance.company_name
         company = instance.company
+        status = instance.status
 
         def create_or_update_employee_saving_scheme_entry(employee, employee_name):
             """
@@ -33,7 +34,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 user_id=user_id,
                 company_name=company_name,
                 employee=employee,
-                employee_name=employee_name
+                employee_name=employee_name,
+                status = status
             )
 
             if not created:
@@ -46,6 +48,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 save_entry.company_name = company_name
                 save_entry.employee = employee
                 save_entry.employee_name = employee_name
+                save_entry.status = status
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
