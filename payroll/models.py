@@ -549,6 +549,52 @@ class SavingSchemeEntries(models.Model):
         super().save(*args, **kwargs)
 
 
+class EmployeeSavingSchemeEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    employee = models.ForeignKey("employees.Employee", on_delete=models.CASCADE,related_name="employee_saving_scheme")
+    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    saving_scheme = models.ForeignKey("payroll.SavingSchemeEntries", verbose_name=_("Saving Scheme"), on_delete=models.CASCADE, related_name="employee_entry")
+    saving_scheme_name = models.CharField(_("Saving Scheme Name"), max_length=150, blank=True, null=True)
+    recurrent = models.BooleanField(_("Recurrent"), default=True)
+    start_period_code = models.CharField(
+        _("Start Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period_code = models.CharField(
+        _("End Period Code"), max_length=50, blank=True, null=True
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    employee_contribution = models.DecimalField(
+        _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
+    )
+    employer_contribution = models.DecimalField(
+        _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
+    )
+    percentage_of_employee_basic = models.DecimalField(
+        _("Percentage Of Employee Basic"), max_digits=4, decimal_places=2, default=0.0
+    )
+    percentage_of_employer_basic = models.DecimalField(
+        _("Percentage Of Employer Basic"), max_digits=4, decimal_places=2, default=0.0
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    class Meta:
+        verbose_name = "Employee Saving Scheme Entries"
+        verbose_name_plural = "Employee Saving Scheme Entries"
+    
+    def __str__(self) -> str:
+        return f"{self.employee_name} {self.saving_scheme_name}"
+
+    def __repr__(self):
+        return f"{self.employee_name} {self.saving_scheme_name}"
+
+
 class PayrollFormular(models.Model):
     """
     Represents a model for a payroll formula in a Django application.
