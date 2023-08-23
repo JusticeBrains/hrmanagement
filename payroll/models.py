@@ -271,6 +271,16 @@ class TransactionEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
+    paygroup = models.ForeignKey(
+        "employee.PayGroup",
+        verbose_name=_("PayGroup"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    paygroup_name = models.CharField(
+        _("Paygroup Name"), max_length=150, blank=True, null=True
+    )
     company = models.ForeignKey(
         "company.Company",
         verbose_name=_("Company"),
