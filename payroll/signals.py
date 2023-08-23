@@ -5,7 +5,7 @@ from company.models import JobTitles
 from .models import EmployeeSavingSchemeEntries, SavingSchemeEntries
 from options.text_options import DisbursementType
 
-@receiver(post_save, sender=SavingSchemeEntries)
+@receiver(pre_save, sender=SavingSchemeEntries)
 def create_employee_saving_scheme(sender, instance, **kwargs):
     """
     Create or update EmployeeSavingSchemeEntries objects based on the disbursement_type of the SavingSchemeEntries instance.
