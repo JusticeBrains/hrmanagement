@@ -28,7 +28,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     end_period_code=end_period_code,
                     user_id=user_id,
                     company_name=company_name,
-                    employee= employee.id,
+                    employee= employee,
                     employee_name= f"{employee.last_name} {employee.first_name}"
                 )
 
@@ -40,7 +40,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     save_entry.end_period_code = end_period_code
                     save_entry.user_id=user_id
                     save_entry.company_name=company_name
-                    save_entry.employee = employee.id
+                    save_entry.employee = employee
                     save_entry.employee_name = f"{employee.last_name} {employee.first_name}"
                     save_entry.save()
 
@@ -55,7 +55,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     end_period_code=end_period_code,
                     user_id=user_id,
                     company_name=company_name,
-                    employee= employee.id,
+                    employee= employee,
                     employee_name= f"{employee.last_name} {employee.first_name}"
                 )
 
@@ -67,7 +67,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     save_entry.end_period_code = end_period_code
                     save_entry.user_id=user_id
                     save_entry.company_name=company_name
-                    save_entry.employee = employee.id
+                    save_entry.employee = employee
                     save_entry.employee_name = f"{employee.last_name} {employee.first_name}"
                     save_entry.save()
 
@@ -82,7 +82,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     end_period_code=end_period_code,
                     user_id=user_id,
                     company_name=company_name,
-                    employee= employee.id,
+                    employee= employee,
                     employee_name= f"{employee.last_name} {employee.first_name}"
                 )
 
@@ -94,7 +94,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     save_entry.end_period_code = end_period_code
                     save_entry.user_id=user_id
                     save_entry.company_name=company_name
-                    save_entry.employee = employee.id
+                    save_entry.employee = employee
                     save_entry.employee_name = f"{employee.last_name} {employee.first_name}"
                     save_entry.save()
 
@@ -109,7 +109,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     end_period_code=end_period_code,
                     user_id=user_id,
                     company_name=company_name,
-                    employee= employee.id,
+                    employee= employee,
                     employee_name= f"{employee.last_name} {employee.first_name}"
                 )
 
@@ -121,6 +121,6 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     save_entry.end_period_code = end_period_code
                     save_entry.user_id=user_id
                     save_entry.company_name=company_name
-                    save_entry.employee = employee.id
+                    save_entry.employee = employee
                     save_entry.employee_name = f"{employee.last_name} {employee.first_name}"
                     save_entry.save()
