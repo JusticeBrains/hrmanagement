@@ -3,16 +3,19 @@ from rest_framework import serializers
 from .models import (
     AuditTrail,
     EmployeeSavingSchemeEntries,
+    EmployeeShiftEntries,
     EmployeeTransactionEntries,
     LoanEntries,
     Loans,
+    ShiftEntries,
+    ShiftSetUp,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
     TransactionEntries,
     PayrollFormular,
     OvertimeSetup,
-    OvertimeEntries
+    OvertimeEntries,
 )
 
 
@@ -62,7 +65,8 @@ class LoansSerializer(serializers.ModelSerializer):
     class Meta:
         model = Loans
         fields = "__all__"
-    
+
+
 class LoanEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanEntries
@@ -80,7 +84,26 @@ class EmployeeSavingSchemeEntriesSerializer(serializers.ModelSerializer):
         model = EmployeeSavingSchemeEntries
         fields = "__all__"
 
+
 class EmployeeTransactionEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeTransactionEntries
+        fields = "__all__"
+
+
+class ShiftSetUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShiftSetUp
+        fields = "__all__"
+
+
+class ShiftEntriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShiftEntries
+        fields = "__all__"
+
+
+class EmployeeShiftEntriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeShiftEntries
         fields = "__all__"

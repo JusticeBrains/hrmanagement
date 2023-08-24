@@ -3,9 +3,12 @@ from rest_framework.routers import SimpleRouter
 from .views import (
     AuditTrailViewSet,
     EmployeeSavingSchemeEntriesViewSet,
+    EmployeeShiftEntriesViewSet,
     EmployeeTransactionEntriesViewSet,
     LoanEntriesViewSet,
     LoansViewSet,
+    ShiftEntriesViewSet,
+    ShiftSetUpViewSet,
     TransactionViewSet,
     SavingSchemeViewSet,
     TransactionEntriesViewSet,
@@ -44,4 +47,11 @@ router.register(
     basename="employee-saving-scheme-entries",
 )
 router.register("audit-trails", AuditTrailViewSet, basename="audit-trails")
+router.register("shift-setup", ShiftSetUpViewSet, basename="shift-setup")
+router.register("shift-entries", ShiftEntriesViewSet, basename="shift-entries")
+router.register(
+    "employee-shift-entries",
+    EmployeeShiftEntriesViewSet,
+    basename="employee-shift-entries",
+)
 urlpatterns = router.urls

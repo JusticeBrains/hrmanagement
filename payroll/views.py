@@ -3,30 +3,36 @@ from rest_framework import viewsets
 from .models import (
     AuditTrail,
     EmployeeSavingSchemeEntries,
+    EmployeeShiftEntries,
     EmployeeTransactionEntries,
     LoanEntries,
     Loans,
+    ShiftEntries,
+    ShiftSetUp,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
     TransactionEntries,
     PayrollFormular,
     OvertimeSetup,
-    OvertimeEntries
+    OvertimeEntries,
 )
 from .serializers import (
     AuditTrailSerializer,
     EmployeeSavingSchemeEntriesSerializer,
+    EmployeeShiftEntriesSerializer,
     EmployeeTransactionEntriesSerializer,
     LoanEntriesSerializer,
     LoansSerializer,
+    ShiftEntriesSerializer,
+    ShiftSetUpSerializer,
     TransactionSerializer,
     SavingSchemeSerializer,
     SavingSchemeEntriesSerializer,
     TransactionEntriesSerializer,
     PayrollFormularSerializer,
     OvertimeSerializer,
-    OvertimeEntriesSerializer
+    OvertimeEntriesSerializer,
 )
 
 
@@ -65,6 +71,7 @@ class OvertimeSetupViewSet(viewsets.ModelViewSet):
     serializer_class = OvertimeSerializer
     filterset_fields = "__all__"
 
+
 class OvertimeEntriesViewSet(viewsets.ModelViewSet):
     queryset = OvertimeEntries.objects.all()
     serializer_class = OvertimeEntriesSerializer
@@ -82,10 +89,12 @@ class LoanEntriesViewSet(viewsets.ModelViewSet):
     serializer_class = LoanEntriesSerializer
     filterset_fields = "__all__"
 
+
 class AuditTrailViewSet(viewsets.ModelViewSet):
     queryset = AuditTrail.objects.all()
     serializer_class = AuditTrailSerializer
     filterset_fields = "__all__"
+
 
 class EmployeeSavingSchemeEntriesViewSet(viewsets.ModelViewSet):
     queryset = EmployeeSavingSchemeEntries.objects.all()
@@ -96,4 +105,22 @@ class EmployeeSavingSchemeEntriesViewSet(viewsets.ModelViewSet):
 class EmployeeTransactionEntriesViewSet(viewsets.ModelViewSet):
     queryset = EmployeeTransactionEntries.objects.all()
     serializer_class = EmployeeTransactionEntriesSerializer
+    filterset_fields = "__all__"
+
+
+class ShiftSetUpViewSet(viewsets.ModelViewSet):
+    queryset = ShiftSetUp.objects.all()
+    serializer_class = ShiftSetUpSerializer
+    filterset_fields = "__all__"
+
+
+class ShiftEntriesViewSet(viewsets.ModelViewSet):
+    queryset = ShiftEntries.objects.all()
+    serializer_class = ShiftEntriesSerializer
+    filterset_fields = "__all__"
+
+
+class EmployeeShiftEntriesViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeShiftEntries.objects.all()
+    serializer_class = EmployeeShiftEntriesSerializer
     filterset_fields = "__all__"

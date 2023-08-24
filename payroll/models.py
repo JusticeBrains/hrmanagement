@@ -11,7 +11,9 @@ from options.text_options import (
     PaymentFrequency,
     AllowanceType,
     DeductionFrequency,
+    RecordType,
     TransactionType,
+    WorkType,
 )
 
 
@@ -1186,3 +1188,120 @@ class AuditTrail(models.Model):
         """
         self.populate_fields()
         super().save(*args, **kwargs)
+
+
+
+class ShiftSetUp(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
+    flat_rate = models.DecimalField(_("Flat Rate"), max_digits=5, decimal_places=2, default=0.0)
+    percentage_of_daily_wage = models.DecimalField(_("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0)
+    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly Rate"), max_digits=5, decimal_places=2, default=0.0)
+    recurring = models.BooleanField(_("Recurring"), default=True)
+    work_type = models.CharField(_("Work Type"), choices=WorkType.choices,max_length=50, blank=True, null=True)
+    record_type = models.CharField(_("Record Type"), choices=RecordType.choices,max_length=50, blank=True, null=True)
+    taxable = models.BooleanField(_("Taxable"), default=True)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+
+    class Meta:
+        verbose_name = "Shift SetUp"
+        verbose_name_plural = "Shift SetUps"
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+    def __repr__(self):
+        return f"{self.name}"
+
+
+class ShiftEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    disbursement_type = models.CharField(
+        _("Disbursement Type"),
+        choices=DisbursementType.choices,
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    shift_code = models.ForeignKey("payroll.ShiftSetUp", verbose_name=_("Shift Code"), on_delete=models.CASCADE,)
+    shift_name = models.CharField(_("Shift Name"), max_length=150, blank=True, null=True)
+    no_of_shift = models.PositiveIntegerField(_("No Of Shift"), default=0)
+    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
+    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly"), max_digits=5, decimal_places=2, default=0.0)
+    shift_amount = models.DecimalField(_("Shift Amount"), max_digits=5, decimal_places=2, default=0.0)
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
+    date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
+    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+
+    class Meta:
+        verbose_name = "Shift Entries"
+        verbose_name_plural = "Shift Entries"
+    
+    def __str__(self) -> str:
+        return f"{self.shift_code}"
+
+    def __repr__(self):
+        return f"{self.shift_code}"
+
+
+class EmployeeShiftEntries(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    shift_code = models.ForeignKey("payroll.ShiftSetUp", verbose_name=_("Shift Code"), on_delete=models.CASCADE,)
+    shift_name = models.CharField(_("Shift Name"), max_length=150, blank=True, null=True)
+    employee_id = models.ForeignKey("employee.Employee", verbose_name=_("Employee ID"), on_delete=models.CASCADE)
+    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    no_of_shift = models.DecimalField(_("No Of Shift"), max_digits=5, decimal_places=2, default=0.0)
+    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
+    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly_rate"), max_digits=5, decimal_places=2, default=0.0)
+    percentage_of_daily_wage = models.DecimalField(_("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0)
+    shift_amount = models.DecimalField(_("Shift Amount"), max_digits=5, decimal_places=2, default=0.0)
+    date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
+    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+
+    class Meta:
+        verbose_name = "Employee Shift Entries"
+        verbose_name_plural = "Employee Shift Entries"
+
+    def __str__(self) -> str:
+        return f"{self.shift_code}"
+
+    def __repr__(self):
+        return f"{self.shift_code}"
