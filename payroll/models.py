@@ -277,7 +277,6 @@ class TransactionEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    type_code = models.CharField(_("Type Code"), max_length=50, blank=True, null=True)
     recurrent = models.BooleanField(_("Recurrent"), default=False)
     start_period = models.ForeignKey(
         "calenders.Period",
@@ -328,6 +327,7 @@ class TransactionEntries(models.Model):
     def populate_fields(self):
         if self.transaction_code:
             self.transaction_name = self.transaction_code.description
+            self.transaction_type = self.transaction_code.transaction_type
         if self.company:
             self.company_name = self.company.name
         if self.employee:
