@@ -309,6 +309,7 @@ class TransactionEntries(models.Model):
     taxable = models.BooleanField(_("Taxable"), default=False)
     contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
+    global_name = models.CharField(_("Global Name"), max_length=250, blank=True, null=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("User"),
@@ -511,6 +512,7 @@ class SavingSchemeEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
+    global_name = models.CharField(_("Global Name"), max_length=250, blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
