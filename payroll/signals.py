@@ -78,6 +78,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     (instance.percentage_of_employer_basic / 100) * employee_basic
                 )
                 instance.global_name = employee.company
+                instance.save()
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
@@ -97,6 +98,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     (instance.percentage_of_employer_basic / 100) * employee_basic
                 )
                 instance.global_name = employee.pay_group_name
+                instance.save()
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
@@ -116,6 +118,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     (instance.percentage_of_employer_basic / 100) * employee_basic
                 )
                 instance.global_name = employee.job_title_description
+                instance.save()
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
@@ -132,6 +135,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     (instance.percentage_of_employer_basic / 100) * employee_basic
                 )
                 instance.global_name = employee_name
+                instance.save()
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
@@ -200,6 +204,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee.company
+                instance.save()
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
@@ -210,6 +215,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee.pay_group_name
+                instance.save()
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.JOB_TITLE:
@@ -220,6 +226,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee.job_title_description
+                instance.save()
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.INDIVIDUAL:
@@ -227,9 +234,9 @@ def create_employee_transaction(sender, instance, **kwargs):
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee_name
+                instance.save()
                 create_or_update_employee_transaction_entry(employee, employee_name)
         
-        instance.save()
 
 @receiver(post_save, sender=ShiftEntries)
 def create_employee_shift_entry(sender, instance, **kwargs):
