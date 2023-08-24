@@ -86,6 +86,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
             pay_group = PayGroup.objects.get(id=instance.global_id)
+            instance.global_name = pay_group.description
+
             employees = Employee.objects.filter(
                 company_id=company, pay_group_code=pay_group
             )
@@ -98,7 +100,6 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 employer_per = float(
                     (instance.percentage_of_employer_basic / 100) * employee_basic
                 )
-                instance.global_name = employee.pay_group_name
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
@@ -106,6 +107,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
 
         elif disbursement_type == DisbursementType.JOB_TITLE:
             job_title = JobTitles.objects.get(id=instance.global_id)
+            instance.global_name = job_title.description
             employees = Employee.objects.filter(
                 company_id=company, job_titles=job_title
             )
@@ -211,23 +213,24 @@ def create_employee_transaction(sender, instance, **kwargs):
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
             pay_group = PayGroup.objects.get(id=instance.global_id)
+            instance.global_name = pay_group.description
+
             employees = Employee.objects.filter(
                 company_id=company, pay_group_code=pay_group
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                instance.global_name = employee.pay_group_name
                 create_or_update_employee_transaction_entry(employee, employee_name)
             instance.save()
 
         elif disbursement_type == DisbursementType.JOB_TITLE:
             job_title = JobTitles.objects.get(id=instance.global_id)
+            instance.global_name = job_title.description
             employees = Employee.objects.filter(
                 company_id=company, job_titles=job_title
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                instance.global_name = employee.job_title_description
                 create_or_update_employee_transaction_entry(employee, employee_name)
             instance.save()
 
