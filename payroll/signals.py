@@ -86,7 +86,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
             pay_group = PayGroup.objects.get(id=instance.global_id)
-            instance.global_name = pay_group.description
+            instance.global_name = pay_group.no
 
             employees = Employee.objects.filter(
                 company_id=company, pay_group_code=pay_group
@@ -213,7 +213,7 @@ def create_employee_transaction(sender, instance, **kwargs):
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
             pay_group = PayGroup.objects.get(id=instance.global_id)
-            instance.global_name = pay_group.description
+            instance.global_name = pay_group.no
 
             employees = Employee.objects.filter(
                 company_id=company, pay_group_code=pay_group
