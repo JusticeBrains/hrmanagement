@@ -135,6 +135,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 create_or_update_employee_saving_scheme_entry(
                     employee, employee_name, employee_per, employer_per
                 )
+        instance.save()
 
 
 @receiver(post_save, sender=TransactionEntries)
@@ -227,8 +228,8 @@ def create_employee_transaction(sender, instance, **kwargs):
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee_name
                 create_or_update_employee_transaction_entry(employee, employee_name)
-
-
+        
+        instance.save()
 
 @receiver(post_save, sender=ShiftEntries)
 def create_employee_shift_entry(sender, instance, **kwargs):
