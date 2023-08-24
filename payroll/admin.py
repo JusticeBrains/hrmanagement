@@ -2,7 +2,10 @@ from django.contrib import admin
 
 from .models import (
     EmployeeSavingSchemeEntries,
+    EmployeeShiftEntries,
     EmployeeTransactionEntries,
+    ShiftEntries,
+    ShiftSetUp,
     Transactions,
     SavingScheme,
     TransactionEntries,
@@ -72,4 +75,16 @@ class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeTransactionEntries)
 class EmployeeTransactionEntriesAdmin(admin.ModelAdmin):
+    ...
+
+@admin.register(ShiftSetUp)
+class ShiftSetUpEntriesAdmin(admin.ModelAdmin):
+    ...
+
+@admin.register(ShiftEntries)
+class ShiftEntriesAdmin(admin.ModelAdmin):
+    ...
+
+@admin.register(EmployeeShiftEntries)
+class EmployeeShiftEntriesAdmin(admin.ModelAdmin):
     ...
