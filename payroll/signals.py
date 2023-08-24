@@ -8,6 +8,8 @@ from .models import (
     SavingSchemeEntries,
     TransactionEntries,
     EmployeeTransactionEntries,
+    ShiftEntries,
+    EmployeeShiftEntries
 )
 from options.text_options import DisbursementType
 
@@ -217,3 +219,90 @@ def create_employee_transaction(sender, instance, **kwargs):
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 create_or_update_employee_transaction_entry(employee, employee_name)
+
+
+
+@receiver(post_save, sender=ShiftEntries)
+def create_employee_shift_entry(sender, instance, **kwargs):
+    """
+    Create or update EmployeeSavingSchemeEntries objects based on the disbursement_type of the SavingSchemeEntries instance.
+    """
+    if instance:
+        disbursement_type = instance.disbursement_type
+        shift_name = instance.shift_name
+        recurrent = instance.recurrent
+        period = instance.period
+        user_id = instance.user_id
+        company_name = instance.company_name
+        company = instance.company
+        status = instance.status
+
+        def create_or_update_employee_shift_entry(
+            employee, employee_name
+        ):
+            """
+            Create or update EmployeeSavingSchemeEntries object for the given employee.
+            """
+            save_entry, created = EmployeeShiftEntries.objects.get_or_create(
+                shift_code=instance,
+                shift_name=shift_name,
+                employee=employee,
+                saving_scheme_name=shift_name,
+                employee_name = employee_name,
+                company = company,
+                defaults={
+                    "recurrent":recurrent,
+                    "period":period,
+                    "user_id":user_id,
+                    "company_name":company_name,
+                    "employee_name":employee_name,
+                    "status":status,
+                },
+            )
+
+            if not created:
+                save_entry.period = period
+                save_entry.user_id = user_id
+                save_entry.status = status
+                save_entry.company_name = company_name
+                save_entry.save()
+
+        if disbursement_type == DisbursementType.ALL_STAFF:
+            employees = Employee.objects.filter(company_id=company)
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                create_or_update_employee_shift_entry(
+                    employee, employee_name
+                )
+
+        elif disbursement_type == DisbursementType.PAY_GROUP:
+            pay_group = PayGroup.objects.get(id=instance.global_id)
+            employees = Employee.objects.filter(
+                company_id=company, pay_group_code=pay_group
+            )
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                
+                create_or_update_employee_shift_entry(
+                    employee, employee_name
+                )
+
+        elif disbursement_type == DisbursementType.JOB_TITLE:
+            job_title = JobTitles.objects.get(id=instance.global_id)
+            employees = Employee.objects.filter(
+                company_id=company, job_titles=job_title
+            )
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                create_or_update_employee_shift_entry(
+                    employee, employee_name
+                )
+
+        elif disbursement_type == DisbursementType.INDIVIDUAL:
+            employee = Employee.objects.get(id=instance.global_id)
+            if employee:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+
+                create_or_update_employee_shift_entry(
+                    employee, employee_name
+                )

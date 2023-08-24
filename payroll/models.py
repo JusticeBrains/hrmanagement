@@ -354,10 +354,23 @@ class TransactionEntries(models.Model):
 
 class EmployeeTransactionEntries(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    employee = models.ForeignKey("employee.Employee", on_delete=models.CASCADE,related_name="employee_transaction")
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
-    transaction_entry = models.ForeignKey("payroll.TransactionEntries", verbose_name=_("Transaction Name"), on_delete=models.CASCADE, related_name="employee_transaction")
-    transaction_entry_name = models.CharField(_("Transaction Name"), max_length=150, blank=True, null=True)
+    employee = models.ForeignKey(
+        "employee.Employee",
+        on_delete=models.CASCADE,
+        related_name="employee_transaction",
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    transaction_entry = models.ForeignKey(
+        "payroll.TransactionEntries",
+        verbose_name=_("Transaction Name"),
+        on_delete=models.CASCADE,
+        related_name="employee_transaction",
+    )
+    transaction_entry_name = models.CharField(
+        _("Transaction Name"), max_length=150, blank=True, null=True
+    )
     transaction_type = models.CharField(
         _("Transaction Type"),
         choices=TransactionType.choices,
@@ -397,7 +410,7 @@ class EmployeeTransactionEntries(models.Model):
     class Meta:
         verbose_name = "Employee Transaction Entries"
         verbose_name_plural = "Employee Transaction Entries"
-    
+
     def __str__(self) -> str:
         return f"{self.employee_name} {self.transaction_entry_name}"
 
@@ -526,9 +539,16 @@ class SavingSchemeEntries(models.Model):
             self.start_period_code = self.start_period.period_code
         if self.end_period:
             self.end_period_code = self.end_period.period_code
-        self.percentage_of_employee_basic = self.savingscheme_code.percentage_of_employee_basic if self.savingscheme_code is not None else None
-        self.percentage_of_employer_basic = self.savingscheme_code.percentage_of_employer_basic if self.savingscheme_code is not None else None
-
+        self.percentage_of_employee_basic = (
+            self.savingscheme_code.percentage_of_employee_basic
+            if self.savingscheme_code is not None
+            else None
+        )
+        self.percentage_of_employer_basic = (
+            self.savingscheme_code.percentage_of_employer_basic
+            if self.savingscheme_code is not None
+            else None
+        )
 
     def save(self, *args, **kwargs):
         self.populate_fields()
@@ -537,10 +557,23 @@ class SavingSchemeEntries(models.Model):
 
 class EmployeeSavingSchemeEntries(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    employee = models.ForeignKey("employee.Employee", on_delete=models.CASCADE,related_name="employee_saving_scheme")
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
-    saving_scheme = models.ForeignKey("payroll.SavingSchemeEntries", verbose_name=_("Saving Scheme"), on_delete=models.CASCADE, related_name="employee_entry")
-    saving_scheme_name = models.CharField(_("Saving Scheme Name"), max_length=150, blank=True, null=True)
+    employee = models.ForeignKey(
+        "employee.Employee",
+        on_delete=models.CASCADE,
+        related_name="employee_saving_scheme",
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    saving_scheme = models.ForeignKey(
+        "payroll.SavingSchemeEntries",
+        verbose_name=_("Saving Scheme"),
+        on_delete=models.CASCADE,
+        related_name="employee_entry",
+    )
+    saving_scheme_name = models.CharField(
+        _("Saving Scheme Name"), max_length=150, blank=True, null=True
+    )
     recurrent = models.BooleanField(_("Recurrent"), default=True)
     start_period_code = models.CharField(
         _("Start Period Code"), max_length=50, blank=True, null=True
@@ -571,7 +604,7 @@ class EmployeeSavingSchemeEntries(models.Model):
     class Meta:
         verbose_name = "Employee Saving Scheme Entries"
         verbose_name_plural = "Employee Saving Scheme Entries"
-    
+
     def __str__(self) -> str:
         return f"{self.employee_name} {self.saving_scheme_name}"
 
@@ -1190,16 +1223,29 @@ class AuditTrail(models.Model):
         super().save(*args, **kwargs)
 
 
-
 class ShiftSetUp(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(_("Name"), max_length=150, blank=True, null=True)
-    flat_rate = models.DecimalField(_("Flat Rate"), max_digits=5, decimal_places=2, default=0.0)
-    percentage_of_daily_wage = models.DecimalField(_("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0)
-    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly Rate"), max_digits=5, decimal_places=2, default=0.0)
+    flat_rate = models.DecimalField(
+        _("Flat Rate"), max_digits=5, decimal_places=2, default=0.0
+    )
+    percentage_of_daily_wage = models.DecimalField(
+        _("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0
+    )
+    percentage_of_hourly_rate = models.DecimalField(
+        _("Percentage Of Hourly Rate"), max_digits=5, decimal_places=2, default=0.0
+    )
     recurring = models.BooleanField(_("Recurring"), default=True)
-    work_type = models.CharField(_("Work Type"), choices=WorkType.choices,max_length=50, blank=True, null=True)
-    record_type = models.CharField(_("Record Type"), choices=RecordType.choices,max_length=50, blank=True, null=True)
+    work_type = models.CharField(
+        _("Work Type"), choices=WorkType.choices, max_length=50, blank=True, null=True
+    )
+    record_type = models.CharField(
+        _("Record Type"),
+        choices=RecordType.choices,
+        max_length=50,
+        blank=True,
+        null=True,
+    )
     taxable = models.BooleanField(_("Taxable"), default=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
@@ -1208,13 +1254,18 @@ class ShiftSetUp(models.Model):
         blank=True,
         null=True,
     )
-    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
-    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+    created_at = models.DateTimeField(
+        _("Created At"), auto_now=False, auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        _("Updated At"),
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = "Shift SetUp"
         verbose_name_plural = "Shift SetUps"
-    
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -1231,12 +1282,24 @@ class ShiftEntries(models.Model):
         blank=True,
         null=True,
     )
-    shift_code = models.ForeignKey("payroll.ShiftSetUp", verbose_name=_("Shift Code"), on_delete=models.CASCADE,)
-    shift_name = models.CharField(_("Shift Name"), max_length=150, blank=True, null=True)
+    shift_code = models.ForeignKey(
+        "payroll.ShiftSetUp",
+        verbose_name=_("Shift Code"),
+        on_delete=models.CASCADE,
+    )
+    shift_name = models.CharField(
+        _("Shift Name"), max_length=150, blank=True, null=True
+    )
     no_of_shift = models.PositiveIntegerField(_("No Of Shift"), default=0)
-    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
-    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly"), max_digits=5, decimal_places=2, default=0.0)
-    shift_amount = models.DecimalField(_("Shift Amount"), max_digits=5, decimal_places=2, default=0.0)
+    no_of_hours = models.DecimalField(
+        _("No Of Hours"), max_digits=5, decimal_places=2, default=0.0
+    )
+    percentage_of_hourly_rate = models.DecimalField(
+        _("Percentage Of Hourly"), max_digits=5, decimal_places=2, default=0.0
+    )
+    shift_amount = models.DecimalField(
+        _("Shift Amount"), max_digits=5, decimal_places=2, default=0.0
+    )
     period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Period"),
@@ -1251,28 +1314,82 @@ class ShiftEntries(models.Model):
         blank=True,
         null=True,
     )
+    status = models.BooleanField(_("Status"), default=False)
+    recurrent = models.BooleanField(_("Reccurent"), default=False)
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
-    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+    created_at = models.DateTimeField(
+        _("Created At"), auto_now=False, auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        _("Updated At"),
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = "Shift Entries"
         verbose_name_plural = "Shift Entries"
-    
+
     def __str__(self) -> str:
         return f"{self.shift_code}"
 
     def __repr__(self):
         return f"{self.shift_code}"
 
+    def populate_fields(self):
+        """
+        Populates the company_name and period_code fields based on the associated company and period objects, respectively.
+        """
+        if self.company:
+            self.company_name = self.company.name
+        if self.period:
+            self.period_code = self.period.period_code
+        if self.shift_code:
+            self.shift_name = self.shift_code.name
+            self.recurrent = self.shift_code.recurring
+            self.percentage_of_hourly_rate = self.shift_code.percentage_of_hourly_rate
+
+    def save(self, *args, **kwargs):
+        """
+        Overrides the save method to call populate_fields before saving the setup entries.
+        """
+        self.populate_fields()
+        super().save(*args, **kwargs)
+
 
 class EmployeeShiftEntries(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    shift_code = models.ForeignKey("payroll.ShiftSetUp", verbose_name=_("Shift Code"), on_delete=models.CASCADE,)
-    shift_name = models.CharField(_("Shift Name"), max_length=150, blank=True, null=True)
-    employee_id = models.ForeignKey("employee.Employee", verbose_name=_("Employee ID"), on_delete=models.CASCADE)
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    shift_code = models.ForeignKey(
+        "payroll.ShiftEntries",
+        verbose_name=_("Shift Code"),
+        on_delete=models.CASCADE,
+    )
+    shift_name = models.CharField(
+        _("Shift Name"), max_length=150, blank=True, null=True
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=50, blank=True, null=True
+    )
     period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Period"),
@@ -1287,14 +1404,40 @@ class EmployeeShiftEntries(models.Model):
         blank=True,
         null=True,
     )
-    no_of_shift = models.DecimalField(_("No Of Shift"), max_digits=5, decimal_places=2, default=0.0)
-    no_of_hours = models.DecimalField(_("No Of Hours"), max_digits=5, decimal_places=2, default=0.0)
-    percentage_of_hourly_rate = models.DecimalField(_("Percentage Of Hourly_rate"), max_digits=5, decimal_places=2, default=0.0)
-    percentage_of_daily_wage = models.DecimalField(_("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0)
-    shift_amount = models.DecimalField(_("Shift Amount"), max_digits=5, decimal_places=2, default=0.0)
+    status = models.BooleanField(_("Status"), default=False)
+    no_of_shift = models.DecimalField(
+        _("No Of Shift"), max_digits=5, decimal_places=2, default=0.0
+    )
+    no_of_hours = models.DecimalField(
+        _("No Of Hours"), max_digits=5, decimal_places=2, default=0.0
+    )
+    percentage_of_hourly_rate = models.DecimalField(
+        _("Percentage Of Hourly_rate"), max_digits=5, decimal_places=2, default=0.0
+    )
+    percentage_of_daily_wage = models.DecimalField(
+        _("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0
+    )
+    shift_amount = models.DecimalField(
+        _("Shift Amount"), max_digits=5, decimal_places=2, default=0.0
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    created_at = models.DateTimeField(_("Created At"), auto_now=False, auto_now_add=True)
-    updated_at = models.DateTimeField(_("Updated At"), auto_now=True,)
+    created_at = models.DateTimeField(
+        _("Created At"), auto_now=False, auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        _("Updated At"),
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = "Employee Shift Entries"
@@ -1305,3 +1448,26 @@ class EmployeeShiftEntries(models.Model):
 
     def __repr__(self):
         return f"{self.shift_code}"
+
+    def populate_fields(self):
+        """
+        Populates the company_name and period_code fields based on the associated company and period objects, respectively.
+        """
+        if self.company:
+            self.company_name = self.company.name
+        if self.period:
+            self.period_code = self.period.period_code
+        if self.shift_code:
+            self.shift_name = self.shift_code.shift_name
+            self.recurrent = self.shift_code.recurrent
+            self.percentage_of_hourly_rate = self.shift_code.percentage_of_hourly_rate
+        if self.employee:
+            self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
+            self.employee_code = self.employee.code
+
+    def save(self, *args, **kwargs):
+        """
+        Overrides the save method to call populate_fields before saving the employee shift entry
+        """
+        self.populate_fields()
+        super().save(*args, **kwargs)
