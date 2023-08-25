@@ -1401,7 +1401,7 @@ class EmployeeShiftEntries(models.Model):
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User Id"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
