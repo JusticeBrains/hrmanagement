@@ -1294,13 +1294,13 @@ class ShiftEntries(models.Model):
     )
     no_of_shift = models.PositiveIntegerField(_("No Of Shift"), default=0)
     no_of_hours = models.DecimalField(
-        _("No Of Hours"), max_digits=5, decimal_places=2, default=0.0
+        _("No Of Hours"), max_digits=9, decimal_places=2, default=0.0
     )
     percentage_of_hourly_rate = models.DecimalField(
-        _("Percentage Of Hourly"), max_digits=5, decimal_places=2, default=0.0
+        _("Percentage Of Hourly"), max_digits=9, decimal_places=2, default=0.0
     )
     shift_amount = models.DecimalField(
-        _("Shift Amount"), max_digits=5, decimal_places=2, default=0.0
+        _("Shift Amount"), max_digits=9, decimal_places=2, default=0.0
     )
     period = models.ForeignKey(
         "calenders.Period",
@@ -1409,10 +1409,10 @@ class EmployeeShiftEntries(models.Model):
     status = models.BooleanField(_("Status"), default=False)
     recurrent = models.BooleanField(_("Recurrent"), default=False)
     no_of_shift = models.DecimalField(
-        _("No Of Shift"), max_digits=5, decimal_places=2, default=0.0
+        _("No Of Shift"), max_digits=9, decimal_places=2, default=0.0
     )
     no_of_hours = models.DecimalField(
-        _("No Of Hours"), max_digits=5, decimal_places=2, default=0.0
+        _("No Of Hours"), max_digits=9, decimal_places=2, default=0.0
     )
     percentage_of_hourly_rate = models.DecimalField(
         _("Percentage Of Hourly_rate"), max_digits=5, decimal_places=2, default=0.0
@@ -1421,7 +1421,7 @@ class EmployeeShiftEntries(models.Model):
         _("Percentage Of Daily Wage"), max_digits=5, decimal_places=2, default=0.0
     )
     shift_amount = models.DecimalField(
-        _("Shift Amount"), max_digits=5, decimal_places=2, default=0.0
+        _("Shift Amount"), max_digits=9, decimal_places=2, default=0.0
     )
     company = models.ForeignKey(
         "company.Company",
