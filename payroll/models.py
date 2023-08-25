@@ -1407,6 +1407,7 @@ class EmployeeShiftEntries(models.Model):
         null=True,
     )
     status = models.BooleanField(_("Status"), default=False)
+    recurrent = models.BooleanField(_("Recurrent"), default=False)
     no_of_shift = models.DecimalField(
         _("No Of Shift"), max_digits=5, decimal_places=2, default=0.0
     )

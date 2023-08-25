@@ -281,6 +281,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
                 save_entry.user_id = user_id
                 save_entry.status = status
                 save_entry.company_name = company_name
+                save_entry.recurrent = recurrent
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
