@@ -7,6 +7,7 @@ from .models import (
     EmployeeTransactionEntries,
     LoanEntries,
     Loans,
+    Paymaster,
     ShiftEntries,
     ShiftSetUp,
     Transactions,
@@ -106,4 +107,9 @@ class ShiftEntriesSerializer(serializers.ModelSerializer):
 class EmployeeShiftEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeShiftEntries
+        fields = "__all__"
+
+class PaymasterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Paymaster
         fields = "__all__"

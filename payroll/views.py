@@ -7,6 +7,7 @@ from .models import (
     EmployeeTransactionEntries,
     LoanEntries,
     Loans,
+    Paymaster,
     ShiftEntries,
     ShiftSetUp,
     Transactions,
@@ -24,6 +25,7 @@ from .serializers import (
     EmployeeTransactionEntriesSerializer,
     LoanEntriesSerializer,
     LoansSerializer,
+    PaymasterSerializer,
     ShiftEntriesSerializer,
     ShiftSetUpSerializer,
     TransactionSerializer,
@@ -123,4 +125,9 @@ class ShiftEntriesViewSet(viewsets.ModelViewSet):
 class EmployeeShiftEntriesViewSet(viewsets.ModelViewSet):
     queryset = EmployeeShiftEntries.objects.all()
     serializer_class = EmployeeShiftEntriesSerializer
+    filterset_fields = "__all__"
+
+class PaymasterViewSet(viewsets.ModelViewSet):
+    queryset = Paymaster.objects.all()
+    serializer_class = PaymasterSerializer
     filterset_fields = "__all__"

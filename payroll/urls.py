@@ -7,6 +7,7 @@ from .views import (
     EmployeeTransactionEntriesViewSet,
     LoanEntriesViewSet,
     LoansViewSet,
+    PaymasterViewSet,
     ShiftEntriesViewSet,
     ShiftSetUpViewSet,
     TransactionViewSet,
@@ -53,5 +54,10 @@ router.register(
     "employee-shift-entries",
     EmployeeShiftEntriesViewSet,
     basename="employee-shift-entries",
+)
+router.register(
+    "paymater",
+    PaymasterViewSet,
+    basename="paymaster",
 )
 urlpatterns = router.urls
