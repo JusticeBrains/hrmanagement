@@ -264,7 +264,6 @@ def create_employee_shift_entry(sender, instance, **kwargs):
                 shift_code=instance,
                 shift_name=shift_name,
                 employee=employee,
-                saving_scheme_name=shift_name,
                 employee_name = employee_name,
                 company = company,
                 defaults={
