@@ -1251,7 +1251,7 @@ class ShiftSetUp(models.Model):
     taxable = models.BooleanField(_("Taxable"), default=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User iD"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -1311,7 +1311,7 @@ class ShiftEntries(models.Model):
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User ID"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
