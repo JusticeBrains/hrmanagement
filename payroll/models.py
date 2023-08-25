@@ -1433,7 +1433,7 @@ class EmployeeShiftEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
+    date = models.DateField(_("Date"), auto_now=False, auto_now_add=True)
     created_at = models.DateTimeField(
         _("Created At"), auto_now=False, auto_now_add=True
     )
