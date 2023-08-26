@@ -1898,7 +1898,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     bank = None
 
                 try:
-                    
+                    salary = None
                     salary_grade_level = employee["Salary_Grade_Code"].strip()
 
                     if salary_grade_level:
