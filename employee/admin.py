@@ -5,7 +5,7 @@ from employee import models as emodels
 
 @admin.register(emodels.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    search_fields = ["code", "company", "pay_group_code","company_email"]
+    search_fields = ["code", "company", "pay_group_name","company_email",""]
     list_display = [
         "fullname",
         "code",
@@ -15,7 +15,9 @@ class EmployeeAdmin(admin.ModelAdmin):
         "branch_name",
         "is_hr",
         "company_email",
-        "total_medical_claim_amount"
+        "total_medical_claim_amount",
+        "notch",
+        "salary_grade",
     ]
 
 
