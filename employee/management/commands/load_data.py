@@ -2438,18 +2438,17 @@ async def load_notch(url, auth, company, comp_id):
             notch, created = await sync_to_async(Notch.objects.get_or_create)(
                 salary_grade=salary_grade_instance,
                 company=company,
+                payroll_structure_code = payroll_structure_instance,
                 defaults={
                     "no": no,
                     "amount": amount,
-                    "company_id": company_instance,
-                    "payroll_structure_code":payroll_structure_instance
+                    "company_id": company_instance
                 },
             )
 
             if not created:
                 notch.amount = amount
                 notch.company_id = company_instance
-                notch.payroll_structure_code = payroll_structure_instance
                 notch.no = no
                 await sync_to_async(notch.save)()
 
