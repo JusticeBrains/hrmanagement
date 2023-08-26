@@ -78,9 +78,14 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_display = ["code", "name", "company","department"]
     search_fields = ["code", "name"]
 
+
+@admin.register(emodels.Notch)
+class NotchAdmin(admin.ModelAdmin):
+    list_display = ["payroll_structure_code", 'no',"salary_grade", "company","amount"]
+    search_fields = ["no"]
+
 admin.site.register(emodels.StaffCategory)
 admin.site.register(emodels.Branch)
-admin.site.register(emodels.Notch)
 admin.site.register(emodels.AppraisalGrading)
 admin.site.register(emodels.EmployeeAppraisal)
 admin.site.register(emodels.PropertyAssignment)
