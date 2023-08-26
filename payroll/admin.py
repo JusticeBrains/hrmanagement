@@ -11,6 +11,7 @@ from .models import (
     TransactionEntries,
     SavingSchemeEntries,
     OvertimeEntries,
+    OvertimeSetup,
     LoanEntries,
     Loans,
     AuditTrail,
@@ -87,4 +88,9 @@ class ShiftEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeShiftEntries)
 class EmployeeShiftEntriesAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(OvertimeSetup)
+class OvertimeSetupAdmin(admin.ModelAdmin):
     ...
