@@ -1908,7 +1908,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     salary = None
                 
                 try:
-                    
+                    notch = None
                     notch_level = employee["Notch"].strip()
 
                     if notch_level:
