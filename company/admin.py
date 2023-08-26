@@ -17,10 +17,10 @@ class CompanyTypeAdmin(admin.ModelAdmin):
 class JobTitlesAdmin(admin.ModelAdmin):
     list_display = ('code','description', 'company')
 
-admin.register(SalaryGrade)
+@admin.register(SalaryGrade)
 class SalaryGradeAdmin(admin.ModelAdmin):
     list_display = ('code', 'company')
-    
+
 class BankAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_filter = (
         "id",
