@@ -10,10 +10,9 @@ class EmployeeAdmin(admin.ModelAdmin):
         "fullname",
         "code",
         "company",
-        "pay_group_code",
-        "department",
-        "branch",
-        "bank_id",
+        "pay_group_name",
+        "department_name",
+        "branch_name",
         "is_hr",
         "company_email",
         "total_medical_claim_amount"

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import Company, CompanyType, JobTitles, SalaryGrade, Bank, BankBranch
+from .models import Company, CompanyType, JobTitles, SalaryGrade, Bank, BankBranch,PayrollStructure
 
 
 @admin.register(Company)
@@ -17,7 +17,10 @@ class CompanyTypeAdmin(admin.ModelAdmin):
 class JobTitlesAdmin(admin.ModelAdmin):
     list_display = ('code','description', 'company')
 
-
+admin.register(SalaryGrade)
+class SalaryGradeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'company')
+    
 class BankAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_filter = (
         "id",
@@ -37,7 +40,8 @@ class BankBranchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     )
     search_fields = ("id", "name",)
 
-admin.site.register(SalaryGrade)
+
+admin.site.register(PayrollStructure)
 
 
 admin.site.register(BankBranch, BankBranchAdmin)

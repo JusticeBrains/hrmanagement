@@ -81,14 +81,29 @@ class Holidays(models.Model):
 
 class PayrollStructure(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    code = models.CharField(_("Code"), max_length=150, blank=True, null=True)
     year = models.PositiveIntegerField(_("Year"))
     name = models.CharField(_("Name"), max_length=150)
     start_date = models.DateField(
         _("Start Date"),
     )
     end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
-    closed = models.BooleanField(_("Closed"))
+    closed = models.BooleanField(_("Closed"), default=False)
+    company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
 
+    class Meta:
+        verbose_name = "Payroll Structure"
+        verbose_name_plural = "Payroll Structures"
+    
+    def __str__(self) -> str:
+        return f"{self.code}"
 
 class BaseCom(models.Model):
     id = models.UUIDField(_("ID"), default=uuid.uuid4, primary_key=True, editable=False)
@@ -135,9 +150,10 @@ class JobTitles(BaseCom):
 class SalaryGrade(BaseCom):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     job_titles = models.ForeignKey("company.JobTitles", verbose_name=_("Job Titles"), on_delete=models.CASCADE, blank=True, null=True)
-    transport_rate = models.DecimalField(
-        _("Transport Rate"), max_digits=5, decimal_places=2
+    company_id = models.ForeignKey(
+        "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True
     )
+    company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
 
     class Meta:
         verbose_name = "Salary Grade"
@@ -243,3 +259,15 @@ class BankBranch(models.Model):
     class Meta:
         verbose_name = "Bank Branch"
         verbose_name_plural = "Bank Branches"
+
+
+# {
+#       "@odata.etag": "W/\"JzU2O1U4TUFBQUNIQUFBQUFBQXUvWU1XQUFBdXNZa1dBQUo3LzFNQVJRQk9BRWtBVHdCU0FBQUFBQUE9Njs2NzU3NTEwOyc=\"",
+#       "No": 0,
+#       "Start_Date": "2020-01-01",
+#       "End_Date": "2021-12-31",
+#       "Code": "SENIOR",
+#       "Year": 2020,
+#       "Name": "General Salary Structure",
+#       "Closed": false
+  

@@ -10,5 +10,6 @@ router.register('jobtitles', views.JobTitleViewSet, basename='jobtitles')
 router.register('salarygrade', views.SalaryGradeViewSet, basename='salarygrade')
 router.register('bank', views.BankViewSet, basename='bank')
 router.register('bank-branch', views.BankBranchViewSet, basename='bank-branch')
+router.register('payroll-structure', views.PayrollStructureViewSet, basename='payroll-structure')
 
 urlpatterns = router.urls

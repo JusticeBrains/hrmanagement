@@ -47,7 +47,13 @@ class BankViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
+
 class BankBranchViewSet(viewsets.ModelViewSet):
     queryset = comp_models.BankBranch.objects.all()
     serializer_class = serializers.BankBranchSerializer
+    filterset_fields = "__all__"
+
+class PayrollStructureViewSet(viewsets.ModelViewSet):
+    queryset = comp_models.PayrollStructure.objects.all()
+    serializer_class = serializers.PayrollStructureSerializer
     filterset_fields = "__all__"
