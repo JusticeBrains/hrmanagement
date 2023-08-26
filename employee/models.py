@@ -139,9 +139,7 @@ class Employee(models.Model):
     pay_group_name = models.CharField(
         _("Pay Group Name"), max_length=250, blank=True, null=True
     )
-    salary_grade = models.CharField(
-        _("Salary Grade"), max_length=50, blank=True, null=True
-    )
+    salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Salary Grade"), on_delete=models.DO_NOTHING, blank=True, null=True)
     notch = models.CharField(_("Notch"), max_length=50, blank=True, null=True)
     annual_basic = models.CharField(
         _("Annual Basic"), max_length=50, blank=True, null=True
