@@ -1902,10 +1902,10 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     salary_grade_level = employee["Salary_Grade_Code"].strip()
 
                     if salary_grade_level:
-                        salary_grade = SalaryGrade.objects.get(code=salary_grade_level, company=company)
+                        salary = SalaryGrade.objects.get(code=salary_grade_level, company=company)
                     
                 except ObjectDoesNotExist:
-                    salary_grade = None
+                    salary = None
                 
                 try:
                     
@@ -1990,7 +1990,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         application_method=employee["Application_Method"],
                         pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
                         pay_group_name= pay_group.no if pay_group is not None else None,
-                        salary_grade=salary_grade if salary_grade_level is not None else None,
+                        salary_grade=salary if salary_grade_level is not None else None,
                         notch=notch if notch_level is not None else None,
                         annual_basic=employee["Annual_Basic"],
                         contribute_to_ssf_employee=employee[
@@ -2081,7 +2081,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                         application_method=employee["Application_Method"],
                         pay_group_code=pay_group if employee["Pay_Group_Code"].strip() !="" else None,
                         pay_group_name= pay_group.no if pay_group is not None else None,
-                        salary_grade=salary_grade if salary_grade_level is not None else None,
+                        salary_grade=salary if salary_grade_level is not None else None,
                         notch=notch if notch_level is not None else None,
                         annual_basic=employee["Annual_Basic"],
                         contribute_to_ssf_employee=employee[
