@@ -1912,7 +1912,7 @@ def get_user_data(url, auth, company, company_id, comp_code):
                     notch_level = employee["Notch"].strip()
 
                     if notch_level:
-                        notch = Notch.objects.get(no=notch_level, company=company)
+                        notch = Notch.objects.get(no=notch_level, company=company, salary_grade=salary)
                     
                 except ObjectDoesNotExist:
                     notch = None
