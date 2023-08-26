@@ -820,6 +820,7 @@ class Branch(Base):
 
 class Notch(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    no = models.CharField(_("No"), max_length=50, blank=True, null=True)
     payroll_structure_code = models.ForeignKey(
         "company.PayrollStructure",
         verbose_name=_("Payroll Structure"),
@@ -835,9 +836,12 @@ class Notch(models.Model):
     amount = models.DecimalField(
         _("Amount"), max_digits=8, decimal_places=2, null=True, blank=True
     )
-
+    company_id = models.ForeignKey(
+        "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True
+    )
+    company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
     def __str__(self):
-        return f"{self.payroll_structure_code} - {self.salary_grade} - {self.no} - {self.amount}"
+        return f"{self.payroll_structure_code} - {self.salary_grade} - {self.amount}"
 
     class Meta:
         verbose_name = "Notch"
