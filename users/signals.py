@@ -58,5 +58,9 @@ def updated_multiple_companies(sender, created, instance, *args, **kwargs):
 
             if len(company) > 1:
                 instance.multiple_companies = 1
+    
+    elif instance.is_hr == 0:
+        instance.multiple_companies = 0
+
 
 
