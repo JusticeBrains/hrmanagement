@@ -48,9 +48,9 @@ env.read_env()
 
 
 @receiver(post_save, sender=CustomUser)
-def updated_multiple_companies(sender, created, instance, *args, **kwargs):
+def updated_multiple_companies(sender, instance, *args, **kwargs):
     post_save.disconnect(updated_multiple_companies, sender=CustomUser)
-    if created:
+    if instance:
         employee = Employee.objects.get(id=instance.employee_id.id)
         if instance.is_hr == 1:
             if employee:
