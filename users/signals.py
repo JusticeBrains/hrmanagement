@@ -49,18 +49,24 @@ env.read_env()
 
 @receiver(post_save, sender=CustomUser)
 def updated_multiple_companies(sender, created, instance, *args, **kwargs):
-    if instance and instance.is_hr == 1:
+    post_save.disconnect(updated_multiple_companies, sender=CustomUser)
+    if created:
         employee = Employee.objects.get(id=instance.employee_id.id)
-        if employee:
-            instance.unique_code = employee.unique_code
-            
-            company = Company.objects.filter(unique_code=instance.unique_code)
+        if instance.is_hr == 1:
+            if employee:
+                instance.unique_code = employee.unique_code
+                
+                company = Company.objects.filter(unique_code=instance.unique_code)
 
-            if len(company) > 1:
-                instance.multiple_companies = 1
+                if len(company) > 1:
+                    instance.multiple_companies = 1
     
-    elif instance.is_hr == 0:
-        instance.multiple_companies = 0
+        elif instance.is_hr == 0:
+            instance.unique_code = employee.unique_code
+            instance.multiple_companies = 0
+        instance.save()
+    post_save.connect(updated_multiple_companies, sender=CustomUser)
+
 
 
 
