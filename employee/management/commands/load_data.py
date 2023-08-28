@@ -39,23 +39,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("--------Loading Departments-------"))
         for comp in companies:
-            if comp.name == "INTERCITY STC LTD":
-                self.stdout.write(
-                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
-                )
-                asyncio.run(
-                    load_department(
-                        url=env.str("intercity_sen_dep"),
-                        auth=auth,
-                        company=comp.name,
-                        comp_id=comp.id,
-                    )
-                )
-
-                self.stdout.write(
-                    self.style.SUCCESS("Successfully load data to database")
-                )
-
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
@@ -67,10 +51,26 @@ class Command(BaseCommand):
                         comp_id=comp.id,
                     )
                 )
+
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.name}")
+                )
+                asyncio.run(
+                    load_department(
+                        url=env.str("intercity_sen_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
@@ -235,6 +235,21 @@ class Command(BaseCommand):
                 )
                 asyncio.run(
                     load_department(
+                        url=env.str("nla_man_dep"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                asyncio.run(
+                    load_department(
                         url=env.str("nla_exc_man_dep"),
                         auth=auth,
                         company=comp.name,
@@ -355,7 +370,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -372,7 +387,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -389,7 +404,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -433,6 +448,23 @@ class Command(BaseCommand):
                 asyncio.run(
                     load_jobtitles(
                         url=env.str("nla_man_jobs"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                asyncio.run(
+                    load_jobtitles(
+                        url=env.str("nla_exec_man_jobs"),
                         auth=auth,
                         company=comp.name,
                         comp_id=comp.id,
@@ -505,7 +537,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("--------Loading Units-------"))
         for comp in companies:
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.name}")
                 )
@@ -515,6 +547,7 @@ class Command(BaseCommand):
                     company=comp.name,
                     comp_id=comp.id,
                 )
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
@@ -527,6 +560,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
 
                 self.stdout.write(
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
@@ -704,6 +738,19 @@ class Command(BaseCommand):
                     self.style.SUCCESS(f"Starting load data to database {comp.id}")
                 )
                 load_branches(
+                    url=env.str("nla_man_branch"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(f"Starting load data to database {comp.id}")
+                )
+                load_branches(
                     url=env.str("nla_exc_man_branch"),
                     auth=auth,
                     company=comp.name,
@@ -810,7 +857,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -822,7 +869,7 @@ class Command(BaseCommand):
                     company=comp.name,
                     comp_id=comp.id,
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -837,7 +884,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -868,7 +915,37 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-            if comp.name == "NLA":
+            if comp.name == "NLA MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("nla_man_paygroup"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA JUNIOR SENIOR":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                load_paygroup(
+                    url=env.str("nlajun_sen_paygroup"),
+                    auth=auth,
+                    company=comp.name,
+                    comp_id=comp.id,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -896,7 +973,7 @@ class Command(BaseCommand):
 
             if comp.name == "Rock City Professional Allowance":
                 load_paygroup(
-                    url=env.str("nlajun_sen_paygroup"),
+                    url=env.str("rch_prof_allowance_paygroup"),
                     auth=auth,
                     company=comp.name,
                     comp_id=comp.id,
@@ -992,7 +1069,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1009,7 +1086,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1026,6 +1103,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
 
                 self.stdout.write(
                     self.style.SUCCESS(
@@ -1083,6 +1161,23 @@ class Command(BaseCommand):
                 )
                 asyncio.run(
                     load_payroll_structure(
+                        url=env.str("nla_man_payroll"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                asyncio.run(
+                    load_payroll_structure(
                         url=env.str("nla_exc_man_payroll"),
                         auth=auth,
                         company=comp.name,
@@ -1129,7 +1224,7 @@ class Command(BaseCommand):
 
 
         self.stdout.write(
-            self.style.SUCCESS("--------Starting Loading Notch-------")
+            self.style.SUCCESS("--------Starting Salary Grade-------")
         )
 
         for comp in companies:
@@ -1203,7 +1298,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1220,7 +1315,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1237,7 +1332,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1336,8 +1431,12 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-        self.style.SUCCESS("--------End Loading Notch-------")
+        self.style.SUCCESS("--------End Loading Salary-------")
 
+
+        self.stdout.write(
+            self.style.SUCCESS("--------Starting Notch-------")
+        )
 
         for comp in companies:
             if comp.name == "Rock City Hotel":
@@ -1410,7 +1509,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "INTERCITY STC LTD":
+            if comp.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1427,7 +1526,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
-
+            if comp.name == "INTERCITY STC COACHES LTD - DRIVERS":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1444,6 +1543,7 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS("Successfully load data to database")
                 )
+            if comp.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
 
                 self.stdout.write(
                     self.style.SUCCESS(
@@ -1493,7 +1593,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if comp.name == "NLA MANAGEMENT":
+            if comp.name == "NLA EXECUTIVE MANAGEMENT":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {comp.id} -- {comp.name}"
@@ -1502,6 +1602,23 @@ class Command(BaseCommand):
                 asyncio.run(
                     load_notch(
                         url=env.str("nla_exc_man_notch"),
+                        auth=auth,
+                        company=comp.name,
+                        comp_id=comp.id,
+                    )
+                )
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully load data to database")
+                )
+            if comp.name == "NLA MANAGEMENT":
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Starting load data to database {comp.id} -- {comp.name}"
+                    )
+                )
+                asyncio.run(
+                    load_notch(
+                        url=env.str("nla_man_notch"),
                         auth=auth,
                         company=comp.name,
                         comp_id=comp.id,
@@ -1634,7 +1751,7 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Successfully load data to database")
                 )
 
-            if company.name == "INTERCITY STC LTD":
+            if company.name == "INTERCITY STC COACHES LTD - JUNIOR STAFF":
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"Starting load data to database {company.id} -- {company.name}"
@@ -1647,6 +1764,8 @@ class Command(BaseCommand):
                     company_id=company.id,
                     comp_code=company.unique_code,
                 )
+            if company.name == "INTERCITY STC COACHES LTD - SENIOR STAFF":
+
                 get_user_data(
                     url=env.str("intercity_sen"),
                     auth=auth,
@@ -1654,6 +1773,8 @@ class Command(BaseCommand):
                     company_id=company.id,
                     comp_code=company.unique_code,
                 )
+            if company.name == "INTERCITY STC COACHES LTD - DRIVERS":
+
                 get_user_data(
                     url=env.str("intercity_driver"),
                     auth=auth,
@@ -1799,6 +1920,7 @@ class Command(BaseCommand):
                     comp_code=company.unique_code,
                 )
                 self.stdout.write(self.style.SUCCESS("----Ending Management---"))
+            if company.name == "NLA EXECUTIVE MANAGEMENT":
                 self.stdout.write(self.style.SUCCESS("----Starting Exec Management--"))
                 get_user_data(
                     url=env.str("nla_exc_man"),
