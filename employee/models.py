@@ -824,7 +824,7 @@ class Notch(models.Model):
     payroll_structure_code = models.ForeignKey(
         "company.PayrollStructure",
         verbose_name=_("Payroll Structure"),
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE, null=True, blank=True
     )
     salary_grade = models.ForeignKey(
         "company.SalaryGrade",
