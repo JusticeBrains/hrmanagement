@@ -293,7 +293,7 @@ def update_emp_total_score_scores(sender, instance, **kwargs):
 def updated_fields_branch(sender, instance,created, **kwargs):
     post_save.disconnect(updated_fields_branch, sender=Branch)
     if created:
-        instance.unit_name = instance.unit.name
+        instance.unit_name = instance.unit.name if instance.unit.name is not None else None 
         instance.save()
     post_save.connect(updated_fields_branch, sender=Branch)
 
