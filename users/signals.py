@@ -15,14 +15,13 @@ env.read_env()
 
 @receiver(post_save, sender=CustomUser)
 def user_created(sender, instance, created, **kwargs):
-    post_save.disconnect(user_created, sender=CustomUser)
-    if instance:
+    if created:  # Only perform actions for newly created instances
         pass_gen = instance.generated_pass
         try:
             print("---------------Sending -----------------------")
             subject = "Login Credentials"
             message = (
-                f"Hello {instance.first_name} your password to signin is {instance.generated_pass}"
+                f"Hello {instance.first_name} your password to sign in is {instance.generated_pass}"
             )
             from_email = env.str("EMAIL_USER")
             recipient_list = [
@@ -36,16 +35,18 @@ def user_created(sender, instance, created, **kwargs):
             instance.generated_pass = make_password(pass_gen)
             instance.save()
             print("---------------Sent -----------------------")
+            del instance.generated_pass  # Delete the generated_pass attribute
         except ValueError as ve:
             print(f"Error occurred while sending email: {str(ve)}")
-
         except Exception as e:
             print("Error occurred while sending email:")
             print(str(e))
             traceback.print_exc()
-        instance.save()
+        else:
+            post_save.disconnect(user_created, sender=CustomUser)
+            instance.save()
+            post_save.connect(user_created, sender=CustomUser)
 
-    post_save.connect(user_created, sender=CustomUser)
 
 
 @receiver(post_save, sender=CustomUser)
