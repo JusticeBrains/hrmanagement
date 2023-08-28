@@ -8,7 +8,8 @@ from django.contrib.auth.hashers import make_password
 from environs import Env
 
 from users.models import CustomUser
-
+from employee.models import Employee
+from company.models import Company
 env = Env()
 env.read_env()
 
@@ -44,3 +45,19 @@ def user_created(sender, instance, created, **kwargs):
             traceback.print_exc()
 
     post_save.connect(user_created, sender=CustomUser)
+
+
+@receiver(post_save, sender=CustomUser)
+def updated_multiple_companies(sender, created, instance, *args, **kwargs):
+    if instance and instance.is_hr == 1:
+        employee = Employee.objects.get(id=instance.employee_id)
+        if employee:
+            instance.unique_code = employee.unique_code
+            
+            company = Company.objects.filter(unique_code=instance.unique_code)
+
+            if len(company) > 1:
+                instance.multiple_companies = 1
+        instance.save()
+
+
