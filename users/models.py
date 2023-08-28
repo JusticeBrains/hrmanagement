@@ -74,7 +74,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-
+    multiple_companies = models.PositiveIntegerField(_("Multiple Companies"), default=0)
     objects = CustomUserManager()
 
     class Meta:
