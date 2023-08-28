@@ -30,4 +30,5 @@ class UserViewset(viewsets.ModelViewSet):
         "is_accountant",
         "employee_id",
         "is_gm",
+        "multiple_companies",
     ]
