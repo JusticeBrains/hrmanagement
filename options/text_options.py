@@ -367,4 +367,7 @@ class RecordType(models.TextChoices):
     COST_CENTER = "Cost Center", _("Cost Center")
     EMPLOYEE_ID = "Employee Id", _("Employee Id")
     COST_CENTER_EMPLOYEE_ID = "Cost Center + Employee ID", _("Cost Center + Employee ID")
-    
+
+class TaxType(models.TextChoices):
+    ANNUALLY = "Annually",_("Annually")
+    MONTHLY = "Monthly", _("Monthly")

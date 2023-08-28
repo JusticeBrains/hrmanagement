@@ -12,6 +12,7 @@ from options.text_options import (
     AllowanceType,
     DeductionFrequency,
     RecordType,
+    TaxType,
     TransactionType,
     WorkType,
 )
@@ -1512,3 +1513,25 @@ class Paymaster(models.Model):
     def save(self, *args, **kwargs):
         self.populate_fields()
         return super().save(*args, **kwargs)
+
+
+class TaxLaws(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    no = models.CharField(_("No."), max_length=50, blank=True,null=True)
+    description = models.CharField(_("Description"), max_length=50, blank=True, null=True)
+    tax_type = models.CharField(_("Tax Type"), choices=TaxType.choices,max_length=150, blank=True, null=True)
+    bonus_tax_rate = models.DecimalField(_("Bonus Tax rate"), max_digits=5, decimal_places=2, default=5.0)
+    bonus_percentage_threshold = models.DecimalField(_("Bonus Percentage Threshold"), max_digits=5, decimal_places=2, default=0.0)
+    annual_bonus_threshold = models.DecimalField(_("Annual Bonus Threshold"), max_digits=10, decimal_places=2,null=True, blank=True)
+    overtime_threshold = models.DecimalField(_("Overtime Threshold"), max_digits=5, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Tax Laws"
+        verbose_name_plural = "Tax Laws"
+    
+    def __str__(self) -> str:
+        return f"{self.no} {self.description}"
+    
+    def __repr__(self) -> str:
+        return f"{self.no} {self.description}"
+        

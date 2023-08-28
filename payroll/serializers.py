@@ -10,6 +10,7 @@ from .models import (
     Paymaster,
     ShiftEntries,
     ShiftSetUp,
+    TaxLaws,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
@@ -113,3 +114,8 @@ class PaymasterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paymaster
         fields = "__all__"
+
+class TaxLawsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaxLaws
+        fields ="__all__"
