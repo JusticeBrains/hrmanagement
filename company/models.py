@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model  # get current active user
 from django.conf import settings  # get a user
 from django.utils import timezone
 from options import text_options
-
+from employee.models import Employee
 User = get_user_model()
 
 
@@ -48,6 +48,13 @@ class Company(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+    def update_employee(self):
+        Employee.objects.filter(company_id=self).update(unique_code=self.unique_code)
+    
+    def save(self, *args, **kwargs):
+        self.update_employee()
+        super().save(*args, **kwargs)
 
     @property
     def alias(self):
