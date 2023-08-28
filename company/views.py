@@ -9,7 +9,7 @@ class CompanyFilterSet(PropertyFilterSet):
 
     class Meta:
         model = comp_models.Company
-        fields = ["id", "name", "comp_type"]
+        fields = ["id", "name", "comp_type","unique_code"]
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
