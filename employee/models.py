@@ -846,7 +846,7 @@ class Notch(models.Model):
     class Meta:
         verbose_name = "Notch"
         verbose_name_plural = "Notches"
-        unique_together = ("no","salary_grade","payroll_structure_code","company","amount")
+        unique_together = ("no","salary_grade","company",)
 
 
 class PayGroup(models.Model):
