@@ -50,7 +50,7 @@ env.read_env()
 @receiver(post_save, sender=CustomUser)
 def updated_multiple_companies(sender, created, instance, *args, **kwargs):
     if instance and instance.is_hr == 1:
-        employee = Employee.objects.get(id=instance.employee_id)
+        employee = Employee.objects.get(id=instance.employee_id.id)
         if employee:
             instance.unique_code = employee.unique_code
             
