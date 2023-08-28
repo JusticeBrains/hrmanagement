@@ -250,7 +250,7 @@ class Command(BaseCommand):
                 )
                 asyncio.run(
                     load_department(
-                        url=env.str("nla_exc_man_dep"),
+                        url=env.str("nla_exec_man_dep"),
                         auth=auth,
                         company=comp.name,
                         comp_id=comp.id,
