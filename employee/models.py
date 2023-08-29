@@ -893,6 +893,7 @@ class Notch(models.Model):
             if self.payroll_structure_code is not None
             else None
         )
+        self.company = self.company_id.name if self.company_id is not None else None
 
     def save(self, *args, **kwargs):
         self.populate_fields()
