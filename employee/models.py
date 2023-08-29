@@ -139,8 +139,20 @@ class Employee(models.Model):
     pay_group_name = models.CharField(
         _("Pay Group Name"), max_length=250, blank=True, null=True
     )
-    salary_grade = models.ForeignKey("company.SalaryGrade", verbose_name=_("Salary Grade"), on_delete=models.DO_NOTHING, blank=True, null=True)
-    notch = models.ForeignKey("employee.Notch", verbose_name=_("Notch"), on_delete=models.CASCADE, blank=True, null=True)
+    salary_grade = models.ForeignKey(
+        "company.SalaryGrade",
+        verbose_name=_("Salary Grade"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    notch = models.ForeignKey(
+        "employee.Notch",
+        verbose_name=_("Notch"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     annual_basic = models.CharField(
         _("Annual Basic"), max_length=50, blank=True, null=True
     )
@@ -824,9 +836,13 @@ class Notch(models.Model):
     payroll_structure_code = models.ForeignKey(
         "company.PayrollStructure",
         verbose_name=_("Payroll Structure"),
-        on_delete=models.CASCADE, null=True, blank=True
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
-    payroll_structure_name = models.CharField(_("Payroll Structure Name"), max_length=150, blank=True, null=True)
+    payroll_structure_name = models.CharField(
+        _("Payroll Structure Name"), max_length=150, blank=True, null=True
+    )
     salary_grade = models.ForeignKey(
         "company.SalaryGrade",
         verbose_name=_("Salary Grade"),
@@ -834,12 +850,18 @@ class Notch(models.Model):
         blank=True,
         null=True,
     )
-    salary_grade_name = models.CharField(_("Salary Grade Name"), max_length=150, blank=True, null=True)
+    salary_grade_name = models.CharField(
+        _("Salary Grade Name"), max_length=150, blank=True, null=True
+    )
     amount = models.DecimalField(
         _("Amount"), max_digits=8, decimal_places=2, null=True, blank=True
     )
     company_id = models.ForeignKey(
-        "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
     user_id = models.ForeignKey(
@@ -849,22 +871,32 @@ class Notch(models.Model):
         blank=True,
         null=True,
     )
+
     class Meta:
         verbose_name = "Notch"
         verbose_name_plural = "Notches"
-        unique_together = ("no","salary_grade","company",)
-    
-    
+        unique_together = (
+            "no",
+            "salary_grade",
+            "company",
+        )
+
     def __str__(self):
         return f"{self.payroll_structure_code} - {self.salary_grade} - {self.amount}"
 
     def populate_fields(self):
-        self.salary_grade_name = self.salary_grade.code if self.salary_grade is not None else None
-        self.payroll_structure_name = self.payroll_structure_code.code if self.payroll_structure_code is not None else None
+        self.salary_grade_name = (
+            self.salary_grade.code if self.salary_grade is not None else None
+        )
+        self.payroll_structure_name = (
+            self.payroll_structure_code.name
+            if self.payroll_structure_code is not None
+            else None
+        )
 
     def save(self, *args, **kwargs):
         self.populate_fields()
-        super().save(*args, **kwargs)    
+        super().save(*args, **kwargs)
 
 
 class PayGroup(models.Model):

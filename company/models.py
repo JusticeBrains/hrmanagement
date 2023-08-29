@@ -8,6 +8,7 @@ from django.conf import settings  # get a user
 from django.utils import timezone
 from options import text_options
 from employee.models import Employee
+
 User = get_user_model()
 
 
@@ -48,10 +49,10 @@ class Company(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-    
+
     def update_employee(self):
         Employee.objects.filter(company_id=self).update(unique_code=self.unique_code)
-    
+
     def save(self, *args, **kwargs):
         self.update_employee()
         super().save(*args, **kwargs)
@@ -115,22 +116,28 @@ class PayrollStructure(models.Model):
     class Meta:
         verbose_name = "Payroll Structure"
         verbose_name_plural = "Payroll Structures"
-    
+
     def __str__(self) -> str:
         return f"{self.code}"
-    
+
     def populate_fields(self):
         self.company = self.company_id.name if self.company_id is not None else None
 
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
-    
+
 
 class BaseCom(models.Model):
     id = models.UUIDField(_("ID"), default=uuid.uuid4, primary_key=True, editable=False)
     code = models.CharField(_("Code"), max_length=150, blank=True, null=True)
-    payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure"), on_delete=models.CASCADE, blank=True, null=True)
+    payroll_structure = models.ForeignKey(
+        "company.PayrollStructure",
+        verbose_name=_("Payroll Structure"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("User ID"),
@@ -138,6 +145,10 @@ class BaseCom(models.Model):
         blank=True,
         null=True,
     )
+    payroll_structure_name = models.CharField(
+        _("Payroll Structure Name"), max_length=150, blank=True, null=True
+    )
+
     class Meta:
         abstract = True
 
@@ -163,10 +174,14 @@ class JobTitles(BaseCom):
 
     def populate_fields(self):
         self.company = self.company_id.name if self.company_id is not None else None
+        self.payroll_structure_name = (
+            self.payroll_structure.name if self.payroll_structure is not None else None
+        )
 
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
+
 
 # if connection.vendor == 'postgresql':
 #     with connection.cursor() as cursor:
@@ -183,9 +198,17 @@ class JobTitles(BaseCom):
 
 class SalaryGrade(BaseCom):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
-    job_titles = models.ForeignKey("company.JobTitles", verbose_name=_("Job Titles"), on_delete=models.CASCADE, blank=True, null=True)
+    job_titles = models.ForeignKey(
+        "company.JobTitles",
+        verbose_name=_("Job Titles"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
-    company_id = models.CharField(_("Company ID"), max_length=150, blank=True, null=True)
+    company_id = models.CharField(
+        _("Company ID"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Salary Grade"
@@ -195,12 +218,22 @@ class SalaryGrade(BaseCom):
         return f"{self.code} - {self.payroll_structure}"
 
     def populate_company(self):
-        self.company = self.payroll_structure.company if self.payroll_structure is not None else None
-        self.company_id = self.payroll_structure.id if self.payroll_structure is not None else None
+        self.company = (
+            self.payroll_structure.company
+            if self.payroll_structure is not None
+            else None
+        )
+        self.company_id = (
+            self.payroll_structure.id if self.payroll_structure is not None else None
+        )
+        self.payroll_structure_name = (
+            self.payroll_structure.name if self.payroll_structure is not None else None
+        )
 
     def save(self, *args, **kwargs):
         self.populate_company()
-        super().save(*args, **kwargs)   
+        super().save(*args, **kwargs)
+
 
 # if connection.vendor == 'postgresql':
 #     with connection.cursor() as cursor:
@@ -236,7 +269,11 @@ class Policy(models.Model):
 class EmployeePolicy(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     employee = models.ForeignKey(
-        "employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, blank=True, null=True
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     policy = models.ForeignKey(
         "company.Policy", verbose_name=_("Policy"), on_delete=models.CASCADE, blank=True
@@ -255,10 +292,18 @@ class EmployeePolicy(models.Model):
 class DepartmentPolicy(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     department = models.ForeignKey(
-        "employee.Department", verbose_name=_("Department"), on_delete=models.CASCADE, blank=True, null=True
+        "employee.Department",
+        verbose_name=_("Department"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     policy = models.ForeignKey(
-        "company.Policy", verbose_name=_("Policy"), on_delete=models.CASCADE, null=True, blank=True
+        "company.Policy",
+        verbose_name=_("Policy"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     date = models.DateField(_("Date"), default=timezone.now)
     accepted = models.BooleanField(_("Accepted"), default=False)
