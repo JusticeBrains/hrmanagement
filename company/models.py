@@ -118,12 +118,26 @@ class PayrollStructure(models.Model):
     
     def __str__(self) -> str:
         return f"{self.code}"
+    
+    def populate_fields(self):
+        self.company = self.company_id.name if self.company_id is not None else None
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
+    
 
 class BaseCom(models.Model):
     id = models.UUIDField(_("ID"), default=uuid.uuid4, primary_key=True, editable=False)
     code = models.CharField(_("Code"), max_length=150, blank=True, null=True)
     payroll_structure = models.ForeignKey("company.PayrollStructure", verbose_name=_("Payroll Structure"), on_delete=models.CASCADE, blank=True, null=True)
-
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User ID"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     class Meta:
         abstract = True
 
@@ -147,6 +161,12 @@ class JobTitles(BaseCom):
     def __str__(self):
         return f"{self.code} - {self.description}"
 
+    def populate_fields(self):
+        self.company = self.company_id.name if self.company_id is not None else None
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)
 
 # if connection.vendor == 'postgresql':
 #     with connection.cursor() as cursor:
@@ -164,9 +184,6 @@ class JobTitles(BaseCom):
 class SalaryGrade(BaseCom):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     job_titles = models.ForeignKey("company.JobTitles", verbose_name=_("Job Titles"), on_delete=models.CASCADE, blank=True, null=True)
-    company_id = models.ForeignKey(
-        "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True
-    )
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
 
     class Meta:
@@ -175,6 +192,13 @@ class SalaryGrade(BaseCom):
 
     def __str__(self) -> str:
         return f"{self.code} - {self.payroll_structure}"
+
+    def populate_company(self):
+        self.company = self.payroll_structure.company if self.payroll_structure is not None else None
+
+    def save(self, *args, **kwargs):
+        self.populate_company()
+        super().save(*args, **kwargs)   
 
 # if connection.vendor == 'postgresql':
 #     with connection.cursor() as cursor:
