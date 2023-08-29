@@ -150,6 +150,7 @@ class BranchViewSet(viewsets.ModelViewSet):
 class NotchViewSet(viewsets.ModelViewSet):
     queryset = employee_model.Notch.objects.all()
     serializer_class = serializers.NotchesSerializer
+    filterset_fields = "__all__ma"
 
 
 class AppraisalGradingViewSet(viewsets.ModelViewSet):
