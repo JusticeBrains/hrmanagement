@@ -185,6 +185,7 @@ class SalaryGrade(BaseCom):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     job_titles = models.ForeignKey("company.JobTitles", verbose_name=_("Job Titles"), on_delete=models.CASCADE, blank=True, null=True)
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
+    company_id = models.CharField(_("Company ID"), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = "Salary Grade"
@@ -195,6 +196,7 @@ class SalaryGrade(BaseCom):
 
     def populate_company(self):
         self.company = self.payroll_structure.company if self.payroll_structure is not None else None
+        self.company_id = self.payroll_structure.id if self.payroll_structure is not None else None
 
     def save(self, *args, **kwargs):
         self.populate_company()

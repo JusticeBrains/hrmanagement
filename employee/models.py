@@ -826,6 +826,7 @@ class Notch(models.Model):
         verbose_name=_("Payroll Structure"),
         on_delete=models.CASCADE, null=True, blank=True
     )
+    payroll_structure_name = models.CharField(_("Payroll Structure Name"), max_length=150, blank=True, null=True)
     salary_grade = models.ForeignKey(
         "company.SalaryGrade",
         verbose_name=_("Salary Grade"),
@@ -833,6 +834,7 @@ class Notch(models.Model):
         blank=True,
         null=True,
     )
+    salary_grade_name = models.CharField(_("Salary Grade Name"), max_length=150, blank=True, null=True)
     amount = models.DecimalField(
         _("Amount"), max_digits=8, decimal_places=2, null=True, blank=True
     )
@@ -847,13 +849,22 @@ class Notch(models.Model):
         blank=True,
         null=True,
     )
-    def __str__(self):
-        return f"{self.payroll_structure_code} - {self.salary_grade} - {self.amount}"
-
     class Meta:
         verbose_name = "Notch"
         verbose_name_plural = "Notches"
         unique_together = ("no","salary_grade","company",)
+    
+    
+    def __str__(self):
+        return f"{self.payroll_structure_code} - {self.salary_grade} - {self.amount}"
+
+    def populate_fields(self):
+        self.salary_grade_name = self.salary_grade.code if self.salary_grade is not None else None
+        self.payroll_structure_name = self.payroll_structure_code.code if self.payroll_structure_code is not None else None
+
+    def save(self, *args, **kwargs):
+        self.populate_fields()
+        super().save(*args, **kwargs)    
 
 
 class PayGroup(models.Model):
