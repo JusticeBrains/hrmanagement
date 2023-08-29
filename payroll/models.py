@@ -1608,7 +1608,13 @@ class TaxLaws(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User ID"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     class Meta:
         verbose_name = "Tax Laws"
         verbose_name_plural = "Tax Laws"
