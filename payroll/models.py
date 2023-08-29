@@ -1542,7 +1542,13 @@ class Paymaster(models.Model):
     total_deductions = models.DecimalField(
         _("Total Deductions"), max_digits=10, decimal_places=2, default=0.0
     )
-
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User ID"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     class Meta:
         verbose_name = "Paymaster"
         verbose_name_plural = "Paymaster"

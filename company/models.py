@@ -104,6 +104,13 @@ class PayrollStructure(models.Model):
         null=True,
         blank=True,
     )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User ID"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Payroll Structure"
@@ -266,15 +273,3 @@ class BankBranch(models.Model):
     class Meta:
         verbose_name = "Bank Branch"
         verbose_name_plural = "Bank Branches"
-
-
-# {
-#       "@odata.etag": "W/\"JzU2O1U4TUFBQUNIQUFBQUFBQXUvWU1XQUFBdXNZa1dBQUo3LzFNQVJRQk9BRWtBVHdCU0FBQUFBQUE9Njs2NzU3NTEwOyc=\"",
-#       "No": 0,
-#       "Start_Date": "2020-01-01",
-#       "End_Date": "2021-12-31",
-#       "Code": "SENIOR",
-#       "Year": 2020,
-#       "Name": "General Salary Structure",
-#       "Closed": false
-  

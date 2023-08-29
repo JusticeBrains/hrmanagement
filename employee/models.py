@@ -840,6 +840,13 @@ class Notch(models.Model):
         "company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, blank=True, null=True
     )
     company = models.CharField(_("Company"), max_length=150, null=True, blank=True)
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("User ID"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     def __str__(self):
         return f"{self.payroll_structure_code} - {self.salary_grade} - {self.amount}"
 

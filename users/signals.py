@@ -16,7 +16,6 @@ env.read_env()
 @receiver(post_save, sender=CustomUser)
 def user_created(sender, instance, created, **kwargs):
     if created:  # Only perform actions for newly created instances
-        pass_gen = instance.generated_pass
         try:
             print("---------------Sending -----------------------")
             subject = "Login Credentials"
