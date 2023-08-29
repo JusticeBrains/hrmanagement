@@ -310,7 +310,9 @@ class TransactionEntries(models.Model):
     taxable = models.BooleanField(_("Taxable"), default=False)
     contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
-    global_name = models.CharField(_("Global Name"), max_length=250, blank=True, null=True)
+    global_name = models.CharField(
+        _("Global Name"), max_length=250, blank=True, null=True
+    )
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("User"),
@@ -513,7 +515,9 @@ class SavingSchemeEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     global_id = models.CharField(_("Global ID"), max_length=250, blank=True, null=True)
-    global_name = models.CharField(_("Global Name"), max_length=250, blank=True, null=True)
+    global_name = models.CharField(
+        _("Global Name"), max_length=250, blank=True, null=True
+    )
     status = models.BooleanField(_("Status"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
@@ -1257,6 +1261,16 @@ class ShiftSetUp(models.Model):
         blank=True,
         null=True,
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     created_at = models.DateTimeField(
         _("Created At"), auto_now=False, auto_now_add=True
     )
@@ -1479,26 +1493,60 @@ class EmployeeShiftEntries(models.Model):
 
 class Paymaster(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
-    company = models.ForeignKey("company.Company", verbose_name=_("Company"), on_delete=models.CASCADE, related_name="paymaster_company")
-    company_name = models.CharField(_("Company Name"), max_length=150, blank=True, null=True)
-    employee = models.ForeignKey("employee.Employee", verbose_name=_("Employee"), on_delete=models.CASCADE, related_name="paymaster_employee")
-    employee_name = models.CharField(_("Employee Name"), max_length=150, blank=True, null=True)
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        related_name="paymaster_company",
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.CASCADE,
+        related_name="paymaster_employee",
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
     employee_code = models.CharField(_("Employee Code"), max_length=50)
-    basic_salary = models.DecimalField(_("Basic Salary"), max_digits=20, decimal_places=2, default=0.0)
-    allowances = models.DecimalField(_("Allowances"), max_digits=20, decimal_places=2, default=0.0)
-    deductions = models.DecimalField(_("Deductions"), max_digits=20, decimal_places=2, default=0.0)
-    ssf_employee = models.DecimalField(_("SSF Employee"), max_digits=10, decimal_places=2, default=0.0)
-    gross_salary = models.DecimalField(_("Gross Salary"), max_digits=10, decimal_places=2, default=0.0)
-    net_salary = models.DecimalField(_("Net Salary"), max_digits=20, decimal_places=2, default=0.0)
-    taxable_salary = models.DecimalField(_("Taxable Salary"), max_digits=5, decimal_places=2)
-    saving_scheme = models.DecimalField(_("Saving Schemes"), max_digits=10, decimal_places=2, default=0.0)
-    loans = models.DecimalField(_("Loans"), max_digits=10, decimal_places=2, default=0.0)
-    total_deductions = models.DecimalField(_("Total Deductions"), max_digits=10, decimal_places=2, default=0.0)
+    basic_salary = models.DecimalField(
+        _("Basic Salary"), max_digits=20, decimal_places=2, default=0.0
+    )
+    allowances = models.DecimalField(
+        _("Allowances"), max_digits=20, decimal_places=2, default=0.0
+    )
+    deductions = models.DecimalField(
+        _("Deductions"), max_digits=20, decimal_places=2, default=0.0
+    )
+    ssf_employee = models.DecimalField(
+        _("SSF Employee"), max_digits=10, decimal_places=2, default=0.0
+    )
+    gross_salary = models.DecimalField(
+        _("Gross Salary"), max_digits=10, decimal_places=2, default=0.0
+    )
+    net_salary = models.DecimalField(
+        _("Net Salary"), max_digits=20, decimal_places=2, default=0.0
+    )
+    taxable_salary = models.DecimalField(
+        _("Taxable Salary"), max_digits=5, decimal_places=2
+    )
+    saving_scheme = models.DecimalField(
+        _("Saving Schemes"), max_digits=10, decimal_places=2, default=0.0
+    )
+    loans = models.DecimalField(
+        _("Loans"), max_digits=10, decimal_places=2, default=0.0
+    )
+    total_deductions = models.DecimalField(
+        _("Total Deductions"), max_digits=10, decimal_places=2, default=0.0
+    )
 
     class Meta:
         verbose_name = "Paymaster"
         verbose_name_plural = "Paymaster"
-    
+
     def __str__(self) -> str:
         return f"{self.company_name}"
 
@@ -1508,8 +1556,12 @@ class Paymaster(models.Model):
     def populate_fields(self):
         self.company_name = self.company.name if self.company is not None else None
         self.employee_code = self.employee.code if self.employee is not None else None
-        self.employee_name = f"{self.employee.last_name} {self.employee.first_name} {self.employee.middle_name}" if self.employee is not None else None
-    
+        self.employee_name = (
+            f"{self.employee.last_name} {self.employee.first_name} {self.employee.middle_name}"
+            if self.employee is not None
+            else None
+        )
+
     def save(self, *args, **kwargs):
         self.populate_fields()
         return super().save(*args, **kwargs)
@@ -1517,21 +1569,46 @@ class Paymaster(models.Model):
 
 class TaxLaws(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
-    no = models.CharField(_("No."), max_length=50, blank=True,null=True)
-    description = models.CharField(_("Description"), max_length=50, blank=True, null=True)
-    tax_type = models.CharField(_("Tax Type"), choices=TaxType.choices,max_length=150, blank=True, null=True)
-    bonus_tax_rate = models.DecimalField(_("Bonus Tax rate"), max_digits=5, decimal_places=2, default=5.0)
-    bonus_percentage_threshold = models.DecimalField(_("Bonus Percentage Threshold"), max_digits=5, decimal_places=2, default=0.0)
-    annual_bonus_threshold = models.DecimalField(_("Annual Bonus Threshold"), max_digits=10, decimal_places=2,null=True, blank=True)
-    overtime_threshold = models.DecimalField(_("Overtime Threshold"), max_digits=5, decimal_places=2, blank=True, null=True)
+    no = models.CharField(_("No."), max_length=50, blank=True, null=True)
+    description = models.CharField(
+        _("Description"), max_length=50, blank=True, null=True
+    )
+    tax_type = models.CharField(
+        _("Tax Type"), choices=TaxType.choices, max_length=150, blank=True, null=True
+    )
+    bonus_tax_rate = models.DecimalField(
+        _("Bonus Tax rate"), max_digits=5, decimal_places=2, default=5.0
+    )
+    bonus_percentage_threshold = models.DecimalField(
+        _("Bonus Percentage Threshold"), max_digits=5, decimal_places=2, default=0.0
+    )
+    annual_bonus_threshold = models.DecimalField(
+        _("Annual Bonus Threshold"),
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    overtime_threshold = models.DecimalField(
+        _("Overtime Threshold"), max_digits=5, decimal_places=2, blank=True, null=True
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Tax Laws"
         verbose_name_plural = "Tax Laws"
-    
+
     def __str__(self) -> str:
         return f"{self.no} {self.description}"
-    
+
     def __repr__(self) -> str:
         return f"{self.no} {self.description}"
-        
