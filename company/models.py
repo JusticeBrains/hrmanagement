@@ -224,7 +224,7 @@ class SalaryGrade(BaseCom):
             else None
         )
         self.company_id = (
-            self.payroll_structure.id if self.payroll_structure is not None else None
+            self.payroll_structure.company_id.id if self.payroll_structure is not None else None
         )
         self.payroll_structure_name = (
             self.payroll_structure.name if self.payroll_structure is not None else None
