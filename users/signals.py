@@ -32,7 +32,7 @@ def user_created(sender, instance, created, **kwargs):
                 if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                     raise ValueError(f"Invalid email address: {email}")
             send_mail(subject, message, from_email, recipient_list)
-            instance.generated_pass = make_password(pass_gen)
+            instance.generated_pass = None
             instance.save()
             print("---------------Sent -----------------------")
             del instance.generated_pass  # Delete the generated_pass attribute
@@ -62,6 +62,9 @@ def updated_multiple_companies(sender, instance, *args, **kwargs):
 
                 if len(company) > 1:
                     instance.multiple_companies = 1
+                elif len(company) <= 1:
+                    instance.multiple_companies = 0
+
     
         elif instance.is_hr == 0:
             instance.unique_code = employee.unique_code
