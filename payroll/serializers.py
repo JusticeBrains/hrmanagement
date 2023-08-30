@@ -134,6 +134,11 @@ class ShiftSetUpSerializer(serializers.ModelSerializer):
 
 
 class ShiftEntriesSerializer(serializers.ModelSerializer):
+    company_name = serializers.ReadOnlyField()
+    period_code = serializers.ReadOnlyField()
+    shift_name = serializers.ReadOnlyField()
+    recurrent = serializers.ReadOnlyField()
+    percentage_of_hourly_rate = serializers.ReadOnlyField()
     class Meta:
         model = ShiftEntries
         fields = "__all__"
