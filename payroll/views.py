@@ -100,13 +100,13 @@ class AuditTrailViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
-class EmployeeSavingSchemeEntriesViewSet(viewsets.ModelViewSet):
+class EmployeeSavingSchemeEntriesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = EmployeeSavingSchemeEntries.objects.all()
     serializer_class = EmployeeSavingSchemeEntriesSerializer
     filterset_fields = "__all__"
 
 
-class EmployeeTransactionEntriesViewSet(viewsets.ModelViewSet):
+class EmployeeTransactionEntriesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = EmployeeTransactionEntries.objects.all()
     serializer_class = EmployeeTransactionEntriesSerializer
     filterset_fields = "__all__"
@@ -124,7 +124,7 @@ class ShiftEntriesViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
 
 
-class EmployeeShiftEntriesViewSet(viewsets.ModelViewSet):
+class EmployeeShiftEntriesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = EmployeeShiftEntries.objects.all()
     serializer_class = EmployeeShiftEntriesSerializer
     filterset_fields = "__all__"

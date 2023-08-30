@@ -338,8 +338,6 @@ class TransactionEntries(models.Model):
             self.employee_name = (
                 f"{self.employee.last_name}, {self.employee.first_name}"
             )
-        if self.company:
-            self.company_name = self.company.name
         if self.start_period:
             self.start_period_code = self.start_period.period_code
         if self.end_period:
