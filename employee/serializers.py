@@ -76,6 +76,8 @@ class BranchSerializer(serializers.ModelSerializer):
 
 
 class NotchesSerializer(serializers.ModelSerializer):
+    company = serializers.CharField(required=False)
+    no = serializers.CharField(required=False)
     class Meta:
         model = employee_model.Notch
         fields = "__all__"
