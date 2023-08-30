@@ -302,7 +302,7 @@ class TransactionEntries(models.Model):
         related_name="end_per_entries",
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=10, decimal_places=2, null=True, blank=True)
+        _("Amount"), max_digits=10, decimal_places=2, null=True, blank=True   )
     percentage_of_basic = models.DecimalField(
         _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
     )

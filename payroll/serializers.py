@@ -23,7 +23,7 @@ from .models import (
 
 class TransactionSerializer(serializers.ModelSerializer):
     start_period = serializers.ReadOnlyField()
-    company = serializers.ReadOnlyField()
+    company_name = serializers.ReadOnlyField()
     class Meta:
         model = Transactions
         fields = "__all__"
@@ -31,7 +31,7 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 class SavingSchemeSerializer(serializers.ModelSerializer):
     start_period = serializers.ReadOnlyField()
-    company = serializers.ReadOnlyField()
+    company_name = serializers.ReadOnlyField()
     class Meta:
         model = SavingScheme
         fields = "__all__"
