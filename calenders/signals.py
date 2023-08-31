@@ -44,26 +44,28 @@ def populate_date(sender, instance, **kwargs):
             gross_income = employee_basic + total_allowances
             net_income = gross_income - total_deductions
             company = instance.company
+            processing_user = instance.user_process_id
 
             paymaster, _ = Paymaster.objects.get_or_create(
                 period=instance,
-                allowances = total_allowances,
-                deductions=total_deductions,
-                gross_salary=gross_income,
-                net_salary=net_income,
                 company=company,
-                employee=employee,
-                basic_salary=employee_basic,
-                user_id=instance.user_process_id
+                defaults={
+                "allowances":total_allowances,
+                "deductions":total_deductions,
+                "gross_salary":gross_income,
+                "net_salary":net_income,
+                "employee":employee,
+                "basic_salary":employee_basic,
+                "user_id":processing_user
+                },
             )
             # Update attributes if the Paymaster instance already existed
             if not paymaster._state.adding:
-                paymaster.period = current_period
                 paymaster.allowances = total_allowances
                 paymaster.deductions = total_deductions
                 paymaster.gross_salary = gross_income
                 paymaster.net_salary = net_income
                 paymaster.basic_salary = employee_basic
-                paymaster.user_id = instance.user_process_id
+                paymaster.user_id = processing_user
 
             paymaster.save()
