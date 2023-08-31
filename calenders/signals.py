@@ -33,6 +33,9 @@ def populate_date(sender, instance, **kwargs):
         )
         global_input.save()
 
+
+@receiver(pre_save, sender=Period)
+def process_payroll(sender, instance, **kwargs):
     if instance.status == 1 and instance.process == True:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
