@@ -45,7 +45,7 @@ def process_payroll(sender, instance, **kwargs):
         processing_user = instance.user_process_id
 
         for employee in employees:
-            entries = EmployeeTransactionEntries.objects.select_related('employee', 'company').filter(
+            entries = EmployeeTransactionEntries.objects.filter(
                 Q(Q(start_period__start_date__lte=instance.start_date, recurrent=True) |
                 Q(recurrent=True) |
                 Q(end_period__end_date__lte=instance.end_date)) &
