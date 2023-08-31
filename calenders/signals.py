@@ -59,11 +59,13 @@ def populate_date(sender, instance, **kwargs):
             if total_allowances is not None:
                 gross_income = employee_basic + total_allowances
             elif total_allowances is None:
-                gross_income = employee_basic
+                total_allowances = 0.0
+                gross_income = employee_basic + total_allowances
             if total_deductions is not None:
                 net_income = gross_income - total_deductions
             elif total_deductions is None:
-                net_income = gross_income
+                total_deductions = 0.0
+                net_income = gross_income - total_deductions
 
 
             paymaster, created = Paymaster.objects.get_or_create(
