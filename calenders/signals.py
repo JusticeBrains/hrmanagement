@@ -44,8 +44,6 @@ def process_payroll(sender, instance, **kwargs):
         company = instance.company
         processing_user = instance.user_process_id
 
-        entries_dict = {}  # Dictionary to store employee entries
-
         for employee in employees:
             entries = EmployeeTransactionEntries.objects.select_related('employee', 'company').filter(
                 Q(Q(start_period__start_date__lte=instance.start_date, recurrent=True) |
@@ -58,24 +56,12 @@ def process_payroll(sender, instance, **kwargs):
                 Q(end_period__end_date__lte=instance.start_date)
             )
 
-            entries_dict[employee] = entries
-
-
-        for employee, entries in entries_dict.items():
             total_allowances = entries.filter(
-                transaction_type=TransactionType.ALLOWANCE
+                transaction_type=TransactionType.ALLOWANCE,
             ).aggregate(amount=Sum("amount"))["amount"]
-
             total_deductions = entries.filter(
-                transaction_type=TransactionType.DEDUCTION
+                transaction_type=TransactionType.DEDUCTION,
             ).aggregate(amount=Sum("amount"))["amount"]
-
-            # total_allowances = entries.filter(
-            #     transaction_type=TransactionType.ALLOWANCE,
-            # ).aggregate(amount=Sum("amount"))["amount"]
-            # total_deductions = entries.filter(
-            #     transaction_type=TransactionType.DEDUCTION,
-            # ).aggregate(amount=Sum("amount"))["amount"]
 
             employee_basic = Decimal(employee.annual_basic)
             if total_allowances is not None:
