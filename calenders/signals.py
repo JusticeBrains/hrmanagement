@@ -52,7 +52,9 @@ def populate_date(sender, instance, **kwargs):
                 employee=employee
             )
             paymaster, created = Paymaster.objects.get_or_create(
-                paymaster_filter,
+                period=instance,
+                company=company,
+                employee=employee,
                 defaults={
                     "allowances": total_allowances,
                     "deductions": total_deductions,
