@@ -14,8 +14,10 @@ from payroll.models import (
 from employee.models import Employee
 from options.text_options import TransactionType
 
+
 class PeriodStatus(Enum):
     PENDING = 1
+
 
 @receiver(pre_save, sender=Period)
 def populate_date(sender, instance, **kwargs):
@@ -36,24 +38,32 @@ def populate_date(sender, instance, **kwargs):
         )
         global_input.save()
 
-
-@receiver(pre_save, sender=Period)
-def process_payroll(sender, instance, **kwargs):
     if instance.status == PeriodStatus.PENDING and instance.process == True:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
         processing_user = instance.user_process_id
 
         for employee in employees:
-            entries = EmployeeTransactionEntries.objects.filter(
-                Q(Q(start_period__start_date__lte=instance.start_date, recurrent=True) |
-                Q(recurrent=True) |
-                Q(end_period__end_date__lte=instance.end_date)) &
-                (Q(employee=employee) & Q(company=company))
-            ).exclude(
-                Q(Q(start_period__start_date__lt=instance.start_date) &
-                Q(end_period__end_date__lte=instance.start_date)) |
-                Q(end_period__end_date__lte=instance.start_date)
+            entries = (
+                EmployeeTransactionEntries.objects.select_related("employee", "company")
+                .filter(
+                    Q(
+                        Q(
+                            start_period__start_date__lte=instance.start_date,
+                            recurrent=True,
+                        )
+                        | Q(recurrent=True)
+                        | Q(end_period__end_date__lte=instance.end_date)
+                    )
+                    & (Q(employee=employee) & Q(company=company))
+                )
+                .exclude(
+                    Q(
+                        Q(start_period__start_date__lt=instance.start_date)
+                        & Q(end_period__end_date__lte=instance.start_date)
+                    )
+                    | Q(end_period__end_date__lte=instance.start_date)
+                )
             )
 
             total_allowances = entries.filter(
