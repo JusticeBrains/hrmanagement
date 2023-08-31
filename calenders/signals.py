@@ -60,12 +60,22 @@ def process_payroll(sender, instance, **kwargs):
                 )
             )
 
-            total_allowances = entries.filter(
-                transaction_type=TransactionType.ALLOWANCE,
-            ).aggregate(amount=Sum("amount"))["amount"] or 0.0
-            total_deductions = entries.filter(
-                transaction_type=TransactionType.DEDUCTION,
-            ).aggregate(amount=Sum("amount"))["amount"] or 0.0
+            total_allowances = (
+                entries.filter(
+                    transaction_type=TransactionType.ALLOWANCE,
+                ).aggregate(
+                    amount=Sum("amount")
+                )["amount"]
+                or 0.0
+            )
+            total_deductions = (
+                entries.filter(
+                    transaction_type=TransactionType.DEDUCTION,
+                ).aggregate(
+                    amount=Sum("amount")
+                )["amount"]
+                or 0.0
+            )
 
             employee_basic = Decimal(employee.annual_basic)
             gross_income = employee_basic + total_allowances
