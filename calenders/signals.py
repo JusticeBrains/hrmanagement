@@ -64,7 +64,6 @@ def populate_date(sender, instance, **kwargs):
             )
             # Update attributes if the Paymaster instance already existed
             if not created:
-                paymaster.period=instance
                 paymaster.allowances = total_allowances
                 paymaster.deductions = total_deductions
                 paymaster.gross_salary = gross_income
