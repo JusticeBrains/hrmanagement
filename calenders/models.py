@@ -132,6 +132,7 @@ class Period(models.Model):
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name="processing_user"
     )
     class Meta:
         verbose_name = _("Period")
