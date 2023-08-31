@@ -54,12 +54,12 @@ def populate_date(sender, instance, **kwargs):
             paymaster, created = Paymaster.objects.get_or_create(
                 paymaster_filter,
                 defaults={
-                "allowances":total_allowances,
-                "deductions":total_deductions,
-                "gross_salary":gross_income,
-                "net_salary":net_income,
-                "basic_salary":employee_basic,
-                "user_id":processing_user,
+                    "allowances": total_allowances,
+                    "deductions": total_deductions,
+                    "gross_salary": gross_income,
+                    "net_salary": net_income,
+                    "basic_salary": employee_basic,
+                    "user_id": processing_user,
                 },
             )
             # Update attributes if the Paymaster instance already existed
@@ -72,3 +72,4 @@ def populate_date(sender, instance, **kwargs):
                 paymaster.user_id = processing_user
             
             paymaster.save()
+
