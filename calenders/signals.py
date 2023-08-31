@@ -1,4 +1,5 @@
 import calendar
+from decimal import Decimal
 from datetime import date
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -39,7 +40,7 @@ def populate_date(sender, instance, **kwargs):
             total_deductions = EmployeeTransactionEntries.objects.filter(
                 employee=employee, transaction_type=TransactionType.DEDUCTION
             ).aggregate(amount=Sum("amount"))["amount"]
-            employee_basic = employee.annual_basic
+            employee_basic = Decimal(employee.annual_basic)
             gross_income = employee_basic + total_allowances
             net_income = gross_income - total_deductions
             company = instance.company
