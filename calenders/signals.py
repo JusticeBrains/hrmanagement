@@ -46,7 +46,7 @@ def populate_date(sender, instance, **kwargs):
             company = instance.company
             processing_user = instance.user_process_id
 
-            paymaster, _ = Paymaster.objects.get_or_create(
+            paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
                 company=company,
                 defaults={
@@ -68,4 +68,4 @@ def populate_date(sender, instance, **kwargs):
                 paymaster.basic_salary = employee_basic
                 paymaster.user_id = processing_user
 
-            paymaster.save()
+                paymaster.save()
