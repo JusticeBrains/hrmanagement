@@ -105,6 +105,7 @@ class Period(models.Model):
     )
     status = models.PositiveIntegerField(_("Status"), default=0)
     process = models.BooleanField(_("Process"), default=False)
+    process_date = models.CharField(_("Process Date"), max_length=150,blank=True, null=True)
     MONTH_NAMES = {
         1: "January",
         2: "February",

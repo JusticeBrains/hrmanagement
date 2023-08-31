@@ -164,6 +164,7 @@ def create_employee_transaction(sender, instance, **kwargs):
         taxable = instance.taxable
         percentage_of_basic = instance.percentage_of_basic
         transaction_entry_name = instance.transaction_name
+        company = instance.company
 
         def create_or_update_employee_transaction_entry(employee, employee_name):
             """
@@ -173,6 +174,7 @@ def create_employee_transaction(sender, instance, **kwargs):
                 transaction_entry=instance,
                 transaction_entry_name=transaction_entry_name,
                 company_name=company_name,
+                company=company,
                 employee=employee,
                 employee_name=employee_name,
 

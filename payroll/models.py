@@ -402,6 +402,13 @@ class EmployeeTransactionEntries(models.Model):
     end_period_code = models.CharField(
         _("End Period Code"), max_length=50, blank=True, null=True
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
