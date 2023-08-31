@@ -1,4 +1,3 @@
-import calendar
 from decimal import Decimal
 from datetime import date
 from django.db.models.signals import post_save, pre_save
@@ -52,21 +51,19 @@ def populate_date(sender, instance, **kwargs):
                 company=company,
                 employee=employee
             )
-            paymaster, _ = Paymaster.objects.get_or_create(
+            paymaster, created = Paymaster.objects.get_or_create(
                 paymaster_filter,
                 defaults={
-                "company":company,
                 "allowances":total_allowances,
                 "deductions":total_deductions,
                 "gross_salary":gross_income,
                 "net_salary":net_income,
-                "employee":employee,
                 "basic_salary":employee_basic,
                 "user_id":processing_user,
                 },
             )
             # Update attributes if the Paymaster instance already existed
-            if not paymaster._state.adding:
+            if not created:
                 paymaster.period=instance
                 paymaster.allowances = total_allowances
                 paymaster.deductions = total_deductions
@@ -74,5 +71,5 @@ def populate_date(sender, instance, **kwargs):
                 paymaster.net_salary = net_income
                 paymaster.basic_salary = employee_basic
                 paymaster.user_id = processing_user
-
+            
             paymaster.save()
