@@ -1569,6 +1569,7 @@ class Paymaster(models.Model):
         null=True,
         blank=True,
     )
+    period_name = models.CharField(_("Period Name"), max_length=50, blank=True, null=True)
     class Meta:
         verbose_name = "Paymaster"
         verbose_name_plural = "Paymaster"
@@ -1587,6 +1588,7 @@ class Paymaster(models.Model):
             if self.employee is not None
             else None
         )
+        self.period_name = self.period.period_name if self.period is not None else None
 
     def save(self, *args, **kwargs):
         self.populate_fields()

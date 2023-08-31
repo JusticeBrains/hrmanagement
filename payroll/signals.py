@@ -152,6 +152,8 @@ def create_employee_transaction(sender, instance, **kwargs):
         disbursement_type = instance.disbursement_type
         recurrent = instance.recurrent
         start_period_code = instance.start_period_code
+        start_period = instance.start_period
+        end_period = instance.end_period
         end_period_code = instance.end_period_code
         user_id = instance.user_id
         company_name = instance.company_name
@@ -184,6 +186,8 @@ def create_employee_transaction(sender, instance, **kwargs):
                 "contribute_to_ssf":contribute_to_ssf,
                 "taxable":taxable,
                 "status":status,
+                "start_period": start_period,
+                "end_period": end_period,
                 }
             )
 
@@ -197,6 +201,8 @@ def create_employee_transaction(sender, instance, **kwargs):
                 save_entry.amount = amount
                 save_entry.contribute_to_ssf = contribute_to_ssf
                 save_entry.taxable = taxable
+                save_entry.start_period = start_period
+                save_entry.end_period = end_period
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
