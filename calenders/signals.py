@@ -40,7 +40,7 @@ def populate_date(sender, instance, **kwargs):
 
         for employee in employees:
             entries = EmployeeTransactionEntries.objects.filter(
-                Q(start_period__start_date__lt=instance.start_date, recurrent=True)
+                Q(start_period__start_date__lte=instance.start_date, end_period__end_date__lte=instance.end_date)
                 |Q(start_period__start_date__lte=instance.start_date, recurrent=True)
                 | Q(recurrent=True)
                 | Q(end_period__end_date__lte=instance.end_date),
