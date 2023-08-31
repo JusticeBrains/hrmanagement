@@ -56,8 +56,15 @@ def populate_date(sender, instance, **kwargs):
             ).aggregate(amount=Sum("amount"))["amount"]
 
             employee_basic = Decimal(employee.annual_basic)
-            gross_income = employee_basic + total_allowances
-            net_income = gross_income - total_deductions
+            if total_allowances is not None:
+                gross_income = employee_basic + total_allowances
+            elif total_allowances is None:
+                gross_income = employee_basic
+            if total_deductions is not None:
+                net_income = gross_income - total_deductions
+            elif total_deductions is None:
+                net_income = gross_income
+
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
