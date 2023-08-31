@@ -5,7 +5,11 @@ from django.dispatch import receiver
 from django.db.models import Sum, Count, Q
 
 from .models import Period, GlobalInputs
-from payroll.models import EmployeeSavingSchemeEntries, EmployeeTransactionEntries, Paymaster
+from payroll.models import (
+    EmployeeSavingSchemeEntries,
+    EmployeeTransactionEntries,
+    Paymaster,
+)
 from employee.models import Employee
 from options.text_options import TransactionType
 
@@ -31,19 +35,29 @@ def populate_date(sender, instance, **kwargs):
 
     if instance.status == 1 and instance.process == True:
         employees = Employee.objects.filter(company_id=instance.company)
+        company = instance.company
+        processing_user = instance.user_process_id
 
         for employee in employees:
-            total_allowances = EmployeeTransactionEntries.objects.filter(
-                employee=employee, transaction_type=TransactionType.ALLOWANCE
+            entries = EmployeeTransactionEntries.objects.filter(
+                Q(start_period__lte=instance.start_period)
+                | Q(recurrent=True)
+                | Q(end_period__lte=instance.end_period),
+                employee=employee,
+                company=company,
+            )
+
+            total_allowances = entries.filter(
+                transaction_type=TransactionType.ALLOWANCE,
             ).aggregate(amount=Sum("amount"))["amount"]
-            total_deductions = EmployeeTransactionEntries.objects.filter(
-                employee=employee, transaction_type=TransactionType.DEDUCTION
+            total_deductions = entries.filter(
+                transaction_type=TransactionType.DEDUCTION,
+             
             ).aggregate(amount=Sum("amount"))["amount"]
+
             employee_basic = Decimal(employee.annual_basic)
             gross_income = employee_basic + total_allowances
             net_income = gross_income - total_deductions
-            company = instance.company
-            processing_user = instance.user_process_id
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
@@ -66,6 +80,5 @@ def populate_date(sender, instance, **kwargs):
                 paymaster.net_salary = net_income
                 paymaster.basic_salary = employee_basic
                 paymaster.user_id = processing_user
-            
-            paymaster.save()
 
+            paymaster.save()
