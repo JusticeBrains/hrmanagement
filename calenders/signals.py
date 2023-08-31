@@ -44,26 +44,22 @@ def populate_date(sender, instance, **kwargs):
         processing_user = instance.user_process_id
 
         for employee in employees:
-            entries = (
-                EmployeeTransactionEntries.objects.select_related("employee", "company")
-                .filter(
+            entries = EmployeeTransactionEntries.objects.filter(
+                Q(
                     Q(
-                        Q(
-                            start_period__start_date__lte=instance.start_date,
-                            recurrent=True,
-                        )
-                        | Q(recurrent=True)
-                        | Q(end_period__end_date__lte=instance.end_date)
+                        start_period__start_date__lte=instance.start_date,
+                        recurrent=True,
                     )
-                    & (Q(employee=employee) & Q(company=company))
+                    | Q(recurrent=True)
+                    | Q(end_period__end_date__lte=instance.end_date)
                 )
-                .exclude(
-                    Q(
-                        Q(start_period__start_date__lt=instance.start_date)
-                        & Q(end_period__end_date__lte=instance.start_date)
-                    )
-                    | Q(end_period__end_date__lte=instance.start_date)
+                & (Q(employee=employee), Q(company=company))
+            ).exclude(
+                Q(
+                    Q(start_period__start_date__lt=instance.start_date),
+                    Q(end_period__end_date__lte=instance.start_date),
                 )
+                | Q(end_period__end_date__lte=instance.start_date)
             )
 
             total_allowances = entries.filter(
