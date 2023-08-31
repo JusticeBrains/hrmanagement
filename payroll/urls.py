@@ -57,7 +57,7 @@ router.register(
     basename="employee-shift-entries",
 )
 router.register(
-    "paymater",
+    "paymaster",
     PaymasterViewSet,
     basename="paymaster",
 )
