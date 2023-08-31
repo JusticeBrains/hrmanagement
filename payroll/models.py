@@ -380,8 +380,24 @@ class EmployeeTransactionEntries(models.Model):
         blank=True,
     )
     recurrent = models.BooleanField(_("Recurrent"), default=True)
+    start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Start Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="emp_start_per_entries",
+    )
     start_period_code = models.CharField(
         _("Start Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="emp_per_entries",
     )
     end_period_code = models.CharField(
         _("End Period Code"), max_length=50, blank=True, null=True

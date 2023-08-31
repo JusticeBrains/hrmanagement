@@ -121,7 +121,14 @@ class Period(models.Model):
     }
     user_id = models.ForeignKey(
         "users.CustomUser",
-        verbose_name=_("Employee"),
+        verbose_name=_("User"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    user_process_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Processing User"),
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
