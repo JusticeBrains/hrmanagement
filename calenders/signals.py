@@ -45,12 +45,6 @@ def populate_date(sender, instance, **kwargs):
             company = instance.company
             processing_user = instance.user_process_id
 
-            # Construct the filter using Q objects
-            paymaster_filter = Q(
-                period=instance,
-                company=company,
-                employee=employee
-            )
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
                 company=company,
