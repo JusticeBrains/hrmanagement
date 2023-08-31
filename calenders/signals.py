@@ -56,7 +56,7 @@ def populate_date(sender, instance, **kwargs):
                 "net_salary":net_income,
                 "employee":employee,
                 "basic_salary":employee_basic,
-                "user_id":processing_user
+                "user_id":processing_user,
                 },
             )
             # Update attributes if the Paymaster instance already existed
