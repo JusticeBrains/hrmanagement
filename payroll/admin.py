@@ -4,6 +4,7 @@ from .models import (
     EmployeeSavingSchemeEntries,
     EmployeeShiftEntries,
     EmployeeTransactionEntries,
+    Paymaster,
     ShiftEntries,
     ShiftSetUp,
     Transactions,
@@ -93,4 +94,8 @@ class EmployeeShiftEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(OvertimeSetup)
 class OvertimeSetupAdmin(admin.ModelAdmin):
+    ...
+
+@admin.register(Paymaster)
+class PaymasterAdmin(admin.ModelAdmin):
     ...
