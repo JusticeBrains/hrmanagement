@@ -98,4 +98,5 @@ class OvertimeSetupAdmin(admin.ModelAdmin):
 
 @admin.register(Paymaster)
 class PaymasterAdmin(admin.ModelAdmin):
-    ...
+    list_display = ["employee_name", "employee_code","basic_salary","allowances","deductions"]
+    search_fields = ["employee_code"]
