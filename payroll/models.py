@@ -1528,7 +1528,7 @@ class Paymaster(models.Model):
         _("Net Salary"), max_digits=20, decimal_places=2, default=0.0
     )
     taxable_salary = models.DecimalField(
-        _("Taxable Salary"), max_digits=5, decimal_places=2
+        _("Taxable Salary"), max_digits=5, decimal_places=2, default=0.0
     )
     saving_scheme = models.DecimalField(
         _("Saving Schemes"), max_digits=10, decimal_places=2, default=0.0
@@ -1545,6 +1545,13 @@ class Paymaster(models.Model):
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
+    )
+    period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     class Meta:
         verbose_name = "Paymaster"
