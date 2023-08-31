@@ -1,8 +1,7 @@
 from decimal import Decimal
-from datetime import date
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.db.models import Sum, Count, Q
+from django.db.models import Sum, Q
 
 from .models import Period, GlobalInputs
 from payroll.models import (
@@ -36,7 +35,7 @@ def populate_date(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Period)
 def process_payroll(sender, instance, **kwargs):
-    if instance.status == 1 and instance.process == True:
+    if instance.status == 1 and instance.process:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
         processing_user = instance.user_process_id
