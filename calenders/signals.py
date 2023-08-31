@@ -40,12 +40,14 @@ def populate_date(sender, instance, **kwargs):
 
         for employee in employees:
             entries = EmployeeTransactionEntries.objects.filter(
-                Q(start_period__start_date__lte=instance.start_date, end_period__end_date__lte=instance.end_date)
-                |Q(start_period__start_date__lte=instance.start_date, recurrent=True)
+                Q(start_period__start_date__lte=instance.start_date, recurrent=True)
                 | Q(recurrent=True)
                 | Q(end_period__end_date__lte=instance.end_date),
                 employee=employee,
                 company=company,
+            ).exclude(
+                Q(start_period__start_date__lt=instance.start_date)
+                | Q(end_period__end_date__lte=instance.start_date)
             )
 
             total_allowances = entries.filter(
@@ -53,7 +55,6 @@ def populate_date(sender, instance, **kwargs):
             ).aggregate(amount=Sum("amount"))["amount"]
             total_deductions = entries.filter(
                 transaction_type=TransactionType.DEDUCTION,
-             
             ).aggregate(amount=Sum("amount"))["amount"]
 
             employee_basic = Decimal(employee.annual_basic)
@@ -66,7 +67,7 @@ def populate_date(sender, instance, **kwargs):
                 net_income = gross_income - total_deductions
             elif total_deductions is None:
                 total_deductions = 0.0
-                net_income = gross_income 
+                net_income = gross_income
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
