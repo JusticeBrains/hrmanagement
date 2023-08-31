@@ -77,7 +77,8 @@ class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeTransactionEntries)
 class EmployeeTransactionEntriesAdmin(admin.ModelAdmin):
-    ...
+    list_display = ["employee_name","transaction_entry","transaction_type","amount","company_name"]
+    search_fields = ["employee_name","company_name","transaction_type","transaction_entry"]
 
 @admin.register(ShiftSetUp)
 class ShiftSetUpEntriesAdmin(admin.ModelAdmin):
