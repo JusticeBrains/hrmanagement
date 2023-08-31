@@ -53,7 +53,8 @@ def populate_date(sender, instance, **kwargs):
                 net_salary=net_income,
                 company=company,
                 employee=employee,
-                basic_salary=employee_basic
+                basic_salary=employee_basic,
+                user_id=instance.user_process_id
             )
             # Update attributes if the Paymaster instance already existed
             if not paymaster._state.adding:
@@ -63,5 +64,6 @@ def populate_date(sender, instance, **kwargs):
                 paymaster.gross_salary = gross_income
                 paymaster.net_salary = net_income
                 paymaster.basic_salary = employee_basic
+                paymaster.user_id = instance.user_process_id
 
             paymaster.save()
