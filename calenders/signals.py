@@ -62,22 +62,14 @@ def process_payroll(sender, instance, **kwargs):
 
             total_allowances = entries.filter(
                 transaction_type=TransactionType.ALLOWANCE,
-            ).aggregate(amount=Sum("amount"))["amount"]
+            ).aggregate(amount=Sum("amount"))["amount"] or 0.0
             total_deductions = entries.filter(
                 transaction_type=TransactionType.DEDUCTION,
-            ).aggregate(amount=Sum("amount"))["amount"]
+            ).aggregate(amount=Sum("amount"))["amount"] or 0.0
 
             employee_basic = Decimal(employee.annual_basic)
-            if total_allowances is not None:
-                gross_income = employee_basic + total_allowances
-            elif total_allowances is None:
-                total_allowances = 0.0
-                gross_income = employee_basic
-            if total_deductions is not None:
-                net_income = gross_income - total_deductions
-            elif total_deductions is None:
-                total_deductions = 0.0
-                net_income = gross_income
+            gross_income = employee_basic + total_allowances
+            net_income = gross_income - total_deductions
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
