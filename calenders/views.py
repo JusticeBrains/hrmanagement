@@ -20,6 +20,7 @@ class PeriodViewSet(viewsets.ModelViewSet):
         "period_name",
         "period_code",
         "status",
+        "process",
     ]
 
 
