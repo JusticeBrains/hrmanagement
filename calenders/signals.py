@@ -3,7 +3,7 @@ from decimal import Decimal
 from datetime import date
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 
 from .models import Period, GlobalInputs
 from payroll.models import EmployeeSavingSchemeEntries, EmployeeTransactionEntries, Paymaster
@@ -46,19 +46,28 @@ def populate_date(sender, instance, **kwargs):
             company = instance.company
             processing_user = instance.user_process_id
 
-            paymaster, created = Paymaster.objects.get_or_create(
+            # Construct the filter using Q objects
+            paymaster_filter = Q(
                 period=instance,
                 company=company,
-                allowances=total_allowances,
-                deductions=total_deductions,
-                gross_salary=gross_income,
-                net_salary=net_income,
-                employee=employee,
-                basic_salary=employee_basic,
-                user_id=processing_user,
+                employee=employee
+            )
+            paymaster, _ = Paymaster.objects.get_or_create(
+                paymaster_filter,
+                defaults={
+                "company":company,
+                "allowances":total_allowances,
+                "deductions":total_deductions,
+                "gross_salary":gross_income,
+                "net_salary":net_income,
+                "employee":employee,
+                "basic_salary":employee_basic,
+                "user_id":processing_user,
+                },
             )
             # Update attributes if the Paymaster instance already existed
-            if not created:
+            if not paymaster._state.adding:
+                paymaster.period=instance
                 paymaster.allowances = total_allowances
                 paymaster.deductions = total_deductions
                 paymaster.gross_salary = gross_income
