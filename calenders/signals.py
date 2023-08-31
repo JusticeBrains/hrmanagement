@@ -46,8 +46,10 @@ def populate_date(sender, instance, **kwargs):
                 employee=employee,
                 company=company,
             ).exclude(
-                Q(start_period__start_date__lt=instance.start_date)
-                | Q(end_period__end_date__lte=instance.start_date)
+                Q(
+                    start_period__start_date__lt=instance.start_date,
+                    end_period__end_date__lte=instance.start_date,
+                )
             )
 
             total_allowances = entries.filter(
