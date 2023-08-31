@@ -1,6 +1,5 @@
 from decimal import Decimal
 from datetime import date
-from enum import Enum
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Sum, Count, Q
@@ -15,13 +14,9 @@ from employee.models import Employee
 from options.text_options import TransactionType
 
 
-class PeriodStatus(Enum):
-    PENDING = 1
-
-
 @receiver(pre_save, sender=Period)
 def populate_date(sender, instance, **kwargs):
-    if instance and instance.status == PeriodStatus.PENDING:
+    if instance and instance.status == 1:
         current_period = instance
         current_year = instance.period_year.year
         total_working_hours = Period.objects.filter(
@@ -38,28 +33,23 @@ def populate_date(sender, instance, **kwargs):
         )
         global_input.save()
 
-    if instance.status == PeriodStatus.PENDING and instance.process == True:
+    if instance.status == 1 and instance.process == True:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
         processing_user = instance.user_process_id
 
         for employee in employees:
             entries = EmployeeTransactionEntries.objects.filter(
-                Q(
-                    Q(
-                        start_period__start_date__lte=instance.start_date,
-                        recurrent=True,
-                    )
-                    | Q(recurrent=True)
-                    | Q(end_period__end_date__lte=instance.end_date)
-                )
-                & (Q(employee=employee), Q(company=company))
+                Q(start_period__start_date__lte=instance.start_date, recurrent=True)
+                | Q(recurrent=True)
+                | Q(end_period__end_date__lte=instance.end_date),
+                employee=employee,
+                company=company,
             ).exclude(
                 Q(
-                    Q(start_period__start_date__lt=instance.start_date),
-                    Q(end_period__end_date__lte=instance.start_date),
+                    start_period__start_date__lt=instance.start_date,
+                    end_period__end_date__lte=instance.start_date,
                 )
-                | Q(end_period__end_date__lte=instance.start_date)
             )
 
             total_allowances = entries.filter(
