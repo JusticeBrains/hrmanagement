@@ -1,5 +1,6 @@
 from decimal import Decimal
 from datetime import date
+from enum import Enum
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Sum, Count, Q
@@ -13,10 +14,12 @@ from payroll.models import (
 from employee.models import Employee
 from options.text_options import TransactionType
 
+class PeriodStatus(Enum):
+    PENDING = 1
 
 @receiver(pre_save, sender=Period)
 def populate_date(sender, instance, **kwargs):
-    if instance and instance.status == 1:
+    if instance and instance.status == PeriodStatus.PENDING:
         current_period = instance
         current_year = instance.period_year.year
         total_working_hours = Period.objects.filter(
@@ -36,32 +39,43 @@ def populate_date(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Period)
 def process_payroll(sender, instance, **kwargs):
-    if instance.status == 1 and instance.process == True:
+    if instance.status == PeriodStatus.PENDING and instance.process == True:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
         processing_user = instance.user_process_id
 
+        entries_dict = {}  # Dictionary to store employee entries
+
         for employee in employees:
-            entries = EmployeeTransactionEntries.objects.filter(
-                Q(start_period__start_date__lte=instance.start_date, recurrent=True)
-                | Q(recurrent=True)
-                | Q(end_period__end_date__lte=instance.end_date),
-                employee=employee,
-                company=company,
+            entries = EmployeeTransactionEntries.objects.select_related('employee', 'company').filter(
+                Q(Q(start_period__start_date__lte=instance.start_date, recurrent=True) |
+                Q(recurrent=True) |
+                Q(end_period__end_date__lte=instance.end_date)) &
+                (Q(employee=employee) & Q(company=company))
             ).exclude(
-                Q(
-                    start_period__start_date__lt=instance.start_date,
-                    end_period__end_date__lte=instance.start_date,
-                )
-                | Q(end_period__end_date__lte=instance.start_date)
+                Q(Q(start_period__start_date__lt=instance.start_date) &
+                Q(end_period__end_date__lte=instance.start_date)) |
+                Q(end_period__end_date__lte=instance.start_date)
             )
 
+            entries_dict[employee] = entries
+
+
+        for employee, entries in entries_dict.items():
             total_allowances = entries.filter(
-                transaction_type=TransactionType.ALLOWANCE,
+                transaction_type=TransactionType.ALLOWANCE
             ).aggregate(amount=Sum("amount"))["amount"]
+
             total_deductions = entries.filter(
-                transaction_type=TransactionType.DEDUCTION,
+                transaction_type=TransactionType.DEDUCTION
             ).aggregate(amount=Sum("amount"))["amount"]
+
+            # total_allowances = entries.filter(
+            #     transaction_type=TransactionType.ALLOWANCE,
+            # ).aggregate(amount=Sum("amount"))["amount"]
+            # total_deductions = entries.filter(
+            #     transaction_type=TransactionType.DEDUCTION,
+            # ).aggregate(amount=Sum("amount"))["amount"]
 
             employee_basic = Decimal(employee.annual_basic)
             if total_allowances is not None:
