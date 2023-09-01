@@ -177,7 +177,7 @@ def create_employee_transaction(sender, instance, **kwargs):
                 company=company,
                 employee=employee,
                 employee_name=employee_name,
-
+                employee_code=employee_code,
                 defaults={
                 "recurrent":recurrent,
                 "start_period_code":start_period_code,
@@ -212,6 +212,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 instance.global_name = employee.company
                 if percentage_of_basic is not None:
                     amount = (percentage_of_basic/100) * employee_basic
@@ -229,6 +230,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 if percentage_of_basic is not None:
                     amount = (percentage_of_basic/100) * employee_basic
                 elif percentage_of_basic is None:
@@ -244,6 +246,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 if percentage_of_basic is not None:
                     amount = (percentage_of_basic/100) * employee_basic
                 elif percentage_of_basic is not None:
@@ -256,6 +259,7 @@ def create_employee_transaction(sender, instance, **kwargs):
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee_name
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 if percentage_of_basic is not None:
                     amount = (percentage_of_basic/100) * employee_basic
                 elif percentage_of_basic is None:
@@ -299,6 +303,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
                     "user_id":user_id,
                     "company_name":company_name,
                     "employee_name":employee_name,
+                    "employee_code":employee_code,
                     "status":status,
                 },
             )
@@ -309,12 +314,14 @@ def create_employee_shift_entry(sender, instance, **kwargs):
                 save_entry.status = status
                 save_entry.company_name = company_name
                 save_entry.recurrent = recurrent
+                save_entry.employee_code= employee_code
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
             employees = Employee.objects.filter(company_id=company)
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
                 create_or_update_employee_shift_entry(
                     employee, employee_name
                 )
@@ -326,7 +333,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                
+                employee_code = employee.code
                 create_or_update_employee_shift_entry(
                     employee, employee_name
                 )
@@ -338,6 +345,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
                 create_or_update_employee_shift_entry(
                     employee, employee_name
                 )
@@ -346,7 +354,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
             employee = Employee.objects.get(id=instance.global_id)
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-
+                employee_code = employee.code
                 create_or_update_employee_shift_entry(
                     employee, employee_name
                 )

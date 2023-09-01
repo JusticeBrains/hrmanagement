@@ -365,6 +365,9 @@ class EmployeeTransactionEntries(models.Model):
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
     )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=150, blank=True, null=True
+    )
     transaction_entry = models.ForeignKey(
         "payroll.TransactionEntries",
         verbose_name=_("Transaction Name"),
@@ -593,6 +596,9 @@ class EmployeeSavingSchemeEntries(models.Model):
     )
     employee_name = models.CharField(
         _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=150, blank=True, null=True
     )
     saving_scheme = models.ForeignKey(
         "payroll.SavingSchemeEntries",
@@ -1695,6 +1701,7 @@ class TaxLawType(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
+
     class Meta:
         verbose_name = "Tax Law Type"
         verbose_name_plural = "Tax Law Types"
