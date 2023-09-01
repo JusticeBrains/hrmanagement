@@ -223,3 +223,5 @@ INTERNAL_IPS = [
     "127.0.0.1",
     "localhost"
 ]
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  
