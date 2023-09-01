@@ -1685,7 +1685,16 @@ class TaxLawType(models.Model):
     amount = models.DecimalField(
         _("Amount"), max_digits=10, decimal_places=2, default=0.0
     )
-
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
     class Meta:
         verbose_name = "Tax Law Type"
         verbose_name_plural = "Tax Law Types"
@@ -1694,6 +1703,7 @@ class TaxLawType(models.Model):
         self.tax_law_name = (
             self.tax_law.description if self.tax_law is not None else None
         )
+        self.company_name = self.company.name if self.company is not None else None
         return super().save(*args, **kwargs)
 
     def __str__(self) -> str:
@@ -1731,7 +1741,7 @@ class TaxRelief(models.Model):
     def __str__(self) -> str:
         return f"{self.description}"
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f"{self.description}"
 
     def save(self, *args, **kwargs):
