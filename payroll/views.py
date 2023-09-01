@@ -12,6 +12,7 @@ from .models import (
     ShiftSetUp,
     TaxLawType,
     TaxLaws,
+    TaxRelief,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
@@ -32,6 +33,7 @@ from .serializers import (
     ShiftSetUpSerializer,
     TaxLawTypeSerializer,
     TaxLawsSerializer,
+    TaxReliefSerializer,
     TransactionSerializer,
     SavingSchemeSerializer,
     SavingSchemeEntriesSerializer,
@@ -144,4 +146,9 @@ class TaxLawsViewSet(viewsets.ModelViewSet):
 class TaxLawTypeViewSet(viewsets.ModelViewSet):
     queryset = TaxLawType.objects.all()
     serializer_class = TaxLawTypeSerializer
+    filterset_fields = "__all__"
+
+class TaxReliefViewSet(viewsets.ModelViewSet):
+    queryset = TaxRelief.objects.all()
+    serializer_class = TaxReliefSerializer
     filterset_fields = "__all__"

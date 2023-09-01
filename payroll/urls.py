@@ -12,6 +12,7 @@ from .views import (
     ShiftSetUpViewSet,
     TaxLawTypeViewSet,
     TaxLawsViewSet,
+    TaxReliefViewSet,
     TransactionViewSet,
     SavingSchemeViewSet,
     TransactionEntriesViewSet,
@@ -71,5 +72,10 @@ router.register(
     "tax-law-type",
     TaxLawTypeViewSet,
     basename="tax-law-type",
+)
+router.register(
+    "tax-relief",
+    TaxReliefViewSet,
+    basename="tax-relief",
 )
 urlpatterns = router.urls

@@ -12,6 +12,7 @@ from .models import (
     ShiftSetUp,
     TaxLawType,
     TaxLaws,
+    TaxRelief,
     Transactions,
     SavingScheme,
     SavingSchemeEntries,
@@ -163,4 +164,9 @@ class TaxLawsSerializer(serializers.ModelSerializer):
 class TaxLawTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaxLawType
+        fields ="__all__"
+
+class TaxReliefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaxRelief
         fields ="__all__"

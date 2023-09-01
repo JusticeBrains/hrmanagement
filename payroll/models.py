@@ -1604,7 +1604,7 @@ class Paymaster(models.Model):
 
     def save(self, *args, **kwargs):
         self.populate_fields()
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class TaxLaws(models.Model):
@@ -1663,7 +1663,13 @@ class TaxLaws(models.Model):
 
 class TaxLawType(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
-    tax_law_type = models.CharField(_("Tax Law Type"),choices=TaxLawChoices.choices, max_length=150, blank=True, null=True)
+    tax_law_type = models.CharField(
+        _("Tax Law Type"),
+        choices=TaxLawChoices.choices,
+        max_length=150,
+        blank=True,
+        null=True,
+    )
     tax_law = models.ForeignKey(
         "payroll.TaxLaws",
         verbose_name=_("Tax Law"),
@@ -1696,3 +1702,38 @@ class TaxLawType(models.Model):
     def __repr__(self) -> str:
         return f"{self.tax_law_name}"
 
+
+class TaxRelief(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    code = models.CharField(_("Code"), max_length=150, blank=True, null=True)
+    description = models.CharField(
+        _("Description"), max_length=150, blank=True, null=True
+    )
+    benefit_relief = models.BooleanField(_("Benefit Relief"), default=False)
+    maximum_no = models.PositiveIntegerField(_("Maximum No"), default=0)
+    rate = models.DecimalField(_("Rate"), max_digits=5, decimal_places=2, default=0.0)
+    maximum_age = models.PositiveIntegerField(_("Maximum Age"), default=0)
+    minimum_age = models.PositiveIntegerField(_("Minimum Age"), default=0)
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.CASCADE,
+        related_name="tax_relief_company",
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Tax Relief"
+        verbose_name_plural = "Tax Relief"
+
+    def __str__(self) -> str:
+        return f"{self.description}"
+
+    def __repr__(self) -> str:
+        return f"{self.description}"
+
+    def save(self, *args, **kwargs):
+        self.company_name = self.company.name if self.company is not None else None
+        super().save(*args, **kwargs)
