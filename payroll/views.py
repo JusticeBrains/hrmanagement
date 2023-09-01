@@ -10,6 +10,7 @@ from .models import (
     Paymaster,
     ShiftEntries,
     ShiftSetUp,
+    TaxLawType,
     TaxLaws,
     Transactions,
     SavingScheme,
@@ -29,6 +30,7 @@ from .serializers import (
     PaymasterSerializer,
     ShiftEntriesSerializer,
     ShiftSetUpSerializer,
+    TaxLawTypeSerializer,
     TaxLawsSerializer,
     TransactionSerializer,
     SavingSchemeSerializer,
@@ -137,4 +139,9 @@ class PaymasterViewSet(viewsets.ModelViewSet):
 class TaxLawsViewSet(viewsets.ModelViewSet):
     queryset = TaxLaws.objects.all()
     serializer_class = TaxLawsSerializer
+    filterset_fields = "__all__"
+
+class TaxLawTypeViewSet(viewsets.ModelViewSet):
+    queryset = TaxLawType.objects.all()
+    serializer_class = TaxLawTypeSerializer
     filterset_fields = "__all__"

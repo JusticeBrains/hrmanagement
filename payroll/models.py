@@ -12,6 +12,7 @@ from options.text_options import (
     AllowanceType,
     DeductionFrequency,
     RecordType,
+    TaxLawChoices,
     TaxType,
     TransactionType,
     WorkType,
@@ -302,7 +303,8 @@ class TransactionEntries(models.Model):
         related_name="end_per_entries",
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=10, decimal_places=2, null=True, blank=True   )
+        _("Amount"), max_digits=10, decimal_places=2, null=True, blank=True
+    )
     percentage_of_basic = models.DecimalField(
         _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
     )
@@ -1576,7 +1578,10 @@ class Paymaster(models.Model):
         null=True,
         blank=True,
     )
-    period_name = models.CharField(_("Period Name"), max_length=50, blank=True, null=True)
+    period_name = models.CharField(
+        _("Period Name"), max_length=50, blank=True, null=True
+    )
+
     class Meta:
         verbose_name = "Paymaster"
         verbose_name_plural = "Paymaster"
@@ -1644,6 +1649,7 @@ class TaxLaws(models.Model):
         blank=True,
         null=True,
     )
+
     class Meta:
         verbose_name = "Tax Laws"
         verbose_name_plural = "Tax Laws"
@@ -1653,3 +1659,40 @@ class TaxLaws(models.Model):
 
     def __repr__(self) -> str:
         return f"{self.no} {self.description}"
+
+
+class TaxLawType(models.Model):
+    id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+    tax_law_type = models.CharField(_("Tax Law Type"),choices=TaxLawChoices.choices, max_length=150, blank=True, null=True)
+    tax_law = models.ForeignKey(
+        "payroll.TaxLaws",
+        verbose_name=_("Tax Law"),
+        on_delete=models.CASCADE,
+        related_name="tax_law_type",
+    )
+    tax_law_name = models.CharField(
+        _("Tax Law Name"), max_length=150, blank=True, null=True
+    )
+    percentage = models.DecimalField(
+        _("Percenatge"), max_digits=5, decimal_places=2, default=0.0
+    )
+    amount = models.DecimalField(
+        _("Amount"), max_digits=10, decimal_places=2, default=0.0
+    )
+
+    class Meta:
+        verbose_name = "Tax Law Type"
+        verbose_name_plural = "Tax Law Types"
+
+    def save(self, *args, **kwargs):
+        self.tax_law_name = (
+            self.tax_law.description if self.tax_law is not None else None
+        )
+        return super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"{self.tax_law_name}"
+
+    def __repr__(self) -> str:
+        return f"{self.tax_law_name}"
+

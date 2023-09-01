@@ -371,3 +371,9 @@ class RecordType(models.TextChoices):
 class TaxType(models.TextChoices):
     ANNUALLY = "Annually",_("Annually")
     MONTHLY = "Monthly", _("Monthly")
+
+
+class TaxLawChoices(models.TextChoices):
+    OVERTIME = "Overtime", _("Overtime")
+    BONUS = "Bonus", _("Bonus")
+    INCOME = "Income", _("Income")

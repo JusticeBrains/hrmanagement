@@ -10,6 +10,7 @@ from .views import (
     PaymasterViewSet,
     ShiftEntriesViewSet,
     ShiftSetUpViewSet,
+    TaxLawTypeViewSet,
     TaxLawsViewSet,
     TransactionViewSet,
     SavingSchemeViewSet,
@@ -65,5 +66,10 @@ router.register(
     "tax-laws",
     TaxLawsViewSet,
     basename="tax-laws",
+)
+router.register(
+    "tax-law-type",
+    TaxLawTypeViewSet,
+    basename="tax-law-type",
 )
 urlpatterns = router.urls
