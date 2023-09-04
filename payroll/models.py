@@ -1,4 +1,6 @@
 import uuid
+import math
+
 from decimal import Decimal
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -1223,16 +1225,16 @@ class LoanEntries(models.Model):
             self.employee_code = self.employee.code
 
         if self.amount and self.monthly_repayment:
-            if self.duration is None:
-                self.duration = round(self.amount / self.monthly_repayment)
-            elif self.duration is not None:
-                self.duration = self.duration
+            # if self.duration is None:
+            self.duration = math.ceil(self.amount / self.monthly_repayment)
+            # elif self.duration is not None:
+            #     self.duration = self.duration
 
         if self.amount and self.duration:
-            if self.monthly_repayment is None:
-                self.monthly_repayment = round(self.amount / self.duration, ndigits=4)
-            elif self.monthly_repayment is not None:
-                self.monthly_repayment = self.monthly_repayment
+            # if self.monthly_repayment is None:
+            self.monthly_repayment = math.ceil(self.amount / self.duration, ndigits=4)
+            # elif self.monthly_repayment is not None:
+            #     self.monthly_repayment = self.monthly_repayment
 
         if self.total_amount_paid >= self.amount:
             self.closed = True
@@ -1240,8 +1242,6 @@ class LoanEntries(models.Model):
 
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
-            import math
-
             amount_left = self.amount
             for month in range(1, math.ceil(self.duration) + 1):
                 amount_left -= self.monthly_repayment
