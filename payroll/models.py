@@ -1226,13 +1226,13 @@ class LoanEntries(models.Model):
 
         if self.amount and self.monthly_repayment:
             # if self.duration is None:
-            self.duration = math.ceil(self.amount / self.monthly_repayment)
+            self.duration = self.amount / self.monthly_repayment
             # elif self.duration is not None:
             #     self.duration = self.duration
 
         if self.amount and self.duration:
             # if self.monthly_repayment is None:
-            self.monthly_repayment = math.ceil(self.amount / self.duration)
+            self.monthly_repayment = self.amount / self.duration
             # elif self.monthly_repayment is not None:
             #     self.monthly_repayment = self.monthly_repayment
 
