@@ -1145,13 +1145,13 @@ class LoanEntries(models.Model):
         _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
     )
     monthly_repayment = models.DecimalField(
-        _("Monthly Repayment"), max_digits=10, decimal_places=4, default=0.0
+        _("Monthly Repayment"), max_digits=10, decimal_places=4, blank=True, null=True
     )
     total_amount_paid = models.DecimalField(
         _("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0
     )
     duration = models.DecimalField(
-        _("Duration"), max_digits=10, decimal_places=2, default=0.0
+        _("Duration"), max_digits=10, decimal_places=2, blank=True, null=True
     )
     transaction_period = models.ForeignKey(
         "calenders.Period",
@@ -1223,10 +1223,16 @@ class LoanEntries(models.Model):
             self.employee_code = self.employee.code
 
         if self.amount and self.monthly_repayment:
-            self.duration = round(self.amount / self.monthly_repayment)
+            if self.duration is None:
+                self.duration = round(self.amount / self.monthly_repayment)
+            elif self.duration is not None:
+                self.duration = self.duration
 
         if self.amount and self.duration:
-            self.monthly_repayment = round(self.amount / self.duration, ndigits=4)
+            if self.monthly_repayment is None:
+                self.monthly_repayment = round(self.amount / self.duration, ndigits=4)
+            elif self.monthly_repayment is not None:
+                self.monthly_repayment = self.monthly_repayment
 
         if self.total_amount_paid >= self.amount:
             self.closed = True
@@ -1235,6 +1241,7 @@ class LoanEntries(models.Model):
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
             import math
+
             amount_left = self.amount
             for month in range(1, math.ceil(self.duration) + 1):
                 amount_left -= self.monthly_repayment
