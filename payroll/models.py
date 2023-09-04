@@ -1145,7 +1145,7 @@ class LoanEntries(models.Model):
     )
     monthly_repayment = models.DecimalField(_("Monthly Repayment"), max_digits=10, decimal_places=4, default=0.0)
     total_amount_paid = models.DecimalField(_("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0)
-    duration = models.PositiveIntegerField(_("Duration"), default=0)
+    duration = models.DecimalField(_("Duration"), max_digits=10, decimal_places=2, default=0.0)
     transaction_period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Transaction Period"),
