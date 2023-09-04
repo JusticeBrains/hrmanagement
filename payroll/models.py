@@ -18,7 +18,6 @@ from options.text_options import (
     WorkType,
 )
 
-
 class Transactions(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     description = models.CharField(
@@ -1118,7 +1117,7 @@ class LoanEntries(models.Model):
         _("Description"), max_length=150, blank=True, null=True
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=10, decimal_places=2, default=0.0
+        _("Amount"), max_digits=10, decimal_places=4, default=0.0
     )
     employee = models.ForeignKey(
         "employee.Employee",
@@ -1144,7 +1143,9 @@ class LoanEntries(models.Model):
     periodic_principal = models.DecimalField(
         _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
     )
-    no_of_repayments = models.PositiveIntegerField(_("No Of Repayments"), default=0)
+    monthly_repayment = models.DecimalField(_("Monthly Repayment"), max_digits=10, decimal_places=4, default=0.0)
+    total_amount_paid = models.DecimalField(_("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0)
+    duration = models.PositiveIntegerField(_("Duration"), default=0)
     transaction_period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Transaction Period"),
@@ -1184,6 +1185,7 @@ class LoanEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     status = models.BooleanField(_("Status"), default=False)
+    closed = models.BooleanField(_("Closed"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
@@ -1211,7 +1213,16 @@ class LoanEntries(models.Model):
         if self.employee:
             self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
             self.employee_code = self.employee.code
+        
+        if self.amount and self.monthly_repayment:
+            self.duration = (self.amount / self.monthly_repayment)
+        
+        if self.amount and self.duration:
+            self.monthly_repayment = round(self.amount / self.duration, ndigits=4)
 
+        if self.total_amount_paid >= self.amount:
+            self.closed = True
+            self.status = False
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
