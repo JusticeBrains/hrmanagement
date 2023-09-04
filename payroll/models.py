@@ -18,6 +18,7 @@ from options.text_options import (
     WorkType,
 )
 
+
 class Transactions(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     description = models.CharField(
@@ -1143,9 +1144,15 @@ class LoanEntries(models.Model):
     periodic_principal = models.DecimalField(
         _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
     )
-    monthly_repayment = models.DecimalField(_("Monthly Repayment"), max_digits=10, decimal_places=4, default=0.0)
-    total_amount_paid = models.DecimalField(_("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0)
-    duration = models.DecimalField(_("Duration"), max_digits=10, decimal_places=2, default=0.0)
+    monthly_repayment = models.DecimalField(
+        _("Monthly Repayment"), max_digits=10, decimal_places=4, default=0.0
+    )
+    total_amount_paid = models.DecimalField(
+        _("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0
+    )
+    duration = models.DecimalField(
+        _("Duration"), max_digits=10, decimal_places=2, default=0.0
+    )
     transaction_period = models.ForeignKey(
         "calenders.Period",
         verbose_name=_("Transaction Period"),
@@ -1213,16 +1220,17 @@ class LoanEntries(models.Model):
         if self.employee:
             self.employee_name = f"{self.employee.first_name} {self.employee.last_name}"
             self.employee_code = self.employee.code
-        
+
         if self.amount and self.monthly_repayment:
-            self.duration = (self.amount / self.monthly_repayment)
-        
+            self.duration = round(self.amount / self.monthly_repayment)
+
         if self.amount and self.duration:
             self.monthly_repayment = round(self.amount / self.duration, ndigits=4)
 
         if self.total_amount_paid >= self.amount:
             self.closed = True
             self.status = False
+
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)

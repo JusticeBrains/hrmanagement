@@ -63,12 +63,20 @@ class LoansAdmin(admin.ModelAdmin):
 
 @admin.register(LoanEntries)
 class LoanEntriesAdmin(admin.ModelAdmin):
-    ...
+    list_display = [
+        "loan",
+        "amount",
+        "employee_name",
+        "monthly_repayment",
+        "duration",
+        "total_amount_paid",
+    ]
 
 
 @admin.register(AuditTrail)
 class AuditTrailAdmin(admin.ModelAdmin):
     ...
+
 
 @admin.register(EmployeeSavingSchemeEntries)
 class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
@@ -77,16 +85,30 @@ class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeTransactionEntries)
 class EmployeeTransactionEntriesAdmin(admin.ModelAdmin):
-    list_display = ["employee_name","transaction_entry","transaction_type","amount","company_name"]
-    search_fields = ["employee_name","company_name","transaction_type","transaction_entry"]
+    list_display = [
+        "employee_name",
+        "transaction_entry",
+        "transaction_type",
+        "amount",
+        "company_name",
+    ]
+    search_fields = [
+        "employee_name",
+        "company_name",
+        "transaction_type",
+        "transaction_entry",
+    ]
+
 
 @admin.register(ShiftSetUp)
 class ShiftSetUpEntriesAdmin(admin.ModelAdmin):
     ...
 
+
 @admin.register(ShiftEntries)
 class ShiftEntriesAdmin(admin.ModelAdmin):
     ...
+
 
 @admin.register(EmployeeShiftEntries)
 class EmployeeShiftEntriesAdmin(admin.ModelAdmin):
@@ -97,7 +119,14 @@ class EmployeeShiftEntriesAdmin(admin.ModelAdmin):
 class OvertimeSetupAdmin(admin.ModelAdmin):
     ...
 
+
 @admin.register(Paymaster)
 class PaymasterAdmin(admin.ModelAdmin):
-    list_display = ["employee_name", "employee_code","basic_salary","allowances","deductions"]
+    list_display = [
+        "employee_name",
+        "employee_code",
+        "basic_salary",
+        "allowances",
+        "deductions",
+    ]
     search_fields = ["employee_code"]
