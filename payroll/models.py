@@ -1235,8 +1235,9 @@ class LoanEntries(models.Model):
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
             import math
+            amount_left = self.amount
             for month in range(1, math.ceil(self.duration) + 1):
-                amount_left = self.amount - self.monthly_repayment
+                amount_left -= self.monthly_repayment
                 schedule.append(
                     {
                         "month": month,
