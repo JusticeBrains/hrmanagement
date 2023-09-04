@@ -1191,6 +1191,7 @@ class LoanEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
+    schedule = models.TextField(_("Schedule"), blank=True, null=True)
     status = models.BooleanField(_("Status"), default=False)
     closed = models.BooleanField(_("Closed"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
@@ -1230,6 +1231,20 @@ class LoanEntries(models.Model):
         if self.total_amount_paid >= self.amount:
             self.closed = True
             self.status = False
+
+        if self.amount and self.duration and self.monthly_repayment:
+            schedule = []
+            import math
+            for month in range(1, math.ceil(self.duration) + 1):
+                amount_left = self.amount - self.monthly_repayment
+                schedule.append(
+                    {
+                        "month": month,
+                        "monthly_payment": float(self.monthly_repayment),
+                        "balance": float(amount_left),
+                    }
+                )
+            self.schedule = schedule
 
     def save(self, *args, **kwargs):
         self.populate_fields()
