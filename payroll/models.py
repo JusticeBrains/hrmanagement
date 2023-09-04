@@ -1249,7 +1249,7 @@ class LoanEntries(models.Model):
                 schedule.append(
                     {
                         "month": month,
-                        "monthly_payment": float(self.monthly_repayment),
+                        "monthly_payment": float(monthly_payment),
                         "balance": float(amount_left),
                     }
                 )
