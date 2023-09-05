@@ -1304,7 +1304,7 @@ class EmployeeLoanPayment(models.Model):
     loan = models.ForeignKey(
         "payroll.Loans",
         verbose_name=_("Loan ID"),
-        related_name="loanentries",
+        related_name="loan_payment_entries",
         on_delete=models.DO_NOTHING,
     )
     loan_name = models.CharField(_("Loan Name"), max_length=150, blank=True, null=True)
@@ -1355,7 +1355,7 @@ class EmployeeLoanPayment(models.Model):
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-        related_name="loan_entries_deduction",
+        related_name="loan_payment",
     )
     deduction_start_period_code = models.CharField(
         _("Deduction Start Period Code"), max_length=50, blank=True, null=True
@@ -1366,7 +1366,7 @@ class EmployeeLoanPayment(models.Model):
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-        related_name="end_entries_deduction",
+        related_name="end_payment",
     )
     deduction_end_period_code = models.CharField(
         _("Deduction End Period Code"), max_length=50, blank=True, null=True
