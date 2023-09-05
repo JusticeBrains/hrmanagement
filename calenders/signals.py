@@ -70,7 +70,7 @@ def process_payroll(sender, instance, **kwargs):
                 employee=employee,
                 company=company,
             )
-            total_loan_deductions = None
+            total_loan_deductions = 0
             for emp_loan in loan_entries:
                 monthly_amount = emp_loan.monthly_repayment
                 total_paid = (
