@@ -227,7 +227,8 @@ class Employee(models.Model):
         _("Is Accountant"), blank=True, null=True, default=0
     )
     is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
-
+    net_salary = models.DecimalField(_("Net Salary"), max_digits=10, decimal_places=4, default=0.0)
+    gross_salary = models.DecimalField(_("Gross Salary"), max_digits=5, decimal_places=2, default=0.0)
     class Meta:
         unique_together = ("code", "company")
         verbose_name = "Employee"
@@ -900,6 +901,82 @@ class Notch(models.Model):
         super().save(*args, **kwargs)
 
 
+# class PayGroup(models.Model):
+#     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
+#     no = models.CharField(_("No"), max_length=150, blank=True, null=True)
+#     description = models.CharField(
+#         _("Description"), max_length=100, null=True, blank=True
+#     )
+#     taxable_income_code = models.CharField(
+#         _("Taxable Income Code"), max_length=50, null=True, blank=True
+#     )
+#     taxable_income_description = models.CharField(
+#         _("Taxable Income Description"), max_length=100, null=True, blank=True
+#     )
+#     tax_code = models.ForeignKey(
+#         "payroll.TaxLaws",
+#         verbose_name=_("Tax Code"),
+#         on_delete=models.DO_NOTHING,
+#         blank=True,
+#         null=True,
+#         related_name="tax_code_law",
+#     )
+#     tax_description = models.CharField(
+#         _("Tax Description"), max_length=150, null=True, blank=True
+#     )
+#     gross_income_code = models.ForeignKey(
+#         "payroll.PayrollFormular",
+#         verbose_name=_("Gross Income Code"),
+#         on_delete=models.DO_NOTHING,
+#         null=True,
+#         blank=True,
+#     )
+#     gross_income_description = models.CharField(
+#         _("Gross Income Description"), max_length=150, null=True, blank=True
+#     )
+#     currency_code = models.CharField(
+#         verbose_name=_("Currency Code"), null=True, blank=True
+#     )
+#     bonus_Tax_code = models.ForeignKey(
+#         "payroll.TaxLaws",
+#         verbose_name=_("Bonus Tax Code"),
+#         on_delete=models.DO_NOTHING,
+#         related_name="bonus_tax_laws",
+#         blank=True,
+#         null=True,
+#     )
+#     bonus_tax_description = models.CharField(
+#         _("Bonus Tax Description"), max_length=150, null=True, blank=True
+#     )
+#     gross_up = models.BooleanField(_("Gross Up"), null=True, blank=True)
+#     total_medical_claim_amount = models.PositiveIntegerField(
+#         _("Medical Claim Amount"), null=True, blank=True
+#     )
+#     company = models.CharField(_("Comapny"), max_length=150, null=True, blank=True)
+#     comp_id = models.ForeignKey(
+#         "company.Company",
+#         verbose_name=_("Company ID"),
+#         on_delete=models.DO_NOTHING,
+#         blank=True,
+#         null=True,
+#     )
+
+#     class Meta:
+#         verbose_name = "Pay Group"
+#         verbose_name_plural = "Pay Groups"
+
+#     def __str__(self):
+#         return f"{self.no} - {self.description} - {self.taxable_income_code} - {self.company}"
+
+#     def save(self, *args, **kwargs):
+#         # Get the employees with the same paygroup and company
+#         Employee.objects.filter(pay_group_code=self, company=self.company).update(
+#             total_medical_claim_amount=self.total_medical_claim_amount
+#         )
+
+#         super().save(*args, **kwargs)
+
+
 class PayGroup(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
     no = models.CharField(_("No"), max_length=150, blank=True, null=True)
@@ -958,7 +1035,6 @@ class PayGroup(models.Model):
         )
 
         super().save(*args, **kwargs)
-
 
 class PropertyAssignment(models.Model):
     id = models.UUIDField(_("ID"), editable=False, primary_key=True, default=uuid.uuid4)
