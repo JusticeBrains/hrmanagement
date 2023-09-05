@@ -129,6 +129,7 @@ class PaymasterAdmin(admin.ModelAdmin):
         "basic_salary",
         "allowances",
         "deductions",
+        "period_name",
     ]
     search_fields = ["employee_code"]
 
