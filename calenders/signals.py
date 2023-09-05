@@ -37,7 +37,7 @@ def populate_date(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Period)
 def process_payroll(sender, instance, **kwargs):
-    if instance.status == 1 and instance.process:
+    if (instance.status == 1 or instance.status == 2) and instance.process:
         employees = Employee.objects.filter(company_id=instance.company)
         company = instance.company
         processing_user = instance.user_process_id
