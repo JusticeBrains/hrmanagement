@@ -1278,6 +1278,128 @@ class LoanEntries(models.Model):
         super().save(*args, **kwargs)
 
 
+class EmployeeLoanPayment(models.Model):
+    """
+    Represents entries for loans.
+
+    Fields:
+    - id: Unique identifier for the loan entry
+    - loan: Foreign key to the associated loan object
+    - loan_name: Name of the loan
+    - description: Description of the loan
+    - amount: Amount of the loan
+    - employee: Foreign key to the associated employee object
+    - employee_code: Code of the employee
+    - employee_name: Name of the employee
+    - interest_rate: Interest rate of the loan
+    - periodic_principal: Principal amount to be repaid periodically
+    - no_of_repayments: Number of repayments for the loan
+    - transaction_period: Foreign key to the associated transaction period object
+    - transaction_period_code: Code of the transaction period
+    - deduction_start_period: Foreign key to the associated deduction start period object
+    - deduction_start_period_code: Code of the deduction start period
+    """
+
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    loan = models.ForeignKey(
+        "payroll.Loans",
+        verbose_name=_("Loan ID"),
+        related_name="loanentries",
+        on_delete=models.DO_NOTHING,
+    )
+    loan_name = models.CharField(_("Loan Name"), max_length=150, blank=True, null=True)
+    description = models.CharField(
+        _("Description"), max_length=150, blank=True, null=True
+    )
+    amount = models.DecimalField(
+        _("Amount"), max_digits=10, decimal_places=4, default=0.0
+    )
+    employee = models.ForeignKey(
+        "employee.Employee",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+    employee_code = models.CharField(
+        _("Employee Code"), max_length=150, blank=True, null=True
+    )
+    employee_name = models.CharField(
+        _("Employee Name"), max_length=150, blank=True, null=True
+    )
+    periodic_principal = models.DecimalField(
+        _("Periodic Principal"), max_digits=8, decimal_places=2, default=0.0
+    )
+    monthly_repayment = models.DecimalField(
+        _("Monthly Repayment"), max_digits=10, decimal_places=4, blank=True, null=True
+    )
+    total_amount_paid = models.DecimalField(
+        _("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0
+    )
+    duration = models.DecimalField(
+        _("Duration"), max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    transaction_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Transaction Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    transaction_period_code = models.CharField(
+        _("Transaction Period Code"), max_length=50, blank=True, null=True
+    )
+    deduction_start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="loan_entries_deduction",
+    )
+    deduction_start_period_code = models.CharField(
+        _("Deduction Start Period Code"), max_length=50, blank=True, null=True
+    )
+    deduction_end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Deduction End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="end_entries_deduction",
+    )
+    deduction_end_period_code = models.CharField(
+        _("Deduction End Period Code"), max_length=50, blank=True, null=True
+    )
+    user_id = models.ForeignKey(
+        "users.CustomUser",
+        verbose_name=_("Employee"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    company_name = models.CharField(
+        _("Company Name"), max_length=150, blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Employee Monthly Loan Payment"
+        verbose_name_plural = "Employee Monthly Loan Payment"
+
+    def __str__(self):
+        return self.loan_name
+
+    def __repr__(self):
+        return self.loan_name
+
+
 class AuditTrail(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     user_id = models.ForeignKey(

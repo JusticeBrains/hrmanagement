@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    EmployeeLoanPayment,
     EmployeeSavingSchemeEntries,
     EmployeeShiftEntries,
     EmployeeTransactionEntries,
@@ -130,3 +131,8 @@ class PaymasterAdmin(admin.ModelAdmin):
         "deductions",
     ]
     search_fields = ["employee_code"]
+
+
+class EmployeeLoanPayment(admin.ModelAdmin):
+    list_display = ["loan_name", "amount", "employee_code", "employee_name"]
+    search_fields = ["employee_code","employee_name"]
