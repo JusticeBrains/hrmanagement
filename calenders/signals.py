@@ -64,7 +64,6 @@ def process_payroll(sender, instance, **kwargs):
                 "employee", "company"
             ).filter(
                 Q(
-                    deduction_end_period__end_date__gte=instance.start_date,
                     status=True,
                     closed=False,
                 ),
@@ -78,10 +77,9 @@ def process_payroll(sender, instance, **kwargs):
                     emp_loan.total_amount_paid
                     if emp_loan.total_amount_paid is not None
                     else monthly_amount
-                )  # Initialize total_paid to monthly amount if it's None
+                )
                 amount_to_be_paid = min(monthly_amount, total_paid)
 
-                # Update the total_amount_paid field using F expressions to avoid race conditions
                 emp_loan.total_amount_paid = F("total_amount_paid") + amount_to_be_paid
                 total_loan_deductions += amount_to_be_paid
                 emp_loan.save()
