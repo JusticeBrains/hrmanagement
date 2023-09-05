@@ -89,6 +89,12 @@ class OvertimeEntriesViewSet(viewsets.ModelViewSet):
 class LoansViewSet(viewsets.ModelViewSet):
     queryset = Loans.objects.all()
     serializer_class = LoansSerializer
+    filterset_fields = "__all__"
+
+
+class LoanEntriesViewSet(viewsets.ModelViewSet):
+    queryset = LoanEntries.objects.all()
+    serializer_class = LoanEntriesSerializer
     filterset_fields = [
         "id",
         "loan",
@@ -113,12 +119,6 @@ class LoansViewSet(viewsets.ModelViewSet):
         "deduction_end_period_code",
         "user_id",
     ]
-
-
-class LoanEntriesViewSet(viewsets.ModelViewSet):
-    queryset = LoanEntries.objects.all()
-    serializer_class = LoanEntriesSerializer
-    filterset_fields = "__all__"
 
 
 class AuditTrailViewSet(viewsets.ModelViewSet):
