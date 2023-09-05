@@ -118,6 +118,8 @@ class LoanEntriesViewSet(viewsets.ModelViewSet):
         "deduction_end_period",
         "deduction_end_period_code",
         "user_id",
+        "status",
+        "closed",
     ]
 
 

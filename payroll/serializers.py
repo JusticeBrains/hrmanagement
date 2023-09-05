@@ -106,6 +106,7 @@ class LoanEntriesSerializer(serializers.ModelSerializer):
     loan_name = serializers.ReadOnlyField()
     employee_name = serializers.ReadOnlyField()
     employee_code = serializers.ReadOnlyField()
+    schedule = serializers.ReadOnlyField()
     class Meta:
         model = LoanEntries
         fields = "__all__"
