@@ -1,12 +1,14 @@
 from decimal import Decimal
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, F
 
 from .models import Period, GlobalInputs
 from payroll.models import (
+    EmployeeLoanPayment,
     EmployeeSavingSchemeEntries,
     EmployeeTransactionEntries,
+    LoanEntries,
     Paymaster,
 )
 from employee.models import Employee
@@ -58,6 +60,35 @@ def process_payroll(sender, instance, **kwargs):
                     | Q(end_period__end_date__lte=instance.start_date)
                 )
             )
+            loan_entries = LoanEntries.objects.prefetch_related(
+                "employee", "company"
+            ).filter(
+                Q(
+                    deduction_end_period__end_date__gte=instance.start_date,
+                    status=True,
+                    closed=False,
+                ),
+                employee=employee,
+                company=company,
+            )
+            total_loan_deductions = None
+            for emp_loan in loan_entries:
+                monthly_amount = emp_loan.monthly_repayment
+                total_paid = (
+                    emp_loan.total_amount_paid
+                    if emp_loan.total_amount_paid is not None
+                    else monthly_amount
+                )  # Initialize total_paid to monthly amount if it's None
+                amount_to_be_paid = min(monthly_amount, total_paid)
+
+                # Update the total_amount_paid field using F expressions to avoid race conditions
+                emp_loan.total_amount_paid = F("total_amount_paid") + amount_to_be_paid
+                total_loan_deductions += amount_to_be_paid
+                emp_loan.save()
+
+                if emp_loan.total_amount_paid == emp_loan.amount:
+                    emp_loan.closed = True
+                    emp_loan.save()
 
             total_allowances = (
                 entries.filter(
@@ -78,7 +109,7 @@ def process_payroll(sender, instance, **kwargs):
 
             employee_basic = Decimal(employee.annual_basic)
             gross_income = employee_basic + total_allowances
-            net_income = gross_income - total_deductions
+            net_income = gross_income - (total_deductions + total_loan_deductions)
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
