@@ -118,6 +118,7 @@ def process_payroll(sender, instance, **kwargs):
                 )
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
+                employee.save()
                 paymaster, created = Paymaster.objects.get_or_create(
                     period=instance,
                     company=company,
