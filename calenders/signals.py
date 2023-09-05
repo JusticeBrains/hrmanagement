@@ -90,10 +90,9 @@ def process_payroll(sender, instance, **kwargs):
                     elif emp_loan.total_amount_paid is None:
                         emp_loan.total_amount_paid = amount_to_be_paid
                         emp_loan.monthly_repayment = amount_to_be_paid
-
+                    emp_loan.save()
                 total_loan_deductions += amount_to_be_paid
-                emp_loan.save()
-
+                
                 if emp_loan.total_amount_paid == emp_loan.amount:
                     emp_loan.closed = True
                     emp_loan.save()
