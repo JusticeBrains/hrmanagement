@@ -1151,7 +1151,7 @@ class LoanEntries(models.Model):
         _("Monthly Repayment"), max_digits=10, decimal_places=4, blank=True, null=True
     )
     total_amount_paid = models.DecimalField(
-        _("Total Amount Paid"), max_digits=10, decimal_places=4, default=0.0
+        _("Total Amount Paid"), max_digits=10, decimal_places=4, blank=True, null=True
     )
     duration = models.DecimalField(
         _("Duration"), max_digits=10, decimal_places=2, blank=True, null=True
@@ -1388,7 +1388,7 @@ class EmployeeLoanPayment(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-
+    paid = models.BooleanField(_("Paid"), default=False)
     class Meta:
         verbose_name = "Employee Monthly Loan Payment"
         verbose_name_plural = "Employee Monthly Loan Payment"
