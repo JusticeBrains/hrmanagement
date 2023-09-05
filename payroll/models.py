@@ -1264,7 +1264,7 @@ class LoanEntries(models.Model):
             amount_left = self.amount
             for month in range(1, math.ceil(self.duration) + 1):
                 monthly_payment = min(self.monthly_repayment, amount_left)
-                amount_left -= monthly_payment
+                amount_left = round(amount_left - monthly_payment,ndigits=4)
                 schedule.append(
                     {
                         "month": month,
