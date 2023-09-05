@@ -149,9 +149,7 @@ def process_payroll(sender, instance, **kwargs):
         processing_user = instance.user_process_id
 
         # Use select_related to optimize database queries and reduce queries in the loop
-        employees = Employee.objects.filter(company_id=company).select_related(
-            "start_period", "end_period"
-        )
+        employees = Employee.objects.filter(company_id=company)
         loan_entries = LoanEntries.objects.prefetch_related(
             "employee", "company"
         ).filter(
