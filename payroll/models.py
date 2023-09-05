@@ -1255,7 +1255,7 @@ class LoanEntries(models.Model):
             #     self.monthly_repayment = self.monthly_repayment
 
         if self.total_amount_paid is not None:
-            if self.total_amount_paid >= self.amount:
+            if self.total_amount_paid == self.amount:
                 self.closed = True
                 self.status = False
 
