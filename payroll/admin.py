@@ -97,7 +97,7 @@ class EmployeeTransactionEntriesAdmin(admin.ModelAdmin):
         "employee_name",
         "company_name",
         "transaction_type",
-        "transaction_entry",
+        "employee_code",
     ]
 
 
