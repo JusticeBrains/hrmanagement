@@ -1254,10 +1254,10 @@ class LoanEntries(models.Model):
             # elif self.monthly_repayment is not None:
             #     self.monthly_repayment = self.monthly_repayment
 
-        if self.total_amount_paid is not None:
-            if self.total_amount_paid >= self.amount:
-                self.closed = True
-                self.status = False
+        # if self.total_amount_paid is not None:
+        #     if self.total_amount_paid >= self.amount:
+        #         self.closed = True
+        #         self.status = False
 
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
