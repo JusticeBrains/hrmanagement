@@ -114,7 +114,9 @@ def process_payroll(sender, instance, **kwargs):
                 if total_loan_deductions is not None
                 else gross_income - total_deductions
             )
-
+            total_deductions += (
+                total_loan_deductions if total_loan_deductions is not None else 0
+            )
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
                 company=company,
