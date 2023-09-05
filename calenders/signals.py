@@ -76,11 +76,11 @@ def process_payroll(sender, instance, **kwargs):
                 total_paid = (
                     emp_loan.total_amount_paid
                     if emp_loan.total_amount_paid is not None
-                    else 0
+                    else None
                 )
                 amount_to_be_paid = (
-                    min(monthly_amount, total_paid)
-                    if total_paid == 0
+                    min(monthly_amount, emp_loan.total_amount_paid)
+                    if emp_loan.total_amount_paid is not None
                     else monthly_amount
                 )
                 if instance.status == 2:
