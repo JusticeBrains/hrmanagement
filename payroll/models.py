@@ -1,3 +1,4 @@
+import json
 import uuid
 import math
 
@@ -1176,6 +1177,17 @@ class LoanEntries(models.Model):
     deduction_start_period_code = models.CharField(
         _("Deduction Start Period Code"), max_length=50, blank=True, null=True
     )
+    deduction_end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Deduction End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="end_entries_deduction",
+    )
+    deduction_end_period_code = models.CharField(
+        _("Deduction End Period Code"), max_length=50, blank=True, null=True
+    )
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("Employee"),
@@ -1193,7 +1205,13 @@ class LoanEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
-    schedule = models.TextField(_("Schedule"), blank=True, null=True)
+    schedule = models.JSONField(
+        _("Schedule"),
+        encoder=json.JSONEncoder,
+        decoder=json.JSONDecoder,
+        null=True,
+        blank=True,
+    )
     status = models.BooleanField(_("Status"), default=False)
     closed = models.BooleanField(_("Closed"), default=False)
     created_at = models.DateField(_("Created At"), auto_now_add=True)
