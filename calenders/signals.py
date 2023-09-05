@@ -109,7 +109,11 @@ def process_payroll(sender, instance, **kwargs):
 
             employee_basic = Decimal(employee.annual_basic)
             gross_income = employee_basic + total_allowances
-            net_income = gross_income - (total_deductions + total_loan_deductions)
+            net_income = (
+                gross_income - (total_deductions + total_loan_deductions)
+                if total_loan_deductions is not None
+                else gross_income - total_deductions
+            )
 
             paymaster, created = Paymaster.objects.get_or_create(
                 period=instance,
