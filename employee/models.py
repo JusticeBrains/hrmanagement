@@ -228,7 +228,7 @@ class Employee(models.Model):
     )
     is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
     net_salary = models.DecimalField(_("Net Salary"), max_digits=10, decimal_places=4, default=0.0)
-    gross_salary = models.DecimalField(_("Gross Salary"), max_digits=5, decimal_places=2, default=0.0)
+    gross_salary = models.DecimalField(_("Gross Salary"), max_digits=10, decimal_places=4, default=0.0)
     class Meta:
         unique_together = ("code", "company")
         verbose_name = "Employee"
