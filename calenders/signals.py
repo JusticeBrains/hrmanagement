@@ -52,10 +52,7 @@ def process_payroll(sender, instance, **kwargs):
         )
         saving_scheme = EmployeeSavingSchemeEntries.objects.prefetch_related(
             "employee", "company"
-        ).filter(
-            recurrent=True,
-            status=True
-        )
+        ).filter(recurrent=True, status=True)
 
         total_loan_deductions = 0
         payslip = []
@@ -117,9 +114,11 @@ def process_payroll(sender, instance, **kwargs):
                             emp_loan.save()
                             loan_dict.append(
                                 {
-                                    "loan_name":emp_loan.loan_name,
-                                    "amount_paid": Decimal(amount_to_be_paid),
-                                    "total_amount_paid":  Decimal(emp_loan.total_amount_paid)
+                                    "loan_name": emp_loan.loan_name,
+                                    "amount_paid": float(amount_to_be_paid),
+                                    "total_amount_paid": float(
+                                        emp_loan.total_amount_paid
+                                    ),
                                 }
                             )
                         total_loan_deductions += amount_to_be_paid
@@ -137,12 +136,12 @@ def process_payroll(sender, instance, **kwargs):
                 employee.save()
                 payslip.append(
                     {
-                        "basic_salary":Decimal(employee_basic),
-                        "gross_salary":Decimal(gross_income),
-                        "net_salary": Decimal(net_income),
-                        "total_deductions": Decimal(total_deductions),
-                        "total_allowances": Decimal(total_allowances),
-                        "total_loan_deductions": Decimal(total_loan_deductions),
+                        "basic_salary": float(employee_basic),
+                        "gross_salary": float(gross_income),
+                        "net_salary": float(net_income),
+                        "total_deductions": float(total_deductions),
+                        "total_allowances": float(total_allowances),
+                        "total_loan_deductions": float(total_loan_deductions),
                         "loans": loan_dict,
                     }
                 )
@@ -156,7 +155,7 @@ def process_payroll(sender, instance, **kwargs):
                         "gross_salary": gross_income,
                         "net_salary": net_income,
                         "basic_salary": employee_basic,
-                        "payslip":payslip,
+                        "payslip": payslip,
                         "user_id": processing_user,
                     },
                 )
