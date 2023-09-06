@@ -113,22 +113,21 @@ def process_payroll(sender, instance, **kwargs):
                                 emp_loan.total_amount_paid = amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
                             emp_loan.save()
-                            loan_dict.append(
-                                {
-                                    "loan_name": emp_loan.loan_name,
-                                    "amount_paid": float(amount_to_be_paid),
-                                    "total_amount_paid": float(
-                                        emp_loan.total_amount_paid
-                                    ),
-                                }
-                            )
+                        loan_dict.append(
+                            {
+                                "loan_name": emp_loan.loan_name,
+                                "amount_paid": float(amount_to_be_paid),
+                                "total_amount_paid": float(
+                                    emp_loan.total_amount_paid
+                                ),
+                            }
+                        )
 
                         total_loan_deductions += amount_to_be_paid
 
                         if emp_loan.total_amount_paid >= emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
-                        pprint(f"Payslip, {loan_dict}")
                     
 
                 net_income = gross_income - (total_deductions + total_loan_deductions)
@@ -137,7 +136,6 @@ def process_payroll(sender, instance, **kwargs):
                 )
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
-                employee.save()
                 payslip.append(
                     {
                         "basic_salary": float(employee_basic),
@@ -149,6 +147,8 @@ def process_payroll(sender, instance, **kwargs):
                         "loans": loan_dict,
                     }
                 )
+                employee.save()
+                
                 paymaster, created = Paymaster.objects.get_or_create(
                     period=instance,
                     company=company,
