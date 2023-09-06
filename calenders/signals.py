@@ -97,7 +97,7 @@ def process_payroll(sender, instance, **kwargs):
                 gross_income = employee_basic + total_allowances
 
                 allowance_types = []
-                deduction_trypes = []
+                deduction_types = []
                 for emp_allow in entries:
                     if emp_allow.employee == employee:
                         if emp_allow.transaction_type == TransactionType.ALLOWANCE:
@@ -109,7 +109,7 @@ def process_payroll(sender, instance, **kwargs):
                                 }
                             )
                         elif emp_allow.transaction_type == TransactionType.DEDUCTION:
-                            deduction_trypes.append(
+                            deduction_types.append(
                                 {
                                     "transaction_type": emp_allow.transaction_type,
                                     "amount": float(emp_allow.amount),
@@ -171,7 +171,7 @@ def process_payroll(sender, instance, **kwargs):
                         "total_loan_deductions": float(total_loan_deductions),
                         "loans": loan_dict,
                         "allowance": allowance_types,
-                        "deductions":deduction_trypes,
+                        "deductions":deduction_types,
                     }
                 )
                 employee.save()
@@ -186,16 +186,6 @@ def process_payroll(sender, instance, **kwargs):
                         "gross_salary": float(gross_income),
                         "net_salary": float(net_income),
                         "basic_salary": float(employee_basic),
-                        # "payslip": loan_dict.append(
-                        #     {
-                        #         "basic_salary": float(employee_basic),
-                        #         "gross_salary": float(gross_income),
-                        #         "net_salary": float(net_income),
-                        #         "total_deductions": float(total_deductions),
-                        #         "total_allowances": float(total_allowances),
-                        #         "total_loan_deductions": float(total_loan_deductions),
-                        #     }
-                        # ),
                         "payslip": payslip,
                         "user_id": processing_user,
                     },
@@ -207,16 +197,6 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
                     paymaster.basic_salary = employee_basic
-                    # paymaster.payslip = loan_dict.append(
-                    #     {
-                    #         "basic_salary": float(employee_basic),
-                    #         "gross_salary": float(gross_income),
-                    #         "net_salary": float(net_income),
-                    #         "total_deductions": float(total_deductions),
-                    #         "total_allowances": float(total_allowances),
-                    #         "total_loan_deductions": float(total_loan_deductions),
-                    #     }
-                    # )
                     paymaster.payslip = payslip
                     paymaster.user_id = processing_user
             paymaster.save()
