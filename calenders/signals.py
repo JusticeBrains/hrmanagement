@@ -129,10 +129,14 @@ def process_payroll(sender, instance, **kwargs):
                         #     else monthly_amount
                         # )
                         amount_to_be_paid = 0
-                        if emp_loan.total_amount_paid >= monthly_amount:
-                            remaining_balance = emp_loan.amount - emp_loan.total_amount_paid
+                        if (emp_loan.total_amount_paid is not None) and (
+                            emp_loan.total_amount_paid >= monthly_amount
+                        ):
+                            remaining_balance = (
+                                emp_loan.amount - emp_loan.total_amount_paid
+                            )
                             amount_to_be_paid = min(monthly_amount, remaining_balance)
-                        
+
                         elif emp_loan.total_amount_paid is None:
                             amount_to_be_paid = monthly_amount
 
@@ -156,7 +160,6 @@ def process_payroll(sender, instance, **kwargs):
 
                         total_loan_deductions += amount_to_be_paid
 
-
                         if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
@@ -177,7 +180,7 @@ def process_payroll(sender, instance, **kwargs):
                         "total_loan_deductions": float(total_loan_deductions),
                         "loans": loan_dict,
                         "allowance": allowance_types,
-                        "deductions":deduction_types,
+                        "deductions": deduction_types,
                     }
                 )
                 employee.save()
