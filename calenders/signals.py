@@ -101,6 +101,7 @@ def process_payroll(sender, instance, **kwargs):
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
+                        amount_to_be_paid = 0
                         if emp_loan.total_amount_paid is not None:
                             if emp_loan.total_amount_paid > monthly_amount:
                                 remaining_amount = (
