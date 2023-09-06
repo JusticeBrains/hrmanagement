@@ -101,11 +101,19 @@ def process_payroll(sender, instance, **kwargs):
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
-                        amount_to_be_paid = (
-                            min(monthly_amount, emp_loan.total_amount_paid)
-                            if emp_loan.total_amount_paid is not None
-                            else monthly_amount
-                        )
+                        if emp_loan.total_amount_paid is not None:
+                            if emp_loan.total_amount_paid > monthly_amount:
+                                remaining_amount = (
+                                    emp_loan.amount - emp_loan.total_amount_paid
+                                )
+                                amount_to_be_paid = min(
+                                    monthly_amount, remaining_amount
+                                )
+                            elif emp_loan.total_amount_paid < monthly_amount:
+                                amount_to_be_paid = monthly_amount
+                        elif emp_loan.total_amount_paid is None:
+                            amount_to_be_paid = monthly_amount
+
                         if instance.status == 2:
                             if emp_loan.total_amount_paid is not None:
                                 emp_loan.total_amount_paid += amount_to_be_paid
@@ -113,20 +121,23 @@ def process_payroll(sender, instance, **kwargs):
                             else:
                                 emp_loan.total_amount_paid = amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
-                            emp_loan.save()
                             loan_dict.append(
                                 {
                                     "loan_name": emp_loan.loan_name,
                                     "amount_paid": float(amount_to_be_paid),
-                                    "total_amount_paid": float(emp_loan.total_amount_paid),
+                                    "total_amount_paid": float(
+                                        emp_loan.total_amount_paid
+                                    ),
                                 }
                             )
-
-                        total_loan_deductions += amount_to_be_paid
+                            emp_loan.save()
 
                         if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
+                            
+
+                        total_loan_deductions += amount_to_be_paid
 
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
