@@ -999,9 +999,6 @@ class PayGroup(models.Model):
     currency_code = models.CharField(
         verbose_name=_("Currency Code"), null=True, blank=True
     )
-    bonus_tax_code = models.CharField(
-        verbose_name=_("Bonus Tax Code"), null=True, blank=True
-    )
     bonus_tax_description = models.CharField(
         _("Bonus Tax Description"), max_length=150, null=True, blank=True
     )
