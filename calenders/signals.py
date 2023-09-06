@@ -106,6 +106,17 @@ def process_payroll(sender, instance, **kwargs):
                             amount_to_be_paid = min(monthly_amount, remaining_amount)
                         else:
                             amount_to_be_paid = monthly_amount
+
+                        # amount_to_be_paid = (
+                        #     min(
+                        #         monthly_amount,
+                        #         emp_loan.total_amount_paid - monthly_amount
+                        #         if emp_loan.total_amount_paid > monthly_amount
+                        #         else emp_loan.total_amount_paid,
+                        #     )
+                        #     if emp_loan.total_amount_paid is not None
+                        #     else monthly_amount
+                        # )
                         if instance.status == 2:
                             if emp_loan.total_amount_paid is not None:
                                 emp_loan.total_amount_paid += amount_to_be_paid
@@ -114,13 +125,13 @@ def process_payroll(sender, instance, **kwargs):
                                 emp_loan.total_amount_paid = amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
                             emp_loan.save()
-                        loan_dict.append(
-                            {
-                                "loan_name": emp_loan.loan_name,
-                                "amount_paid": float(amount_to_be_paid),
-                                "total_amount_paid": float(emp_loan.total_amount_paid),
-                            }
-                        )
+                            loan_dict.append(
+                                {
+                                    "loan_name": emp_loan.loan_name,
+                                    "amount_paid": float(amount_to_be_paid),
+                                    "total_amount_paid": float(emp_loan.total_amount_paid),
+                                }
+                            )
 
                         total_loan_deductions += amount_to_be_paid
 
