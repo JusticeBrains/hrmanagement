@@ -109,6 +109,8 @@ def process_payroll(sender, instance, **kwargs):
                                 amount_to_be_paid = min(
                                     monthly_amount, remaining_amount
                                 )
+                                total_loan_deductions += amount_to_be_paid
+
                                 if instance.status == 2:
                                     if emp_loan.total_amount_paid is not None:
                                         emp_loan.total_amount_paid += amount_to_be_paid
@@ -128,6 +130,8 @@ def process_payroll(sender, instance, **kwargs):
                                     emp_loan.save()
                             elif emp_loan.total_amount_paid < monthly_amount:
                                 amount_to_be_paid = monthly_amount
+                                total_loan_deductions += amount_to_be_paid
+
                                 if emp_loan.total_amount_paid is not None:
                                     emp_loan.total_amount_paid += amount_to_be_paid
                                     emp_loan.monthly_repayment = amount_to_be_paid
@@ -146,6 +150,8 @@ def process_payroll(sender, instance, **kwargs):
                                 emp_loan.save()
                         elif emp_loan.total_amount_paid is None:
                             amount_to_be_paid = monthly_amount
+                            total_loan_deductions += amount_to_be_paid
+
                             if emp_loan.total_amount_paid is not None:
                                 emp_loan.total_amount_paid += amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
@@ -168,7 +174,6 @@ def process_payroll(sender, instance, **kwargs):
                             emp_loan.save()
                             
 
-                        total_loan_deductions += amount_to_be_paid
 
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
