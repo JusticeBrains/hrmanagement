@@ -122,14 +122,13 @@ def process_payroll(sender, instance, **kwargs):
                                     ),
                                 }
                             )
-                        pprint(f"Payslip, {loan_dict}")
 
                         total_loan_deductions += amount_to_be_paid
 
                         if emp_loan.total_amount_paid >= emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
-
+                    
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
                     total_loan_deductions if total_loan_deductions is not None else 0
