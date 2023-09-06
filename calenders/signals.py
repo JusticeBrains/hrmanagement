@@ -102,7 +102,7 @@ def process_payroll(sender, instance, **kwargs):
                         allowance_types.append(
                             {
                                 "transaction_type": emp_allow.transaction_type,
-                                "amount": emp_allow.amount,
+                                "amount": float(emp_allow.amount),
                                 "name": emp_allow.transaction_entry_name,
                             }
                         )
@@ -170,11 +170,11 @@ def process_payroll(sender, instance, **kwargs):
                     company=company,
                     employee=employee,
                     defaults={
-                        "allowances": total_allowances,
-                        "deductions": total_deductions,
-                        "gross_salary": gross_income,
-                        "net_salary": net_income,
-                        "basic_salary": employee_basic,
+                        "allowances": float(total_allowances),
+                        "deductions": float(total_deductions),
+                        "gross_salary": float(gross_income),
+                        "net_salary": float(net_income),
+                        "basic_salary": float(employee_basic),
                         # "payslip": loan_dict.append(
                         #     {
                         #         "basic_salary": float(employee_basic),
