@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.db import transaction
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from employee.models import Employee, PayGroup
@@ -30,7 +31,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
         company_name = instance.company_name
         company = instance.company
         status = instance.status
-
+        
+        @transaction.atomic
         def create_or_update_employee_saving_scheme_entry(
             employee, employee_name, employee_per, employer_per
         ):
@@ -166,6 +168,7 @@ def create_employee_transaction(sender, instance, **kwargs):
         transaction_entry_name = instance.transaction_name
         company = instance.company
 
+        @transaction.atomic
         def create_or_update_employee_transaction_entry(employee, employee_name):
             """
             Create or update EmployeeTransactionEntries object for the given employee.
@@ -285,6 +288,7 @@ def create_employee_shift_entry(sender, instance, **kwargs):
         company = instance.company
         status = instance.status
 
+        @transaction.atomic
         def create_or_update_employee_shift_entry(
             employee, employee_name
         ):
