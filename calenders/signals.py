@@ -120,7 +120,7 @@ def process_payroll(sender, instance, **kwargs):
                 # Calculate loan deductions for this employee
                 loan_dict = []
                 total_loan_amount = 0
-
+                total_loan_balance = 0
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
@@ -197,6 +197,9 @@ def process_payroll(sender, instance, **kwargs):
 
                         total_loan_deductions += amount_to_be_paid
                         total_loan_amount += emp_loan.amount
+                        total_loan_balance += float(
+                            emp_loan.amount - emp_loan.total_amount_paid
+                        )
 
                         if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
@@ -217,6 +220,7 @@ def process_payroll(sender, instance, **kwargs):
                         "total_allowances": float(total_allowances),
                         "total_loan_deductions": float(total_loan_deductions),
                         "total_loan_amount": float(total_loan_amount),
+                        "total_loan_balance": total_loan_balance,
                         "loans": loan_dict,
                         "allowance": allowance_types,
                         "deductions": deduction_types,
