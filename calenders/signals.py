@@ -154,6 +154,7 @@ def process_payroll(sender, instance, **kwargs):
                                     )
                                     if emp_loan.total_amount_paid is not None
                                     else emp_loan.amount,
+                                    "loan_amount": emp_loan.amount,
                                 }
                             )
                             emp_loan.save()
