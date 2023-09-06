@@ -1,4 +1,4 @@
-import pprint
+from pprint import pprint
 from decimal import Decimal
 from django.db import transaction
 from django.db.models.signals import pre_save
@@ -128,7 +128,9 @@ def process_payroll(sender, instance, **kwargs):
                         if emp_loan.total_amount_paid >= emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
+                        pprint(f"Payslip, {loan_dict}")
                     
+
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
                     total_loan_deductions if total_loan_deductions is not None else 0
