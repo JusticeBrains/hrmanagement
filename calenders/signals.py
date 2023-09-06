@@ -52,7 +52,7 @@ def process_payroll(sender, instance, **kwargs):
         )
 
         total_loan_deductions = 0
-
+        payslip = []
         with transaction.atomic():
             for employee in employees:
                 # Fetch entries for the employee once, instead of multiple times in the loop
@@ -92,6 +92,7 @@ def process_payroll(sender, instance, **kwargs):
                 gross_income = employee_basic + total_allowances
 
                 # Calculate loan deductions for this employee
+                loan_dict = []
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
@@ -108,6 +109,13 @@ def process_payroll(sender, instance, **kwargs):
                                 emp_loan.total_amount_paid = amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
                             emp_loan.save()
+                            loan_dict.append(
+                                {
+                                    "loan_name":emp_loan.loan_name,
+                                    "amount_paid": amount_to_be_paid,
+                                    "total_amount_paid":  emp_loan.total_amount_paid
+                                }
+                            )
                         total_loan_deductions += amount_to_be_paid
 
                         if emp_loan.total_amount_paid >= emp_loan.amount:
@@ -121,6 +129,17 @@ def process_payroll(sender, instance, **kwargs):
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 employee.save()
+                payslip.append(
+                    {
+                        "basic_salary":employee_basic,
+                        "gross_salary":gross_income,
+                        "net_salary": net_income,
+                        "total_deductions": total_deductions,
+                        "total_allowances": total_allowances,
+                        "total_loan_deductions": total_loan_deductions,
+                        "loans": loan_dict,
+                    }
+                )
                 paymaster, created = Paymaster.objects.get_or_create(
                     period=instance,
                     company=company,
@@ -131,6 +150,7 @@ def process_payroll(sender, instance, **kwargs):
                         "gross_salary": gross_income,
                         "net_salary": net_income,
                         "basic_salary": employee_basic,
+                        "payslip":payslip,
                         "user_id": processing_user,
                     },
                 )
@@ -141,6 +161,7 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
                     paymaster.basic_salary = employee_basic
+                    paymaster.payslip = payslip
                     paymaster.user_id = processing_user
 
             paymaster.save()
