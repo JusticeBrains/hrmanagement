@@ -989,13 +989,10 @@ class PayGroup(models.Model):
     taxable_income_description = models.CharField(
         _("Taxable Income Description"), max_length=100, null=True, blank=True
     )
-    tax_code = models.CharField(verbose_name=_("Tax Code"), null=True, blank=True)
     tax_description = models.CharField(
         _("Tax Description"), max_length=150, null=True, blank=True
     )
-    gross_income_code = models.CharField(
-        _("CalculationHeader"), max_length=50, null=True, blank=True
-    )
+    
     gross_income_description = models.CharField(
         _("Gross Income Description"), max_length=150, null=True, blank=True
     )
