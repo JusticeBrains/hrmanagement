@@ -1,12 +1,13 @@
 import json
 import uuid
 import math
-
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
 from decimal import Decimal
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from calenders.models import GlobalInputs
+from calenders.models import GlobalInputs, Period
 from options.text_options import (
     DisbursementType,
     InterestBasic,
@@ -1259,6 +1260,16 @@ class LoanEntries(models.Model):
                 self.closed = True
                 self.status = False
 
+        if self.duration is not None:
+            end_date = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration))
+            periods = Period.objects.filter(company=self.company,period_year_value=self.deduction_start_period.period_year_value).all()
+
+            for period in periods:
+                if period.start_date == end_date:
+                    self.deduction_end_period = period
+
+
+
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
             amount_left = self.amount
@@ -1273,7 +1284,7 @@ class LoanEntries(models.Model):
                     }
                 )
             self.schedule = schedule
-
+        
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
