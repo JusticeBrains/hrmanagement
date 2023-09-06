@@ -159,7 +159,7 @@ class EmployeeShiftEntriesViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = "__all__"
 
 
-class PaymasterViewSet(viewsets.ModelViewSet):
+class PaymasterViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Paymaster.objects.all()
     serializer_class = PaymasterSerializer
     filterset_fields = [
