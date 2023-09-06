@@ -1,3 +1,4 @@
+import pprint
 from decimal import Decimal
 from django.db import transaction
 from django.db.models.signals import pre_save
@@ -121,6 +122,8 @@ def process_payroll(sender, instance, **kwargs):
                                     ),
                                 }
                             )
+                            pprint(f"Payslip, {loan_dict}")
+
                         total_loan_deductions += amount_to_be_paid
 
                         if emp_loan.total_amount_paid >= emp_loan.amount:
@@ -168,5 +171,5 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.basic_salary = employee_basic
                     paymaster.payslip = payslip
                     paymaster.user_id = processing_user
-
+                pprint(f"Payslip, {payslip}")
             paymaster.save()
