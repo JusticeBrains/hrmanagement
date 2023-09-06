@@ -122,7 +122,7 @@ def process_payroll(sender, instance, **kwargs):
                                     ),
                                 }
                             )
-                            pprint(f"Payslip, {loan_dict}")
+                        pprint(f"Payslip, {loan_dict}")
 
                         total_loan_deductions += amount_to_be_paid
 
