@@ -133,8 +133,6 @@ def process_payroll(sender, instance, **kwargs):
                         if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
-                            
-
 
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
@@ -165,7 +163,7 @@ def process_payroll(sender, instance, **kwargs):
                         "gross_salary": gross_income,
                         "net_salary": net_income,
                         "basic_salary": employee_basic,
-                        "payslip": payslip,
+                        "payslip": loan_dict,
                         "user_id": processing_user,
                     },
                 )
@@ -176,6 +174,6 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
                     paymaster.basic_salary = employee_basic
-                    paymaster.payslip = payslip
+                    paymaster.payslip = loan_dict
                     paymaster.user_id = processing_user
             paymaster.save()
