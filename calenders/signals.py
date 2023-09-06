@@ -197,7 +197,8 @@ def process_payroll(sender, instance, **kwargs):
                             )
 
                         total_loan_deductions += amount_to_be_paid
-                        print(total_loan_deductions)
+                        if total_loan_deductions > 0:
+                            print(total_loan_deductions)
                         total_loan_amount += emp_loan.amount
                         total_loan_balance += float(
                             emp_loan.amount - emp_loan.total_amount_paid
