@@ -96,6 +96,17 @@ def process_payroll(sender, instance, **kwargs):
                 employee_basic = Decimal(employee.annual_basic)
                 gross_income = employee_basic + total_allowances
 
+                allowance_types = []
+                for emp_allow in entries:
+                    if emp_allow.employee == employee:
+                        allowance_types.append(
+                            {
+                                "transaction_type": emp_allow.transaction_type,
+                                "amount": emp_allow.amount,
+                                "name": emp_allow.transaction_entry_name,
+                            }
+                        )
+
                 # Calculate loan deductions for this employee
                 loan_dict = []
                 for emp_loan in loan_entries:
@@ -123,7 +134,6 @@ def process_payroll(sender, instance, **kwargs):
                                 }
                             )
                             emp_loan.save()
-                            
 
                         total_loan_deductions += amount_to_be_paid
 
@@ -150,6 +160,7 @@ def process_payroll(sender, instance, **kwargs):
                         "total_allowances": float(total_allowances),
                         "total_loan_deductions": float(total_loan_deductions),
                         "loans": loan_dict,
+                        "allowance": allowance_types,
                     }
                 )
                 employee.save()
@@ -174,7 +185,7 @@ def process_payroll(sender, instance, **kwargs):
                         #         "total_loan_deductions": float(total_loan_deductions),
                         #     }
                         # ),
-                        "payslip":payslip,
+                        "payslip": payslip,
                         "user_id": processing_user,
                     },
                 )
