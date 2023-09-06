@@ -1178,17 +1178,7 @@ class LoanEntries(models.Model):
     deduction_start_period_code = models.CharField(
         _("Deduction Start Period Code"), max_length=50, blank=True, null=True
     )
-    deduction_end_period = models.ForeignKey(
-        "calenders.Period",
-        verbose_name=_("Deduction End Period"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="end_entries_deduction",
-    )
-    deduction_end_period_code = models.CharField(
-        _("Deduction End Period Code"), max_length=50, blank=True, null=True
-    )
+    deduction_end_period = models.DateField(_("Deduction End Date"),null=True, blank=True)
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("Employee"),
@@ -1261,13 +1251,7 @@ class LoanEntries(models.Model):
                 self.status = False
 
         if self.duration is not None:
-            end_date = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration))
-            periods = Period.objects.filter(company=self.company,period_year_value=self.deduction_start_period.period_year_value).all()
-
-            for period in periods:
-                if period.start_date == end_date:
-                    self.deduction_end_period = period
-
+            self.deduction_end_period = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration))
 
 
         if self.amount and self.duration and self.monthly_repayment:
