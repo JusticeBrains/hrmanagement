@@ -1264,7 +1264,7 @@ class LoanEntries(models.Model):
             amount_left = self.amount
             for month in range(1, math.ceil(self.duration) + 1):
                 monthly_payment = min(self.monthly_repayment, amount_left)
-                amount_left = round(amount_left - monthly_payment,ndigits=4)
+                amount_left = round(amount_left - monthly_payment, ndigits=4)
                 schedule.append(
                     {
                         "month": month,
@@ -1390,6 +1390,7 @@ class EmployeeLoanPayment(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     paid = models.BooleanField(_("Paid"), default=False)
+
     class Meta:
         verbose_name = "Employee Monthly Loan Payment"
         verbose_name_plural = "Employee Monthly Loan Payment"
@@ -1770,6 +1771,13 @@ class Paymaster(models.Model):
     )
     period_name = models.CharField(
         _("Period Name"), max_length=50, blank=True, null=True
+    )
+    payslip = models.JSONField(
+        _("PaySlip"),
+        encoder=json.JSONEncoder,
+        decoder=json.JSONDecoder,
+        blank=True,
+        null=True,
     )
 
     class Meta:
