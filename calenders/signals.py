@@ -166,7 +166,7 @@ def process_payroll(sender, instance, **kwargs):
                                     else emp_loan.amount,
                                 }
                             )
-                            list_amount_to_be_paid.append(amount_to_be_paid)
+                            list_amount_to_be_paid.append(float(amount_to_be_paid))
                             emp_loan.save()
 
                         if instance.status == 1:
@@ -197,7 +197,7 @@ def process_payroll(sender, instance, **kwargs):
                                     else emp_loan.amount,
                                 }
                             )
-                            list_amount_to_be_paid.append(amount_to_be_paid)
+                            list_amount_to_be_paid.append(float(amount_to_be_paid))
                             if employee.code == "STC088":
                                 print(
                                     f"Amount To Be Paid {amount_to_be_paid} -- {emp_loan.loan_name} --{emp_loan.amount} -- {list_amount_to_be_paid}"
