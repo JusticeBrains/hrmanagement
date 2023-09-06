@@ -172,5 +172,4 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.basic_salary = employee_basic
                     paymaster.payslip = payslip
                     paymaster.user_id = processing_user
-            pprint(f"{payslip}")
             paymaster.save()

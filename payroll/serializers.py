@@ -153,6 +153,7 @@ class EmployeeShiftEntriesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PaymasterSerializer(serializers.ModelSerializer):
+    payslip = serializers.ReadOnlyField()
     class Meta:
         model = Paymaster
         fields = "__all__"

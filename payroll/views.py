@@ -162,7 +162,27 @@ class EmployeeShiftEntriesViewSet(viewsets.ReadOnlyModelViewSet):
 class PaymasterViewSet(viewsets.ModelViewSet):
     queryset = Paymaster.objects.all()
     serializer_class = PaymasterSerializer
-    filterset_fields = "__all__"
+    filterset_fields = [
+        "id",
+        "company",
+        "company_name",
+        "employee",
+        "employee_name",
+        "employee_code",
+        "basic_salary",
+        "allowances",
+        "deductions",
+        "ssf_employee",
+        "gross_salary",
+        "net_salary",
+        "taxable_salary",
+        "saving_scheme",
+        "loans",
+        "total_deductions",
+        "user_id",
+        "period",
+        "period_name",
+    ]
 
 
 class TaxLawsViewSet(viewsets.ModelViewSet):
