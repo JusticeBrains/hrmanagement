@@ -125,7 +125,7 @@ def process_payroll(sender, instance, **kwargs):
 
                         total_loan_deductions += amount_to_be_paid
 
-                        if emp_loan.total_amount_paid >= emp_loan.amount:
+                        if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
                     
