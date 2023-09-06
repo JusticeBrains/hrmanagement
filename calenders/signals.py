@@ -167,7 +167,7 @@ def process_payroll(sender, instance, **kwargs):
                             )
                             total_loan_deductions += amount_to_be_paid
                             emp_loan.save()
-                            
+
                         if instance.status == 1:
                             if emp_loan.total_amount_paid is not None:
                                 emp_loan.total_amount_paid += amount_to_be_paid
@@ -197,7 +197,9 @@ def process_payroll(sender, instance, **kwargs):
                                 }
                             )
                             if employee.code == "STC088":
-                                print(amount_to_be_paid)
+                                print(
+                                    f"Amount To Be Paid {amount_to_be_paid} -- {emp_loan.loan_name} --{emp_loan.amount}"
+                                )
 
                             total_loan_deductions += amount_to_be_paid
                         if total_loan_deductions > 0 and employee.code == "STC088":
