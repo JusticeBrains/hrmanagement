@@ -163,7 +163,16 @@ def process_payroll(sender, instance, **kwargs):
                         "gross_salary": gross_income,
                         "net_salary": net_income,
                         "basic_salary": employee_basic,
-                        "payslip": loan_dict,
+                        "payslip": loan_dict.append(
+                            {
+                                "basic_salary": float(employee_basic),
+                                "gross_salary": float(gross_income),
+                                "net_salary": float(net_income),
+                                "total_deductions": float(total_deductions),
+                                "total_allowances": float(total_allowances),
+                                "total_loan_deductions": float(total_loan_deductions),
+                            }
+                        ),
                         "user_id": processing_user,
                     },
                 )
@@ -174,6 +183,15 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
                     paymaster.basic_salary = employee_basic
-                    paymaster.payslip = loan_dict
+                    paymaster.payslip = loan_dict.append(
+                        {
+                            "basic_salary": float(employee_basic),
+                            "gross_salary": float(gross_income),
+                            "net_salary": float(net_income),
+                            "total_deductions": float(total_deductions),
+                            "total_allowances": float(total_allowances),
+                            "total_loan_deductions": float(total_loan_deductions),
+                        }
+                    )
                     paymaster.user_id = processing_user
             paymaster.save()
