@@ -126,6 +126,7 @@ def process_payroll(sender, instance, **kwargs):
                         monthly_amount = emp_loan.monthly_repayment
 
                         amount_to_be_paid = 0
+                        list_amount_to_be_paid = []
                         if (emp_loan.total_amount_paid is not None) and (
                             emp_loan.total_amount_paid >= monthly_amount
                         ):
@@ -165,7 +166,7 @@ def process_payroll(sender, instance, **kwargs):
                                     else emp_loan.amount,
                                 }
                             )
-                            total_loan_deductions += amount_to_be_paid
+                            list_amount_to_be_paid.append(amount_to_be_paid)
                             emp_loan.save()
 
                         if instance.status == 1:
@@ -196,12 +197,14 @@ def process_payroll(sender, instance, **kwargs):
                                     else emp_loan.amount,
                                 }
                             )
+                            list_amount_to_be_paid.append(amount_to_be_paid)
                             if employee.code == "STC088":
                                 print(
-                                    f"Amount To Be Paid {amount_to_be_paid} -- {emp_loan.loan_name} --{emp_loan.amount}"
+                                    f"Amount To Be Paid {amount_to_be_paid} -- {emp_loan.loan_name} --{emp_loan.amount} -- {list_amount_to_be_paid}"
                                 )
+                            
 
-                            total_loan_deductions += amount_to_be_paid
+                        total_loan_deductions = sum(list_amount_to_be_paid)
                         if total_loan_deductions > 0 and employee.code == "STC088":
                             print(f"TLD {total_loan_deductions} -- {emp_loan.loan_name} -- {emp_loan.employee_code}")
                         total_loan_amount += emp_loan.amount
