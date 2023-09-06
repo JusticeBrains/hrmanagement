@@ -56,10 +56,11 @@ def process_payroll(sender, instance, **kwargs):
         ).filter(recurrent=True, status=True)
 
         total_loan_deductions = 0
-        payslip = []
         with transaction.atomic():
             for employee in employees:
                 # Fetch entries for the employee once, instead of multiple times in the loop
+                payslip = []
+
                 entries = (
                     EmployeeTransactionEntries.objects.select_related(
                         "employee", "company"
