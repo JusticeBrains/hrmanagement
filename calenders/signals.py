@@ -97,15 +97,25 @@ def process_payroll(sender, instance, **kwargs):
                 gross_income = employee_basic + total_allowances
 
                 allowance_types = []
+                deduction_trypes = []
                 for emp_allow in entries:
                     if emp_allow.employee == employee:
-                        allowance_types.append(
-                            {
-                                "transaction_type": emp_allow.transaction_type,
-                                "amount": float(emp_allow.amount),
-                                "name": emp_allow.transaction_entry_name,
-                            }
-                        )
+                        if emp_allow.transaction_type == TransactionType.ALLOWANCE:
+                            allowance_types.append(
+                                {
+                                    "transaction_type": emp_allow.transaction_type,
+                                    "amount": float(emp_allow.amount),
+                                    "name": emp_allow.transaction_entry_name,
+                                }
+                            )
+                        elif emp_allow.transaction_type == TransactionType.DEDUCTION:
+                            deduction_trypes.append(
+                                {
+                                    "transaction_type": emp_allow.transaction_type,
+                                    "amount": float(emp_allow.amount),
+                                    "name": emp_allow.transaction_entry_name,
+                                }
+                            )
 
                 # Calculate loan deductions for this employee
                 loan_dict = []
@@ -161,6 +171,7 @@ def process_payroll(sender, instance, **kwargs):
                         "total_loan_deductions": float(total_loan_deductions),
                         "loans": loan_dict,
                         "allowance": allowance_types,
+                        "deductions":deduction_trypes,
                     }
                 )
                 employee.save()
