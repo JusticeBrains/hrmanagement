@@ -109,13 +109,43 @@ def process_payroll(sender, instance, **kwargs):
                                 amount_to_be_paid = min(
                                     monthly_amount, remaining_amount
                                 )
+                                if instance.status == 2:
+                                    if emp_loan.total_amount_paid is not None:
+                                        emp_loan.total_amount_paid += amount_to_be_paid
+                                        emp_loan.monthly_repayment = amount_to_be_paid
+                                    else:
+                                        emp_loan.total_amount_paid = amount_to_be_paid
+                                        emp_loan.monthly_repayment = amount_to_be_paid
+                                    loan_dict.append(
+                                        {
+                                            "loan_name": emp_loan.loan_name,
+                                            "amount_paid": float(amount_to_be_paid),
+                                            "total_amount_paid": float(
+                                                emp_loan.total_amount_paid
+                                            ),
+                                        }
+                                    )
+                                    emp_loan.save()
                             elif emp_loan.total_amount_paid < monthly_amount:
                                 amount_to_be_paid = monthly_amount
+                                if emp_loan.total_amount_paid is not None:
+                                    emp_loan.total_amount_paid += amount_to_be_paid
+                                    emp_loan.monthly_repayment = amount_to_be_paid
+                                else:
+                                    emp_loan.total_amount_paid = amount_to_be_paid
+                                    emp_loan.monthly_repayment = amount_to_be_paid
+                                loan_dict.append(
+                                    {
+                                        "loan_name": emp_loan.loan_name,
+                                        "amount_paid": float(amount_to_be_paid),
+                                        "total_amount_paid": float(
+                                            emp_loan.total_amount_paid
+                                        ),
+                                    }
+                                )
+                                emp_loan.save()
                         elif emp_loan.total_amount_paid is None:
                             amount_to_be_paid = monthly_amount
-                        amount_to_be_paid = amount_to_be_paid
-
-                        if instance.status == 2:
                             if emp_loan.total_amount_paid is not None:
                                 emp_loan.total_amount_paid += amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
