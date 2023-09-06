@@ -157,6 +157,11 @@ def process_payroll(sender, instance, **kwargs):
                                     if emp_loan.total_amount_paid is not None
                                     else emp_loan.amount,
                                     "loan_amount": float(emp_loan.amount),
+                                    "balance_bf": float(
+                                        emp_loan.total_amount_paid - amount_to_be_paid
+                                    )
+                                    if emp_loan.total_amount_paid is not None
+                                    else emp_loan.amount,
                                 }
                             )
                             emp_loan.save()
@@ -180,6 +185,11 @@ def process_payroll(sender, instance, **kwargs):
                                     if emp_loan.total_amount_paid is not None
                                     else emp_loan.amount,
                                     "loan_amount": float(emp_loan.amount),
+                                    "balance_bf": float(
+                                        emp_loan.total_amount_paid - amount_to_be_paid
+                                    )
+                                    if emp_loan.total_amount_paid is not None
+                                    else emp_loan.amount,
                                 }
                             )
 
