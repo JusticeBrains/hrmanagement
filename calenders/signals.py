@@ -121,12 +121,13 @@ def process_payroll(sender, instance, **kwargs):
                 loan_dict = []
                 total_loan_amount = 0
                 total_loan_balance = 0
+                list_amount_to_be_paid = []
+
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
 
                         amount_to_be_paid = 0
-                        list_amount_to_be_paid = []
                         if (emp_loan.total_amount_paid is not None) and (
                             emp_loan.total_amount_paid >= monthly_amount
                         ):
