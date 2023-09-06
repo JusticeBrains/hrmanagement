@@ -102,7 +102,12 @@ def process_payroll(sender, instance, **kwargs):
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
                         amount_to_be_paid = (
-                            min(monthly_amount, emp_loan.total_amount_paid)
+                            min(
+                                monthly_amount,
+                                emp_loan.total_amount_paid - monthly_amount
+                                if emp_loan.total_amount_paid > monthly_amount
+                                else emp_loan.total_amount_paid,
+                            )
                             if emp_loan.total_amount_paid is not None
                             else monthly_amount
                         )
@@ -118,9 +123,7 @@ def process_payroll(sender, instance, **kwargs):
                             {
                                 "loan_name": emp_loan.loan_name,
                                 "amount_paid": float(amount_to_be_paid),
-                                "total_amount_paid": float(
-                                    emp_loan.total_amount_paid
-                                ),
+                                "total_amount_paid": float(emp_loan.total_amount_paid),
                             }
                         )
 
@@ -129,7 +132,6 @@ def process_payroll(sender, instance, **kwargs):
                         if emp_loan.total_amount_paid == emp_loan.amount:
                             emp_loan.closed = True
                             emp_loan.save()
-                    
 
                 net_income = gross_income - (total_deductions + total_loan_deductions)
                 total_deductions += (
@@ -149,7 +151,7 @@ def process_payroll(sender, instance, **kwargs):
                     }
                 )
                 employee.save()
-                
+
                 paymaster, created = Paymaster.objects.get_or_create(
                     period=instance,
                     company=company,
