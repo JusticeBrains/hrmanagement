@@ -113,7 +113,6 @@ def process_payroll(sender, instance, **kwargs):
                             else:
                                 emp_loan.total_amount_paid = amount_to_be_paid
                                 emp_loan.monthly_repayment = amount_to_be_paid
-                            emp_loan.save()
                             loan_dict.append(
                                 {
                                     "loan_name": emp_loan.loan_name,
@@ -123,6 +122,8 @@ def process_payroll(sender, instance, **kwargs):
                                     ),
                                 }
                             )
+                            emp_loan.save()
+                            
 
                         total_loan_deductions += amount_to_be_paid
 
