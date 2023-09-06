@@ -195,9 +195,11 @@ def process_payroll(sender, instance, **kwargs):
                                     else emp_loan.amount,
                                 }
                             )
+                            if employee.code == "STC088":
+                                print(amount_to_be_paid)
 
                         total_loan_deductions += amount_to_be_paid
-                        if total_loan_deductions > 0:
+                        if total_loan_deductions > 0 and employee.code == "STC088":
                             print(total_loan_deductions)
                         total_loan_amount += emp_loan.amount
                         total_loan_balance += float(
