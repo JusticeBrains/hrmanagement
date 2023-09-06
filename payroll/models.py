@@ -1251,7 +1251,7 @@ class LoanEntries(models.Model):
                 self.status = False
 
         if self.duration is not None:
-            self.deduction_end_period = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration))
+            self.deduction_end_period = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration)-1)
 
 
         if self.amount and self.duration and self.monthly_repayment:
