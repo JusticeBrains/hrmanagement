@@ -32,11 +32,39 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 
 class SavingSchemeSerializer(serializers.ModelSerializer):
-    start_period = serializers.ReadOnlyField()
     company_name = serializers.ReadOnlyField()
     class Meta:
         model = SavingScheme
-        fields = "__all__"
+        fields = [
+            "id",
+            "description",
+            "start_period",
+            "start_period_code",
+            "deduction_frequency",
+            "prorate_new_staff",
+            "prorate_existing_staff",
+            "percentage_of_employee_basic",
+            "percentage_of_employer_basic",
+            "percentage_of_employee_gross",
+            "percentage_of_employer_gross",
+            "statutory",
+            "varying_amount",
+            "employee_tax_deductible",
+            "employer_taxable",
+            "old_employee_contribution",
+            "old_employer_contribution",
+            "old_percentage_of_employer_basic",
+            "old_percentage_of_employee_basic",
+            "recurring",
+            "base",
+            "ssnit_percentage",
+            "tier_2",
+            "company",
+            "company_name",
+            "user_id",
+            "created_at",
+            "updated_at",
+        ]
 
 
 class SavingSchemeEntriesSerializer(serializers.ModelSerializer):
