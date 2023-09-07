@@ -268,6 +268,7 @@ def process_payroll(sender, instance, **kwargs):
                         "basic_salary": float(employee_basic),
                         "payslip": payslip,
                         "total_deductions":total_deductions,
+                        "saving_scheme": total_contribution,
                         "user_id": processing_user,
                     },
                 )
@@ -281,4 +282,5 @@ def process_payroll(sender, instance, **kwargs):
                     paymaster.payslip = payslip
                     paymaster.user_id = processing_user
                     paymaster.total_deductions = total_deductions
+                    paymaster.saving_scheme = total_contribution
                 paymaster.save()
