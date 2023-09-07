@@ -232,13 +232,10 @@ def process_payroll(sender, instance, **kwargs):
                             emp_loan.closed = True
                             emp_loan.save()
 
-                net_income = gross_income - (
-                    total_deductions + Decimal(total_loan_deductions)
-                )
                 total_deductions += Decimal(
                     total_loan_deductions if total_loan_deductions is not None else 0
                 ) + Decimal(total_contribution if total_contribution is not None else 0)
-
+                net_income = gross_income - total_deductions
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 payslip.append(
