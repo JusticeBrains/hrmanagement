@@ -76,8 +76,8 @@ class LoanEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(AuditTrail)
 class AuditTrailAdmin(admin.ModelAdmin):
-    ...
-
+    list_display = ["user_id","process_id","company_name","created_at"]
+    search_fields = ["process_id"]
 
 @admin.register(EmployeeSavingSchemeEntries)
 class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):

@@ -1178,7 +1178,9 @@ class LoanEntries(models.Model):
     deduction_start_period_code = models.CharField(
         _("Deduction Start Period Code"), max_length=50, blank=True, null=True
     )
-    deduction_end_period = models.DateField(_("Deduction End Date"),null=True, blank=True)
+    deduction_end_period = models.DateField(
+        _("Deduction End Date"), null=True, blank=True
+    )
     user_id = models.ForeignKey(
         "users.CustomUser",
         verbose_name=_("Employee"),
@@ -1251,8 +1253,10 @@ class LoanEntries(models.Model):
                 self.status = False
 
         if self.duration is not None:
-            self.deduction_end_period = self.deduction_start_period.start_date + relativedelta(months=math.ceil(self.duration)-1)
-
+            self.deduction_end_period = (
+                self.deduction_start_period.start_date
+                + relativedelta(months=math.ceil(self.duration) - 1)
+            )
 
         if self.amount and self.duration and self.monthly_repayment:
             schedule = []
@@ -1268,7 +1272,7 @@ class LoanEntries(models.Model):
                     }
                 )
             self.schedule = schedule
-        
+
     def save(self, *args, **kwargs):
         self.populate_fields()
         super().save(*args, **kwargs)
