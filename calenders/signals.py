@@ -93,6 +93,26 @@ def process_payroll(sender, instance, **kwargs):
                     transaction_type=TransactionType.DEDUCTION
                 ).aggregate(amount=Sum("amount"))["amount"] or Decimal(0)
 
+                saving_scheme_dict = []
+                total_employer_contribution = 0
+                total_employee_contribution = 0
+
+                for emp_saving in saving_scheme:
+                    if emp_saving.employee == employee:
+                        employee_contribution = emp_saving.employee_contribution
+                        employer_contribution = emp_saving.employer_contribution
+                        
+                        total_employer_contribution += employer_contribution
+                        total_employee_contribution += employee_contribution
+                        saving_scheme_dict.append(
+                            {
+                                "employee_contribution":float(employee_contribution),
+                                "employer_contribution": float(employer_contribution),
+                                "name": emp_saving.saving_scheme_name,
+                                "total_deducted": float(total_employer_contribution + total_employee_contribution)
+                            }
+                        )
+
                 employee_basic = Decimal(employee.annual_basic)
                 gross_income = employee_basic + total_allowances
 
@@ -231,6 +251,7 @@ def process_payroll(sender, instance, **kwargs):
                         "loans": loan_dict,
                         "allowance": allowance_types,
                         "deductions": deduction_types,
+                        "saving_scheme": saving_scheme_dict,
                     }
                 )
                 employee.save()
