@@ -55,7 +55,6 @@ def process_payroll(sender, instance, **kwargs):
             "employee", "company"
         ).filter(recurrent=True, status=True)
 
-        
         with transaction.atomic():
             for employee in employees:
                 # Fetch entries for the employee once, instead of multiple times in the loop
@@ -101,17 +100,19 @@ def process_payroll(sender, instance, **kwargs):
                     if emp_saving.employee == employee:
                         employee_contribution = emp_saving.employee_contribution
                         employer_contribution = emp_saving.employer_contribution
-                        
+
                         total_employer_contribution.append(employer_contribution)
                         total_employee_contribution.append(employee_contribution)
                         saving_scheme_dict.append(
                             {
-                                "employee_contribution":float(employee_contribution),
+                                "employee_contribution": float(employee_contribution),
                                 "employer_contribution": float(employer_contribution),
                                 "name": emp_saving.saving_scheme_name,
                             }
                         )
-                    total_contribution = sum(total_employee_contribution + total_employer_contribution)
+                    total_contribution = sum(
+                        total_employee_contribution + total_employer_contribution
+                    )
 
                 employee_basic = Decimal(employee.annual_basic)
                 gross_income = employee_basic + total_allowances
@@ -219,10 +220,9 @@ def process_payroll(sender, instance, **kwargs):
                                 }
                             )
                             list_amount_to_be_paid.append(float(amount_to_be_paid))
-                            
 
                         total_loan_deductions = sum(list_amount_to_be_paid)
-    
+
                         total_loan_amount += emp_loan.amount
                         total_loan_balance += float(
                             emp_loan.amount - emp_loan.total_amount_paid
@@ -232,9 +232,13 @@ def process_payroll(sender, instance, **kwargs):
                             emp_loan.closed = True
                             emp_loan.save()
 
-                net_income = gross_income - (total_deductions + Decimal(total_loan_deductions))
-                total_deductions += Decimal(total_loan_deductions) + Decimal(total_contribution)
-                
+                net_income = gross_income - (
+                    total_deductions + Decimal(total_loan_deductions)
+                )
+                total_deductions += Decimal(
+                    total_loan_deductions if total_loan_deductions is not None else 0
+                ) + Decimal(total_contribution if total_contribution is not None else 0)
+
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 payslip.append(
@@ -267,7 +271,7 @@ def process_payroll(sender, instance, **kwargs):
                         "net_salary": float(net_income),
                         "basic_salary": float(employee_basic),
                         "payslip": payslip,
-                        "total_deductions":total_deductions,
+                        "total_deductions": total_deductions,
                         "saving_scheme": total_contribution,
                         "user_id": processing_user,
                     },
