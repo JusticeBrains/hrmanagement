@@ -94,24 +94,24 @@ def process_payroll(sender, instance, **kwargs):
                 ).aggregate(amount=Sum("amount"))["amount"] or Decimal(0)
 
                 saving_scheme_dict = []
-                total_employer_contribution = 0
-                total_employee_contribution = 0
-
+                total_employer_contribution = []
+                total_employee_contribution = []
+                total_contribution = 0
                 for emp_saving in saving_scheme:
                     if emp_saving.employee == employee:
                         employee_contribution = emp_saving.employee_contribution
                         employer_contribution = emp_saving.employer_contribution
                         
-                        total_employer_contribution += employer_contribution
-                        total_employee_contribution += employee_contribution
+                        total_employer_contribution.append(employer_contribution)
+                        total_employee_contribution.append(employee_contribution)
                         saving_scheme_dict.append(
                             {
                                 "employee_contribution":float(employee_contribution),
                                 "employer_contribution": float(employer_contribution),
                                 "name": emp_saving.saving_scheme_name,
-                                "total_deducted": float(total_employer_contribution + total_employee_contribution)
                             }
                         )
+                    total_contribution = sum(total_employee_contribution + total_employer_contribution)
 
                 employee_basic = Decimal(employee.annual_basic)
                 gross_income = employee_basic + total_allowances
@@ -243,7 +243,8 @@ def process_payroll(sender, instance, **kwargs):
                         "basic_salary": float(employee_basic),
                         "gross_salary": float(gross_income),
                         "net_salary": float(net_income),
-                        "total_deductions": float(total_deductions),
+                        "total_deductions": float(total_deductions + total_contribution),
+                        "saving_scheme": float(total_contribution),
                         "total_allowances": float(total_allowances),
                         "total_loan_deductions": float(total_loan_deductions),
                         "total_loan_amount": float(total_loan_amount),
