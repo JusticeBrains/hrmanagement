@@ -188,9 +188,9 @@ class SavingScheme(models.Model):
         default=0.0,
     )
     recurring = models.BooleanField(_("Recurring"), default=False)
-    base = models.DecimalField(_("Base"), max_digits=10, decimal_places=2, default=0.0)
+    base = models.DecimalField(_("Base"), max_digits=10, decimal_places=4, default=0.0)
     ssnit_percentage = models.DecimalField(
-        _("SSNIT Percentage"), max_digits=3, decimal_places=2, default=0.0
+        _("SSNIT Percentage"), max_digits=5, decimal_places=4, default=0.0
     )
     tier_2 = models.DecimalField(
         _("Tier 2"), max_digits=10, decimal_places=2, default=0.0

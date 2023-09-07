@@ -56,6 +56,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     "user_id":user_id,
                     "company_name":company_name,
                     "employee_name":employee_name,
+                    "employee_code": employee_code,
                     "status":status,
                     "employee_contribution":employee_per,
                     "employer_contribution":employer_per,
@@ -72,6 +73,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 save_entry.status = status
                 save_entry.employee_contribution = employee_per
                 save_entry.employer_contribution = employer_per
+                save_entry.employee_code = employee_code
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
@@ -80,6 +82,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 employee_per = float(
                     (instance.percentage_of_employee_basic / 100) * employee_basic
                 )
@@ -101,6 +104,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 employee_per = float(
                     (instance.percentage_of_employee_basic / 100) * employee_basic
                 )
@@ -121,6 +125,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
                 employee_per = float(
+                employee_code = employee.code
                     (instance.percentage_of_employee_basic / 100) * employee_basic
                 )
                 employer_per = float(
@@ -136,6 +141,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 employee_basic = Decimal(employee.annual_basic)
+                employee_code = employee.code
                 employee_per = float(
                     (instance.percentage_of_employee_basic / 100) * employee_basic
                 )
