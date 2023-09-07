@@ -422,7 +422,7 @@ class EmployeeTransactionEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=10, decimal_places=2, default=0.0
+        _("Amount"), max_digits=10, decimal_places=4, default=0.0
     )
     percentage_of_basic = models.DecimalField(
         _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
@@ -521,10 +521,10 @@ class SavingSchemeEntries(models.Model):
         related_name="saving_end_per_entries",
     )
     percentage_of_employee_basic = models.DecimalField(
-        _("Percentage Of Employee Basic"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Employee Basic"), max_digits=10, decimal_places=4, default=0.0
     )
     percentage_of_employer_basic = models.DecimalField(
-        _("Percentage Of Employer Basic"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Employer Basic"), max_digits=10, decimal_places=4, default=0.0
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
