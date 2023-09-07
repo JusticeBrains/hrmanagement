@@ -1748,34 +1748,34 @@ class Paymaster(models.Model):
     )
     employee_code = models.CharField(_("Employee Code"), max_length=50)
     basic_salary = models.DecimalField(
-        _("Basic Salary"), max_digits=20, decimal_places=2, default=0.0
+        _("Basic Salary"), max_digits=20, decimal_places=4, default=0.0
     )
     allowances = models.DecimalField(
-        _("Allowances"), max_digits=20, decimal_places=2, default=0.0
+        _("Allowances"), max_digits=20, decimal_places=4, default=0.0
     )
     deductions = models.DecimalField(
-        _("Deductions"), max_digits=20, decimal_places=2, default=0.0
+        _("Deductions"), max_digits=20, decimal_places=4, default=0.0
     )
     ssf_employee = models.DecimalField(
-        _("SSF Employee"), max_digits=10, decimal_places=2, default=0.0
+        _("SSF Employee"), max_digits=10, decimal_places=4, default=0.0
     )
     gross_salary = models.DecimalField(
-        _("Gross Salary"), max_digits=10, decimal_places=2, default=0.0
+        _("Gross Salary"), max_digits=10, decimal_places=4, default=0.0
     )
     net_salary = models.DecimalField(
-        _("Net Salary"), max_digits=20, decimal_places=2, default=0.0
+        _("Net Salary"), max_digits=20, decimal_places=4, default=0.0
     )
     taxable_salary = models.DecimalField(
-        _("Taxable Salary"), max_digits=5, decimal_places=2, default=0.0
+        _("Taxable Salary"), max_digits=5, decimal_places=4, default=0.0
     )
     saving_scheme = models.DecimalField(
-        _("Saving Schemes"), max_digits=10, decimal_places=2, default=0.0
+        _("Saving Schemes"), max_digits=10, decimal_places=4, default=0.0
     )
     loans = models.DecimalField(
-        _("Loans"), max_digits=10, decimal_places=2, default=0.0
+        _("Loans"), max_digits=10, decimal_places=4, default=0.0
     )
     total_deductions = models.DecimalField(
-        _("Total Deductions"), max_digits=10, decimal_places=2, default=0.0
+        _("Total Deductions"), max_digits=10, decimal_places=4, default=0.0
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
