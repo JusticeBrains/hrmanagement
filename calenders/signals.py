@@ -96,7 +96,6 @@ def process_payroll(sender, instance, **kwargs):
                 total_employer_contribution = []
                 total_employee_contribution = []
                 total_contribution = 0
-                total_empr_contribution = 0
                 for emp_saving in saving_scheme:
                     if emp_saving.employee == employee:
                         employee_contribution = emp_saving.employee_contribution
@@ -111,10 +110,7 @@ def process_payroll(sender, instance, **kwargs):
                                 "name": emp_saving.saving_scheme_name,
                             }
                         )
-                    total_contribution = sum(
-                        total_employee_contribution + total_employer_contribution
-                    )
-                    total_empr_contribution = sum(total_employer_contribution)
+                    total_contribution = sum(total_employee_contribution)
 
                 employee_basic = Decimal(employee.annual_basic)
                 gross_income = employee_basic + total_allowances
@@ -237,7 +233,7 @@ def process_payroll(sender, instance, **kwargs):
                 total_deductions += Decimal(
                     total_loan_deductions if total_loan_deductions is not None else 0
                 ) + Decimal(total_contribution if total_contribution is not None else 0)
-                net_income = gross_income - total_deductions  + total_empr_contribution
+                net_income = gross_income - total_deductions
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 payslip.append(
