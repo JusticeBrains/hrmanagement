@@ -133,8 +133,7 @@ class SavingScheme(models.Model):
         verbose_name=_("Start Period"),
         on_delete=models.CASCADE,
         null=True,
-        blank=True,
-        related_name="saving-period"
+        blank=True
     )
     start_period_code = models.CharField(
         _("Start Period Code"), max_length=50, blank=True, null=True
