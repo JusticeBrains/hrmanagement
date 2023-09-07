@@ -151,17 +151,17 @@ class SavingScheme(models.Model):
     percentage_of_employee_basic = models.DecimalField(
         _("Percentage Of Employee Contribution"),
         max_digits=10,
-        decimal_places=2,
+        decimal_places=4,
         default=0.0,
     )
     percentage_of_employer_basic = models.DecimalField(
-        _("Percentage Of Employer Basic"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Employer Basic"), max_digits=10, decimal_places=4, default=0.0
     )
     percentage_of_employee_gross = models.DecimalField(
-        _("Percentage Of Employee Gross"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Employee Gross"), max_digits=10, decimal_places=4, default=0.0
     )
     percentage_of_employer_gross = models.DecimalField(
-        _("Percentage Of Employer Gross"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Employer Gross"), max_digits=10, decimal_places=4, default=0.0
     )
     statutory = models.BooleanField(_("Statutory"), default=False)
     varying_amount = models.BooleanField(_("Varying Amount"), default=True)
