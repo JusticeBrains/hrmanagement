@@ -55,7 +55,7 @@ def process_payroll(sender, instance, **kwargs):
             "employee", "company"
         ).filter(recurrent=True, status=True)
 
-        total_loan_deductions = 0
+        
         with transaction.atomic():
             for employee in employees:
                 # Fetch entries for the employee once, instead of multiple times in the loop
@@ -122,7 +122,7 @@ def process_payroll(sender, instance, **kwargs):
                 total_loan_amount = 0
                 total_loan_balance = 0
                 list_amount_to_be_paid = []
-
+                total_loan_deductions = 0
                 for emp_loan in loan_entries:
                     if emp_loan.employee == employee:
                         monthly_amount = emp_loan.monthly_repayment
