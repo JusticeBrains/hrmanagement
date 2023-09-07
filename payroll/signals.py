@@ -26,7 +26,9 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
         saving_scheme_name = instance.saving_scheme_name
         recurrent = instance.recurrent
         start_period_code = instance.start_period_code
+        start_period = instance.start_period
         end_period_code = instance.end_period_code
+        end_period = instance.end_period
         user_id = instance.user_id
         company_name = instance.company_name
         company = instance.company
@@ -47,7 +49,9 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 company_name = company_name,
                 defaults={
                     "recurrent":recurrent,
+                    "start_period":start_period,
                     "start_period_code":start_period_code,
+                    "end_period":end_period,
                     "end_period_code":end_period_code,
                     "user_id":user_id,
                     "company_name":company_name,
@@ -61,6 +65,8 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
             if not created:
                 save_entry.recurrent = recurrent
                 save_entry.start_period_code = start_period_code
+                save_entry.start_period = start_period
+                save_entry.end_period = end_period
                 save_entry.end_period_code = end_period_code
                 save_entry.user_id = user_id
                 save_entry.status = status

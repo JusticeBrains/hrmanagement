@@ -614,11 +614,27 @@ class EmployeeSavingSchemeEntries(models.Model):
         _("Saving Scheme Name"), max_length=150, blank=True, null=True
     )
     recurrent = models.BooleanField(_("Recurrent"), default=True)
+    start_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("Start Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="emp_start_period",
+    )
     start_period_code = models.CharField(
         _("Start Period Code"), max_length=50, blank=True, null=True
     )
     end_period_code = models.CharField(
         _("End Period Code"), max_length=50, blank=True, null=True
+    )
+    end_period = models.ForeignKey(
+        "calenders.Period",
+        verbose_name=_("End Period"),
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="emp_end_per_entries",
     )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
