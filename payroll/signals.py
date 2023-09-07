@@ -60,6 +60,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                     "status":status,
                     "employee_contribution":employee_per,
                     "employer_contribution":employer_per,
+                    "company": company
                 },
             )
 
@@ -74,6 +75,7 @@ def create_employee_saving_scheme(sender, instance, **kwargs):
                 save_entry.employee_contribution = employee_per
                 save_entry.employer_contribution = employer_per
                 save_entry.employee_code = employee_code
+                save_entry.company = company
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:

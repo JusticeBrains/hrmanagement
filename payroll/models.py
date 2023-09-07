@@ -636,6 +636,13 @@ class EmployeeSavingSchemeEntries(models.Model):
         null=True,
         related_name="emp_end_per_entries",
     )
+    company = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
