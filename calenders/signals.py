@@ -111,7 +111,7 @@ def process_payroll(sender, instance, **kwargs):
                         elif (
                             percentage_of_basic is None and emp_total.amount is not None
                         ):
-                            total_allowances_list.append(float(emp_total.amount))
+                            total_allowances_list.append(float(amount))
 
                         total_allowances_sum = sum(total_allowances_list)
 
@@ -130,7 +130,7 @@ def process_payroll(sender, instance, **kwargs):
                         elif (
                             percentage_of_basic is None and emp_total.amount is not None
                         ):
-                            total_deductions_list.append(float(emp_total.amount))
+                            total_deductions_list.append(float(amount))
 
                         total_deductions_sum = sum(total_deductions_list)
 
