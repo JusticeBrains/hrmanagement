@@ -163,12 +163,12 @@ def process_payroll(sender, instance, **kwargs):
                 for emp_allow in entries:
                     if emp_allow.employee == employee:
                         if emp_allow.percentage_of_basic is not None:
-                            amount = (percentage_of_basic / 100) * employee_basic
+                            amount = (emp_allow.percentage_of_basic / 100) * employee_basic
                         elif (
                             emp_allow.percentage_of_basic is not None
                             and emp_allow.amount is not None
                         ):
-                            amount = (percentage_of_basic / 100) * employee_basic
+                            amount = (emp_allow.percentage_of_basic / 100) * employee_basic
                         elif (
                             emp_allow.percentage_of_basic is None
                             and emp_allow.amount is not None
