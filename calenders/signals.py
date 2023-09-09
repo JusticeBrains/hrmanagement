@@ -274,6 +274,10 @@ def process_payroll(sender, instance, **kwargs):
                 total_deductions_sum += float(
                     Decimal(total_loan_deductions) + Decimal(total_contribution)
                 )
+                print(
+                    f"Emp -- {employee.code} --Dedudction -- {total_deductions_list} -- loan--{total_loan_deductions} -- contribution {total_contribution}"
+                )
+                print(f"Emp -- {employee.code} -- Allowance -- {total_allowances_list}")
                 net_income = gross_income - Decimal(total_deductions_sum)
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
