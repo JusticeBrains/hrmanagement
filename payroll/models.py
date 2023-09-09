@@ -475,7 +475,7 @@ class SavingSchemeEntries(models.Model):
 
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     disbursement_type = models.CharField(
-        _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True
+        _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True, max_length=100
     )
     employee = models.ForeignKey(
         "employee.Employee",

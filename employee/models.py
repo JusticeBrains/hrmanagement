@@ -935,7 +935,7 @@ class PayGroup(models.Model):
         _("Gross Income Description"), max_length=150, null=True, blank=True
     )
     currency_code = models.CharField(
-        verbose_name=_("Currency Code"), null=True, blank=True
+        verbose_name=_("Currency Code"), null=True, blank=True, max_length=100
     )
     bonus_Tax_code = models.ForeignKey(
         "payroll.TaxLaws",
