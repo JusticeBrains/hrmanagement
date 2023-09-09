@@ -108,6 +108,7 @@ def process_payroll(sender, instance, **kwargs):
                             and emp_total.amount is not None
                         ):
                             amount = (percentage_of_basic / 100) * employee_basic
+                            total_allowances_list.append(float(amount))
                         elif (
                             percentage_of_basic is None and emp_total.amount is not None
                         ):
@@ -121,12 +122,13 @@ def process_payroll(sender, instance, **kwargs):
                         percentage_of_basic = emp_total.percentage_of_basic
                         if percentage_of_basic is not None:
                             amount = (percentage_of_basic / 100) * employee_basic
-                            total_allowances_list.append(float(amount))
+                            total_deductions_list.append(float(amount))
                         elif (
                             percentage_of_basic is not None
                             and emp_total.amount is not None
                         ):
                             amount = (percentage_of_basic / 100) * employee_basic
+                            total_deductions_list.append(float(amount))
                         elif (
                             percentage_of_basic is None and emp_total.amount is not None
                         ):
