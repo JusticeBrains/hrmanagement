@@ -207,6 +207,7 @@ def create_employee_transaction(sender, instance, **kwargs):
                 "status":status,
                 "start_period": start_period,
                 "end_period": end_period,
+                "percentage_of_basic": percentage_of_basic,
                 }
             )
 
@@ -222,6 +223,7 @@ def create_employee_transaction(sender, instance, **kwargs):
                 save_entry.taxable = taxable
                 save_entry.start_period = start_period
                 save_entry.end_period = end_period
+                save_entry.percentage_of_basic = percentage_of_basic
                 save_entry.save()
 
         if disbursement_type == DisbursementType.ALL_STAFF:
