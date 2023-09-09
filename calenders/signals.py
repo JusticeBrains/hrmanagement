@@ -162,16 +162,24 @@ def process_payroll(sender, instance, **kwargs):
                 deduction_types = []
                 for emp_allow in entries:
                     if emp_allow.employee == employee:
+                        if emp_allow.percentage_of_basic is not None:
+                            amount = (percentage_of_basic / 100) * employee_basic
+                        elif (
+                            emp_allow.percentage_of_basic is not None
+                            and emp_allow.amount is not None
+                        ):
+                            amount = (percentage_of_basic / 100) * employee_basic
+                        elif (
+                            emp_allow.percentage_of_basic is None
+                            and emp_allow.amount is not None
+                        ):
+                            amount = emp_allow.amount
+
                         if emp_allow.transaction_type == TransactionType.ALLOWANCE:
                             allowance_types.append(
                                 {
                                     "transaction_type": emp_allow.transaction_type,
-                                    "amount": float(emp_allow.amount)
-                                    if emp_allow.amount is not None
-                                    else float(
-                                        (emp_allow.percentage_of_basic / 100)
-                                        * Decimal(employee.annual_basic)
-                                    ),
+                                    "amount": amount,
                                     "name": emp_allow.transaction_entry_name,
                                 }
                             )
@@ -179,12 +187,7 @@ def process_payroll(sender, instance, **kwargs):
                             deduction_types.append(
                                 {
                                     "transaction_type": emp_allow.transaction_type,
-                                    "amount": float(emp_allow.amount)
-                                    if emp_allow.amount is not None
-                                    else float(
-                                        (emp_allow.percentage_of_basic / 100)
-                                        * Decimal(employee.annual_basic)
-                                    ),
+                                    "amount": amount,
                                     "name": emp_allow.transaction_entry_name,
                                 }
                             )
