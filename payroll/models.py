@@ -422,7 +422,7 @@ class EmployeeTransactionEntries(models.Model):
         _("Company Name"), max_length=150, blank=True, null=True
     )
     amount = models.DecimalField(
-        _("Amount"), max_digits=10, decimal_places=4, default=0.0
+        _("Amount"), max_digits=10, decimal_places=4, null=True, blank=True
     )
     percentage_of_basic = models.DecimalField(
         _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
