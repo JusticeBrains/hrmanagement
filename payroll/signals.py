@@ -181,6 +181,7 @@ def create_employee_transaction(sender, instance, **kwargs):
         percentage_of_basic = instance.percentage_of_basic
         transaction_entry_name = instance.transaction_name
         company = instance.company
+        amount = instance.amount
 
         @transaction.atomic
         def create_or_update_employee_transaction_entry(employee, employee_name):
@@ -230,13 +231,8 @@ def create_employee_transaction(sender, instance, **kwargs):
             employees = Employee.objects.filter(company_id=company)
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                employee_basic = Decimal(employee.annual_basic)
                 employee_code = employee.code
                 instance.global_name = employee.company
-                if percentage_of_basic is not None:
-                    amount = (percentage_of_basic/100) * employee_basic
-                elif percentage_of_basic is None:
-                    amount = instance.amount
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.PAY_GROUP:
@@ -248,12 +244,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                employee_basic = Decimal(employee.annual_basic)
                 employee_code = employee.code
-                if percentage_of_basic is not None:
-                    amount = (percentage_of_basic/100) * employee_basic
-                elif percentage_of_basic is None:
-                    amount = instance.amount
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.JOB_TITLE:
@@ -264,12 +255,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             )
             for employee in employees:
                 employee_name = f"{employee.last_name} {employee.first_name}"
-                employee_basic = Decimal(employee.annual_basic)
                 employee_code = employee.code
-                if percentage_of_basic is not None:
-                    amount = (percentage_of_basic/100) * employee_basic
-                elif percentage_of_basic is not None:
-                    amount = instance.amount
                 create_or_update_employee_transaction_entry(employee, employee_name)
 
         elif disbursement_type == DisbursementType.INDIVIDUAL:
@@ -277,12 +263,7 @@ def create_employee_transaction(sender, instance, **kwargs):
             if employee:
                 employee_name = f"{employee.last_name} {employee.first_name}"
                 instance.global_name = employee_name
-                employee_basic = Decimal(employee.annual_basic)
                 employee_code = employee.code
-                if percentage_of_basic is not None:
-                    amount = (percentage_of_basic/100) * employee_basic
-                elif percentage_of_basic is None:
-                    amount = instance.amount
                 create_or_update_employee_transaction_entry(employee, employee_name)
         instance.save()
 
