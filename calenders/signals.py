@@ -179,7 +179,7 @@ def process_payroll(sender, instance, **kwargs):
                             allowance_types.append(
                                 {
                                     "transaction_type": emp_allow.transaction_type,
-                                    "amount": amount,
+                                    "amount": float(amount),
                                     "name": emp_allow.transaction_entry_name,
                                 }
                             )
@@ -187,7 +187,7 @@ def process_payroll(sender, instance, **kwargs):
                             deduction_types.append(
                                 {
                                     "transaction_type": emp_allow.transaction_type,
-                                    "amount": amount,
+                                    "amount": float(amount),
                                     "name": emp_allow.transaction_entry_name,
                                 }
                             )
