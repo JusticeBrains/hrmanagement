@@ -301,7 +301,7 @@ def process_payroll(sender, instance, **kwargs):
                     company=company,
                     employee=employee,
                     defaults={
-                        "allowances": float(total_allowances),
+                        "allowances": float(total_allowances_sum),
                         "deductions": float(total_deductions_sum),
                         "gross_salary": float(gross_income),
                         "net_salary": float(net_income),
@@ -315,7 +315,7 @@ def process_payroll(sender, instance, **kwargs):
                 )
                 # Update attributes if the Paymaster instance already existed
                 if not created:
-                    paymaster.allowances = total_allowances
+                    paymaster.allowances = total_allowances_sum
                     paymaster.deductions = total_deductions_sum
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
