@@ -85,12 +85,54 @@ def process_payroll(sender, instance, **kwargs):
                     )
                 )
 
+                total_allowances_sum = 0
+                total_deductions_sum = 0
+
                 total_allowances = entries.filter(
                     transaction_type=TransactionType.ALLOWANCE
-                ).aggregate(amount=Sum("amount"))["amount"] or Decimal(0)
+                )
                 total_deductions = entries.filter(
                     transaction_type=TransactionType.DEDUCTION
-                ).aggregate(amount=Sum("amount"))["amount"] or Decimal(0)
+                )
+                employee_basic = Decimal(employee.annual_basic)
+
+                total_allowances_list = []
+                for emp_total in total_allowances:
+                    if employee == emp_total.employee:
+                        percentage_of_basic = emp_total.percentage_of_basic
+                        if percentage_of_basic is not None:
+                            amount = (percentage_of_basic / 100) * employee_basic
+                            total_allowances_list.append(float(amount))
+                        elif (
+                            percentage_of_basic is not None
+                            and emp_total.amount is not None
+                        ):
+                            amount = (percentage_of_basic / 100) * employee_basic
+                        elif (
+                            percentage_of_basic is None and emp_total.amount is not None
+                        ):
+                            total_allowances_list.append(float(emp_total.amount))
+
+                        total_allowances_sum = sum(total_allowances_list)
+
+                total_deductions_list = []
+                for emp_total in total_deductions:
+                    if employee == emp_total.employee:
+                        percentage_of_basic = emp_total.percentage_of_basic
+                        if percentage_of_basic is not None:
+                            amount = (percentage_of_basic / 100) * employee_basic
+                            total_allowances_list.append(float(amount))
+                        elif (
+                            percentage_of_basic is not None
+                            and emp_total.amount is not None
+                        ):
+                            amount = (percentage_of_basic / 100) * employee_basic
+                        elif (
+                            percentage_of_basic is None and emp_total.amount is not None
+                        ):
+                            total_deductions_list.append(float(emp_total.amount))
+
+                        total_deductions_sum = sum(total_deductions_list)
 
                 saving_scheme_dict = []
                 total_employer_contribution = []
@@ -112,8 +154,7 @@ def process_payroll(sender, instance, **kwargs):
                         )
                     total_contribution = sum(total_employee_contribution)
 
-                employee_basic = Decimal(employee.annual_basic)
-                gross_income = employee_basic + total_allowances
+                gross_income = employee_basic + total_allowances_sum
 
                 allowance_types = []
                 deduction_types = []
@@ -230,10 +271,10 @@ def process_payroll(sender, instance, **kwargs):
                             emp_loan.closed = True
                             emp_loan.save()
 
-                total_deductions += Decimal(total_loan_deductions) + Decimal(
+                total_deductions_sum += Decimal(total_loan_deductions) + Decimal(
                     total_contribution
                 )
-                net_income = gross_income - total_deductions
+                net_income = gross_income - total_deductions_sum
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 payslip.append(
@@ -241,9 +282,9 @@ def process_payroll(sender, instance, **kwargs):
                         "basic_salary": float(employee_basic),
                         "gross_salary": float(gross_income),
                         "net_salary": float(net_income),
-                        "total_deductions": float(total_deductions),
+                        "total_deductions": float(total_deductions_sum),
                         "saving_scheme_contribution": float(total_contribution),
-                        "total_allowances": float(total_allowances),
+                        "total_allowances": float(total_allowances_sum),
                         "total_loan_deductions": float(total_loan_deductions),
                         "total_loan_amount": float(total_loan_amount),
                         "total_loan_balance": total_loan_balance,
@@ -261,12 +302,12 @@ def process_payroll(sender, instance, **kwargs):
                     employee=employee,
                     defaults={
                         "allowances": float(total_allowances),
-                        "deductions": float(total_deductions),
+                        "deductions": float(total_deductions_sum),
                         "gross_salary": float(gross_income),
                         "net_salary": float(net_income),
                         "basic_salary": float(employee_basic),
                         "payslip": payslip,
-                        "total_deductions": total_deductions,
+                        "total_deductions": total_deductions_sum,
                         "saving_scheme": total_contribution,
                         "loans": total_loan_deductions,
                         "user_id": processing_user,
@@ -275,13 +316,13 @@ def process_payroll(sender, instance, **kwargs):
                 # Update attributes if the Paymaster instance already existed
                 if not created:
                     paymaster.allowances = total_allowances
-                    paymaster.deductions = total_deductions
+                    paymaster.deductions = total_deductions_sum
                     paymaster.gross_salary = gross_income
                     paymaster.net_salary = net_income
                     paymaster.basic_salary = employee_basic
                     paymaster.payslip = payslip
                     paymaster.user_id = processing_user
-                    paymaster.total_deductions = total_deductions
+                    paymaster.total_deductions = total_deductions_sum
                     paymaster.saving_scheme = total_contribution
                     paymaster.loans = total_loan_deductions
                 paymaster.save()
