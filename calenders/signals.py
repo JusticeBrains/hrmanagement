@@ -274,7 +274,7 @@ def process_payroll(sender, instance, **kwargs):
                 total_deductions_sum += float(
                     Decimal(total_loan_deductions) + Decimal(total_contribution)
                 )
-                net_income = gross_income - total_deductions_sum
+                net_income = gross_income - Decimal(total_deductions_sum)
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
                 payslip.append(
@@ -307,7 +307,7 @@ def process_payroll(sender, instance, **kwargs):
                         "net_salary": float(net_income),
                         "basic_salary": float(employee_basic),
                         "payslip": payslip,
-                        "total_deductions": total_deductions_sum,
+                        "total_deductions": float(total_deductions_sum),
                         "saving_scheme": total_contribution,
                         "loans": total_loan_deductions,
                         "user_id": processing_user,
