@@ -154,7 +154,7 @@ def process_payroll(sender, instance, **kwargs):
                         )
                     total_contribution = sum(total_employee_contribution)
 
-                gross_income = employee_basic + total_allowances_sum
+                gross_income = employee_basic + Decimal(total_allowances_sum)
 
                 allowance_types = []
                 deduction_types = []
