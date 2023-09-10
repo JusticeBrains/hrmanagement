@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-
+from .models import CustomUser
 User = get_user_model()
 
 
@@ -11,7 +11,7 @@ User = get_user_model()
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = User
+    model = CustomUser
     list_display = ("email", "emp_code","is_staff", "is_active", "is_admin",)
     list_filter = ("email", "is_staff", "is_active", "is_admin",)
     fieldsets = (
