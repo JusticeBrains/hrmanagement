@@ -163,12 +163,16 @@ def process_payroll(sender, instance, **kwargs):
                 for emp_allow in entries:
                     if emp_allow.employee == employee:
                         if emp_allow.percentage_of_basic is not None:
-                            amount = (emp_allow.percentage_of_basic / 100) * employee_basic
+                            amount = (
+                                emp_allow.percentage_of_basic / 100
+                            ) * employee_basic
                         elif (
                             emp_allow.percentage_of_basic is not None
                             and emp_allow.amount is not None
                         ):
-                            amount = (emp_allow.percentage_of_basic / 100) * employee_basic
+                            amount = (
+                                emp_allow.percentage_of_basic / 100
+                            ) * employee_basic
                         elif (
                             emp_allow.percentage_of_basic is None
                             and emp_allow.amount is not None
@@ -289,13 +293,11 @@ def process_payroll(sender, instance, **kwargs):
                 total_deductions_sum += float(
                     Decimal(total_loan_deductions) + Decimal(total_contribution)
                 )
-                print(
-                    f"Emp -- {employee.code} --Dedudction -- {total_deductions_list} -- loan--{total_loan_deductions} -- contribution {total_contribution}"
-                )
-                print(f"Emp -- {employee.code} -- Allowance -- {total_allowances_list}")
+
                 net_income = gross_income - Decimal(total_deductions_sum)
                 employee.net_salary = net_income
                 employee.gross_salary = gross_income
+
                 payslip.append(
                     {
                         "basic_salary": float(employee_basic),
