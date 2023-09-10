@@ -72,7 +72,8 @@ def updated_multiple_companies(sender, instance, *args, **kwargs):
         if instance.companies:
             company_dicts = {}
             for company in instance.companies.all():
-                company_dicts[str(company.id)] = instance.companies.name
+                comp = Company.objects.get(id=company.id)
+                company_dicts[str(company.id)] = comp.name
             instance.company_names = company_dicts
         instance.save()
     post_save.connect(updated_multiple_companies, sender=CustomUser)
