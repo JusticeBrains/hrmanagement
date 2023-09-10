@@ -81,7 +81,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
     )
-    company_names = HStoreField()
+    company_names = HStoreField(blank=True, null=True, max_length=250)
 
     objects = CustomUserManager()
 
