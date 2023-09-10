@@ -34,6 +34,7 @@ class CustomUserAdmin(UserAdmin):
                     "first_name",
                     "last_name",
                     "employee_id",
+                    "company_names",
                 )
             },
         ),
