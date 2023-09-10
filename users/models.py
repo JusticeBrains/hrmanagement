@@ -1,3 +1,4 @@
+from json import JSONDecoder, JSONEncoder
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
@@ -81,7 +82,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
     )
-    company_names = HStoreField(blank=True, null=True, max_length=250)
+    company_names = models.JSONField(
+        _("Company Names"),
+        encoder=JSONEncoder,
+        decoder=JSONDecoder,
+        blank=True,
+        null=True,
+    )
 
     objects = CustomUserManager()
 
