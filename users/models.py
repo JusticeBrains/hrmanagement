@@ -79,16 +79,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "company.Company",
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
-        blank=True,
-        null=True,
     )
-    
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = [
         "email",
     ]
+
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
