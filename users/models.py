@@ -61,12 +61,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Is Accountant"), blank=True, null=True, default=0
     )
     is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
-    generated_pass = models.CharField(_("Generated Password"), max_length=150, null=True, blank=True)
+    generated_pass = models.CharField(
+        _("Generated Password"), max_length=150, null=True, blank=True
+    )
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = [
-        "email",
-    ]
     employee_id = models.ForeignKey(
         "employee.Employee",
         verbose_name=_("Employee ID"),
@@ -74,9 +72,23 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-    multiple_companies = models.PositiveIntegerField(_("Multiple Companies"), default=0)
+    multiple_companies = models.PositiveIntegerField(
+        _("Is Multiple Companies"), default=0
+    )
+    companies = models.ManyToManyField(
+        "company.Company",
+        verbose_name=_("Multiple Companies"),
+        related_name="multi_companies",
+        blank=True,
+        null=True,
+    )
+    
     objects = CustomUserManager()
 
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = [
+        "email",
+    ]
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
