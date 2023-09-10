@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 from options.text_options import ASSIGNEDAREA
+from django.contrib.postgres.fields import HStoreField
 from django.utils import timezone
 import uuid
 
@@ -80,6 +81,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
     )
+    company_names = HStoreField()
 
     objects = CustomUserManager()
 
