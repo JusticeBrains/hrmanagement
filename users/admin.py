@@ -14,35 +14,35 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ("email", "emp_code",)
     list_filter = ("email", "emp_code",)
-    fieldsets = (
-        ("User", {"fields": ("email", "password", "is_admin", "phonenumber", "username")}),
-        (
-            "Permissions",
-            {"fields": ("is_staff", "is_active","is_admin","groups", "user_permissions")},
-        ),
-    )
-    add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": (
-                    "email",
-                    "first_name",
-                    "last_name",
-                    "employee_id",
-                    "emp_code",
-                    "is_admin",
-                    "phonenumber",
-                    "password1",
-                    "password2",
-                    "companies",
-                    "is_staff",
-                    "is_active",
-                    "user_permissions",
-                ),
-            },
-        ),
-    )
+    # fieldsets = (
+    #     ("User", {"fields": ("email", "password", "is_admin", "phonenumber", "username")}),
+    #     (
+    #         "Permissions",
+    #         {"fields": ("is_staff", "is_active","is_admin","groups", "user_permissions")},
+    #     ),
+    # )
+    # add_fieldsets = (
+    #     (
+    #         None,
+    #         {
+    #             "classes": ("wide",),
+    #             "fields": (
+    #                 "email",
+    #                 "first_name",
+    #                 "last_name",
+    #                 "employee_id",
+    #                 "emp_code",
+    #                 "is_admin",
+    #                 "phonenumber",
+    #                 "password1",
+    #                 "password2",
+    #                 "companies",
+    #                 "is_staff",
+    #                 "is_active",
+    #                 "user_permissions",
+    #             ),
+    #         },
+    #     ),
+    # )
     search_fields = ("email", "emp_code")
     ordering = ("email", "emp_code")
