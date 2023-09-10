@@ -30,6 +30,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.postgres",
 ]
 
 THIRD_PARTY_APPS = [
@@ -97,6 +98,27 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+# DATABASES = {
+#     "default":env.dj_db_url("DATABASE_URL"),
+#     # "nla_junior": env.dj_db_url("NLA_JUNIOR_URL"),
+#     # "nla_senior":env.dj_db_url("NLA_SENIOR_URL"),
+#     # "nla_management": env.dj_db_url("NLA_MANAGEMENT_URL"),
+#     # "intercity_senior":env.dj_db_url("INTERCITY_SENIOR_URL"),
+#     # "intercity_junior":env.dj_db_url("INTERCITY_JUNIOR_URL"),
+#     # "intercity_driver":env.dj_db_url("INTERCITY_DRIVER_URL"),
+#     # "emery":env.dj_db_url("EMERY_URL"), 
+#     # "faab":env.dj_db_url("FAAB_URL"), 
+#     # "rchod":env.dj_db_url("RCHOD_URL"), 
+#     # "rch":env.dj_db_url("ROCK_CITY_HOTEL_URL"), 
+#     # "rch_prof_allow":env.dj_db_url("RCH_PROF_ALLOW_URL"), 
+#     # "rch_kumasi":env.dj_db_url("RCH_KUMASI_URL"), 
+#     # "baf":env.dj_db_url("BAF_URL"), 
+#     # "jay_lodge":env.dj_db_url("JAYLODGE_URL"), 
+#     # "intu_it":env.dj_db_url("INTU_IT_URL"), 
+#     # "intu_it_prof":env.dj_db_url("INTU_PROF_ALLOW_URL"),
+#     # "republic":env.dj_db_url("REPUBLIC_MEDIA"),
+#     # "reiss":env.dj_db_url("REISS_URL"),
+#     }
 
 
 # Password validation
@@ -225,3 +247,5 @@ INTERNAL_IPS = [
 ]
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  
+
+# DATABASE_ROUTERS = ["auth_routers.company_router.CompanyRouter"]
