@@ -68,6 +68,12 @@ def updated_multiple_companies(sender, instance, *args, **kwargs):
         elif instance.is_hr == 0:
             instance.unique_code = employee.unique_code
             instance.multiple_companies = 0
+        
+        if instance.companies:
+            company_dicts = {}
+            for company in instance.companies.all():
+                company_dicts[str(company.id)] = instance.companies.name
+            instance.company_names = company
         instance.save()
     post_save.connect(updated_multiple_companies, sender=CustomUser)
 
