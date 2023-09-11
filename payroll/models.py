@@ -65,13 +65,17 @@ class Transactions(models.Model):
     taxable = models.BooleanField(_("Taxable"), default=True)
     contribute_to_ssf = models.BooleanField(_("Contribute To SSF"), default=False)
     monthly_amount = models.DecimalField(
-        _("Monthly Amount"), max_digits=10, decimal_places=2, default=0.0
+        _("Monthly Amount"), max_digits=10, decimal_places=2, null=True, blank=True
     )
     percentage_of_basic = models.DecimalField(
-        _("Percentage Of Basic"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Basic"), max_digits=4, decimal_places=2, null=True, blank=True
     )
     percentage_of_emolument = models.DecimalField(
-        _("Percentage Of Emolument"), max_digits=4, decimal_places=2, default=0.0
+        _("Percentage Of Emolument"),
+        max_digits=4,
+        decimal_places=2,
+        null=True,
+        blank=True,
     )
     ceiling = models.DecimalField(
         _("Ceiling"), max_digits=5, decimal_places=2, default=0.0
@@ -133,7 +137,7 @@ class SavingScheme(models.Model):
         verbose_name=_("Start Period"),
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
     )
     start_period_code = models.CharField(
         _("Start Period Code"), max_length=50, blank=True, null=True
@@ -152,16 +156,29 @@ class SavingScheme(models.Model):
         _("Percentage Of Employee Contribution"),
         max_digits=10,
         decimal_places=4,
-        default=0.0,
+        null=True,
+        blank=True
     )
     percentage_of_employer_basic = models.DecimalField(
-        _("Percentage Of Employer Basic"), max_digits=10, decimal_places=4, default=0.0
+        _("Percentage Of Employer Basic"),
+        max_digits=10,
+        decimal_places=4,
+        null=True,
+        blank=True,
     )
     percentage_of_employee_gross = models.DecimalField(
-        _("Percentage Of Employee Gross"), max_digits=10, decimal_places=4, default=0.0
+        _("Percentage Of Employee Gross"),
+        max_digits=10,
+        decimal_places=4,
+        null=True,
+        blank=True,
     )
     percentage_of_employer_gross = models.DecimalField(
-        _("Percentage Of Employer Gross"), max_digits=10, decimal_places=4, default=0.0
+        _("Percentage Of Employer Gross"),
+        max_digits=10,
+        decimal_places=4,
+        null=True,
+        blank=True,
     )
     statutory = models.BooleanField(_("Statutory"), default=False)
     varying_amount = models.BooleanField(_("Varying Amount"), default=True)
@@ -337,6 +354,8 @@ class TransactionEntries(models.Model):
         if self.transaction_code:
             self.transaction_name = self.transaction_code.description
             self.transaction_type = self.transaction_code.transaction_type
+            self.percentage_of_basic = self.transaction_code.percentage_of_basic
+            self.amount = self.transaction_code.monthly_amount
         if self.company:
             self.company_name = self.company.name
         if self.employee:
@@ -475,7 +494,11 @@ class SavingSchemeEntries(models.Model):
 
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
     disbursement_type = models.CharField(
-        _("Disbursement Type"), choices=DisbursementType.choices, blank=True, null=True, max_length=100
+        _("Disbursement Type"),
+        choices=DisbursementType.choices,
+        blank=True,
+        null=True,
+        max_length=100,
     )
     employee = models.ForeignKey(
         "employee.Employee",
@@ -646,11 +669,17 @@ class EmployeeSavingSchemeEntries(models.Model):
     company_name = models.CharField(
         _("Company Name"), max_length=150, blank=True, null=True
     )
+    percentage_of_employee_basic = models.DecimalField(
+        _("Percentage Of Employee Basic"), max_digits=10, decimal_places=4, default=0.0
+    )
+    percentage_of_employer_basic = models.DecimalField(
+        _("Percentage Of Employer Basic"), max_digits=10, decimal_places=4, default=0.0
+    )
     employee_contribution = models.DecimalField(
-        _("Employee Contribution"), max_digits=10, decimal_places=2, default=0.0
+        _("Employee Contribution"), max_digits=10, decimal_places=4, blank=True, null=True
     )
     employer_contribution = models.DecimalField(
-        _("Employer Contribution"), max_digits=10, decimal_places=2, default=0.0
+        _("Employer Contribution"), max_digits=10, decimal_places=4, blank=True, null=True
     )
     user_id = models.ForeignKey(
         "users.CustomUser",
