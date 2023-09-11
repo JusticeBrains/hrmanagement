@@ -9,7 +9,6 @@ from django.contrib.postgres.fields import HStoreField
 from django.utils import timezone
 
 from .managers import CustomUserManager
-from company.models import Company
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(_("Id"), primary_key=True, default=uuid.uuid4, editable=False)
@@ -106,20 +105,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-    def populate_company_names(self):
-        if self.companies:
-            company_dicts = []
-            related_companies = self.companies.all()
-            for company in related_companies:
-                company_dicts.append(
-                    {
-                    "company_id":str(company.id),
-                    "name": Company.objects.get(id=company.id).name
-                    }
-                )
-            self.company_names = [{"companies": company_dicts}]
-
-    def save(self, *args, **kwargs):
-        self.populate_company_names()
-        super().save(*args, **kwargs)
