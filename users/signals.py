@@ -45,22 +45,22 @@ def user_created(sender, instance, created, **kwargs):
             post_save.connect(user_created, sender=CustomUser)
 
 
-@receiver(pre_save, sender=CustomUser)
-def updated_multiple_companies(sender, instance, **kwargs):
-    if instance:
-        try:
-            if instance.companies.exists():
-                company_dicts = []
-                related_companies = instance.companies.all()
+# @receiver(pre_save, sender=CustomUser)
+# def updated_multiple_companies(sender, instance, **kwargs):
+#     if instance:
+#         try:
+#             if instance.companies.exists():
+#                 company_dicts = []
+#                 related_companies = instance.companies.all()
 
-                for company in related_companies:
-                    company_dicts.append(
-                        {"company_id": str(company.id), "name": company.name}
-                    )
+#                 for company in related_companies:
+#                     company_dicts.append(
+#                         {"company_id": str(company.id), "name": company.name}
+#                     )
 
-                with transaction.atomic():
-                    instance.company_names = [{"companies": company_dicts}]
-        except Exception as e:
-            print("Error creating ---")
-            print(str(e))
-            traceback.print_exc()
+#                 with transaction.atomic():
+#                     instance.company_names = [{"companies": company_dicts}]
+#         except Exception as e:
+#             print("Error creating ---")
+#             print(str(e))
+#             traceback.print_exc()
