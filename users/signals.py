@@ -16,7 +16,7 @@ env = Env()
 env.read_env()
 
 
-@receiver(post_save, sender=CustomUser)
+# @receiver(post_save, sender=CustomUser)
 def user_created(sender, instance, created, **kwargs):
     if created:  # Only perform actions for newly created instances
         try:
