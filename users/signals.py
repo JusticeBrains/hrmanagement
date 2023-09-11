@@ -29,6 +29,20 @@ def user_created(sender, instance, created, **kwargs):
                 if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                     raise ValueError(f"Invalid email address: {email}")
             send_mail(subject, message, from_email, recipient_list)
+
+            # Update company_names field
+            if instance.companies.exists():
+                company_dicts = []
+                related_companies = instance.companies.all()
+
+                for company in related_companies:
+                    company_dicts.append(
+                        {"company_id": str(company.id), "name": company.name}
+                    )
+
+                with transaction.atomic():
+                    instance.company_names = [{"companies": company_dicts}]
+
             instance.generated_pass = None
             instance.save()
             print("---------------Sent -----------------------")
@@ -39,10 +53,7 @@ def user_created(sender, instance, created, **kwargs):
             print("Error occurred while sending email:")
             print(str(e))
             traceback.print_exc()
-        else:
-            post_save.disconnect(user_created, sender=CustomUser)
-            instance.save()
-            post_save.connect(user_created, sender=CustomUser)
+
 
 
 @receiver(pre_save, sender=CustomUser)
