@@ -1,5 +1,6 @@
 import re
 import traceback
+from django.db import transaction
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
@@ -46,20 +47,20 @@ def user_created(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=CustomUser)
 def updated_multiple_companies(sender, instance, **kwargs):
-    if instance.companies:
-        try:
+    try:
+        if instance.companies.exists():
             company_dicts = []
-            for company in instance.companies.all():
-                comp = Company.objects.get(id=company.id)
-                company_dicts.append({"company_id": str(company.id), "name": comp.name})
-            comp_json = [{"companies": company_dicts}]
-            instance.company_names = comp_json
-            instance.save()
-        except Exception as e:
-            print("Error creating ---")
-            print(str(e))
-            traceback.print_exc()
-        else:
-            post_save.disconnect(updated_multiple_companies, sender=CustomUser)
-            instance.save()
-            post_save.connect(updated_multiple_companies, sender=CustomUser)
+            related_companies = instance.companies.all()
+
+            for company in related_companies:
+                company_dicts.append(
+                    {"company_id": str(company.id), "name": company.name}
+                )
+
+            with transaction.atomic():
+                instance.company_names = [{"companies": company_dicts}]
+                instance.save()
+    except Exception as e:
+        print("Error creating ---")
+        print(str(e))
+        traceback.print_exc()
