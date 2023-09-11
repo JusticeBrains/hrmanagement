@@ -51,7 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Staff Category"), max_length=50, blank=True, null=True
     )
     company = models.ForeignKey(
-        "company.Company",
+        Company,
         verbose_name=_("Company"),
         on_delete=models.CASCADE,
         null=True,
@@ -79,7 +79,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("Is Multiple Companies"), default=0
     )
     companies = models.ManyToManyField(
-        "company.Company",
+        Company,
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
         blank=True,
