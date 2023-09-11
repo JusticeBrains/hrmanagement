@@ -172,7 +172,7 @@ def process_payroll(sender, instance, **kwargs):
                                     "name": emp_saving.saving_scheme_name,
                                 }
                             )
-                    total_contribution = sum(float(total_employee_contribution))
+                    total_contribution = sum(total_employee_contribution)
 
                 gross_income = employee_basic + Decimal(total_allowances_sum)
 
