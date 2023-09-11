@@ -76,12 +76,21 @@ class LoanEntriesAdmin(admin.ModelAdmin):
 
 @admin.register(AuditTrail)
 class AuditTrailAdmin(admin.ModelAdmin):
-    list_display = ["user_id","process_id","company_name","created_at"]
+    list_display = ["user_id", "process_id", "company_name", "created_at"]
     search_fields = ["process_id"]
+
 
 @admin.register(EmployeeSavingSchemeEntries)
 class EmployeeSavingSchemeEntriesAdmin(admin.ModelAdmin):
-    ...
+    list_display = [
+        "employee",
+        "employee_name",
+        "employee_code",
+        "saving_scheme_name",
+        "start_period_code",
+        "company_name",
+    ]
+    search_fields = ["employee_code", "start_period_code", "company_name"]
 
 
 @admin.register(EmployeeTransactionEntries)
@@ -136,4 +145,4 @@ class PaymasterAdmin(admin.ModelAdmin):
 
 class EmployeeLoanPayment(admin.ModelAdmin):
     list_display = ["loan_name", "amount", "employee_code", "employee_name"]
-    search_fields = ["employee_code","employee_name"]
+    search_fields = ["employee_code", "employee_name"]
