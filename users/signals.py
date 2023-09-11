@@ -48,21 +48,22 @@ def user_created(sender, instance, created, **kwargs):
 def updated_multiple_companies(sender, instance, *args, **kwargs):
     post_save.disconnect(updated_multiple_companies, sender=CustomUser)
     if instance:
-        employee = Employee.objects.get(id=instance.employee_id.id)
-        if instance.is_hr == 1:
-            if employee:
+        if instance.employee_id is not None:
+            employee = Employee.objects.get(id=instance.employee_id.id)
+            if instance.is_hr == 1:
+                if employee:
+                    instance.unique_code = employee.unique_code
+
+                    company = Company.objects.filter(unique_code=instance.unique_code)
+
+                    if len(company) > 1:
+                        instance.multiple_companies = 1
+                    elif len(company) <= 1:
+                        instance.multiple_companies = 0
+
+            elif instance.is_hr == 0:
                 instance.unique_code = employee.unique_code
-
-                company = Company.objects.filter(unique_code=instance.unique_code)
-
-                if len(company) > 1:
-                    instance.multiple_companies = 1
-                elif len(company) <= 1:
-                    instance.multiple_companies = 0
-
-        elif instance.is_hr == 0:
-            instance.unique_code = employee.unique_code
-            instance.multiple_companies = 0
+                instance.multiple_companies = 0
 
         if instance.companies:
             company_dicts = []
