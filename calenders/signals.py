@@ -142,18 +142,36 @@ def process_payroll(sender, instance, **kwargs):
                 total_contribution = 0
                 for emp_saving in saving_scheme:
                     if emp_saving.employee == employee:
-                        employee_contribution = emp_saving.employee_contribution
-                        employer_contribution = emp_saving.employer_contribution
-
-                        total_employer_contribution.append(employer_contribution)
-                        total_employee_contribution.append(employee_contribution)
-                        saving_scheme_dict.append(
-                            {
-                                "employee_contribution": float(employee_contribution),
-                                "employer_contribution": float(employer_contribution),
-                                "name": emp_saving.saving_scheme_name,
-                            }
+                        percentage_of_employee_basic = (
+                            emp_saving.percentage_of_employee_basic
                         )
+                        percentage_of_employer_basic = (
+                            emp_saving.percentage_of_employer_basic
+                        )
+                        if (
+                            percentage_of_employee_basic is not None
+                            and percentage_of_employer_basic is not None
+                        ):
+                            employee_contribution = (
+                                percentage_of_employee_basic / 100
+                            ) * employee_basic
+                            employer_contribution = (
+                                percentage_of_employer_basic / 100
+                            ) * 100
+
+                            total_employer_contribution.append(employer_contribution)
+                            total_employee_contribution.append(employee_contribution)
+                            saving_scheme_dict.append(
+                                {
+                                    "employee_contribution": float(
+                                        employee_contribution
+                                    ),
+                                    "employer_contribution": float(
+                                        employer_contribution
+                                    ),
+                                    "name": emp_saving.saving_scheme_name,
+                                }
+                            )
                     total_contribution = sum(total_employee_contribution)
 
                 gross_income = employee_basic + Decimal(total_allowances_sum)
