@@ -1,3 +1,5 @@
+import uuid
+
 from json import JSONDecoder, JSONEncoder
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
@@ -5,10 +7,9 @@ from django.utils.translation import gettext_lazy as _
 from options.text_options import ASSIGNEDAREA
 from django.contrib.postgres.fields import HStoreField
 from django.utils import timezone
-import uuid
 
 from .managers import CustomUserManager
-
+from company.models import Company
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(_("Id"), primary_key=True, default=uuid.uuid4, editable=False)
@@ -105,17 +106,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
-    def save(self, *args, **kwargs):
-        if self.companies.exists():
+
+    def populate_company_names(self):
+        if self.companies:
             company_dicts = []
             related_companies = self.companies.all()
             for company in related_companies:
                 company_dicts.append(
                     {
                     "company_id":str(company.id),
-                    "name": company.name
+                    "name": Company.objects.get(id=company.id).name
                     }
                 )
             self.company_names = [{"companies": company_dicts}]
+
+    def save(self, *args, **kwargs):
+        self.populate_company_names()
         super().save(*args, **kwargs)
