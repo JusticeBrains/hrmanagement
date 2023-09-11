@@ -31,7 +31,7 @@ def user_created(sender, instance, created, **kwargs):
             instance.generated_pass = None
             instance.save()
             print("---------------Sent -----------------------")
-            del instance.generated_pass  # Delete the generated_pass attribute
+            # del instance.generated_pass  # Delete the generated_pass attribute
         except ValueError as ve:
             print(f"Error occurred while sending email: {str(ve)}")
         except Exception as e:
