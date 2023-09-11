@@ -31,7 +31,7 @@ def user_created(sender, instance, created, **kwargs):
             instance.generated_pass = None
             instance.save()
             print("---------------Sent -----------------------")
-            # del instance.generated_pass  # Delete the generated_pass attribute
+            del instance.generated_pass  # Delete the generated_pass attribute
         except ValueError as ve:
             print(f"Error occurred while sending email: {str(ve)}")
         except Exception as e:
@@ -44,8 +44,8 @@ def user_created(sender, instance, created, **kwargs):
             post_save.connect(user_created, sender=CustomUser)
 
 
-@receiver(pre_save, sender=CustomUser)
-def updated_multiple_companies(sender, instance, *args, **kwargs):
+@receiver(post_save, sender=CustomUser)
+def updated_multiple_companies(sender, instance, **kwargs):
     if instance.companies:
         company_dicts = []
         for company in instance.companies.all():
@@ -53,3 +53,4 @@ def updated_multiple_companies(sender, instance, *args, **kwargs):
             company_dicts.append({"company_id": str(company.id), "name": comp.name})
         comp_json = [{"companies": company_dicts}]
         instance.company_names = comp_json
+    instance.save()
