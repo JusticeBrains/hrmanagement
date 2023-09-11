@@ -81,6 +81,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "company.Company",
         verbose_name=_("Multiple Companies"),
         related_name="multi_companies",
+        blank=True,
     )
     company_names = models.JSONField(
         _("Company Names"),
