@@ -1,7 +1,7 @@
 import re
 import traceback
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
 
@@ -44,33 +44,12 @@ def user_created(sender, instance, created, **kwargs):
             post_save.connect(user_created, sender=CustomUser)
 
 
-@receiver(post_save, sender=CustomUser)
+@receiver(pre_save, sender=CustomUser)
 def updated_multiple_companies(sender, instance, *args, **kwargs):
-    post_save.disconnect(updated_multiple_companies, sender=CustomUser)
-    if instance:
-        if instance.employee_id is not None:
-            employee = Employee.objects.get(id=instance.employee_id.id)
-            if instance.is_hr == 1:
-                if employee:
-                    instance.unique_code = employee.unique_code
-
-                    company = Company.objects.filter(unique_code=instance.unique_code)
-
-                    if len(company) > 1:
-                        instance.multiple_companies = 1
-                    elif len(company) <= 1:
-                        instance.multiple_companies = 0
-
-            elif instance.is_hr == 0:
-                instance.unique_code = employee.unique_code
-                instance.multiple_companies = 0
-
-        if instance.companies:
-            company_dicts = []
-            for company in instance.companies.all():
-                comp = Company.objects.get(id=company.id)
-                company_dicts.append({"company_id": str(company.id), "name": comp.name})
-            comp_json = [{"companies": company_dicts}]
-            instance.company_names = comp_json
-        instance.save()
-    post_save.connect(updated_multiple_companies, sender=CustomUser)
+    if instance.companies:
+        company_dicts = []
+        for company in instance.companies.all():
+            comp = Company.objects.get(id=company.id)
+            company_dicts.append({"company_id": str(company.id), "name": comp.name})
+        comp_json = [{"companies": company_dicts}]
+        instance.company_names = comp_json
