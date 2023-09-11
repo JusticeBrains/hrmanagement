@@ -45,7 +45,7 @@ def user_created(sender, instance, created, **kwargs):
             post_save.connect(user_created, sender=CustomUser)
 
 
-@receiver(post_save, sender=CustomUser)
+@receiver(pre_save, sender=CustomUser)
 def updated_multiple_companies(sender, instance, **kwargs):
     try:
         if instance.companies.exists():
