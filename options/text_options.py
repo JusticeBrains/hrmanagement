@@ -332,6 +332,14 @@ class DisbursementType(models.TextChoices):
     ALL_STAFF = "All Staff", _("All Staff")
     JOB_TITLE = "JOb Title", _("Job Title")
     PAY_GROUP = "Pay Group", _("Pay Group")
+
+
+class AppraisalSetUpType(models.TextChoices):
+    INDIVIDUAL = "Individual", _("Individual")
+    ALL_STAFF = "All Staff", _("All Staff")
+    JOB_TITLE = "JOb Title", _("Job Title")
+    PAY_GROUP = "Pay Group", _("Pay Group")
+    DEPARTMENT = "Department", _("Department")
     
 
 class TransactionType(models.TextChoices):
