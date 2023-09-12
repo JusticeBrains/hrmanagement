@@ -913,38 +913,38 @@ class PayGroup(models.Model):
     taxable_income_description = models.CharField(
         _("Taxable Income Description"), max_length=100, null=True, blank=True
     )
-    tax_code = models.ForeignKey(
-        "payroll.TaxLaws",
-        verbose_name=_("Tax Code"),
-        on_delete=models.DO_NOTHING,
-        blank=True,
-        null=True,
-        related_name="tax_code_law",
-    )
+    # tax_code = models.ForeignKey(
+    #     "payroll.TaxLaws",
+    #     verbose_name=_("Tax Code"),
+    #     on_delete=models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     related_name="tax_code_law",
+    # )
     tax_description = models.CharField(
         _("Tax Description"), max_length=150, null=True, blank=True
     )
-    gross_income_code = models.ForeignKey(
-        "payroll.PayrollFormular",
-        verbose_name=_("Gross Income Code"),
-        on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
-    )
+    # gross_income_code = models.ForeignKey(
+    #     "payroll.PayrollFormular",
+    #     verbose_name=_("Gross Income Code"),
+    #     on_delete=models.DO_NOTHING,
+    #     null=True,
+    #     blank=True,
+    # )
     gross_income_description = models.CharField(
         _("Gross Income Description"), max_length=150, null=True, blank=True
     )
     currency_code = models.CharField(
         verbose_name=_("Currency Code"), null=True, blank=True, max_length=100
     )
-    bonus_Tax_code = models.ForeignKey(
-        "payroll.TaxLaws",
-        verbose_name=_("Bonus Tax Code"),
-        on_delete=models.DO_NOTHING,
-        related_name="bonus_tax_laws",
-        blank=True,
-        null=True,
-    )
+    # bonus_Tax_code = models.ForeignKey(
+    #     "payroll.TaxLaws",
+    #     verbose_name=_("Bonus Tax Code"),
+    #     on_delete=models.DO_NOTHING,
+    #     related_name="bonus_tax_laws",
+    #     blank=True,
+    #     null=True,
+    # )
     bonus_tax_description = models.CharField(
         _("Bonus Tax Description"), max_length=150, null=True, blank=True
     )
