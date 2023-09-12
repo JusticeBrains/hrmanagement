@@ -71,4 +71,9 @@ router.register(
     employee_views.EmployeeBehaviouralViewSet,
     basename="employee-behavoural",
 )
+router.register(
+    "appraisal-setup",
+    employee_views.AppraisalSetUpViewSet,
+    basename="appraisal-setup"
+)
 urlpatterns = router.urls

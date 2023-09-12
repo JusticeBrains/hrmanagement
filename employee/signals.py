@@ -4,6 +4,7 @@ from django.db.models import Sum
 from employee.models import (
     KPI,
     AppraisalGrading,
+    AppraisalSetup,
     BehaviouralCompetencies,
     Branch,
     Department,
@@ -18,8 +19,9 @@ from employee.models import (
     PropertyRequest,
     Unit,
 )
+from django.db import transaction
 from django.core.exceptions import ValidationError
-from company.models import Company
+from company.models import Company, JobTitles
 from django.utils import timezone
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
@@ -28,6 +30,7 @@ from django.core.management import call_command
 
 
 from employee.management.commands import update_scheduler
+from options.text_options import AppraisalSetUpType
 
 
 birth_date_remainder = Signal()
@@ -53,6 +56,104 @@ def send_birthday_reminder(sender, instance, **kwargs):
         subject = "Birthday Reminder"
         message = f"Dear {employee.name}, your birthday is coming up in 3 days!"
         send_mail(subject, message, "hr@pay360.com", [employee.company_email])
+
+
+@receiver(post_save, sender=AppraisalSetup)
+def create_appraisal(sender, instance,**kwargs):
+    post_save.disconnect(create_appraisal, sender=AppraisalSetup)
+    if instance:
+        appraisal_type = instance.appraisal_type
+        appraisal_date = instance.appraisal_date
+        appraisal_id = instance.appraisal_id
+        period = instance.period
+        company_id = instance.company_id
+        company = instance.company
+        status = instance.status
+
+
+        @transaction.atomic
+        def create_or_update_employee_employee_appraisal(
+            employee, employee_name
+        ):
+            """
+            Create or update EmployeeSavingSchemeEntries object for the given employee.
+            """
+            save_entry, created = EmployeeAppraisal.objects.get_or_create(
+                appraisal_setup=instance,
+                emp_id=employee,
+                emp_name = employee_name,
+                defaults={
+                    "company":company,
+                    "emp_name":employee_name,
+                    "employee_code": employee_code,
+                    "status":status,
+                    "company": company,
+                    "company_id": company_id,
+                    "appraisal_date": appraisal_date,
+                },
+            )
+
+            if not created:
+                save_entry.status = status
+                save_entry.employee_code = employee_code
+                save_entry.company = company
+                save_entry.company_id = company_id
+                save_entry.period = period
+                save_entry.appraisal_date = appraisal_date
+                save_entry.save()
+
+        if appraisal_type == AppraisalSetUpType.ALL_STAFF:
+            employees = Employee.objects.filter(company_id=company_id)
+
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
+                instance.appraisal_name = employee.company
+                create_or_update_employee_employee_appraisal(
+                    employee, employee_name
+                )
+
+        elif appraisal_type == AppraisalSetUpType.PAY_GROUP:
+            pay_group = PayGroup.objects.get(id=instance.appraisal_id)
+            instance.appraisal_name = pay_group.no
+
+            employees = Employee.objects.filter(
+                company_id=company_id, pay_group_code=pay_group
+            )
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
+                create_or_update_employee_employee_appraisal(
+                    employee, employee_name
+                )
+
+        elif appraisal_type == AppraisalSetUpType.JOB_TITLE:
+            job_title = JobTitles.objects.get(id=instance.appraisal_id)
+            instance.appraisal_name = job_title.description
+            employees = Employee.objects.filter(
+                company_id=company_id, job_titles=job_title
+            )
+            for employee in employees:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
+                instance.appraisal_name = employee.job_title_description
+                create_or_update_employee_employee_appraisal(
+                    employee, employee_name
+                )
+
+        elif appraisal_type == AppraisalSetUpType.INDIVIDUAL:
+            employee = Employee.objects.get(id=instance.appraisal_id)
+            if employee:
+                employee_name = f"{employee.last_name} {employee.first_name}"
+                employee_code = employee.code
+                instance.appraisal_name = employee_name
+                create_or_update_employee_employee_appraisal(
+                    employee, employee_name
+                )
+        instance.save()
+    post_save.disconnect(create_appraisal, sender=AppraisalSetup)
+
+
 
 
 @receiver(pre_save, sender=EmployeeAppraisal)

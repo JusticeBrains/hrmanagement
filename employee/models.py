@@ -1,5 +1,8 @@
+from collections.abc import Iterable
 import uuid
 from options.text_options import (
+    AppraisalSetUpType,
+    DisbursementType,
     ReviewType,
     OffenseType,
     RecommendedAction,
@@ -227,8 +230,13 @@ class Employee(models.Model):
         _("Is Accountant"), blank=True, null=True, default=0
     )
     is_gm = models.PositiveIntegerField(_("Is GM"), default=0)
-    net_salary = models.DecimalField(_("Net Salary"), max_digits=10, decimal_places=4, default=0.0)
-    gross_salary = models.DecimalField(_("Gross Salary"), max_digits=10, decimal_places=4, default=0.0)
+    net_salary = models.DecimalField(
+        _("Net Salary"), max_digits=10, decimal_places=4, default=0.0
+    )
+    gross_salary = models.DecimalField(
+        _("Gross Salary"), max_digits=10, decimal_places=4, default=0.0
+    )
+
     class Meta:
         unique_together = ("code", "company")
         verbose_name = "Employee"
@@ -278,8 +286,50 @@ class EmployeeDeduction(models.Model):
         return f"{self.employee.fullname} - {self.deduction_reason} - {self.no_of_days}"
 
 
+class AppraisalSetup(models.Model):
+    id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    appraisal_type = models.CharField(
+        _("Appraisal Type"),
+        choices=AppraisalSetUpType.choices,
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    appraisal_id = models.CharField(_("Global Name"), max_length=150, blank=True, null=True)
+    appraisal_name = models.CharField(
+        _("Appraisal Name"), max_length=50, blank=True, null=True
+    )
+    appraisal_date = models.DateField(
+        _("Appraisal Date"), default=timezone.now, blank=True, null=True
+    )
+    appraiser = models.CharField(
+        verbose_name="Appraiser", max_length=200, blank=True, null=True
+    )
+    status = models.PositiveIntegerField(_("Status"), default=0)
+    period = models.CharField(_("Period"), max_length=150, default=timezone.now().year)
+    company = models.CharField(_("Company"), max_length=150, blank=True, null=True)
+    company_id = models.ForeignKey(
+        "company.Company",
+        verbose_name=_("Company ID"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Appraisal SetUp"
+        verbose_name_plural = "Appraisal SetUps"
+
+    def __str__(self):
+        return f"{self.appraisal_name}"
+    def save(self, *args, **kwargs):
+        self.company = self.company_id.name
+        return super().save(*args, **kwargs)
+
+
 class EmployeeAppraisal(models.Model):
     id = models.UUIDField(_("ID"), primary_key=True, editable=False, default=uuid.uuid4)
+    appraisal_setup = models.ForeignKey("employee.AppraisalSetup", verbose_name=_("Appraisal SetUp"), on_delete=models.CASCADE)
     emp_id = models.ForeignKey(
         Employee,
         verbose_name=_("Employee"),
@@ -975,7 +1025,6 @@ class PayGroup(models.Model):
         )
 
         super().save(*args, **kwargs)
-
 
 
 class PropertyAssignment(models.Model):

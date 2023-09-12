@@ -86,6 +86,11 @@ class NotchesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class AppraisalSetUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = employee_model.AppraisalSetup
+        fields = "__all__"
+
 class AppraisalGradingSerializer(serializers.ModelSerializer):
     score_range = IntegerRangeField()
     company = serializers.ReadOnlyField()

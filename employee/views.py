@@ -219,3 +219,9 @@ class EmployeeBehaviouralViewSet(viewsets.ModelViewSet):
     queryset = employee_model.EmployeeBehavioural.objects.all()
     serializer_class = serializers.EmployeeBehaviourialSerializer
     filterset_fields = "__all__"
+
+
+class AppraisalSetUpViewSet(viewsets.ModelViewSet):
+    queryset = employee_model.AppraisalSetup.objects.all()
+    serializer_class = serializers.AppraisalSetUpSerializer
+    filterset_fields = "__all__"
