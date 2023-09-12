@@ -2324,7 +2324,7 @@ def load_paygroup(url, auth, company, comp_id):
                     # gross_income_code=paygroup["Gross_Income_Code"],
                     gross_income_description=paygroup["Gross_Income_Description"],
                     currency_code=paygroup["Currency_Code"],
-                    bonus_tax_code=paygroup["Bonus_Tax_Code"],
+                    # bonus_tax_code=paygroup["Bonus_Tax_Code"],
                     bonus_tax_description=paygroup["Bonus_Tax_Description"],
                     gross_up=paygroup["Gross_Up"],
                     company=company,
